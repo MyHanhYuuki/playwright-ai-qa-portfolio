@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA Agent Pipeline</title>
+<style>
+:root{
+  --bg:#fafaf7;--card:#fff;--text:#2c2c2a;--muted:#5f5e5a;--faint:#888780;
+  --border:rgba(0,0,0,.12);--border-strong:rgba(0,0,0,.25);--chip:#F1EFE8;--chip-hover:#D3D1C7;
+  --agent-bg:#E1F5EE;--agent:#1D9E75;--agent-fg:#085041;
+  --hitl-bg:#FAEEDA;--hitl:#BA7517;--hitl-fg:#633806;
+  --art-bg:#FAECE7;--art:#D85A30;--art-fg:#7a2a10;
+  --tool-bg:#E8E6FA;--tool:#6a5fc9;--tool-fg:#2f2870;
+  --focus:#1a6fd4;
+}
+@media (prefers-color-scheme:dark){
+:root{
+  --bg:#1a1a18;--card:#242422;--text:#ecebe5;--muted:#b4b2a9;--faint:#8a8880;
+  --border:rgba(255,255,255,.14);--border-strong:rgba(255,255,255,.3);--chip:#34332f;--chip-hover:#47453f;
+  --agent-bg:#0c3a2e;--agent:#3fc79a;--agent-fg:#a8ecd4;
+  --hitl-bg:#47310c;--hitl:#e0a040;--hitl-fg:#f6d9a0;
+  --art-bg:#4a2214;--art:#f08a64;--art-fg:#fbc9b4;
+  --tool-bg:#2b2757;--tool:#9d94f0;--tool-fg:#d6d1fa;
+  --focus:#6fb0ff;
+}}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;font-size:14px}
+header{padding:24px 32px 14px;border-bottom:1px solid var(--border)}
+header h1{margin:0 0 6px;font-size:20px;font-weight:500}
+header p{margin:0;color:var(--muted);font-size:13px;max-width:820px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:12px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:4px;border:2px solid;display:inline-block}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;padding:24px 32px;max-width:1280px;margin:0 auto}
+@media (max-width:960px){
+  .layout{grid-template-columns:minmax(0,1fr);padding:16px}
+  header{padding:18px 16px 12px}
+  .info{position:static!important}
+}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.card svg{display:block;width:100%;height:auto}
+.hint{text-align:center;color:var(--faint);font-size:12px;margin:10px 0 0}
+.info{position:sticky;top:16px;height:fit-content}
+.badge{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:12px;margin-bottom:10px;font-weight:500}
+.badge.agent{background:var(--agent-bg);color:var(--agent-fg)}
+.badge.hitl{background:var(--hitl-bg);color:var(--hitl-fg)}
+.badge.artifact{background:var(--art-bg);color:var(--art-fg)}
+.badge.tool{background:var(--tool-bg);color:var(--tool-fg)}
+.info h2{font-size:17px;font-weight:500;margin:0 0 10px;word-break:break-word}
+.info p{margin:0}
+.info h4{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin:14px 0 6px}
+.info ul{margin:0;padding-left:18px}
+.info li{margin-bottom:3px;font-size:13px}
+.info .rel{padding:0;list-style:none}
+.info .rel li{display:inline-block;margin:0 6px 6px 0}
+.rel button{font:inherit;font-size:13px;color:var(--text);background:var(--chip);border:0;border-radius:6px;padding:3px 9px;cursor:pointer}
+.rel button:hover{background:var(--chip-hover)}
+.reset{margin-top:16px;font:inherit;font-size:12px;background:none;border:1px solid var(--border-strong);color:var(--muted);padding:6px 14px;border-radius:6px;cursor:pointer}
+.reset:hover{background:var(--chip)}
+button:focus-visible,.node:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.node{cursor:pointer;outline:none}
+.node rect{stroke-width:1.5;transition:stroke-width .15s}
+.node:hover rect{stroke-width:2.5}
+.node.sel rect{stroke-width:4}
+.node:focus-visible rect{stroke:var(--focus)}
+.node text{pointer-events:none;font-size:12.5px;text-anchor:middle;fill:var(--text)}
+.node .t2{font-size:10.5px;fill:var(--muted)}
+.node.agent rect{fill:var(--agent-bg);stroke:var(--agent)}
+.node.hitl rect{fill:var(--hitl-bg);stroke:var(--hitl)}
+.node.artifact rect{fill:var(--art-bg);stroke:var(--art)}
+.node.tool rect{fill:var(--tool-bg);stroke:var(--tool)}
+.node.agent .t1{fill:var(--agent-fg);font-weight:600}
+.node.hitl .t1{fill:var(--hitl-fg);font-weight:600}
+.node.artifact .t1{fill:var(--art-fg)}
+.node.tool .t1{fill:var(--tool-fg);font-weight:600}
+.edge{fill:none;stroke:var(--faint);stroke-width:1.5}
+.edge.dash{stroke:var(--tool);stroke-dasharray:4 4;opacity:.8}
+.elabel{font-size:10.5px;fill:var(--muted);text-anchor:middle}
+marker path{fill:var(--faint)}
+</style>
+</head>
+<body>
+<header>
+  <h1>QA Agent Pipeline</h1>
+  <p>5 AI agent do 1 orchestrator điều phối, 3 điểm dừng để người duyệt (HITL). Các agent chỉ trao đổi với nhau qua file. Bấm vào một khối để xem chi tiết.</p>
+  <div class="legend">
+    <span><i style="background:var(--agent-bg);border-color:var(--agent)"></i>AI agent</span>
+    <span><i style="background:var(--hitl-bg);border-color:var(--hitl)"></i>Người duyệt (HITL)</span>
+    <span><i style="background:var(--art-bg);border-color:var(--art)"></i>File / artifact</span>
+    <span><i style="background:var(--tool-bg);border-color:var(--tool)"></i>Công cụ / orchestrator</span>
+  </div>
+</header>
+<main class="layout">
+  <section class="card">
+    <svg id="svg" viewBox="0 0 760 1110" role="group" aria-label="Sơ đồ luồng QA Agent Pipeline">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9z"/></marker></defs>
+      <g id="edges"></g><g id="nodes"></g>
+    </svg>
+    <p class="hint">Bấm hoặc Tab + Enter vào khối bất kỳ. Nét đứt: công cụ Playwright MCP.</p>
+  </section>
+  <aside class="card info" id="info" aria-live="polite"></aside>
+</main>
+<script>
+var T={agent:"AI agent",hitl:"Người duyệt (HITL)",artifact:"File / artifact",tool:"Công cụ"};
+var N=[
+{id:"orch",type:"tool",x:640,y:85,w:110,h:830,t1:"/qa-orchestrator",rot:1,title:"/qa-orchestrator",
+ desc:"Lệnh trong Claude Code điều phối cả pipeline. Chỉ orchestrator được gọi agent, agent không gọi nhau mà chỉ trao đổi qua file.",
+ inp:["Đường dẫn requirement của chức năng cần test","Artifact do từng agent ghi ra (kiểm tra sau mỗi bước)"],
+ out:["defects.md (sau HITL #3)","rtm-report.html (ma trận truy vết)"],
+ rules:["Gọi từng agent đúng thứ tự, kiểm tra kết quả mỗi bước","Dừng ở 3 điểm HITL chờ người duyệt","Đếm số vòng sửa của healer: tối đa 2 vòng / test case","Cuối cùng ghi bug report và RTM"],
+ rel:["test-design","test-impl","script-gen","executor","healer","hitl1","hitl2","hitl3","defects","rtm"]},
+{id:"mcp",type:"tool",x:10,y:85,w:56,h:830,t1:"Playwright MCP",rot:1,title:"Playwright MCP",
+ desc:"Cấu hình trong .mcp.json: cầu nối để agent điều khiển trình duyệt thật. Chỉ 3 agent được dùng: test-design, script-gen và healer.",
+ inp:["Lệnh điều khiển trình duyệt từ agent"],out:["Trạng thái trang thật, locator, ảnh chụp, lỗi khi debug"],
+ rules:["test-design: tự khám phá web (tùy chọn)","script-gen: kiểm tra locator trước khi viết code","healer: debug trên trình duyệt thật"],
+ rel:["test-design","script-gen","healer"]},
+{id:"req",type:"artifact",x:200,y:10,w:320,h:44,t1:"requirement",t2:"hoặc khám phá web",title:"requirement",
+ desc:"Đầu vào của một lần chạy: yêu cầu chức năng do người (QC tester) viết hoặc cung cấp.",
+ inp:["Người chọn chức năng cần test"],out:["requirement/requirement.md"],rules:["Mỗi chức năng một thư mục trong qa-runs/<tên-chức-năng>/"],rel:["test-design"]},
+{id:"test-design",type:"agent",x:200,y:85,w:320,h:44,t1:"[1] test-design",t2:"phân tích yêu cầu",title:"[1] test-design",
+ desc:"Phân tích requirement, tìm điểm mơ hồ và lập danh sách viewpoint cần test.",
+ inp:["requirement","Tùy chọn: tự khám phá web bằng trình duyệt (Playwright MCP)"],out:["spec-review.md","viewpoint.csv","internal-question.md"],
+ rules:["Câu hỏi mở được chuyển cho người ở HITL #1"],rel:["req","a1","mcp","orch"]},
+{id:"a1",type:"artifact",x:200,y:160,w:320,h:44,t1:"spec-review.md, viewpoint.csv",t2:"internal-question.md",title:"Đầu ra của test-design",
+ desc:"Ba file do test-design ghi ra: đánh giá spec, danh sách viewpoint và câu hỏi nội bộ cho người.",
+ inp:["Từ [1] test-design"],out:["Đọc bởi HITL #1 và [2] test-impl"],rules:["Lưu trong qa-runs/<chức-năng>/"],rel:["test-design","hitl1","test-impl"]},
+{id:"hitl1",type:"hitl",x:200,y:235,w:320,h:44,t1:"HITL #1",t2:"người trả lời câu hỏi",title:"HITL #1: trả lời câu hỏi mở",
+ desc:"Người trả lời các câu hỏi mở của AI về requirement. Câu trả lời được lưu để test-impl dùng.",
+ inp:["internal-question.md"],out:["qa/q-and-a.md","kb/q-and-a-archive.md (Q&A tích lũy, dùng lại cho chức năng sau)"],
+ rules:["Pipeline dừng tới khi người trả lời xong"],rel:["a1","test-impl","orch"]},
+{id:"test-impl",type:"agent",x:200,y:310,w:320,h:44,t1:"[2] test-impl",t2:"viết test case",title:"[2] test-impl",
+ desc:"Viết test case có cấu trúc từ viewpoint và câu trả lời của người.",
+ inp:["viewpoint.csv","Câu trả lời HITL #1 (qa/q-and-a.md)"],out:["test-cases.csv","test-data.md"],
+ rules:["Kỹ thuật: phân vùng tương đương, giá trị biên, bảng quyết định, chuyển trạng thái","Nếu HITL #2 yêu cầu sửa, quay lại bước này"],rel:["hitl1","a2","hitl2","orch"]},
+{id:"a2",type:"artifact",x:200,y:385,w:320,h:44,t1:"test-cases.csv",t2:"test-data.md",title:"Đầu ra của test-impl",
+ desc:"Danh sách test case và dữ liệu test, chờ người duyệt.",
+ inp:["Từ [2] test-impl"],out:["Đọc bởi HITL #2 và [3] script-gen"],rules:[],rel:["test-impl","hitl2","script-gen"]},
+{id:"hitl2",type:"hitl",x:200,y:460,w:320,h:44,t1:"HITL #2",t2:"người duyệt test case",title:"HITL #2: duyệt test case",
+ desc:"Người duyệt viewpoint và test case trước khi viết code.",
+ inp:["test-cases.csv","test-data.md"],out:["Duyệt, hoặc góp ý cần sửa"],
+ rules:["Cần sửa: quay lại [2] test-impl","Duyệt: chuyển sang [3] script-gen"],rel:["a2","test-impl","script-gen","orch"]},
+{id:"script-gen",type:"agent",x:200,y:535,w:320,h:44,t1:"[3] script-gen",t2:"viết code test + Playwright MCP",title:"[3] script-gen",
+ desc:"Viết code test Playwright. Mở web thật để kiểm tra locator rồi mới viết code.",
+ inp:["test-cases.csv"],out:["tests/pages/*.ts (Page Object)","tests/specs/*.spec.ts"],
+ rules:["Dùng Playwright MCP để xác nhận locator trên trình duyệt thật"],rel:["hitl2","a3","mcp","orch"]},
+{id:"a3",type:"artifact",x:200,y:610,w:320,h:44,t1:"tests/pages/*.ts",t2:"tests/specs/*.spec.ts",title:"Code test",
+ desc:"Page Object và spec, dùng chung cả dự án trong thư mục tests/.",
+ inp:["Từ [3] script-gen"],out:["Chạy bởi [4] executor"],rules:["Thư mục tests/: pages, specs, data, fixtures"],rel:["script-gen","executor"]},
+{id:"executor",type:"agent",x:200,y:685,w:320,h:44,t1:"[4] executor",t2:"chạy test + phân loại",title:"[4] executor",
+ desc:"Chạy bộ test bằng Playwright Test rồi phân loại từng test fail.",
+ inp:["Bộ test (tests/)"],out:["run-results/*.json","triage.md"],
+ rules:["Phân loại: flaky, script-issue (test sai), real-bug (web lỗi)","Chạy lại sau khi healer sửa"],rel:["a3","triage","healer","orch"]},
+{id:"triage",type:"artifact",x:200,y:760,w:320,h:44,t1:"triage.md",t2:"phân loại kết quả",title:"triage.md",
+ desc:"Kết quả phân loại. Mỗi loại đi một nhánh khác nhau. Nếu tất cả test pass thì đi thẳng tới rtm-report.html.",
+ inp:["Từ [4] executor"],out:["script-issue: [5] healer","flaky: ghi nhận, không chặn","real-bug: HITL #3","tất cả pass: rtm-report.html"],rules:[],rel:["executor","healer","flaky","hitl3","rtm"]},
+{id:"healer",type:"agent",x:100,y:835,w:150,h:44,t1:"[5] healer",t2:"sửa test sai",title:"[5] healer",
+ desc:"Sửa các test bị gắn nhãn script-issue bằng cách debug trên trình duyệt thật.",
+ inp:["Test có nhãn script-issue"],out:["Code đã sửa","healing-log.md"],
+ rules:["KHÔNG đụng real-bug","KHÔNG sửa kết quả mong đợi để test pass","Sửa locator, timing, logic","Tối đa 2 vòng, sau đó đánh needs-manual-fix"],rel:["triage","executor","manual","mcp","orch"]},
+{id:"flaky",type:"artifact",x:295,y:835,w:130,h:44,t1:"flaky",t2:"ghi nhận, không chặn",title:"flaky",
+ desc:"Test chập chờn được ghi nhận trong triage, không chặn pipeline.",inp:["Từ triage.md"],out:["Ghi nhận"],rules:["Không chặn các bước sau"],rel:["triage"]},
+{id:"hitl3",type:"hitl",x:440,y:835,w:180,h:44,t1:"HITL #3",t2:"người duyệt bug",title:"HITL #3: duyệt bug thật",
+ desc:"Người duyệt các test real-bug trước khi ghi vào danh sách lỗi. AI có thể sai mà trông vẫn rất đúng.",
+ inp:["Các test real-bug trong triage.md"],out:["Bug đã duyệt"],rules:["Chỉ bug đã duyệt mới vào defects.md"],rel:["triage","defects","orch"]},
+{id:"manual",type:"artifact",x:100,y:915,w:150,h:44,t1:"needs-manual-fix",t2:"quá 2 vòng",title:"needs-manual-fix",
+ desc:"Test healer sửa quá 2 vòng vẫn chưa được thì đánh nhãn này để người sửa tay.",inp:["Từ [5] healer"],out:["Người xử lý thủ công"],rules:["Tối đa 2 vòng / test case"],rel:["healer"]},
+{id:"defects",type:"artifact",x:440,y:915,w:180,h:44,t1:"defects.md",t2:"bug report (file local)",title:"defects.md",
+ desc:"Danh sách lỗi dạng markdown lưu cục bộ, do orchestrator ghi sau khi người duyệt.",inp:["Bug đã duyệt ở HITL #3"],out:["Đọc bởi rtm-report.html"],rules:["Không dùng hệ thống ticket ngoài"],rel:["hitl3","rtm","orch"]},
+{id:"rtm",type:"artifact",x:200,y:990,w:320,h:44,t1:"rtm-report.html",t2:"ma trận truy vết",title:"rtm-report.html",
+ desc:"Ma trận truy vết: requirement, AC, viewpoint, test case, code, kết quả, bug.",inp:["defects.md","Kết quả chạy test"],out:["Báo cáo RTM"],
+ rules:["Truy vết đầy đủ từ requirement tới bug"],rel:["defects","triage","done","orch"]},
+{id:"done",type:"tool",x:260,y:1060,w:200,h:40,t1:"Xong",t2:"commit rồi CI",title:"Xong",
+ desc:"Kết thúc một lần chạy: commit, sau đó GitHub Actions (CI, không phải AI) tự chạy toàn bộ test mỗi lần push.",inp:["rtm-report.html"],out:["Commit, CI"],rules:[],rel:["rtm"]}
+];
+var E=[
+["M360 54V83"],["M360 129V158"],["M360 204V233"],["M360 279V308"],["M360 354V383"],["M360 429V458"],
+["M360 504V533"],["M360 579V608"],["M360 654V683"],["M360 729V758"],
+["M520 482H560V332H522","cần sửa",566,410,0,"start"],
+["M360 804V820H175V833","script-issue",215,814],
+["M360 804V833"],
+["M360 820H530V833","real-bug",470,814],
+["M100 857H80V707H198","chạy lại, tối đa 2 vòng",84,780,0,"start"],
+["M175 879V913","quá 2 vòng",178,897,0,"start"],
+["M530 879V913"],
+["M530 959V975H360V988"],["M360 1034V1058"],
+["M66 107H198",0,0,0,1],["M66 557H198",0,0,0,1],["M66 870H98",0,0,0,1]
+];
+var NS="http://www.w3.org/2000/svg",byId={};
+function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+var gE=document.getElementById("edges"),gN=document.getElementById("nodes");
+E.forEach(function(e){
+  var p=el("path",{d:e[0],"class":"edge"+(e[4]?" dash":"")},gE);
+  if(!e[4])p.setAttribute("marker-end","url(#ar)");
+  if(e[1]){var t=el("text",{x:e[2],y:e[3],"class":"elabel"},gE);t.textContent=e[1];if(e[5])t.setAttribute("style","text-anchor:start")}
+});
+N.forEach(function(n){
+  byId[n.id]=n;
+  var g=el("g",{"class":"node "+n.type,tabindex:0,role:"button","aria-label":n.title+" ("+T[n.type]+")","data-id":n.id},gN);
+  el("rect",{x:n.x,y:n.y,width:n.w,height:n.h,rx:8},g);
+  var cx=n.x+n.w/2,cy=n.y+n.h/2;
+  if(n.rot){var t=el("text",{x:cx,y:cy,"class":"t1",transform:"rotate(-90 "+cx+" "+cy+")",dy:4},g);t.textContent=n.t1}
+  else if(n.t2){el("text",{x:cx,y:n.y+19,"class":"t1"},g).textContent=n.t1;el("text",{x:cx,y:n.y+34,"class":"t2"},g).textContent=n.t2}
+  else el("text",{x:cx,y:cy+4,"class":"t1"},g).textContent=n.t1;
+  g.addEventListener("click",function(){sel(n.id)});
+  g.addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();sel(n.id)}});
+});
+var info=document.getElementById("info");
+function list(h,a){
+  if(!a||!a.length)return null;
+  var d=document.createDocumentFragment(),x=document.createElement("h4");x.textContent=h;d.appendChild(x);
+  var u=document.createElement("ul");a.forEach(function(s){var l=document.createElement("li");l.textContent=s;u.appendChild(l)});d.appendChild(u);return d}
+function sel(id){
+  var n=byId[id];if(!n)return;
+  Array.prototype.forEach.call(document.querySelectorAll(".node"),function(g){g.classList.toggle("sel",g.getAttribute("data-id")===id)});
+  info.textContent="";
+  var b=document.createElement("span");b.className="badge "+n.type;b.textContent=T[n.type];info.appendChild(b);
+  var h=document.createElement("h2");h.textContent=n.title;info.appendChild(h);
+  var p=document.createElement("p");p.textContent=n.desc;info.appendChild(p);
+  [["Đầu vào",n.inp],["Đầu ra",n.out],["Quy tắc",n.rules]].forEach(function(s){var f=list(s[0],s[1]);if(f)info.appendChild(f)});
+  if(n.rel&&n.rel.length){
+    var h4=document.createElement("h4");h4.textContent="Liên quan";info.appendChild(h4);
+    var u=document.createElement("ul");u.className="rel";
+    n.rel.forEach(function(r){var l=document.createElement("li"),bt=document.createElement("button");bt.type="button";bt.textContent=byId[r].title;bt.onclick=function(){sel(r)};l.appendChild(bt);u.appendChild(l)});
+    info.appendChild(u)}
+  var rb=document.createElement("button");rb.type="button";rb.className="reset";rb.textContent="Về orchestrator";rb.onclick=function(){sel("orch")};info.appendChild(rb);
+}
+sel("orch");
+</script>
+</body>
+</html>

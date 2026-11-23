@@ -6,3 +6,10 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Claude Code local settings (machine-specific)
+.claude/settings.local.json
+
+# QA pipeline: orchestrator state + raw Playwright JSON (summaries are committed)
+qa-runs/**/.qa-state.json
+qa-runs/**/run-results/raw-*.json

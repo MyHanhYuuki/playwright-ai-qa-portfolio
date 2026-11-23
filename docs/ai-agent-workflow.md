@@ -1,6 +1,10 @@
 # Sơ đồ làm việc của AI agent trong dự án
 
-> Tổng quan: dự án có những "vai" nào (người, AI agent, công cụ), mỗi vai làm gì và phối hợp với nhau ra sao.
+> Pipeline QA gồm **5 AI agent** do **1 orchestrator** điều phối, có **3 điểm dừng để người duyệt (HITL)**.
+> Bản sơ đồ tương tác (bấm vào từng khối để xem chi tiết): [ai-agent-workflow.html](ai-agent-workflow.html)
+>
+> Phát triển tiếp từ repo v1 [learn-ai-automation-test](https://github.com/MyHanhYuuki/learn-ai-automation-test):
+> giữ quy trình QA, nâng cấp agent bằng công cụ **Playwright MCP** để làm việc trên trình duyệt thật.
 
 ## 1. Sơ đồ cây: các thành phần
 
@@ -8,101 +12,132 @@
 Dự án playwright-ai-qa-portfolio
 │
 ├── 👤 NGƯỜI (QC tester)
-│     ├── Ra yêu cầu, chọn chức năng cần test
-│     ├── Duyệt kế hoạch test và code do AI sinh ra
-│     ├── Làm lại từng bước theo mẫu để hiểu
-│     └── Quyết định: lỗi do test sai hay do web có bug thật
+│     ├── Chọn chức năng cần test, viết/cung cấp requirement
+│     ├── HITL #1: trả lời câu hỏi mở của AI về requirement
+│     ├── HITL #2: duyệt viewpoint + test case trước khi viết code
+│     └── HITL #3: duyệt bug thật trước khi ghi vào danh sách lỗi
 │
-├── 🧑‍🏫 CLAUDE CODE (trợ lý chính, "người hướng dẫn")
-│     ├── Điều phối: gọi đúng agent ở đúng bước
-│     ├── Làm mẫu → giải thích → review phần người làm lại
-│     ├── Refactor code (Page Object Model), viết test API
-│     ├── Viết tài liệu: docs/learning/, bug report, ai-log
-│     └── Quản lý git: commit, (sau này) push
+├── 🎯 ORCHESTRATOR  (/qa-orchestrator, lệnh trong Claude Code)
+│     ├── Gọi từng agent theo đúng thứ tự, kiểm tra kết quả mỗi bước
+│     ├── Dừng ở 3 điểm HITL chờ người duyệt
+│     ├── Đếm số vòng sửa của healer (tối đa 2 vòng / test case)
+│     └── Cuối cùng: ghi bug report (defects.md) + ma trận truy vết (RTM)
 │
-├── 🤖 3 AI AGENT CỦA PLAYWRIGHT (.claude/agents/)
+├── 🤖 5 AI AGENT  (.claude/agents/)
 │     │
-│     ├── 🗺️ planner  (lập kế hoạch)
-│     │     ├── Vào: URL web + chức năng cần test
-│     │     ├── Làm: mở trình duyệt, tự click khám phá web
-│     │     └── Ra:  specs/<tên>-plan.md (danh sách scenario + các bước + kết quả mong đợi)
+│     ├── [1] 🔍 test-design   phân tích yêu cầu
+│     │     ├── Vào:  requirement + (tùy chọn) tự khám phá web bằng trình duyệt
+│     │     └── Ra:   spec-review.md, viewpoint.csv, internal-question.md
 │     │
-│     ├── ✍️ generator  (sinh code test)
-│     │     ├── Vào: file kế hoạch trong specs/
-│     │     ├── Làm: chạy thử từng bước trên web thật để chọn locator đúng
-│     │     └── Ra:  tests/<tên>.spec.ts (code test Playwright)
+│     ├── [2] 📝 test-impl     viết test case
+│     │     ├── Vào:  viewpoint.csv + câu trả lời HITL #1
+│     │     ├── Kỹ thuật: phân vùng tương đương, giá trị biên, bảng quyết định, chuyển trạng thái
+│     │     └── Ra:   test-cases.csv, test-data.md
 │     │
-│     └── 🩺 healer  (sửa test hỏng)
-│           ├── Vào: test đang fail
-│           ├── Làm: chạy lại, xem lỗi, xem trang web, tìm nguyên nhân
-│           └── Ra:  code test đã sửa, HOẶC đánh dấu test.fixme nếu web có bug thật
+│     ├── [3] ✍️ script-gen    viết code test
+│     │     ├── Vào:  test-cases.csv
+│     │     ├── Làm:  mở web thật để kiểm tra locator rồi mới viết code (Playwright MCP)
+│     │     └── Ra:   tests/pages/*.ts (Page Object), tests/specs/*.spec.ts
+│     │
+│     ├── [4] ▶️ executor      chạy test + phân loại
+│     │     ├── Vào:  bộ test
+│     │     ├── Phân loại test fail:  flaky | script-issue (test sai) | real-bug (web lỗi)
+│     │     └── Ra:   run-results/*.json, triage.md
+│     │
+│     └── [5] 🩺 healer        sửa test sai
+│           ├── Vào:  các test bị gắn nhãn script-issue
+│           ├── Làm:  debug trên trình duyệt thật (Playwright MCP), sửa locator/timing/logic
+│           ├── Luật: KHÔNG đụng real-bug, KHÔNG sửa kết quả mong đợi, tối đa 2 vòng
+│           └── Ra:   code đã sửa, healing-log.md
 │
-├── 🔌 CÔNG CỤ AI DÙNG
-│     ├── Playwright MCP (.mcp.json): cầu nối để AI điều khiển trình duyệt thật
-│     └── Playwright Test: thư viện chạy test, ghi trace, xuất báo cáo
+├── 🔌 CÔNG CỤ
+│     ├── Playwright MCP (.mcp.json): cầu nối để agent điều khiển trình duyệt thật
+│     └── Playwright Test: chạy test, ghi trace, xuất báo cáo
 │
-└── ⚙️ TỰ ĐỘNG HÓA (không phải AI)
-      └── GitHub Actions (CI): mỗi lần push → tự chạy toàn bộ test → báo cáo xanh/đỏ
+└── ⚙️ GITHUB ACTIONS (CI, không phải AI): mỗi lần push tự chạy toàn bộ test
 ```
 
-## 2. Sơ đồ luồng: một vòng làm việc
+## 2. Sơ đồ luồng
 
-> Sơ đồ dưới đây hiển thị được trên GitHub. Trong VS Code cần cài extension
-> *Markdown Preview Mermaid Support* mới xem được hình.
+> Hiển thị được trên GitHub. Trong VS Code cần extension *Markdown Preview Mermaid Support*.
 
 ```mermaid
 flowchart TD
-    A["👤 Người: chọn chức năng cần test<br/>(vd: Đăng nhập SauceDemo)"] --> B["🧑‍🏫 Claude Code: giao việc cho agent"]
-    B --> C["🗺️ planner: khám phá web"]
-    C --> D[/"📄 specs/login-plan.md<br/>kế hoạch test"/]
-    D --> E{"👤 Người duyệt kế hoạch<br/>đủ chưa? đúng chưa?"}
-    E -- "Thiếu / sai" --> C
-    E -- "OK" --> F["✍️ generator: sinh code test"]
-    F --> G[/"🧪 tests/login.spec.ts"/]
-    G --> H["▶️ Chạy test: npx playwright test"]
-    H --> I{"Kết quả?"}
-    I -- "✅ Pass" --> J["🧑‍🏫 Claude Code: refactor (POM),<br/>giải thích, ghi docs/learning"]
-    I -- "❌ Fail" --> K["🩺 healer: điều tra lỗi"]
-    K --> L{"Lỗi do đâu?"}
-    L -- "Test sai<br/>(locator, chờ chưa đủ...)" --> M["healer sửa code test"]
-    M --> H
-    L -- "Web có bug thật" --> N[/"🐞 docs/bug-reports/<br/>+ test.fixme"/]
-    N --> J
-    J --> O["👤 Người làm lại theo mẫu<br/>→ Claude Code review"]
-    O --> P["📦 git commit"]
-    P --> Q["⚙️ GitHub Actions (CI)<br/>tự chạy test khi push"]
+    R[/"📄 requirement<br/>(hoặc khám phá web)"/] --> TD["[1] 🔍 test-design"]
+    TD --> A1[/"spec-review.md<br/>viewpoint.csv<br/>internal-question.md"/]
+    A1 --> H1{"⏸ HITL #1<br/>Người trả lời câu hỏi"}
+    H1 --> TI["[2] 📝 test-impl"]
+    TI --> A2[/"test-cases.csv<br/>test-data.md"/]
+    A2 --> H2{"⏸ HITL #2<br/>Người duyệt test case"}
+    H2 -- "Cần sửa" --> TI
+    H2 -- "Duyệt" --> SG["[3] ✍️ script-gen<br/>+ Playwright MCP"]
+    SG --> A3[/"tests/pages/*.ts<br/>tests/specs/*.spec.ts"/]
+    A3 --> EX["[4] ▶️ executor"]
+    EX --> A4[/"triage.md"/]
+    A4 --> Q{"Phân loại"}
+    Q -- "script-issue" --> HE["[5] 🩺 healer<br/>+ Playwright MCP"]
+    HE -- "đã sửa, chạy lại<br/>(tối đa 2 vòng)" --> EX
+    HE -- "quá 2 vòng" --> MF[/"needs-manual-fix"/]
+    Q -- "flaky" --> FL[/"ghi nhận, không chặn"/]
+    Q -- "real-bug" --> H3{"⏸ HITL #3<br/>Người duyệt bug"}
+    Q -- "tất cả pass" --> RTM
+    H3 --> DF[/"defects.md<br/>(bug report)"/]
+    DF --> RTM[/"rtm-report.html<br/>ma trận truy vết"/]
+    RTM --> DONE(["✅ Xong → commit → CI"])
 ```
 
 ## 3. Bảng phân vai
 
-| Vai | Loại | Đầu vào | Đầu ra | Dùng ở bài |
+| Bước | Vai | Đầu vào | Đầu ra | Công cụ đặc biệt |
 |---|---|---|---|---|
-| 👤 Người (QC) | Con người | Mục tiêu test | Quyết định, duyệt, làm lại | Tất cả |
-| 🧑‍🏫 Claude Code | AI trợ lý chính | Yêu cầu của người | Hướng dẫn, review, refactor, tài liệu, commit | Tất cả |
-| 🗺️ planner | AI agent | URL + chức năng | `specs/*.md` | Bài 2 |
-| ✍️ generator | AI agent | `specs/*.md` | `tests/*.spec.ts` | Bài 3 |
-| 🩺 healer | AI agent | Test đang fail | Test đã sửa / `test.fixme` | Bài 5 |
-| 🔌 Playwright MCP | Công cụ | Lệnh từ AI | Thao tác trên trình duyệt | Bài 2, 3, 5 |
-| ⚙️ GitHub Actions | Tự động hóa | Code mới push | Kết quả test + báo cáo | Bài 8 |
+| 1 | 🔍 test-design | requirement | spec-review, viewpoint, câu hỏi | Trình duyệt (khám phá web) |
+| ⏸ | 👤 HITL #1 | câu hỏi | `qa/q-and-a.md` | – |
+| 2 | 📝 test-impl | viewpoint + Q&A | test-cases.csv, test-data.md | – |
+| ⏸ | 👤 HITL #2 | test case | duyệt / góp ý | – |
+| 3 | ✍️ script-gen | test-cases.csv | Page Object + spec | Trình duyệt (kiểm tra locator) |
+| 4 | ▶️ executor | bộ test | run-results, triage.md | Playwright CLI |
+| 5 | 🩺 healer | script-issue | code đã sửa, healing-log | Trình duyệt + debug test |
+| ⏸ | 👤 HITL #3 | real-bug | duyệt bug | – |
+| 6 | 🎯 orchestrator | bug đã duyệt | defects.md, rtm-report.html | – |
 
-## 4. Lộ trình các bài và agent tham gia
+## 4. Nơi lưu kết quả của một lần chạy
 
 ```
-Bài 1  Cấu trúc dự án ........................ 🧑‍🏫 Claude Code              ✅ xong
-Bài 2  Lập kế hoạch test SauceDemo ........... 🗺️ planner
-Bài 3  Sinh code test (login, giỏ hàng) ...... ✍️ generator
-Bài 4  Page Object Model (tổ chức code) ...... 🧑‍🏫 Claude Code
-Bài 5  Test hỏng & test chập chờn (flaky) .... 🩺 healer
-Bài 6  Tìm bug & viết bug report ............. 🩺 healer + 👤 Người
-Bài 7  Test API (Restful Booker) ............. 🧑‍🏫 Claude Code
-Bài 8  CI với GitHub Actions ................. ⚙️ GitHub Actions
-Bài 9  Hoàn thiện README & nhật ký dùng AI ... 🧑‍🏫 Claude Code + 👤 Người
+qa-runs/<tên-chức-năng>/          ← mỗi chức năng một thư mục (vd: saucedemo-login)
+  requirement/requirement.md       ← đầu vào
+  spec-review.md                   ← [1]
+  viewpoint.csv                    ← [1]
+  internal-question.md             ← [1]
+  qa/q-and-a.md                    ← HITL #1
+  test-cases.csv, test-data.md     ← [2]
+  run-results/run-*.json           ← [4]
+  triage.md                        ← [4]
+  healing-log.md                   ← [5]
+  defects.md                       ← [6]
+  rtm-report.html                  ← [6]
+tests/                             ← code test dùng chung cả dự án
+  pages/   specs/   data/   fixtures/
+kb/q-and-a-archive.md              ← Q&A tích lũy, dùng lại cho chức năng sau
 ```
 
-## 5. Vì sao vẫn cần người ở giữa?
+## 5. Lộ trình các bài
 
-AI làm nhanh nhưng có thể **sai mà trông vẫn rất đúng**. Người cần chốt ở 3 điểm:
+```
+Bài 1  Cấu trúc dự án ............................ ✅ xong
+Bài 2  Phân tích yêu cầu (test-design) + HITL #1 . 🔍 SauceDemo: Đăng nhập
+Bài 3  Thiết kế test case (test-impl) + HITL #2 .. 📝 EP, BVA, bảng quyết định
+Bài 4  Viết code test (script-gen) ............... ✍️ Page Object Model, locator
+Bài 5  Chạy test & phân loại (executor) .......... ▶️ báo cáo, trace, flaky
+Bài 6  Sửa test hỏng (healer) .................... 🩺 debug, giới hạn vòng sửa
+Bài 7  Bug report + RTM + HITL #3 ................ 🐞 problem_user của SauceDemo
+Bài 8  Chạy trọn pipeline cho chức năng mới ...... 🎯 /qa-orchestrator: Giỏ hàng → Thanh toán
+Bài 9  Test API (Restful Booker) ................. 🔗
+Bài 10 CI GitHub Actions + hoàn thiện README ..... ⚙️
+```
 
-1. **Duyệt kế hoạch test.** AI hay bỏ sót trường hợp biên, hoặc test những thứ không quan trọng.
-2. **Phân biệt "test sai" với "web có bug".** Nếu để healer tự sửa test cho pass, có thể vô tình **che mất bug thật**.
-3. **Review code sinh ra.** Kiểm tra test có thực sự kiểm tra điều cần kiểm tra không, hay chỉ chạy qua mà không có `expect`.
+## 6. Nguyên tắc
+
+1. **Chỉ orchestrator gọi agent.** Agent không gọi nhau, chỉ trao đổi qua file.
+2. **Người chốt ở 3 điểm HITL.** AI có thể sai mà trông vẫn rất đúng.
+3. **Phân biệt "test sai" với "web lỗi".** Healer chỉ sửa test sai, không bao giờ sửa test cho pass để che bug.
+4. **Truy vết đầy đủ:** requirement → AC → viewpoint → test case → code → kết quả → bug.

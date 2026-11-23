@@ -7,7 +7,7 @@
 | Lệnh | Tác dụng |
 |---|---|
 | `npm init playwright@latest -- --lang=ts --browser=chromium --gha` | Tạo khung dự án Playwright: dùng TypeScript, trình duyệt Chromium, kèm file CI cho GitHub Actions |
-| `npx playwright init-agents --loop=claude` | Tạo 3 AI agent của Playwright để dùng với Claude Code |
+| `npx playwright init-agents --loop=claude` | Tạo cấu hình Playwright MCP (`.mcp.json`) + file seed cho AI agent. Sau đó dự án thay 3 agent mặc định bằng pipeline QA 5 agent riêng (xem [sơ đồ](../ai-agent-workflow.md)) |
 | `npx playwright test` | Chạy tất cả test |
 
 - **npm**: công cụ quản lý thư viện của Node.js, dùng để tải, cài và cập nhật thư viện.
@@ -17,17 +17,26 @@
 
 ```
 playwright-ai-qa-portfolio/
-├── .claude/agents/          # Định nghĩa 3 AI agent của Playwright
-│   ├── playwright-test-planner.md     # Lập kế hoạch test (khám phá web, liệt kê scenario)
-│   ├── playwright-test-generator.md   # Sinh code test từ kế hoạch
-│   └── playwright-test-healer.md      # Tự sửa test bị hỏng (khi UI thay đổi)
+├── .claude/
+│   ├── agents/              # 5 AI agent của pipeline QA
+│   │   ├── test-design.md   # [1] Phân tích yêu cầu → viewpoint
+│   │   ├── test-impl.md     # [2] Viết test case + test data
+│   │   ├── script-gen.md    # [3] Viết code test (Page Object Model)
+│   │   ├── executor.md      # [4] Chạy test + phân loại kết quả
+│   │   └── healer.md        # [5] Sửa test viết sai
+│   └── commands/
+│       └── qa-orchestrator.md   # Lệnh /qa-orchestrator điều phối cả pipeline
 ├── .github/workflows/
 │   └── playwright.yml       # CI: GitHub tự chạy test mỗi khi push code
-├── docs/                    # Tài liệu: sổ tay học, test case, bug report, nhật ký dùng AI
-├── specs/                   # Kế hoạch test do AI planner viết (file .md)
-├── tests/                   # File test, đuôi .spec.ts
-│   ├── example.spec.ts      # Test mẫu Playwright tạo sẵn (sẽ xóa sau)
-│   └── seed.spec.ts         # Test "hạt giống": điểm bắt đầu cho AI agent
+├── docs/                    # Tài liệu: sơ đồ AI agent, sổ tay học
+├── kb/q-and-a-archive.md    # Q&A tích lũy, AI dùng lại cho chức năng sau
+├── qa-runs/<feature>/       # Kết quả từng lần chạy pipeline: requirement, test case, triage, bug, RTM
+├── tests/
+│   ├── pages/               # Page Object: mô tả từng trang web
+│   ├── specs/               # File test, đuôi .spec.ts
+│   ├── data/                # Test data (vd: users.ts chứa tài khoản test)
+│   ├── fixtures/            # Phần chuẩn bị dùng chung (vd: trang đã đăng nhập)
+│   └── seed.spec.ts         # Test "hạt giống": điểm bắt đầu để AI agent mở trình duyệt
 ├── .gitignore               # Danh sách file/thư mục KHÔNG đưa lên git
 ├── .mcp.json                # Cấu hình MCP server để AI điều khiển trình duyệt
 ├── package.json             # "Danh sách thư viện" của dự án
@@ -61,7 +70,10 @@ playwright-ai-qa-portfolio/
 | `retries: process.env.CI ? 2 : 0` | Trên CI, test fail thì cho chạy lại tối đa 2 lần. Trên máy mình thì không chạy lại |
 | `workers: process.env.CI ? 1 : undefined` | Trên CI chạy 1 luồng, trên máy mình tự chọn theo số CPU |
 | `reporter: 'html'` | Xuất báo cáo dạng trang web (mở bằng `npx playwright show-report`) |
+| `baseURL: ... 'https://www.saucedemo.com'` | Địa chỉ gốc của web. Trong test chỉ cần `page.goto('/')`. Có thể đổi bằng biến môi trường `BASE_URL` |
+| `testIdAttribute: 'data-test'` | SauceDemo đánh dấu phần tử bằng `data-test="..."`, nên `page.getByTestId('...')` sẽ tìm theo thuộc tính này |
 | `trace: 'on-first-retry'` | Khi test chạy lại lần đầu, ghi **trace** (ảnh từng bước, network, console) để điều tra lỗi |
+| `screenshot: 'only-on-failure'` | Test fail thì tự chụp màn hình, làm bằng chứng cho bug report |
 | `projects: [chromium]` | Chạy trên Chrome desktop. Sau này có thể thêm Firefox, WebKit (Safari), mobile |
 
 ### `tests/*.spec.ts`: file test
@@ -74,10 +86,10 @@ playwright-ai-qa-portfolio/
 
 ### `.mcp.json` và `.claude/agents/`: phần AI
 - **MCP (Model Context Protocol)**: giao thức giúp AI (Claude) dùng được công cụ bên ngoài, ở đây là điều khiển trình duyệt thật.
-- **AI agent**: AI được giao một vai trò cụ thể, có công cụ riêng và tự làm nhiều bước:
-  - `planner`: mở web, tự click khám phá, viết kế hoạch test vào `specs/`
-  - `generator`: đọc kế hoạch, sinh code test vào `tests/`
-  - `healer`: chạy test, test nào fail vì UI đổi thì tự tìm nguyên nhân và sửa
+- **AI agent**: AI được giao một vai trò cụ thể, có công cụ riêng và tự làm nhiều bước. Dự án có 5 agent: test-design → test-impl → script-gen → executor → healer.
+- **Orchestrator** (`/qa-orchestrator`): "trưởng nhóm" gọi từng agent theo thứ tự và dừng ở 3 điểm cho người duyệt (HITL).
+- **HITL (Human-in-the-loop)**: điểm người kiểm tra và duyệt kết quả của AI trước khi đi tiếp.
+- Chi tiết xem [Sơ đồ làm việc của AI agent](../ai-agent-workflow.md).
 
 ## 4. Lệnh hay dùng
 
