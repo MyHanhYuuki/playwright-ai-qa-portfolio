@@ -30,6 +30,10 @@ specs/       AI-generated test plans (planner agent)
 tests/       Playwright tests
 ```
 
+## Learning notes (Vietnamese)
+Step-by-step notes written while building this project with an AI agent:
+1. [Cấu trúc dự án Playwright](docs/learning/01-cau-truc-du-an.md)
+
 ## Progress
 - [x] Project setup (Playwright 1.65, Chromium, AI agents)
 - [ ] SauceDemo: test plan & test cases
