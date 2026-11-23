@@ -30,6 +30,9 @@ specs/       AI-generated test plans (planner agent)
 tests/       Playwright tests
 ```
 
+## AI agent workflow
+How the AI agents (planner / generator / healer) and the human work together: [docs/ai-agent-workflow.md](docs/ai-agent-workflow.md)
+
 ## Learning notes (Vietnamese)
 Step-by-step notes written while building this project with an AI agent:
 1. [Cấu trúc dự án Playwright](docs/learning/01-cau-truc-du-an.md)
