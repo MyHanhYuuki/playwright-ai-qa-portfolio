@@ -16,6 +16,7 @@ npm run test:smoke     # chỉ test @smoke
 npm run test:ui        # UI mode
 npm run test:evidence  # chạy kèm evidence: ảnh khoanh đỏ + ghi chú + video → qa-runs/<feature>/evidence/
 npm run report         # mở báo cáo HTML
+npm run rtm            # tạo RTM (rtm.md + rtm-report.html) cho mỗi qa-runs/<feature>/
 ```
 
 ## Quy ước viết test

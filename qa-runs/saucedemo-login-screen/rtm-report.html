@@ -1,0 +1,79 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RTM saucedemo-login-screen</title><style>
+:root{--bg:#fff;--fg:#1a1a1a;--mute:#666;--line:#ddd;--ok:#1a7f37;--okbg:#dafbe1;--ng:#cf222e;--ngbg:#ffebe9;--na:#9a6700;--nabg:#fff8c5}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1117;--fg:#e6edf3;--mute:#8b949e;--line:#30363d;--okbg:#12261e;--ngbg:#3c1618;--nabg:#3a2e00;--ok:#3fb950;--ng:#f85149;--na:#d29922}}
+body{background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,sans-serif;margin:0 auto;padding:16px;max-width:1200px}
+h1{font-size:22px}h2{font-size:17px;margin-top:28px}.mute{color:var(--mute)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.card{border:1px solid var(--line);border-radius:8px;padding:10px}.card b{display:block;font-size:22px}
+.warn{border:2px solid var(--na);background:var(--nabg);border-radius:8px;padding:8px 12px}
+.wrap{overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:color-mix(in srgb,var(--line) 40%,transparent)}
+.ok{background:var(--okbg);color:var(--ok);font-weight:600}.ng{background:var(--ngbg);color:var(--ng);font-weight:600}.na{background:var(--nabg);color:var(--na);font-weight:600}
+td:first-child,.nw{white-space:nowrap}
+a{color:inherit}</style></head><body>
+<h1>RTM: saucedemo-login-screen</h1>
+<p class="mute">Ma trận truy vết AC → viewpoint → test case → kết quả → bug · kết quả từ run-20261124-150906.json · tạo bởi <code>npm run rtm</code></p>
+
+<div class="cards">
+<div class="card">AC có test case<b>7/7</b></div>
+<div class="card">AC đạt<b>5/7</b></div>
+<div class="card">Test case Passed<b>31/33</b></div>
+<div class="card">Test case Failed<b>2</b></div>
+<div class="card">Skipped · Flaky · Not run<b>0 · 0 · 0</b></div>
+<div class="card">Bug đang mở<b>2</b></div></div>
+<p class="mute">Kết quả so với expected của test case. Test bug đã biết dùng <code>test.fail()</code>: Playwright ghi "passed", RTM ghi Failed.</p>
+<h2>Theo AC</h2><div class="wrap"><table><tr><th>AC</th><th>Yêu cầu</th><th>Viewpoint</th><th>TC</th><th>Passed</th><th>Failed</th><th>Khác</th><th>Bug</th><th>Trạng thái</th></tr>
+<tr><td>AC-1</td><td>Trang đăng nhập hiển thị ô Username, ô Password (nhập ẩn ký tự) và nút Login.</td><td>2 (+1 ngoài phạm vi)</td><td>2</td><td>2</td><td>0</td><td>0</td><td class="nw">–</td><td class="ok">✅ Đạt</td></tr>
+<tr><td>AC-2</td><td>Nhập đúng username và password hợp lệ, bấm Login thì chuyển tới trang danh sách sản phẩm.</td><td>6 (+2 ngoài phạm vi)</td><td>9</td><td>9</td><td>0</td><td>0</td><td class="nw">–</td><td class="ok">✅ Đạt</td></tr>
+<tr><td>AC-3</td><td>Bỏ trống Username hoặc Password thì hiển thị thông báo lỗi tương ứng và không đăng nhập.</td><td>3</td><td>5</td><td>4</td><td>1</td><td>0</td><td class="nw"><a href="defects.md#bug-01-login-báo-thiếu-một-ô-nhưng-cả-hai-ô-đều-bị-đánh-dấu-lỗi">BUG-01</a></td><td class="ng">❌ Chưa đạt (có bug)</td></tr>
+<tr><td>AC-4</td><td>Nhập sai username hoặc password thì hiển thị thông báo lỗi và không đăng nhập.</td><td>4 (+1 ngoài phạm vi)</td><td>9</td><td>9</td><td>0</td><td>0</td><td class="nw">–</td><td class="ok">✅ Đạt</td></tr>
+<tr><td>AC-5</td><td>Tài khoản bị khóa thì không đăng nhập được và hiển thị thông báo cho biết tài khoản bị khóa.</td><td>2</td><td>2</td><td>2</td><td>0</td><td>0</td><td class="nw">–</td><td class="ok">✅ Đạt</td></tr>
+<tr><td>AC-6</td><td>Người dùng chưa đăng nhập không truy cập được các trang bên trong (vd: trang sản phẩm).</td><td>3 (+1 ngoài phạm vi)</td><td>6</td><td>5</td><td>1</td><td>0</td><td class="nw"><a href="defects.md#bug-02-login-tự-tạo-cookie-là-vào-được-trang-bên-trong-không-cần-đăng-nhập">BUG-02</a></td><td class="ng">❌ Chưa đạt (có bug)</td></tr>
+<tr><td>AC-7</td><td>Người dùng đã đăng nhập có thể đăng xuất và quay về trang đăng nhập.</td><td>3</td><td>3</td><td>3</td><td>0</td><td>0</td><td class="nw">–</td><td class="ok">✅ Đạt</td></tr>
+</table></div>
+<h2>Chi tiết</h2><div class="wrap"><table><tr><th>AC</th><th>Viewpoint</th><th>Test case</th><th>Kỹ thuật</th><th>Tự động</th><th>Kết quả</th><th>Bug</th></tr>
+<tr><td>AC-1</td><td>TVP-001</td><td><a href="evidence/all-cases/TC-001/README.md">TC-001</a> UI: trang đăng nhập hiển thị đủ ô Username, Password và nút Login</td><td>-</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-1</td><td>TVP-002</td><td><a href="evidence/all-cases/TC-002/README.md">TC-002</a> UI: ô Password ẩn ký tự khi nhập</td><td>-</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-2</td><td>TVP-003</td><td><a href="evidence/all-cases/TC-003/README.md">TC-003</a> Happy path: standard_user đăng nhập thành công</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-2</td><td>TVP-004</td><td><a href="evidence/all-cases/TC-004/README.md">TC-004</a> Đăng nhập bằng phím Enter</td><td>-</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-2</td><td>TVP-005</td><td><a href="evidence/all-cases/TC-005/README.md">TC-005</a> User hợp lệ problem_user đăng nhập được</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-2</td><td>TVP-005</td><td><a href="evidence/all-cases/TC-006/README.md">TC-006</a> User hợp lệ performance_glitch_user đăng nhập được (chờ tối đa 10 giây)</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-2</td><td>TVP-005</td><td><a href="evidence/all-cases/TC-007/README.md">TC-007</a> User hợp lệ error_user đăng nhập được</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-2</td><td>TVP-005</td><td><a href="evidence/all-cases/TC-008/README.md">TC-008</a> User hợp lệ visual_user đăng nhập được</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-2</td><td>TVP-017</td><td><a href="evidence/all-cases/TC-029/README.md">TC-029</a> Đăng xuất rồi đăng nhập lại thành công</td><td>State Transition</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-2</td><td>TVP-018</td><td><a href="evidence/all-cases/TC-030/README.md">TC-030</a> Thử lại sau khi lỗi: thông báo cập nhật, nhập đúng thì vào được</td><td>State Transition</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-2</td><td>TVP-019</td><td><a href="evidence/all-cases/TC-031/README.md">TC-031</a> Tải lại trang vẫn giữ phiên đăng nhập</td><td>-</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-3</td><td>TVP-006</td><td><a href="evidence/all-cases/TC-009/README.md">TC-009</a> Bảng quyết định R1: trống Username + trống Password</td><td>Decision Table</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-3</td><td>TVP-006</td><td><a href="evidence/all-cases/TC-010/README.md">TC-010</a> Bảng quyết định R2: có Username + trống Password</td><td>Decision Table</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-3</td><td>TVP-006</td><td><a href="evidence/all-cases/TC-011/README.md">TC-011</a> Bảng quyết định R3: trống Username + có Password</td><td>Decision Table</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-3</td><td>TVP-012</td><td><a href="evidence/all-cases/TC-022/README.md">TC-022</a> Đóng thông báo lỗi bằng nút X</td><td>-</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-3</td><td>TVP-016</td><td><a href="evidence/all-cases/TC-028/README.md">TC-028</a> Chỉ ô bị thiếu mới bị đánh dấu lỗi (cả 2 chiều)</td><td>-</td><td>automatable</td><td class="ng">Failed</td><td class="nw"><a href="defects.md#bug-01-login-báo-thiếu-một-ô-nhưng-cả-hai-ô-đều-bị-đánh-dấu-lỗi">BUG-01</a></td></tr>
+<tr><td>AC-4</td><td>TVP-007</td><td><a href="evidence/all-cases/TC-012/README.md">TC-012</a> Sai mật khẩu</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-4</td><td>TVP-007</td><td><a href="evidence/all-cases/TC-013/README.md">TC-013</a> Username không tồn tại</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-4</td><td>TVP-007</td><td><a href="evidence/all-cases/TC-014/README.md">TC-014</a> Sai cả username và mật khẩu</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-4</td><td>TVP-008</td><td><a href="evidence/all-cases/TC-015/README.md">TC-015</a> Username viết hoa bị từ chối</td><td>Error Guessing</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-4</td><td>TVP-008</td><td><a href="evidence/all-cases/TC-016/README.md">TC-016</a> Username có khoảng trắng đầu bị từ chối</td><td>Error Guessing</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-4</td><td>TVP-008</td><td><a href="evidence/all-cases/TC-017/README.md">TC-017</a> Mật khẩu thừa khoảng trắng cuối bị từ chối</td><td>Error Guessing</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-4</td><td>TVP-008</td><td><a href="evidence/all-cases/TC-018/README.md">TC-018</a> Mật khẩu viết hoa bị từ chối</td><td>Error Guessing</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-4</td><td>TVP-009</td><td><a href="evidence/all-cases/TC-019/README.md">TC-019</a> Username rất dài (1000 ký tự) không làm lỗi trang</td><td>Error Guessing</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-4</td><td>TVP-018</td><td><a href="evidence/all-cases/TC-030/README.md">TC-030</a> Thử lại sau khi lỗi: thông báo cập nhật, nhập đúng thì vào được</td><td>State Transition</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-5</td><td>TVP-010</td><td><a href="evidence/all-cases/TC-020/README.md">TC-020</a> Tài khoản bị khóa không đăng nhập được</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-5</td><td>TVP-011</td><td><a href="evidence/all-cases/TC-021/README.md">TC-021</a> Tài khoản bị khóa + sai mật khẩu không lộ trạng thái khóa</td><td>Decision Table</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-6</td><td>TVP-013</td><td><a href="evidence/all-cases/TC-023/README.md">TC-023</a> Chưa đăng nhập mở thẳng /inventory.html bị chặn</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-6</td><td>TVP-013</td><td><a href="evidence/all-cases/TC-024/README.md">TC-024</a> Chưa đăng nhập mở thẳng /cart.html bị chặn</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-6</td><td>TVP-013</td><td><a href="evidence/all-cases/TC-025/README.md">TC-025</a> Chưa đăng nhập mở thẳng /checkout-step-one.html bị chặn</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-6</td><td>TVP-015</td><td><a href="evidence/all-cases/TC-027/README.md">TC-027</a> Đăng xuất rồi bấm Back không xem lại được trang sản phẩm</td><td>State Transition</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-6</td><td>TVP-013</td><td><a href="evidence/all-cases/TC-032/README.md">TC-032</a> Chưa đăng nhập mở thẳng trang chi tiết sản phẩm bị chặn</td><td>EP</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-6</td><td>TVP-020</td><td><a href="evidence/all-cases/TC-033/README.md">TC-033</a> Cookie phiên tự tạo không được vào trang bên trong</td><td>Error Guessing</td><td>automatable</td><td class="ng">Failed</td><td class="nw"><a href="defects.md#bug-02-login-tự-tạo-cookie-là-vào-được-trang-bên-trong-không-cần-đăng-nhập">BUG-02</a></td></tr>
+<tr><td>AC-7</td><td>TVP-014</td><td><a href="evidence/all-cases/TC-026/README.md">TC-026</a> Đăng xuất về trang đăng nhập và xóa phiên</td><td>State Transition</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-7</td><td>TVP-015</td><td><a href="evidence/all-cases/TC-027/README.md">TC-027</a> Đăng xuất rồi bấm Back không xem lại được trang sản phẩm</td><td>State Transition</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+<tr><td>AC-7</td><td>TVP-017</td><td><a href="evidence/all-cases/TC-029/README.md">TC-029</a> Đăng xuất rồi đăng nhập lại thành công</td><td>State Transition</td><td>automatable</td><td class="ok">Passed</td><td class="nw">–</td></tr>
+</table></div>
+<h2>Viewpoint ngoài phạm vi</h2><div class="wrap"><table><tr><th>Viewpoint</th><th>AC</th><th>Nội dung</th><th>Nguồn quyết định</th></tr>
+<tr><td>TVP-021</td><td>AC-2</td><td>Hiệu năng: thời gian đăng nhập trong ngưỡng chấp nhận</td><td>O-14;Q5;IMP-03</td></tr>
+<tr><td>TVP-022</td><td>AC-1</td><td>Accessibility: ô nhập có label, có autocomplete, điều hướng được bằng bàn phím</td><td>O-01;Q10;IMP-04</td></tr>
+<tr><td>TVP-023</td><td>AC-6</td><td>Phiên hết hạn sau 10 phút thì phải đăng nhập lại</td><td>O-12;Q9</td></tr>
+<tr><td>TVP-024</td><td>AC-2</td><td>Đã đăng nhập mở lại trang / thì tự chuyển vào trang sản phẩm</td><td>O-23;Q13;IMP-06</td></tr>
+<tr><td>TVP-025</td><td>AC-4</td><td>Đăng nhập lỗi thì ô Password được xóa trắng</td><td>O-10;Q7</td></tr>
+</table></div></body></html>
