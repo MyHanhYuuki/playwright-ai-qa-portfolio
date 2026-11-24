@@ -1,7 +1,13 @@
 # Playwright AI QA Portfolio 🎭🤖
 
+[![Playwright Tests](https://github.com/MyHanhYuuki/playwright-ai-qa-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/MyHanhYuuki/playwright-ai-qa-portfolio/actions/workflows/playwright.yml)
+![Playwright](https://img.shields.io/badge/Playwright-1.65-2EAD33?logo=playwright)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+
 End-to-end & API test automation with **Playwright + TypeScript**, driven by an **AI agent QA pipeline**
 built on Claude Code subagents + **Playwright MCP** (agents work on a real browser).
+
+📋 **Start here:** [Project overview & test plan (Vietnamese)](docs/tong-quan-du-an.md): goals, tools, systems under test, scope, roadmap, deliverables.
 
 ## AI agent QA pipeline
 ```
@@ -35,10 +41,12 @@ Run the whole pipeline in Claude Code: `/qa-orchestrator <feature>`
 ```bash
 npm ci
 npx playwright install chromium
-npx playwright test          # run all tests
-npx playwright test --ui     # interactive UI mode
-npx playwright show-report   # open HTML report
+npm test                     # run all tests
+npm run test:smoke           # smoke check only (site is up)
+npm run test:ui              # interactive UI mode
+npm run report               # open HTML report
 ```
+Optional environment variables: see [.env.example](.env.example).
 
 ## Project structure
 ```
@@ -49,7 +57,12 @@ kb/                  Q&A archive reused across features
 docs/                workflow diagrams, learning notes
 ```
 
+## AI usage log
+How AI was used and **controlled**: what it did, where it was wrong, how it was verified: [docs/ai-log.md](docs/ai-log.md)
+
 ## Learning notes (Vietnamese)
+📖 Glossary: [docs/thuat-ngu.md](docs/thuat-ngu.md)
+
 Step-by-step notes written while building this project with an AI agent:
 0. [Lời dặn trước khi bắt đầu](docs/learning/00-loi-dan-truoc-khi-bat-dau.md)
 1. [Cấu trúc dự án Playwright](docs/learning/01-cau-truc-du-an.md)

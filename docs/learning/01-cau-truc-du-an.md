@@ -101,6 +101,25 @@ playwright-ai-qa-portfolio/
 - **HITL (Human-in-the-loop)**: điểm người kiểm tra và duyệt kết quả của AI trước khi đi tiếp.
 - Chi tiết xem [Sơ đồ làm việc của AI agent](../ai-agent-workflow.md).
 
+### Commit và push: khác nhau thế nào, khi nào nên push?
+| | Commit | Push |
+|---|---|---|
+| Là gì | Lưu một mốc thay đổi **trên máy mình** | Đẩy các commit **lên GitHub** |
+| Ai thấy | Chỉ mình | Mọi người (repo public) |
+| Kích hoạt CI | Không | Có, GitHub tự chạy test |
+
+**Nên push khi:**
+- Thay đổi đã **hoàn chỉnh và chạy được**, nên không đẩy code đang dở.
+- Cần **CI kiểm chứng trên môi trường thật** (Linux), không chỉ trên máy mình.
+- Muốn **sao lưu**. Máy hỏng hay máy dùng chung thì việc trên máy dễ mất.
+- Muốn người khác (đồng đội, nhà tuyển dụng) **thấy tiến độ**.
+
+**Chưa nên push khi:**
+- Còn đang dở, test đang đỏ, hoặc chưa quét thông tin nhạy cảm.
+- Muốn tự xem lại hoặc sửa commit. Sửa commit **chưa push** thì dễ, sửa commit **đã push** thì phải ghi đè lịch sử.
+
+> Thói quen tốt: **commit thường xuyên, push theo từng cụm việc đã xong**. Mỗi lần push là một lần CI chạy, nên gom các commit liên quan rồi push một lần.
+
 ## 4. Lệnh hay dùng
 
 | Lệnh | Dùng khi |
