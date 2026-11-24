@@ -14,10 +14,23 @@ Dự án portfolio học test automation bằng **Playwright + TypeScript** vớ
 npm test               # chạy toàn bộ test
 npm run test:smoke     # chỉ test @smoke
 npm run test:ui        # UI mode
-npm run test:evidence  # chạy kèm evidence: ảnh khoanh đỏ + ghi chú + video → qa-runs/<feature>/evidence/
+npm run test:run -- <feature>       # chạy test 1 feature, lưu kết quả vào qa-runs/<feature>/run-results/
+npm run test:evidence -- <feature>  # chạy kèm evidence: ảnh khoanh đỏ + ghi chú + video → qa-runs/<feature>/evidence/
+npm run rtm -- <feature>            # tạo RTM (rtm.md + rtm-report.html) của feature
 npm run report         # mở báo cáo HTML
-npm run rtm            # tạo RTM (rtm.md + rtm-report.html) cho mỗi qa-runs/<feature>/
 ```
+Thêm `-g "TC-001|TC-004"` để chạy một nhóm test. Mọi lệnh có `<feature>` chỉ đụng tới feature đó.
+
+## Bắt đầu chức năng mới (màn hình mới)
+Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `review-final.md`).
+1. Đặt tên `<feature>` theo màn hình, vd `saucedemo-cart-checkout`. **Tên này dùng chung** cho thư mục `qa-runs/<feature>/` và file `tests/specs/<feature>.spec.ts` (evidence lấy thư mục theo tên spec).
+2. Tạo `qa-runs/<feature>/requirement/requirement.md` theo mẫu SD-101. AC **phải** viết dạng `- **AC-n**: …` (RTM đọc theo dạng này).
+3. Chạy `/qa-orchestrator <feature>`, đi qua từng bước và 3 điểm HITL.
+4. Đánh số:
+   - `TC-xxx`, `TVP-xxx`, `Qn`, `O-xx`, `IMP-xx`: **riêng từng feature**, bắt đầu từ 001 / 1.
+   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, feature sau bắt đầu từ BUG-05).
+5. Bug đã biết: ghi `BUG-xx` vào cột `notes` của TC (RTM đọc cột này), thêm vào `tests/data/bugs.ts`, test dùng `test.fail()` + tag `@BUG-xx`.
+6. Dữ liệu dùng chung: thêm vào `tests/data/users.ts`, `messages.ts` (nhóm mới cho feature), không tạo file trùng.
 
 ## Quy ước viết test
 - Locator: `getByRole` → `getByLabel`/`getByPlaceholder` → `getByTestId` (thuộc tính `data-test`) → CSS. Không dùng XPath, không dùng `.nth()` cố định.

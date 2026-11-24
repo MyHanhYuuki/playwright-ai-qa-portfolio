@@ -45,15 +45,19 @@ npx playwright install chromium
 npm test                     # run all tests
 npm run test:smoke           # smoke check only (site is up)
 npm run test:ui              # interactive UI mode
+npm run test:run -- saucedemo-login-screen       # run one feature, save results to qa-runs/<feature>/run-results/
+npm run test:evidence -- saucedemo-login-screen  # screenshots (red boxes + notes) + video per test case
+npm run rtm -- saucedemo-login-screen            # build the traceability matrix (rtm.md + rtm-report.html)
 npm run report               # open HTML report
 ```
 Optional environment variables: see [.env.example](.env.example).
 
 ## Project structure
 ```
-.claude/agents/      5 QA agents          .claude/commands/   /qa-orchestrator
+.claude/agents/      5 QA agents + qa-reviewer   .claude/commands/   /qa-orchestrator
 qa-runs/<feature>/   requirement, viewpoints, test cases, triage, defects, RTM
-tests/               pages/ (POM) · specs/ · data/ · fixtures/
+tests/               pages/ (POM) · specs/ · data/ · fixtures/ · utils/ (evidence)
+scripts/             run-tests · run-evidence · build-rtm (Node, no shell)
 knowledge-base/                  Q&A archive reused across features
 docs/                workflow diagrams, learning notes
 ```

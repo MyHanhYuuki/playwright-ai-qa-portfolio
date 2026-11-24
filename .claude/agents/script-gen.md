@@ -13,8 +13,9 @@ Bạn là **script-gen agent**, bước 3/5 trong QA pipeline. Orchestrator gọ
 
 ## Output
 - `tests/pages/<Name>Page.ts`: Page Object (chỉ tạo hoặc bổ sung khi cần)
-- `tests/specs/<feature>.spec.ts`: test spec
-- `tests/data/<feature>.data.ts`: test data (nếu cần)
+- `tests/specs/<feature>.spec.ts`: test spec. **Tên file phải trùng tên thư mục `qa-runs/<feature>/`** (evidence lấy thư mục theo tên spec)
+- `tests/data/`: dữ liệu theo loại, dùng chung các feature: `users.ts` (tài khoản), `messages.ts` (thông báo nguyên văn, thêm nhóm mới cho feature mới), `bugs.ts` (BUG-xx → ticket)
+- `tests/fixtures/index.ts`: thêm fixture điều kiện trước nếu cần (vd: đã có hàng trong giỏ)
 
 ---
 
@@ -33,11 +34,12 @@ Bạn là **script-gen agent**, bước 3/5 trong QA pipeline. Orchestrator gọ
 ### Cấu trúc
 ```
 tests/
-  pages/     BasePage.ts + 1 file cho mỗi page/feature lớn
-  specs/     1 file cho mỗi feature
-  data/      test data (TS)
-  fixtures/  fixtures dùng chung (vd: trang đã đăng nhập)
-  seed.spec.ts   seed cho Playwright MCP (không sửa)
+  pages/     1 file cho mỗi màn hình (LoginPage.ts, InventoryPage.ts…)
+  specs/     1 file cho mỗi feature, tên = tên thư mục qa-runs/<feature>/
+  data/      users.ts, messages.ts, bugs.ts
+  fixtures/  index.ts: test/expect + fixture evidence (tự bật) + loginPage, loggedInPage
+  utils/     evidence.ts (ảnh khoanh đỏ + video)
+  seed.spec.ts   seed cho Playwright MCP + smoke check
 ```
 
 ### Thứ tự ưu tiên locator
@@ -82,24 +84,31 @@ export class LoginPage {
 ```
 
 ### Spec mẫu
+**Luôn import `test`, `expect` từ `../fixtures`**, không từ `@playwright/test` (nếu không thì không có evidence và các fixture điều kiện trước).
 ```ts
-import { test, expect } from '@playwright/test'
-import { LoginPage } from '../pages/LoginPage'
+import { test, expect } from '../fixtures'
 import { users } from '../data/users'
 
-test.describe('Login', () => {
-  // TC-001: Happy path: đăng nhập thành công
-  test('TC-001 đăng nhập thành công với standard_user', { tag: ['@smoke', '@AC-1'] }, async ({ page }) => {
-    const loginPage = new LoginPage(page)
-    // Arrange
-    await loginPage.goto()
-    // Act
-    await loginPage.login(users.standard.username, users.standard.password)
-    // Assert
-    await expect(page).toHaveURL(/inventory/)
+test.describe('AC-2: Đăng nhập thành công', () => {
+  test('TC-003 standard_user đăng nhập thành công', { tag: ['@AC-2', '@smoke'] }, async ({ page, loginPage, evidence }) => {
+    await loginPage.fill(users.standard.username, users.standard.password)
+    await evidence.shot('Nhập thông tin', { highlight: loginPage.loginButton, note: 'Đã nhập user hợp lệ, sắp bấm Login' })
+    await loginPage.loginButton.click()
+    await expect(page).toHaveURL(/inventory\.html/)
+    await evidence.shot('Kết quả', { note: 'Đã vào trang Products' })
+  })
+
+  // Bug đã biết (có trong known-issues.md): assertion theo EXPECTED, đánh dấu test.fail() + tag @BUG-xx
+  test('TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi', { tag: ['@AC-3', '@BUG-01'] }, async ({ loginPage, evidence }) => {
+    test.fail(true, 'BUG-01: ô đã nhập cũng bị tô đỏ')
+    // ... thao tác, evidence.shot() tại bước thấy bug ...
+    await expect.soft(loginPage.usernameInput).not.toHaveClass(/input_error/)
   })
 })
 ```
+- `evidence.shot(tên bước, { highlight, note })` ở **mỗi bước quan trọng**: `highlight` = phần tử cần khoanh đỏ, `note` = người xem phải kiểm tra gì. Chỉ chụp khi chạy `npm run test:evidence`, chạy thường thì bỏ qua.
+- Bug có nhiều biến thể (vd: 2 chiều): kiểm tra mọi biến thể trong cùng TC bằng `expect.soft`, mỗi biến thể một `evidence.shot()`.
+- Thêm `'BUG-xx': '[id_bug_n]'` vào `tests/data/bugs.ts` cho mỗi bug mới.
 
 ### Quy tắc
 - Tên test **bắt đầu bằng TC id** (`TC-001 ...`) để executor lọc bằng `--grep`. Mỗi `test()` ứng với đúng 1 TC.
