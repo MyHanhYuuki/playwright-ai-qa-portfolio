@@ -10,7 +10,7 @@
 |---|---|---|---|---|---|
 | 1 | 2026-11-24 | Thiết kế pipeline AI agent | Đề xuất ghép pipeline v1 với 3 agent của Playwright | Bản ghép đầu tiên **trùng vai và lệch định dạng** | Yêu cầu AI cân nhắc lại hiệu quả, chọn phương án ghép có chọn lọc |
 | 2 | 2026-11-24 | Script hướng dẫn agent | Viết hướng dẫn cho agent `script-gen` | Hướng dẫn gọi `npx tsc` khi dự án **chưa cài TypeScript** | Phát hiện khi chạy thử, sửa hướng dẫn |
-| 3 | 2026-11-24 | Tối ưu CI | Phân tích thời gian từng bước, đề xuất cache | – | Duyệt thay đổi, đo lại: **11 phút 8 giây → 36 giây** |
+| 3 | 2026-11-24 | Tối ưu CI | Phân tích thời gian từng bước, đề xuất cache | **Kết luận vội từ một lần đo**: lần sau bước apt mất 5,5 phút | Ghi nhận, để Bài 10 đo nhiều lần rồi mới chốt số liệu |
 | 4 | 2026-11-24 | Khám phá web (Bài 2) | Khám phá SauceDemo bằng trình duyệt, khoảng 20 tình huống | Lần đầu **báo nhầm 3 user không đăng nhập được** (script-issue) | Chạy lại với phiên sạch, xác nhận không phải bug |
 | 5 | 2026-11-24 | Seed test | – | Test seed mặc định **rỗng nhưng vẫn pass**, làm CI xanh giả | Đổi thành smoke check, **chứng minh test fail được** khi đổi URL sai |
 

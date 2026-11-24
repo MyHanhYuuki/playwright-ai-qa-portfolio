@@ -6,13 +6,13 @@
 ## 1. Mục đích
 1. **Học và chứng minh** khả năng tự thiết kế, xây dựng test automation bằng **Playwright**, có **AI agent** hỗ trợ.
 2. Làm theo **quy trình QA chuẩn**: phân tích yêu cầu → thiết kế test → viết code → chạy → phân loại lỗi → báo bug → truy vết. Không phải kiểu "AI cứ thế sinh code".
-3. Tạo **portfolio** công khai trên GitHub để giới thiệu năng lực.
 
 ## 2. Thông tin chung
 | Mục | Nội dung |
 |---|---|
 | Người thực hiện | MyHanhYuuki (QC tester) |
-| Vai trò AI | Claude Code: hướng dẫn, làm mẫu, chạy pipeline agent. Người duyệt mọi kết quả |
+| Vai trò AI | Claude Code: hướng dẫn, làm mẫu, chạy pipeline agent |
+| Vai trò người thực hiện | **Kiểm tra và duyệt mọi kết quả AI tạo ra** trước khi dùng: trả lời câu hỏi, duyệt test case, xác nhận bug, quyết định commit/push |
 | Bắt đầu | 2026-11-23 · Dự kiến khoảng 6 tuần |
 | Repo | https://github.com/MyHanhYuuki/playwright-ai-qa-portfolio |
 | Phiên bản trước | [learn-ai-automation-test](https://github.com/MyHanhYuuki/learn-ai-automation-test) (v1: pipeline QA với form đăng nhập đơn giản) |
@@ -59,7 +59,7 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | # | Hạng mục | Kết quả đầu ra | Trạng thái |
 |---|---|---|---|
 | 0 | Lời dặn, nguyên tắc làm việc | `docs/learning/00-…` | ✅ |
-| 1 | Dựng dự án, CI, pipeline AI agent | Cấu trúc repo, CI 36 giây | ✅ |
+| 1 | Dựng dự án, CI, pipeline AI agent | Cấu trúc repo, CI chạy tự động | ✅ |
 | 2 | Phân tích yêu cầu: Đăng nhập | spec-review, viewpoint, câu hỏi | 🔄 Chờ HITL #1 |
 | 3 | Thiết kế test case: Đăng nhập | test-cases.csv, test-data | ⏳ |
 | 4 | Viết code test (POM) | `tests/pages`, `tests/specs` | ⏳ |
@@ -95,12 +95,12 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | Rủi ro | Cách xử lý |
 |---|---|
 | Web demo thay đổi giao diện hoặc tạm ngưng | Locator ổn định, healer sửa script, chạy lại sau |
-| AI sinh kết quả sai nhưng trông hợp lý | 3 điểm người duyệt (HITL), review mọi output |
+| AI sinh kết quả sai nhưng trông hợp lý | 3 điểm người duyệt (HITL). Người thực hiện tự kiểm tra lại mọi kết quả AI |
 | Test chập chờn do mạng | Chờ theo điều kiện, retry chỉ trên CI, phân loại flaky riêng |
 | Chi phí token AI | Làm theo từng chức năng nhỏ, không chạy lại cả pipeline khi không cần |
 
 ## 12. Số liệu nổi bật (cập nhật dần)
 | Chỉ số | Giá trị |
 |---|---|
-| Thời gian CI | 11 phút 8 giây → **36 giây** (nhanh hơn khoảng 18 lần) |
+| Thời gian CI | 11 phút 8 giây → 36 giây ở lần đo đầu. Lần sau 5,5 phút do bước apt của Ubuntu không ổn định. **Đo lại và xử lý ở Bài 10** (dùng Docker image Playwright) |
 | Đăng nhập: quan sát khi khám phá | 19 quan sát, 15 viewpoint, 10 câu hỏi làm rõ |
