@@ -10,11 +10,11 @@
 | TD-03 | `error_user` | + mật khẩu hợp lệ | TC-012, 019, 032 |
 | TD-04 | `visual_user` | + mật khẩu hợp lệ | TC-005, 013, 033, 035, 036, 040 |
 | TD-05 | `performance_glitch_user` | + mật khẩu hợp lệ | TC-034 |
-| TD-06 | Danh mục sản phẩm chuẩn (lấy từ `standard_user`, O-01) | 6 sản phẩm: id, tên, giá, khóa ảnh (xem bảng dưới) | Mọi TC kiểm tên, giá, ảnh, thứ tự |
+| TD-06 | Danh mục sản phẩm chuẩn (lấy từ `standard_user`, O-01) | 6 sản phẩm: id, tên, giá, mô tả, khóa ảnh (xem bảng dưới; mô tả đầy đủ trong `tests/data/products.ts`) | Mọi TC kiểm tên, giá, ảnh, thứ tự |
 | TD-07 | id ngoài khoảng 0–5 | `6`, `99`, `-1` | TC-025 |
-| TD-08 | id sai định dạng | `abc`, rỗng, `4abc`, `04` | TC-026 |
+| TD-08 | id sai định dạng | `abc`, rỗng, `4abc`, `04`, `4.9`, `0x4` | TC-026 |
 | TD-09 | Dữ liệu giỏ sửa tay (`localStorage` khóa `cart-contents`) | `[4,4]` (trùng id), `[4,"x"]` (id lạ) | TC-025 |
-| TD-10 | Cookie phiên tự tạo | `session-username=standard_user` | TC-045 |
+| TD-10 | Cookie phiên tự tạo (giống SD-101 TD-08) | `session-username=standard_user`, domain `www.saucedemo.com`, path `/` | TC-045 |
 
 ## TD-06: danh mục sản phẩm chuẩn
 | id | Tên | Giá | Khóa ảnh (một phần tên file) |
@@ -32,5 +32,5 @@ Thứ tự đúng của 4 kiểu sắp xếp tính từ bảng này (cùng giá 
 | ID | Nội dung |
 |---|---|
 | MSG-01 | `Sorting is broken! This error has been reported to Backtrace.` (hộp thoại của `error_user`, dùng làm bằng chứng BUG-12) |
-| MSG-02 | `Epic sadface: You can only access '<path>' when you are logged in.` (giống SD-101 MSG-05) |
+| MSG-02 | `Epic sadface: You can only access '<path>' when you are logged in.` (giống SD-101 MSG-05; trong code dùng `MSG.notLoggedIn(path)` có sẵn, không tạo hằng mới). Đường dẫn **không có** `?id=` |
 | MSG-03 | `ITEM NOT FOUND` (tên hiển thị ở trang sản phẩm không tồn tại) |
