@@ -15,7 +15,9 @@ Web demo thường không có tài liệu đặc tả đầy đủ. Khi đó:
 1. Gọi `planner_setup_page` với seed `tests/seed.spec.ts` để mở trình duyệt.
 2. `browser_navigate` tới URL trong requirement, dùng `browser_snapshot` để đọc cấu trúc trang. Thử các luồng chính và các input sai.
 3. Ghi lại **hành vi quan sát được** (thông báo lỗi chính xác, điều hướng, trạng thái) vào mục "Quan sát thực tế" của `spec-review.md`.
-4. **Quan sát ≠ yêu cầu.** Nếu hành vi đáng ngờ (có thể là bug) hoặc không rõ là cố ý, đưa vào `q-and-a.md`. Không tự coi đó là đúng.
+4. **Quan sát ≠ yêu cầu.** Nếu hành vi đáng ngờ (có thể là bug) hoặc không rõ là cố ý, đưa vào `q-and-a.md`. Không tự coi đó là đúng. Mục Business Rules chỉ ghi điều rút ra từ requirement; hành vi hiện tại chưa được xác nhận thì ghi riêng "chờ Qn".
+5. **Script khám phá:** mỗi tình huống một phiên trình duyệt sạch. Sau mỗi lần chuyển trang phải chờ **phần tử riêng của trang đích**, không chỉ chờ URL. Quan sát lạ chạy lại ≥ 2 lần trước khi ghi.
+6. **Ma trận tài khoản × trang × thao tác:** với mọi tài khoản / vai trò, thử **mọi thao tác trên mọi trang** của feature (kể cả chỗ không nghi ngờ), ghi bảng ma trận trong `spec-review.md`. Không khám phá theo triệu chứng.
 
 ## Output (PHẢI tạo đủ, trong `qa-runs/<feature>/`)
 - `spec-review.md`: tóm tắt requirement sau review
@@ -82,6 +84,7 @@ TVP-001,functional,"Happy path: user [action] thành công",high,AC-1
 TVP-002,data,"Invalid: [field] để trống",high,AC-3
 ```
 Mỗi AC phải có ít nhất 1 viewpoint. Happy path và bảo mật ưu tiên `high`.
+Feature có trang bên trong thì **luôn có dòng kiểm soát truy cập** (chưa đăng nhập, phiên giả mạo): `scope=in`, hoặc `scope=out` kèm nguồn là TC đã có ở feature khác. Viewpoint ngoài phạm vi không gắn AC thì để `linked_ac` là `-`.
 
 ---
 

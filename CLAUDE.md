@@ -31,6 +31,7 @@ Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `revi
    - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, feature sau bắt đầu từ BUG-05).
 5. Bug đã biết: ghi `BUG-xx` vào cột `notes` của TC (RTM đọc cột này), thêm vào `tests/data/bugs.ts`, test dùng `test.fail()` + tag `@BUG-xx`.
 6. Dữ liệu dùng chung: thêm vào `tests/data/users.ts`, `messages.ts` (nhóm mới cho feature), không tạo file trùng.
+7. Feature gồm **nhiều màn hình**: mọi tài liệu phải **ghi rõ màn hình** để không nhầm. `q-and-a.md`, `known-issues.md` chia mục theo màn hình (mục "Chung" cho thứ ảnh hưởng nhiều màn hình); bảng quan sát, `improvements.md` có cột "Màn hình"; `viewpoint.csv`, `test-cases.csv` có cột `screen`.
 
 ## Quy ước viết test
 - Locator: `getByRole` → `getByLabel`/`getByPlaceholder` → `getByTestId` (thuộc tính `data-test`) → CSS. Không dùng XPath, không dùng `.nth()` cố định.

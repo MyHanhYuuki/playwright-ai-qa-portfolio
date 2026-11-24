@@ -34,6 +34,8 @@ Mức: 🔴 Critical (sai làm hỏng các bước sau) · 🟠 Major · 🟡 Mi
 - [ ] Kiểm soát truy cập: mọi loại trang bên trong (có và không có tham số URL), **phiên giả mạo** (cookie, URL)
 - [ ] Câu hỏi có context, đề xuất, ảnh hưởng. Không trùng lặp giữa các file
 - [ ] Bug thấy sớm đã ghi vào `known-issues.md`
+- [ ] Có ma trận tài khoản × trang × thao tác, mọi ô đã thử; mọi ô lỗi có viewpoint bắt, ô đúng của tài khoản đặc biệt có viewpoint dương tính
+- [ ] Business Rules không chứa hành vi hiện tại chưa xác nhận
 
 ### test-impl (ISTQB: Test Design + Implementation)
 - [ ] Mọi viewpoint `scope=in` có ≥1 TC. Mọi BUG-xx có TC bắt được
