@@ -15,6 +15,11 @@ if (!feature || !fs.existsSync(spec)) {
 let triggeredBy = 'orchestrator';
 const tbIndex = rest.indexOf('--triggered-by');
 if (tbIndex >= 0) triggeredBy = rest.splice(tbIndex, 2)[1];
+// The JSON reporter is required for the summary: drop any --reporter the caller passed (it would replace ours).
+for (let i = rest.length - 1; i >= 0; i--) {
+  if (rest[i].startsWith('--reporter=')) rest.splice(i, 1);
+  else if (rest[i] === '--reporter') rest.splice(i, 2);
+}
 const gIndex = rest.findIndex((a) => a === '-g' || a === '--grep');
 const scope = gIndex >= 0 ? `subset:${rest[gIndex + 1]}` : 'full';
 
