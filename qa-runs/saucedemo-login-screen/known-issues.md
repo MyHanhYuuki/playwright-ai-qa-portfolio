@@ -7,9 +7,9 @@
 ## Bug đã biết
 | ID | Mô tả | Bằng chứng | Mức (dự kiến) | Test phải bắt | Trạng thái |
 |---|---|---|---|---|---|
-| KI-01 | Thiếu Password mà **ô Username cũng bị tô đỏ** và có icon lỗi | O-03 | Low (giao diện) | TC-028 dự kiến **FAIL** | Chờ chạy test |
-| KI-02 | **Tự tạo cookie `session-username` là vào được trang bên trong mà không cần đăng nhập**, vi phạm AC-6 | O-21 | Critical nếu là hệ thống thật (bảo mật) | TC-033 dự kiến **FAIL** | Đã chốt là bug (Q12). Chờ chạy test |
-| KI-03 | `performance_glitch_user` đăng nhập mất **~5,1 giây** (user khác ~0,07 giây) | O-14 | Vấn đề hiệu năng, chưa có AC | TC-006 **PASS** (không đánh fail theo thời gian). Ghi lại thời gian thực tế | Báo kèm IMP-03 |
+| KI-01 | Thiếu Password mà **ô Username cũng bị tô đỏ** và có icon lỗi | O-03 | Low (giao diện) | TC-028 dự kiến **FAIL** | ✅ Xác nhận khi chạy test (run-20261124-150906). HITL #3 approved |
+| KI-02 | **Tự tạo cookie `session-username` là vào được trang bên trong mà không cần đăng nhập**, vi phạm AC-6 | O-21 | Critical nếu là hệ thống thật (bảo mật) | TC-033 dự kiến **FAIL** | ✅ Xác nhận khi chạy test (run-20261124-150906). HITL #3 approved |
+| KI-03 | `performance_glitch_user` đăng nhập mất **~5,1 giây** (user khác ~0,07 giây) | O-14 | Vấn đề hiệu năng, chưa có AC | TC-006 **PASS** (không đánh fail theo thời gian). Ghi lại thời gian thực tế | Đo được: TC-006 mất 10,4 giây cả test. Báo kèm IMP-03 |
 | KI-04 | Thông báo "You can only access…" **không tự mất** khi mở lại trang đăng nhập | O-18 | Low (quan sát) | Không có TC (Q8) | Theo dõi |
 
 ## Vấn đề không phải bug (đề xuất cải tiến)

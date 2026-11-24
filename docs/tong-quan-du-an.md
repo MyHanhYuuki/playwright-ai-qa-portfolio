@@ -63,9 +63,9 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | 2 | Phân tích yêu cầu: Đăng nhập | spec-review, viewpoint, Q&A, đề xuất cải tiến | ✅ |
 | 3 | Thiết kế test case: Đăng nhập | test-cases.csv, test-data | ✅ |
 | 4 | Viết code test (POM) | `tests/pages`, `tests/specs` | ✅ |
-| 5 | Chạy test và phân loại lỗi | triage.md, báo cáo HTML | 🔄 |
-| 6 | Sửa test hỏng (healer) | healing-log.md | ⏳ |
-| 7 | Bug report + RTM | defects.md, rtm-report.html | ⏳ |
+| 5 | Chạy test và phân loại lỗi | triage.md, báo cáo HTML | ✅ |
+| 6 | Sửa test hỏng (healer) | healing-log.md | ⏭ Lần này không có script-issue |
+| 7 | Bug report + RTM | defects.md, rtm-report.html | 🔄 Chờ HITL #3 |
 | 8 | Giỏ hàng → Thanh toán (cả pipeline) | Bộ test E2E mua hàng | ⏳ |
 | 9 | Test API: Restful Booker | `tests/api` | ⏳ |
 | 10 | Hoàn thiện CI, README, tổng kết | Báo cáo tổng kết | ⏳ |
@@ -107,3 +107,4 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | Đăng nhập: bug phát hiện sớm (trước khi chạy test) | 4, trong đó 1 lỗi bảo mật: vượt đăng nhập bằng cookie tự tạo |
 | Đăng nhập: test case | 33 TC, phủ 20/20 viewpoint, 7/7 AC |
 | Đăng nhập: code test | 33 test (POM: 2 Page Object, 2 fixture), 5 test smoke |
+| Đăng nhập: kết quả chạy | 31 pass + 2 bug đã biết fail đúng chỗ, 0 chập chờn (chạy lặp 66/66), 15,8 giây |

@@ -1,0 +1,347 @@
+{
+  "run_id": "run-20261124-150906",
+  "triggered_by": "orchestrator",
+  "scope": "full",
+  "browser": "chromium",
+  "summary": {
+    "total": 33,
+    "passed": 33,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "expected_fail": 2
+  },
+  "total_duration_ms": 15828,
+  "tests": [
+    {
+      "tc_id": "TC-001",
+      "title": "TC-001 hiển thị đủ ô Username, Password và nút Login",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5743,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-002",
+      "title": "TC-002 ô Password ẩn ký tự khi nhập",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5771,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-003",
+      "title": "TC-003 standard_user đăng nhập thành công",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5743,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-004",
+      "title": "TC-004 đăng nhập bằng phím Enter",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5582,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-005",
+      "title": "TC-005 user hợp lệ problem_user đăng nhập được",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5507,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-006",
+      "title": "TC-006 user hợp lệ performance_glitch_user đăng nhập được",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 10377,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-007",
+      "title": "TC-007 user hợp lệ error_user đăng nhập được",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5551,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-008",
+      "title": "TC-008 user hợp lệ visual_user đăng nhập được",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5517,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-009",
+      "title": "TC-009 R1: trống Username + trống Password",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1152,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-010",
+      "title": "TC-010 R2: có Username + trống Password",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1146,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-011",
+      "title": "TC-011 R3: trống Username + có Password",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1027,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-012",
+      "title": "TC-012 sai mật khẩu",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1161,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-013",
+      "title": "TC-013 username không tồn tại",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1038,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-014",
+      "title": "TC-014 sai cả username và mật khẩu",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 979,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-015",
+      "title": "TC-015 username viết hoa bị từ chối",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 935,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-016",
+      "title": "TC-016 username có khoảng trắng đầu bị từ chối",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1025,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-017",
+      "title": "TC-017 mật khẩu thừa khoảng trắng cuối bị từ chối",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 965,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-018",
+      "title": "TC-018 mật khẩu viết hoa bị từ chối",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 995,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-019",
+      "title": "TC-019 username 1000 ký tự không làm lỗi trang",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1120,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-020",
+      "title": "TC-020 tài khoản bị khóa không đăng nhập được",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1041,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-021",
+      "title": "TC-021 tài khoản bị khóa + sai mật khẩu không lộ trạng thái khóa",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 938,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-022",
+      "title": "TC-022 đóng thông báo lỗi bằng nút X",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1104,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-023",
+      "title": "TC-023 mở thẳng /inventory.html khi chưa đăng nhập bị chặn",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1056,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-024",
+      "title": "TC-024 mở thẳng /cart.html khi chưa đăng nhập bị chặn",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1098,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-025",
+      "title": "TC-025 mở thẳng /checkout-step-one.html khi chưa đăng nhập bị chặn",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1042,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-026",
+      "title": "TC-026 đăng xuất về trang đăng nhập và xóa phiên",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1810,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-027",
+      "title": "TC-027 đăng xuất rồi bấm Back không xem lại được trang sản phẩm",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1850,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-028",
+      "title": "TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 5890,
+      "retry_count": 0,
+      "error": "Error: expect(locator).not.toHaveClass(expected) failed\n\nLocator: getByPlaceholder('Username')\nExpected pattern: not /input_error/\nReceived string: \"input_error form_input error\"\nTimeout: 5000ms\n\nCall log:\n  - Expect \"not toHaveClass\" getByPlaceholder('Username') with timeout 5000ms\n  - waiting for getByPlaceholder('Username')\n    14 × locator resolved to <input type=\"text\" id=\"user-name\" name=\"us"
+    },
+    {
+      "tc_id": "TC-029",
+      "title": "TC-029 đăng xuất rồi đăng nhập lại thành công",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 6502,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-030",
+      "title": "TC-030 thử lại sau lỗi: thông báo cập nhật, nhập đúng thì vào được",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1010,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-031",
+      "title": "TC-031 tải lại trang vẫn giữ phiên đăng nhập",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1563,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-032",
+      "title": "TC-032 mở thẳng /inventory-item.html khi chưa đăng nhập bị chặn",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1186,
+      "retry_count": 0,
+      "error": null
+    },
+    {
+      "tc_id": "TC-033",
+      "title": "TC-033 cookie phiên tự tạo không được vào trang bên trong",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 5848,
+      "retry_count": 0,
+      "error": "Error: expect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/inventory.html\"\nTimeout:  5000ms\n\n\n  177 |     await context.addCookies([{ name: 'session-username', value: standard.username, url: baseURL! }]);\n  178 |     await page.goto(protectedPages.inventory);\n> 179 |     await expect(page).toHaveURL(isLoginScreen);\n      |                   "
+    }
+  ]
+}
