@@ -1,12 +1,23 @@
 {
   "name": "playwright-ai-qa-portfolio",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "private": true,
+  "description": "Playwright + TypeScript test automation portfolio driven by an AI agent QA pipeline (Claude Code + Playwright MCP)",
+  "license": "UNLICENSED",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "qa-automation",
+    "e2e-testing",
+    "ai-agents"
+  ],
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.65.1",

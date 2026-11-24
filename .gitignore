@@ -13,3 +13,9 @@ node_modules/
 # QA pipeline: orchestrator state + raw Playwright JSON (summaries are committed)
 qa-runs/**/.qa-state.json
 qa-runs/**/run-results/raw-*.json
+
+# Claude Code personal instructions (machine-specific)
+CLAUDE.local.md
+
+# Local environment variables
+.env
