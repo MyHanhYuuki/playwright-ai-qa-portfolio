@@ -1,34 +1,45 @@
-viewpoint_id,axis,description,priority,linked_ac,scope,source
-TVP-001,functional,"Trang Products hiển thị đủ 6 sản phẩm, mỗi sản phẩm có ảnh, tên, mô tả, giá, nút Add to cart",high,AC-1,in,O-01
-TVP-002,data,"Tên, giá, mô tả, ảnh của từng sản phẩm đúng dữ liệu chuẩn",medium,AC-1,in,O-01
-TVP-003,functional,"Sắp xếp 4 kiểu (tên A→Z, Z→A, giá thấp→cao, cao→thấp), mặc định A→Z",high,AC-2,in,O-02
-TVP-004,data,"Sắp theo giá khi có sản phẩm cùng giá: thứ tự ổn định theo tên",low,AC-2,in,O-03;Q6
-TVP-005,functional,"Thêm 1 sản phẩm: nút đổi thành Remove, số trên giỏ là 1",high,AC-3,in,O-05
-TVP-006,data,"Thêm lần lượt cả 6 sản phẩm: số trên giỏ đếm đúng 1→6",medium,AC-3,in,O-05
-TVP-007,functional,"Bỏ sản phẩm ở danh sách: nút về Add to cart, số giảm, giỏ trống thì không hiện số",high,AC-4,in,O-05
-TVP-008,functional,"Bấm tên hoặc ảnh mở đúng trang chi tiết, dữ liệu khớp danh sách",high,AC-5,in,O-06
-TVP-009,flow,"Thêm / bỏ ở trang chi tiết đồng bộ với số giỏ và nút ở danh sách",medium,AC-3;AC-4;AC-5,in,O-07
-TVP-010,flow,"Quay lại danh sách bằng nút Back to products và nút Back của trình duyệt",medium,AC-5,in,O-07
-TVP-011,data,"Chi tiết sản phẩm không tồn tại (id sai): không thêm được vào giỏ, số trên giỏ bằng số sản phẩm thật",medium,AC-3;AC-5,in,O-08;O-09;Q2
-TVP-012,functional,"Trang giỏ liệt kê đúng sản phẩm đã thêm (số lượng 1, tên, mô tả, giá) theo thứ tự thêm",high,AC-6,in,O-10;O-11;Q12
-TVP-013,functional,"Bỏ sản phẩm ở trang giỏ: mất khỏi danh sách giỏ, số giỏ giảm",high,AC-4;AC-6,in,O-12
-TVP-014,flow,"Continue Shopping về danh sách, Checkout sang bước thanh toán, bấm tên trong giỏ mở chi tiết",medium,AC-6,in,O-12
-TVP-015,functional,"Giỏ trống: hành vi nút Checkout",medium,AC-6,in,O-13;Q5
-TVP-016,flow,"Giỏ giữ nguyên khi tải lại trang, chuyển trang, mở tab mới",high,AC-7,in,O-14
-TVP-017,flow,"Giỏ giữ nguyên sau khi đăng xuất rồi đăng nhập lại cùng tài khoản",medium,AC-7,in,O-15
-TVP-018,non-functional,"Bảo mật thông tin: giỏ của tài khoản này không hiện cho tài khoản khác trên cùng trình duyệt",high,AC-7,in,O-16;Q3
-TVP-019,flow,"Reset App State: giỏ trống và mọi nút về Add to cart ngay lập tức ở danh sách, chi tiết, giỏ",medium,AC-3;AC-4;AC-7,in,O-17;Q4
-TVP-020,data,"problem_user: ảnh sản phẩm đúng",medium,AC-1,in,O-18;Q1
-TVP-021,data,"problem_user và error_user: sắp xếp hoạt động giống standard_user",high,AC-2,in,O-19;O-22;Q1
-TVP-022,data,"problem_user và error_user: thêm và bỏ được cả 6 sản phẩm",high,AC-3;AC-4,in,O-20;O-23;Q1
-TVP-023,data,"problem_user: bấm sản phẩm mở đúng trang chi tiết",high,AC-5,in,O-21;Q1
-TVP-024,data,"visual_user: giá ở danh sách đúng và khớp với trang chi tiết, giỏ",high,AC-1,in,O-24;Q1
-TVP-025,non-functional,"visual_user: ảnh đúng và biểu tượng giỏ đúng vị trí như standard_user",low,AC-1;AC-3,in,O-25;Q1;Q11
-TVP-026,data,"performance_glitch_user: sắp xếp, thêm giỏ, mở chi tiết, mở giỏ đều thành công (không đánh fail theo thời gian)",medium,AC-2;AC-3;AC-5;AC-6,in,O-26;Q1;Q10
-TVP-027,flow,"Menu All Items từ trang chi tiết và trang giỏ về danh sách",low,AC-5;AC-6,in,O-27
-TVP-028,non-functional,"Hiệu năng: thời gian sắp xếp trong ngưỡng",medium,AC-2,out,O-26;Q10;IMP-04
-TVP-029,flow,"Giữ kiểu sắp xếp khi quay lại hoặc tải lại trang",low,AC-2,out,O-04;Q7;IMP-01
-TVP-030,functional,"Trang giỏ có tổng tiền, ảnh, sửa số lượng",low,AC-6,out,O-10;Q8;IMP-02
-TVP-031,functional,"Thông báo giỏ trống",low,AC-6,out,O-13;Q9;IMP-03
-TVP-032,functional,"Menu About, Dynamic Catalog, liên kết mạng xã hội",low,AC-1,out,ticket;O-27;Q13
-TVP-033,non-functional,"Accessibility: ảnh có alt, điều hướng bằng bàn phím",medium,AC-1,out,knowledge-base (SD-101 Q10)
+viewpoint_id,axis,description,priority,linked_ac,scope,source,screen
+TVP-001,functional,"Trang Products hiển thị đủ 6 sản phẩm, mỗi sản phẩm có ảnh, tên, mô tả, giá, nút Add to cart",high,AC-1,in,O-01,Danh sách
+TVP-002,data,"Tên, giá của từng sản phẩm đúng dữ liệu chuẩn (standard_user)",medium,AC-1,in,O-01,Danh sách
+TVP-003,functional,"Sắp xếp 4 kiểu (tên A→Z, Z→A, giá thấp→cao, cao→thấp), mặc định A→Z",high,AC-2,in,O-02,Danh sách
+TVP-004,data,Sắp theo giá khi có sản phẩm cùng giá: thứ tự ổn định theo tên,low,AC-2,in,O-03;Q6,Danh sách
+TVP-005,functional,"Thêm 1 sản phẩm: nút đổi thành Remove, số trên giỏ là 1",high,AC-3,in,O-05,Danh sách
+TVP-006,data,Thêm lần lượt cả 6 sản phẩm: số trên giỏ đếm đúng 1→6,medium,AC-3,in,O-05,Danh sách
+TVP-007,functional,"Bỏ sản phẩm ở danh sách: nút về Add to cart, số giảm, giỏ trống thì không hiện số",high,AC-4,in,O-05,Danh sách
+TVP-008,functional,"Mở đúng trang chi tiết bằng tên, bằng ảnh và bằng bàn phím (Enter trên tên); dữ liệu khớp danh sách",high,AC-5,in,O-06;O-34,Danh sách;Chi tiết
+TVP-009,flow,Thêm / bỏ ở trang chi tiết đồng bộ với số giỏ và nút ở danh sách,medium,AC-3;AC-4;AC-5,in,O-07,Danh sách;Chi tiết
+TVP-010,flow,Quay lại danh sách bằng nút Back to products và nút Back của trình duyệt,medium,AC-5,in,O-07,Danh sách;Chi tiết
+TVP-011,data,"id ngoài khoảng 0–5 (6, 99, -1): báo không tìm thấy, không thêm được vào giỏ, số trên giỏ bằng số sản phẩm thật",medium,AC-3;AC-5,in,O-08;O-09;Q2,Chi tiết;Giỏ
+TVP-012,functional,"Trang giỏ liệt kê đúng sản phẩm đã thêm (số lượng 1, tên, mô tả, giá) theo thứ tự thêm",high,AC-6,in,O-10;O-11;Q12,Giỏ
+TVP-013,functional,"Bỏ sản phẩm ở trang giỏ: mất khỏi danh sách giỏ, số giỏ giảm",high,AC-4;AC-6,in,O-12,Giỏ
+TVP-014,flow,"Continue Shopping về danh sách, Checkout sang bước thanh toán, bấm tên trong giỏ mở chi tiết",medium,AC-6,in,O-12,Giỏ
+TVP-015,functional,Giỏ trống: không cho bấm Checkout sang bước thanh toán,medium,AC-6,in,O-13;Q5;BUG-19,Giỏ
+TVP-016,flow,"Giỏ giữ nguyên khi tải lại trang, chuyển trang, mở tab mới",high,AC-7,in,O-14,Cả 3
+TVP-017,flow,Giỏ giữ nguyên sau khi đăng xuất rồi đăng nhập lại cùng tài khoản,medium,AC-7,in,O-15,Cả 3
+TVP-018,non-functional,Bảo mật thông tin: giỏ của tài khoản này không hiện cho tài khoản khác trên cùng trình duyệt (yêu cầu bổ sung từ Q3),high,AC-7,in,O-16;Q3,Cả 3
+TVP-019,flow,"Reset App State: giỏ trống và mọi nút về Add to cart ngay lập tức ở danh sách, chi tiết, giỏ",medium,AC-3;AC-4;AC-7,in,O-17;Q4,Cả 3
+TVP-020,data,"Ảnh sản phẩm đúng với mọi tài khoản đăng nhập được (problem_user, visual_user…)",medium,AC-1,in,O-18;O-25;Q1,Danh sách
+TVP-021,data,problem_user và error_user: sắp xếp hoạt động giống standard_user (test-impl tách TC theo tài khoản),high,AC-2,in,O-19;O-22;Q1,Danh sách
+TVP-022,data,problem_user và error_user: thêm và bỏ được cả 6 sản phẩm ở danh sách và trang chi tiết (tách TC theo tài khoản),high,AC-3;AC-4;AC-5,in,O-20;O-23;Q1,Danh sách;Chi tiết
+TVP-023,data,problem_user: bấm từng sản phẩm mở đúng trang chi tiết,high,AC-5,in,O-21;Q1,Danh sách;Chi tiết
+TVP-024,data,"visual_user: giá ở danh sách đúng và khớp với trang chi tiết, giỏ",high,AC-1,in,O-24;Q1,Danh sách;Chi tiết;Giỏ
+TVP-025,non-functional,"visual_user: bố cục giống standard_user (biểu tượng giỏ, nút Add, biểu tượng menu ở danh sách; nút Checkout ở trang giỏ)",low,AC-1;AC-6,in,O-25;O-29;Q1;Q11,Danh sách;Giỏ
+TVP-026,data,"performance_glitch_user: sắp xếp, thêm giỏ, mở chi tiết, mở giỏ đều thành công (không đánh fail theo thời gian)",medium,AC-2;AC-3;AC-5;AC-6,in,O-26;Q1;Q10,Cả 3
+TVP-027,flow,Menu All Items từ trang chi tiết và trang giỏ về danh sách,low,AC-5;AC-6,in,O-27,Chi tiết;Giỏ
+TVP-028,non-functional,Hiệu năng: thời gian sắp xếp trong ngưỡng,medium,AC-2,out,O-26;Q10;IMP-04,Danh sách
+TVP-029,flow,Giữ kiểu sắp xếp khi quay lại hoặc tải lại trang,low,AC-2,out,O-04;Q7;IMP-01,Danh sách
+TVP-030,functional,"Trang giỏ có tổng tiền, ảnh, sửa số lượng",low,AC-6,out,O-10;Q8;IMP-02,Giỏ
+TVP-031,functional,Thông báo giỏ trống,low,AC-6,out,O-13;Q9;IMP-03,Giỏ
+TVP-032,functional,"Menu About, Dynamic Catalog, liên kết mạng xã hội",low,-,out,ticket: Ngoài phạm vi;O-27;Q13,Cả 3
+TVP-033,non-functional,"Accessibility: ảnh có alt, link có URL thật, điều hướng bằng bàn phím",medium,-,out,knowledge-base (SD-101 Q10);O-35;IMP-08,Cả 3
+TVP-034,data,"Tài khoản đặc biệt: mọi ô ✅ của ma trận (vd giá, ảnh, mở chi tiết, thêm / bỏ, trang giỏ) phải đúng như standard_user (test dương tính, 1 TC / tài khoản)",medium,AC-6,in,O-34;Q1,Cả 3
+TVP-035,data,"id sai định dạng (abc, rỗng, 4abc, 04): xử lý như id không tồn tại",low,AC-5,in,O-08;O-33;Q2,Chi tiết
+TVP-036,data,"Dữ liệu giỏ trong trình duyệt bị sửa tay (trùng id, id lạ): số giỏ bằng số sản phẩm thật, không có dòng trùng",low,AC-3;AC-6,in,O-31;Q2,Giỏ
+TVP-037,non-functional,Kiểm soát truy cập: phiên giả mạo (tự tạo cookie) không vào được trang giỏ và trang chi tiết,high,AC-5;AC-6,in,O-30;BUG-02,Chi tiết;Giỏ
+TVP-038,non-functional,"Kiểm soát truy cập: chưa đăng nhập mở trực tiếp danh sách, chi tiết, giỏ bị đưa về trang đăng nhập",high,AC-5;AC-6,out,SD-101 TC-023;SD-101 TC-024;SD-101 TC-032,Cả 3
+TVP-039,data,locked_out_user: không áp dụng (không đăng nhập được; cookie giả bị chặn),low,-,out,SD-101;O-30,-
+TVP-040,flow,Thay đổi giỏ rồi bấm Back / Forward của trình duyệt: trạng thái nút và số giỏ đúng,medium,AC-4;AC-7,in,O-34;review B3,Danh sách;Giỏ
+TVP-041,flow,Đăng xuất ở trang giỏ hoặc trang chi tiết rồi bấm Back: không xem lại được trang,medium,AC-6,in,O-34;review B3,Chi tiết;Giỏ
+TVP-042,flow,Sắp xếp khi giỏ đang có hàng: nút Remove đi theo đúng sản phẩm,medium,AC-2;AC-3,in,O-34;review B3,Danh sách
+TVP-043,flow,"Hai tab mở cùng lúc: thay đổi giỏ ở tab này, tab kia thấy đúng sau khi chuyển trang hoặc tải lại",low,AC-7,in,review B3,Cả 3
+TVP-044,data,Dữ liệu giỏ trong trình duyệt bị hỏng (không phải JSON): trang vẫn dùng được,low,AC-3;AC-6,out,O-32;Q14;IMP-07,Cả 3
