@@ -145,6 +145,46 @@ playwright-ai-qa-portfolio/
 | AI agent | AI có vai trò và công cụ riêng, tự làm nhiều bước |
 
 ## 6. Câu hỏi liên quan
-- **Vì sao không đưa `node_modules` lên git?** Vì nó nặng và tải lại được bằng `npm ci`. Phiên bản đã được khóa trong `package-lock.json`.
-- **`retries` dùng để làm gì? Có nên đặt cao không?** Để giảm fail ngẫu nhiên trên CI, nhưng đặt cao sẽ **che giấu test chập chờn (flaky)**. Nên giữ thấp và sửa tận gốc.
-- **Trace dùng để làm gì?** Để điều tra test fail trên CI mà không cần chạy lại: xem ảnh từng bước, request mạng, log console.
+
+### Q1. Vì sao không đưa `node_modules` lên git?
+**Trả lời:**
+- `node_modules` rất nặng (hàng trăm MB) và **tạo lại được** bất cứ lúc nào bằng `npm ci`.
+- Thứ cần lưu là **danh sách thư viện** (`package.json`) và **phiên bản chính xác** (`package-lock.json`), không phải bản thân thư viện.
+- Đưa lên git sẽ làm repo phình to, clone chậm, và gây xung đột khi máy Windows và Linux cài ra file khác nhau.
+
+### Q2. `package.json` và `package-lock.json` khác nhau thế nào?
+**Trả lời:**
+- `package.json`: khai báo **cần thư viện gì**, cho phép một khoảng phiên bản (vd `^1.65.1`, tức chấp nhận 1.66, 1.67…).
+- `package-lock.json`: ghi **chính xác phiên bản đã cài** của từng thư viện, kể cả thư viện con.
+- Nhờ file lock, máy mình, máy đồng đội và CI cài **giống hệt nhau**, tránh lỗi "máy tôi chạy được".
+- Vì vậy CI dùng `npm ci` (cài đúng theo file lock) thay vì `npm install`.
+
+### Q3. `retries` dùng để làm gì? Có nên đặt cao không?
+**Trả lời:**
+- `retries` cho test fail **được chạy lại** tự động. Dùng để giảm fail ngẫu nhiên do mạng hoặc môi trường trên CI.
+- **Không nên đặt cao.** Retry nhiều sẽ **che giấu test chập chờn (flaky)**: test lúc pass lúc fail nhưng báo cáo vẫn xanh, nên vấn đề thật không ai thấy.
+- Cách đúng: giữ thấp (0 trên máy, 1–2 trên CI), theo dõi test nào phải retry mới pass, rồi **sửa tận gốc** (thường do chờ chưa đúng hoặc test phụ thuộc nhau).
+
+### Q4. Trace dùng để làm gì?
+**Trả lời:**
+- Trace là "hộp đen" ghi lại toàn bộ lần chạy test: **ảnh chụp từng bước, DOM, request mạng, log console, thời gian**.
+- Dùng để **điều tra test fail trên CI mà không cần chạy lại**: tải file `trace.zip` về, mở bằng `npx playwright show-trace`, tua lại từng bước như xem video.
+- Cấu hình `trace: 'on-first-retry'`: chỉ ghi trace khi test bị chạy lại, vừa có bằng chứng khi cần, vừa không làm chậm lúc bình thường.
+
+### Q5. Headless và headed khác nhau thế nào? Khi nào dùng cái nào?
+**Trả lời:**
+- **Headless**: trình duyệt chạy ẩn, không hiện cửa sổ. Nhanh, nhẹ, dùng trên **CI** và khi chạy cả bộ test.
+- **Headed** (`--headed`): hiện cửa sổ trình duyệt. Dùng khi **viết hoặc gỡ lỗi test**, để nhìn tận mắt test đang làm gì.
+- Khi học hoặc debug, nên dùng **UI mode** (`npm run test:ui`): vừa xem được, vừa chạy lại từng test, vừa tua từng bước.
+
+### Q6. CI là gì? Vì sao test phải chạy trên CI chứ không chỉ trên máy mình?
+**Trả lời:**
+- CI (Continuous Integration) tự động chạy test **mỗi khi có code mới được push**.
+- Máy mình có thể "chạy được" nhờ cấu hình riêng, dữ liệu sẵn có, hệ điều hành khác. CI chạy trên **môi trường sạch**, giống nhau mọi lần, nên kết quả khách quan.
+- Ai mở repo cũng thấy ngay trạng thái **xanh hoặc đỏ** (badge), và bug bị chặn **trước khi** vào nhánh chính.
+
+### Q7. MCP và AI agent là gì? Có thay được người viết test không?
+**Trả lời:**
+- **MCP** là cầu nối để AI dùng công cụ bên ngoài. Ở đây AI dùng nó để **điều khiển trình duyệt thật** (mở trang, click, đọc nội dung).
+- **AI agent** là AI được giao một vai trò cụ thể (vd: phân tích yêu cầu, sinh code test), có công cụ riêng và tự làm nhiều bước.
+- **Không thay được người.** AI làm nhanh nhưng có thể sai mà trông vẫn rất đúng (xem [nhật ký dùng AI](../ai-log.md)). Người làm QC vẫn phải **quyết định test cái gì, duyệt kết quả, và chịu trách nhiệm**. AI giúp làm nhanh hơn, không phải thay người suy nghĩ.
