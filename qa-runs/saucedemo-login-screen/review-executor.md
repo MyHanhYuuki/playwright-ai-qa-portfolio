@@ -7,7 +7,7 @@
 | Mục | Kết quả |
 |---|---|
 | Phân loại có bằng chứng (thông báo lỗi, giá trị nhận được) | ✅ |
-| Mọi KI có test bắt được | ✅ KI-01 (TC-028), KI-02 (TC-033). KI-03 ghi nhận thời gian ở N1. KI-04 không có TC (đúng theo Q8) |
+| Mọi BUG-xx có test bắt được | ✅ BUG-01 (TC-028), BUG-02 (TC-033). BUG-03 ghi nhận thời gian ở N1. BUG-04 không có TC (đúng theo Q8) |
 | Test `test.fail()` fail **đúng assertion của bug**, không phải lỗi khác (lưu ý D2 của review script-gen) | ✅ Đã đọc lỗi chi tiết: TC-028 fail ở `not.toHaveClass`, TC-033 fail ở `toHaveURL` |
 | Không có real-bug bị gắn nhầm thành script-issue | ✅ |
 | Độ ổn định | ✅ Chạy lặp 2 lần: 66/66 |

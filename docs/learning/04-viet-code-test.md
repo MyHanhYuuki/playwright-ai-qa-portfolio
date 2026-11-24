@@ -60,7 +60,7 @@ TC-012 → TC-019 cùng bước "nhập sai rồi kiểm tra thông báo", chỉ
 
 ### 6. Test của bug đã biết
 ```ts
-test.fail(true, 'KI-01: ô Username bị tô đỏ dù đã nhập');
+test.fail(true, 'BUG-01: ô Username bị tô đỏ dù đã nhập');
 ```
 Test vẫn kiểm tra **hành vi đúng**. Vì bug đang tồn tại nên test fail, và `test.fail()` biến kết quả đó thành "đúng như dự kiến", CI không đỏ. Khi dev sửa bug, test sẽ báo "pass bất ngờ" để mình biết mà bỏ `test.fail()`.
 > ⚠️ Rủi ro: `test.fail()` cũng "pass" khi test fail vì **lỗi khác** (vd: locator sai). Ở Bài 5 phải kiểm tra test fail **đúng chỗ**.

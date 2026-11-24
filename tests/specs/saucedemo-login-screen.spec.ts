@@ -1,9 +1,9 @@
 /**
  * SD-101: Login screen (SauceDemo)
  * Test cases: qa-runs/saucedemo-login-screen/test-cases.csv (33 TC, approved at HITL #2)
- * Known issues: qa-runs/saucedemo-login-screen/known-issues.md (KI-01, KI-02 expected to FAIL)
+ * Known issues: qa-runs/saucedemo-login-screen/known-issues.md (BUG-01, BUG-02 expected to FAIL)
  *
- * Convention: 1 test = 1 TC, title starts with the TC id, tags = @AC-x (+ @smoke / @KI-xx).
+ * Convention: 1 test = 1 TC, title starts with the TC id, tags = @AC-x (+ @smoke / @BUG-xx).
  * Evidence: `evidence.shot()` = annotated screenshot (only with npm run test:evidence).
  */
 import { test, expect, isLoginScreen } from '../fixtures';
@@ -59,7 +59,7 @@ test.describe('AC-2: Successful login', () => {
   // TC-005 → TC-008: each special user is its own partition (different known behaviour)
   const specialUsers = [
     { tc: 'TC-005', user: users.problem, timeout: undefined },
-    // Q5: do not fail on speed; allow up to 10s (KI-03 records the ~5s delay)
+    // Q5: do not fail on speed; allow up to 10s (BUG-03 records the ~5s delay)
     { tc: 'TC-006', user: users.performanceGlitch, timeout: 10_000 },
     { tc: 'TC-007', user: users.error, timeout: undefined },
     { tc: 'TC-008', user: users.visual, timeout: undefined },
@@ -136,17 +136,17 @@ test.describe('AC-3: Empty fields (decision table)', () => {
     await evidence.shot('Sau khi bấm X', { highlight: loginPage.usernameInput, note: 'Khung lỗi và icon X biến mất; ô Username vẫn giữ standard_user' });
   });
 
-  test('TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi', { tag: ['@AC-3', '@KI-01'] }, async ({ loginPage, evidence }) => {
-    // KI-01 (O-03): the Username field is also marked as error. Known bug → expected to fail.
+  test('TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi', { tag: ['@AC-3', '@BUG-01'] }, async ({ loginPage, evidence }) => {
+    // BUG-01 (O-03): the Username field is also marked as error. Known bug → expected to fail.
     // Remove test.fail() when the bug is fixed.
-    test.fail(true, 'KI-01: ô Username bị tô đỏ dù đã nhập');
+    test.fail(true, 'BUG-01: ô Username bị tô đỏ dù đã nhập');
     await loginPage.fill(standard.username, '');
     await evidence.shot('Có Username, trống Password', { highlight: loginPage.usernameInput, note: 'Ô Username ĐÃ nhập standard_user' });
     await loginPage.loginButton.click();
     await expect(loginPage.passwordInput).toHaveClass(/input_error/);
     await evidence.shot('Kết quả: BUG', {
       highlight: loginPage.usernameInput,
-      note: 'BUG KI-01: ô Username đã nhập đúng nhưng vẫn bị viền đỏ + icon X. Mong đợi: chỉ ô Password bị đánh dấu',
+      note: 'BUG-01: ô Username đã nhập đúng nhưng vẫn bị viền đỏ + icon X. Mong đợi: chỉ ô Password bị đánh dấu',
     });
     await expect(loginPage.usernameInput).not.toHaveClass(/input_error/);
   });
@@ -229,10 +229,10 @@ test.describe('AC-6: Access control (not logged in)', () => {
     });
   }
 
-  test('TC-033 cookie phiên tự tạo không được vào trang bên trong', { tag: ['@AC-6', '@KI-02', '@security'] }, async ({ page, context, baseURL, evidence }) => {
-    // KI-02 (O-21): the site trusts the client-side cookie only. Known bug → expected to fail.
+  test('TC-033 cookie phiên tự tạo không được vào trang bên trong', { tag: ['@AC-6', '@BUG-02', '@security'] }, async ({ page, context, baseURL, evidence }) => {
+    // BUG-02 (O-21): the site trusts the client-side cookie only. Known bug → expected to fail.
     // Remove test.fail() when the bug is fixed.
-    test.fail(true, 'KI-02: tự tạo cookie session-username là vào được');
+    test.fail(true, 'BUG-02: tự tạo cookie session-username là vào được');
     await page.goto('/');
     const loginPage = new LoginPage(page);
     await evidence.shot('Chưa đăng nhập', { highlight: loginPage.loginButton, note: 'Đang ở trang đăng nhập, CHƯA đăng nhập' });
@@ -240,7 +240,7 @@ test.describe('AC-6: Access control (not logged in)', () => {
     await page.goto(protectedPages.inventory);
     await evidence.shot('Kết quả: BUG', {
       highlight: new InventoryPage(page).title,
-      note: 'BUG KI-02: chỉ tự tạo cookie session-username=standard_user là vào được trang Products. Mong đợi: bị chặn',
+      note: 'BUG-02: chỉ tự tạo cookie session-username=standard_user là vào được trang Products. Mong đợi: bị chặn',
     });
     await expect(page).toHaveURL(isLoginScreen);
     await expect(loginPage.errorMessage).toHaveText(MSG.notLoggedIn(protectedPages.inventory));

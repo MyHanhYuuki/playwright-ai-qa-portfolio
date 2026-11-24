@@ -11,7 +11,7 @@ Người dùng đăng nhập bằng username và password để vào trang danh 
 | AC-3 | Bỏ trống thì báo lỗi "tương ứng" | ✅ (sau Q&A) | Ban đầu ⚠️: không nêu nội dung lỗi. Đã làm rõ ở Q1, Q3 |
 | AC-4 | Sai thông tin thì báo lỗi | ✅ (sau Q&A) | Ban đầu ⚠️: không nêu nội dung lỗi, hoa thường, khoảng trắng. Đã làm rõ ở Q1, Q2. Độ dài tối đa chờ Q14 |
 | AC-5 | Tài khoản khóa thì báo bị khóa | ✅ (sau Q&A) | Ban đầu ⚠️: không nói trường hợp khóa + sai mật khẩu. Đã làm rõ ở Q4 |
-| AC-6 | Chưa đăng nhập không vào được trang bên trong | ✅ | ⚠️ Cookie tự tạo vượt qua được (O-21, Q12, KI-02) |
+| AC-6 | Chưa đăng nhập không vào được trang bên trong | ✅ | ⚠️ Cookie tự tạo vượt qua được (O-21, Q12, BUG-02) |
 | AC-7 | Đăng xuất về trang đăng nhập | ✅ | Không nói phiên hết hạn (Q9: ngoài phạm vi) |
 
 ## Business Rules (rút ra từ requirement và quan sát)
@@ -42,7 +42,7 @@ Người dùng đăng nhập bằng username và password để vào trang danh 
 | O-18 | Bị chặn ở O-15 rồi mở lại `/` | Thông báo lỗi cũ **vẫn còn** hiển thị | (Q8) |
 | O-19 | Console khi tải trang | 2 lỗi 401 tới `events.backtrace.io` (dịch vụ theo dõi lỗi bên thứ 3), cảnh báo thiếu `autocomplete` | Không ảnh hưởng chức năng (Q10) |
 | O-20 | Bị báo lỗi, rồi gõ lại vào ô / bấm vào icon ✕ trong ô | Icon ✕ (hình trang trí `svg role=img`) **vẫn hiện khi đang gõ**, bấm vào không có tác dụng | Dễ hiểu nhầm là nút xóa (Q11, người duyệt phát hiện) |
-| O-21 | Chưa đăng nhập, **tự tạo cookie** `session-username=standard_user` rồi mở `/inventory.html` | **Vào được**, thấy 6 sản phẩm | 🔴 Vượt qua đăng nhập (Q12, KI-02) |
+| O-21 | Chưa đăng nhập, **tự tạo cookie** `session-username=standard_user` rồi mở `/inventory.html` | **Vào được**, thấy 6 sản phẩm | 🔴 Vượt qua đăng nhập (Q12, BUG-02) |
 | O-22 | Đã đăng nhập, tải lại trang (F5) | Vẫn ở `/inventory.html` | ✅ Giữ phiên |
 | O-23 | Đã đăng nhập, mở lại `/` | Vẫn hiện form đăng nhập, không tự chuyển vào trang sản phẩm | (Q13) |
 | O-24 | Bấm Login khi trống → nhập sai mật khẩu → nhập đúng | Thông báo đổi đúng theo từng lần thử, lần cuối vào `/inventory.html` | ✅ |
@@ -70,4 +70,4 @@ Người dùng đăng nhập bằng username và password để vào trang danh 
 | Edge case, negative? | ❌ | Không đề cập. Đã bổ sung qua khám phá (O-05 → O-10, O-17, O-18, O-21 → O-25) |
 | Có câu hỏi blocking? | ✅ | 14 câu (6 blocking, 8 non-blocking): xem [`q-and-a.md`](q-and-a.md). Còn mở: Q12, Q13, Q14 |
 
-**Bug phát hiện sớm**: xem [`known-issues.md`](known-issues.md) (KI-01 → KI-04).
+**Bug phát hiện sớm**: xem [`known-issues.md`](known-issues.md) (BUG-01 → BUG-04).

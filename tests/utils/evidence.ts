@@ -18,7 +18,7 @@ type ShotOptions = {
  *
  * qa-runs/<spec-name>/evidence/
  *   all-cases/TC-xxx/  01-<step>.jpg, 02-<step>.jpg, video.webm, README.md
- *   bugs/<ticket>_<KI>/  copies for test cases tagged @KI-xx
+ *   bugs/<ticket>_<BUG>/  copies for test cases tagged @BUG-xx
  */
 export class Evidence {
   private step = 0;
@@ -34,9 +34,9 @@ export class Evidence {
     const root = path.join(info.project.testDir, '..', 'qa-runs', feature, 'evidence');
     this.dir = path.join(root, 'all-cases', this.tcId);
     this.bugDirs = info.tags
-      .map((t) => t.match(/^@(KI-\d+)$/)?.[1])
-      .filter((ki): ki is string => !!ki)
-      .map((ki) => path.join(root, 'bugs', `${BUG_TICKETS[ki] ?? '[id_bug]'}_${ki}`, this.tcId));
+      .map((t) => t.match(/^@(BUG-\d+)$/)?.[1])
+      .filter((id): id is string => !!id)
+      .map((id) => path.join(root, 'bugs', `${BUG_TICKETS[id] ?? '[id_bug]'}_${id}`, this.tcId));
     if (EVIDENCE_ENABLED) {
       for (const d of [this.dir, ...this.bugDirs]) {
         fs.rmSync(d, { recursive: true, force: true });
@@ -102,13 +102,13 @@ export class Evidence {
       for (const d of this.bugDirs) fs.copyFileSync(target, path.join(d, 'video.webm'));
     }
     // QC result = compared with the EXPECTED RESULT of the test case (not Playwright's "expected status").
-    const kis = this.info.tags.filter((t) => /^@KI-\d+$/.test(t)).map((t) => t.slice(1)).join(', ');
+    const bugs = this.info.tags.filter((t) => /^@BUG-\d+$/.test(t)).map((t) => t.slice(1)).join(', ');
     const s = this.info.status;
     const result =
       s === 'passed' ? '✅ Passed' : s === 'skipped' ? '⏭ Skipped' : s === 'timedOut' ? '❌ Failed (timeout)' : '❌ Failed';
     const remark =
-      kis && s === 'failed' ? ` · Bug: ${kis}`
-      : kis && s === 'passed' ? ` · ⚠️ Bug ${kis} có vẻ đã được sửa: kiểm tra lại rồi bỏ test.fail()`
+      bugs && s === 'failed' ? ` · Bug: ${bugs}`
+      : bugs && s === 'passed' ? ` · ⚠️ Bug ${bugs} có vẻ đã được sửa: kiểm tra lại rồi bỏ test.fail()`
       : '';
     const readme = [
       `# ${this.info.title}`,

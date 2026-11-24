@@ -22,8 +22,8 @@ Trong 33 test có 2 test **bug đã biết** dùng `test.fail()`. "Pass" ở đ�
 
 | Test | Fail ở đâu | Đúng bug? |
 |---|---|---|
-| TC-028 | `not.toHaveClass(/input_error/)`: ô Username vẫn có class lỗi | ✅ KI-01 |
-| TC-033 | `toHaveURL`: vẫn ở `/inventory.html` dù chỉ có cookie giả | ✅ KI-02 |
+| TC-028 | `not.toHaveClass(/input_error/)`: ô Username vẫn có class lỗi | ✅ BUG-01 |
+| TC-033 | `toHaveURL`: vẫn ở `/inventory.html` dù chỉ có cookie giả | ✅ BUG-02 |
 
 Cách báo cáo đúng: **31 pass + 2 bug đã biết**, không phải "33 pass".
 
@@ -39,7 +39,7 @@ npx playwright test tests/specs/saucedemo-login-screen.spec.ts --repeat-each=2
 |---|---|---|
 | `flaky` | Lúc pass lúc fail, do môi trường hoặc timing | 0 |
 | `script-issue` | Code test sai (locator, chờ, logic) → healer sửa | 0 |
-| `real-bug` | Web làm sai so với AC → người duyệt ở HITL #3 | **2** (KI-01, KI-02) |
+| `real-bug` | Web làm sai so với AC → người duyệt ở HITL #3 | **2** (BUG-01, BUG-02) |
 
 Thêm một ghi nhận: TC-006 mất 10,4 giây, **sát ngưỡng** 10 giây. Đây là nguy cơ chập chờn, cần theo dõi.
 
@@ -58,8 +58,8 @@ Tự động tạo trong `qa-runs/saucedemo-login-screen/evidence/`:
 evidence/
 ├── README.md                          ← mục lục: mọi TC + kết quả + link
 ├── all-cases/TC-001 … TC-033/         ← mỗi TC: ảnh từng bước + video + README
-└── bugs/[id_bug_1]_KI-01/TC-028/      ← bản sao cho TC có bug, đặt tên theo ticket
-         [id_bug_2]_KI-02/TC-033/         (log bug xong thì sửa tên trong tests/data/bugs.ts)
+└── bugs/[id_bug_1]_BUG-01/TC-028/      ← bản sao cho TC có bug, đặt tên theo ticket
+         [id_bug_2]_BUG-02/TC-033/         (log bug xong thì sửa tên trong tests/data/bugs.ts)
 ```
 - Mỗi ảnh có **nhãn** `TC-xxx · Bước n`, **khung đỏ** khoanh vùng cần xem, dòng **"🔍 Cần xem: …"** nói rõ người review phải kiểm tra gì.
 - Mỗi TC có **video** quay lại toàn bộ thao tác.

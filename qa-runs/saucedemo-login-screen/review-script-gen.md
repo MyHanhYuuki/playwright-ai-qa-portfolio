@@ -9,7 +9,7 @@
 | Mỗi TC automatable có đúng 1 test, tên bắt đầu bằng TC id, có tag @AC | ✅ 33/33 (kiểm bằng `--list`) |
 | Locator theo thứ tự ưu tiên, không XPath, không chờ cứng, không `networkidle` | ✅ (2 ngoại lệ có lý do, xem D1) |
 | Assertion theo expected trong test case (nguyên văn thông báo, URL) | ✅ |
-| Test bug đã biết dùng `test.fail()` kèm KI id | ✅ TC-028 (KI-01), TC-033 (KI-02) |
+| Test bug đã biết dùng `test.fail()` kèm BUG id | ✅ TC-028 (BUG-01), TC-033 (BUG-02) |
 | Mỗi test độc lập (mỗi test một phiên trình duyệt mới) | ✅ |
 | Page Object không chứa assertion nghiệp vụ | ✅ Chỉ fixture `loggedInPage` kiểm tra điều kiện trước (đã vào trang Products) |
 | Mật khẩu không viết thẳng trong spec | ✅ Lấy từ `tests/data/users.ts` |

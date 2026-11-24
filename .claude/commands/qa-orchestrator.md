@@ -80,7 +80,7 @@ Khi người dùng xác nhận: ghi câu trả lời vào cột **Trả lời** 
 
 ## Bước 2: test-impl
 Gọi agent `test-impl` với: `viewpoint.csv`, `q-and-a.md`, `known-issues.md`, `spec-review.md`.
-Kiểm tra: `test-cases.csv` có ≥1 TC, mọi TC có `linked_ac`, mọi viewpoint `scope=in` có ≥1 TC, mọi KI có TC.
+Kiểm tra: `test-cases.csv` có ≥1 TC, mọi TC có `linked_ac`, mọi viewpoint `scope=in` có ≥1 TC, mọi BUG-xx có TC.
 Gọi `qa-reviewer` (test-impl).
 Đặt `hitl_pending = "HITL #2"`.
 

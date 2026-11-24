@@ -28,12 +28,12 @@ Viewpoint mới nói **"test cái gì"**. Test case nói **"test thế nào"**: 
 | R3 | trống | có | `Username is required` | TC-011 |
 | R4 | có (đúng) | có (đúng) | Vào trang Products | TC-003 |
 
-**Độ phủ:** 20/20 viewpoint trong phạm vi, 7/7 AC, 2/2 bug đã biết có TC bắt (KI-01, KI-02). Ưu tiên: 14 high, 16 medium, 3 low. Gắn tag `smoke` cho 5 TC quan trọng nhất (TC-001, 003, 020, 023, 026).
+**Độ phủ:** 20/20 viewpoint trong phạm vi, 7/7 AC, 2/2 bug đã biết có TC bắt (BUG-01, BUG-02). Ưu tiên: 14 high, 16 medium, 3 low. Gắn tag `smoke` cho 5 TC quan trọng nhất (TC-001, 003, 020, 023, 026).
 
 **Những điểm cần chú ý:**
 - Expected ghi **nguyên văn** thông báo lỗi (theo Q1), không ghi "hiện lỗi phù hợp".
 - Mật khẩu không ghi vào test case, chỉ ghi `<mật khẩu hợp lệ>` và lấy từ test data.
-- TC-028 (KI-01) và TC-033 (KI-02) **dự kiến fail**. Vẫn viết, vì test để **bắt bug**, không phải để xanh.
+- TC-028 (BUG-01) và TC-033 (BUG-02) **dự kiến fail**. Vẫn viết, vì test để **bắt bug**, không phải để xanh.
 - TC-005 → 008 test cả 4 user: mỗi user có hành vi đặc biệt riêng nên là **các phân vùng khác nhau**, không trái nguyên tắc EP.
 - Bản đầu ghi TC-019 là "BVA". Review chỉ ra là **sai**, vì không có biên. Đã sửa thành Error Guessing.
 - TC-019: requirement không nêu độ dài tối đa nên **không làm được BVA đầy đủ** (min/max ±1), chỉ test giá trị cực lớn. Đây là giới hạn cần ghi rõ.

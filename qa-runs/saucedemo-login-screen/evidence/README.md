@@ -1,13 +1,13 @@
 # Evidence: saucedemo-login-screen
 
-> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-24T09:45:19.062Z.
+> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-24T10:23:26.979Z.
 > Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Mỗi test case có video.
 
 ## Bug (theo ticket)
 | Ticket_KI | Test case | Thư mục |
 |---|---|---|
-| [id_bug_1]_KI-01 | TC-028 | [bugs/[id_bug_1]_KI-01/TC-028](<bugs/[id_bug_1]_KI-01/TC-028/README.md>) |
-| [id_bug_2]_KI-02 | TC-033 | [bugs/[id_bug_2]_KI-02/TC-033](<bugs/[id_bug_2]_KI-02/TC-033/README.md>) |
+| [id_bug_1]_BUG-01 | TC-028 | [bugs/[id_bug_1]_BUG-01/TC-028](<bugs/[id_bug_1]_BUG-01/TC-028/README.md>) |
+| [id_bug_2]_BUG-02 | TC-033 | [bugs/[id_bug_2]_BUG-02/TC-033](<bugs/[id_bug_2]_BUG-02/TC-033/README.md>) |
 
 ## Tất cả test case
 | Test case | Kết quả | Thư mục |
@@ -39,9 +39,9 @@
 | TC-025 mở thẳng /checkout-step-one.html khi chưa đăng nhập bị chặn | ✅ Passed | [all-cases/TC-025](all-cases/TC-025/README.md) |
 | TC-026 đăng xuất về trang đăng nhập và xóa phiên | ✅ Passed | [all-cases/TC-026](all-cases/TC-026/README.md) |
 | TC-027 đăng xuất rồi bấm Back không xem lại được trang sản phẩm | ✅ Passed | [all-cases/TC-027](all-cases/TC-027/README.md) |
-| TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi | ❌ Failed · Bug: KI-01 | [all-cases/TC-028](all-cases/TC-028/README.md) |
+| TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi | ❌ Failed · Bug: BUG-01 | [all-cases/TC-028](all-cases/TC-028/README.md) |
 | TC-029 đăng xuất rồi đăng nhập lại thành công | ✅ Passed | [all-cases/TC-029](all-cases/TC-029/README.md) |
 | TC-030 thử lại sau lỗi: thông báo cập nhật, nhập đúng thì vào được | ✅ Passed | [all-cases/TC-030](all-cases/TC-030/README.md) |
 | TC-031 tải lại trang vẫn giữ phiên đăng nhập | ✅ Passed | [all-cases/TC-031](all-cases/TC-031/README.md) |
 | TC-032 mở thẳng /inventory-item.html khi chưa đăng nhập bị chặn | ✅ Passed | [all-cases/TC-032](all-cases/TC-032/README.md) |
-| TC-033 cookie phiên tự tạo không được vào trang bên trong | ❌ Failed · Bug: KI-02 | [all-cases/TC-033](all-cases/TC-033/README.md) |
+| TC-033 cookie phiên tự tạo không được vào trang bên trong | ❌ Failed · Bug: BUG-02 | [all-cases/TC-033](all-cases/TC-033/README.md) |

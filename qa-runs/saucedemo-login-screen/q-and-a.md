@@ -2,7 +2,7 @@
 
 > **Phiếu hỏi đáp duy nhất** của chức năng: test-design đặt câu hỏi, người duyệt (PO/BA) trả lời ở HITL #1.
 > Trạng thái: `Open` (chờ trả lời) · `Answered` (đã chốt).
-> O-xx = quan sát trong [`spec-review.md`](spec-review.md). IMP-xx = [`improvements.md`](improvements.md). KI-xx = [`known-issues.md`](known-issues.md).
+> O-xx = quan sát trong [`spec-review.md`](spec-review.md). IMP-xx = [`improvements.md`](improvements.md). BUG-xx = [`known-issues.md`](known-issues.md).
 
 **Tổng hợp**: 14 câu (6 blocking, 8 non-blocking) · Answered 14 · Open 0
 
@@ -13,15 +13,15 @@
 | Q2 | Phân biệt hoa thường? Cắt khoảng trắng? | O-06, O-07 | Password: phân biệt, không cắt. Username: theo hành vi hiện tại, đề xuất cắt khoảng trắng | Theo đề xuất. Không coi hành vi hiện tại là đúng chỉ vì web đang vậy, nên ghi IMP-01 | Answered | TC-015 → TC-018 expected báo sai thông tin |
 | Q3 | Trống cả 2 ô báo lỗi nào? | O-02 | Chỉ "Username is required". Đề xuất UX báo từng ô | Theo đề xuất (IMP-02) | Answered | TC-009 → TC-011 |
 | Q4 | Tài khoản khóa + sai mật khẩu báo gì? | O-09 | Báo "không khớp", không lộ trạng thái khóa | Theo đề xuất. Chống dò tài khoản | Answered | TC-021 |
-| Q5 | Ngưỡng thời gian đăng nhập? | O-14: ~5,1 giây so với ~0,07 giây | Test chức năng chỉ kiểm tra thành công (≤10 giây). Báo riêng vấn đề hiệu năng, đề xuất ≤3 giây | Theo đề xuất (IMP-03, KI-03) | Answered | TC-006 timeout 10 giây |
-| Q12 | **Tự tạo cookie `session-username` là vào được trang bên trong mà không cần đăng nhập. Là bug?** | O-21 (đã kiểm chứng) | **Là bug bảo mật, vi phạm AC-6.** Severity Critical với hệ thống thật. SauceDemo xác thực phía trình duyệt nên khó sửa, nhưng vẫn phải báo. Viết test (dự kiến fail) | Theo đề xuất | Answered | TVP-020, TC-033, KI-02 |
+| Q5 | Ngưỡng thời gian đăng nhập? | O-14: ~5,1 giây so với ~0,07 giây | Test chức năng chỉ kiểm tra thành công (≤10 giây). Báo riêng vấn đề hiệu năng, đề xuất ≤3 giây | Theo đề xuất (IMP-03, BUG-03) | Answered | TC-006 timeout 10 giây |
+| Q12 | **Tự tạo cookie `session-username` là vào được trang bên trong mà không cần đăng nhập. Là bug?** | O-21 (đã kiểm chứng) | **Là bug bảo mật, vi phạm AC-6.** Severity Critical với hệ thống thật. SauceDemo xác thực phía trình duyệt nên khó sửa, nhưng vẫn phải báo. Viết test (dự kiến fail) | Theo đề xuất | Answered | TVP-020, TC-033, BUG-02 |
 
 ## Câu hỏi non-blocking
 | # | Câu hỏi | Context | Đề xuất | Trả lời | Trạng thái | Ảnh hưởng tới test |
 |---|---|---|---|---|---|---|
-| Q6 | Thiếu Password mà ô Username cũng tô đỏ? | O-03 | Bug giao diện, mức Low | Theo đề xuất. Gây hiểu nhầm username sai | Answered | TVP-016, TC-028, KI-01 |
+| Q6 | Thiếu Password mà ô Username cũng tô đỏ? | O-03 | Bug giao diện, mức Low | Theo đề xuất. Gây hiểu nhầm username sai | Answered | TVP-016, TC-028, BUG-01 |
 | Q7 | Xóa ô Password sau khi đăng nhập lỗi? | O-10 | Không yêu cầu | Theo đề xuất. Ticket không nêu | Answered | TVP-025 (ngoài phạm vi) |
-| Q8 | Lỗi "You can only access…" không tự mất? | O-18 | Quan sát mức Low | Theo đề xuất | Answered | Không viết test. Theo dõi ở KI-04 |
+| Q8 | Lỗi "You can only access…" không tự mất? | O-18 | Quan sát mức Low | Theo đề xuất | Answered | Không viết test. Theo dõi ở BUG-04 |
 | Q9 | Test phiên hết hạn 10 phút? | O-12 | Ngoài phạm vi | Theo đề xuất. Tách ticket riêng nếu cần | Answered | TVP-023 (ngoài phạm vi) |
 | Q10 | Accessibility (thiếu label)? | O-01, O-19 | Ngoài phạm vi, tách ticket accessibility | Theo đề xuất. Vi phạm WCAG (IMP-04) | Answered | TVP-022 (ngoài phạm vi) |
 | Q11 | Icon ✕ trong ô nhập dễ hiểu nhầm là nút xóa? | O-20 (người duyệt phát hiện) | Đề xuất cải tiến UX | Theo đề xuất (IMP-05) | Answered | Không viết test |

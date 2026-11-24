@@ -36,7 +36,7 @@ Mức: 🔴 Critical (sai làm hỏng các bước sau) · 🟠 Major · 🟡 Mi
 - [ ] Bug thấy sớm đã ghi vào `known-issues.md`
 
 ### test-impl (ISTQB: Test Design + Implementation)
-- [ ] Mọi viewpoint `scope=in` có ≥1 TC. Mọi KI có TC bắt được
+- [ ] Mọi viewpoint `scope=in` có ≥1 TC. Mọi BUG-xx có TC bắt được
 - [ ] Kỹ thuật ghi đúng (không gọi là BVA khi không có biên; EP chỉ 1 đại diện/phân vùng)
 - [ ] Expected **cụ thể, đo được** (nguyên văn text, URL, trạng thái). Mỗi TC một mục đích
 - [ ] Không có mật khẩu thật trong TC. Test data đủ cho mọi TC
@@ -46,12 +46,12 @@ Mức: 🔴 Critical (sai làm hỏng các bước sau) · 🟠 Major · 🟡 Mi
 - [ ] Mỗi TC automatable có đúng 1 test, tên bắt đầu bằng TC id, có tag @AC
 - [ ] Locator theo thứ tự ưu tiên. Không XPath, không chờ cứng, không `networkidle`
 - [ ] Assertion theo **expected trong test case**, không theo hành vi hiện tại của web
-- [ ] Test của bug đã biết dùng `test.fail()` kèm KI id, không bị bỏ qua
+- [ ] Test của bug đã biết dùng `test.fail()` kèm BUG id, không bị bỏ qua
 - [ ] Mỗi test độc lập. Page Object không chứa assertion nghiệp vụ
 
 ### executor
 - [ ] Phân loại flaky / script-issue / real-bug có bằng chứng (trace, ảnh chụp)
-- [ ] Mọi KI đã được test bắt được. KI nào "pass" bất ngờ thì phải điều tra
+- [ ] Mọi BUG-xx đã được test bắt được. BUG nào "pass" bất ngờ thì phải điều tra
 - [ ] Không có real-bug bị gắn nhầm thành script-issue
 
 ## Quy tắc
