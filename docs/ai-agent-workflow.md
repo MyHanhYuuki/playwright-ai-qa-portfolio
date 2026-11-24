@@ -111,7 +111,7 @@ flowchart TD
 ## 4. Nơi lưu kết quả của một lần chạy
 
 ```
-qa-runs/<tên-chức-năng>/          ← mỗi chức năng một thư mục (vd: saucedemo-login)
+qa-runs/<tên-chức-năng>/          ← mỗi chức năng một thư mục (vd: saucedemo-login-screen)
   requirement/requirement.md       ← đầu vào
   spec-review.md                   ← [1]
   viewpoint.csv                    ← [1]

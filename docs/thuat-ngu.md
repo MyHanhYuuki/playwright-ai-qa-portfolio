@@ -6,7 +6,7 @@
 | Thuật ngữ | Nghĩa | Ví dụ trong dự án |
 |---|---|---|
 | **SUT / AUT** (System/Application Under Test) | Hệ thống đang được test | SauceDemo (saucedemo.com) |
-| **Requirement** | Tài liệu mô tả chức năng cần làm | `qa-runs/saucedemo-login/requirement/` |
+| **Requirement** | Tài liệu mô tả chức năng cần làm | `qa-runs/saucedemo-login-screen/requirement/` |
 | **User story** | Yêu cầu viết dạng "Là… tôi muốn… để…" | "Là khách hàng, tôi muốn đăng nhập để mua hàng" |
 | **AC** (Acceptance Criteria) | Tiêu chí nghiệm thu: điều kiện để coi chức năng là "xong" | AC-3: bỏ trống thì báo lỗi |
 | **Testable** | Đo lường được, kiểm tra được pass/fail | "Báo lỗi phù hợp" là **không** testable |
@@ -23,7 +23,7 @@
 | **Test Plan** | Kế hoạch kiểm thử: mục tiêu, phạm vi, cách làm, tiêu chí xong, rủi ro | `docs/tong-quan-du-an.md` |
 | **Exit criteria** | Tiêu chí hoàn thành: khi nào coi là test xong | Mục 10 trong tổng quan dự án |
 | **RTM** (Requirement Traceability Matrix) | Ma trận truy vết: requirement → AC → TC → kết quả → bug | `rtm-report.html` |
-| **Q&A sheet** | Phiếu hỏi đáp: câu hỏi và câu trả lời nằm chung một file, có trạng thái Open/Answered | `qa-runs/saucedemo-login/q-and-a.md` |
+| **Q&A sheet** | Phiếu hỏi đáp: câu hỏi và câu trả lời nằm chung một file, có trạng thái Open/Answered | `qa-runs/saucedemo-login-screen/q-and-a.md` |
 | **Known issue** | Bug đã biết từ trước khi chạy test. Test phải bắt được | `known-issues.md` (KB-xx) |
 | **Peer review** (review chéo) | Người khác (hoặc agent khác) soát lại kết quả trước khi đi tiếp | Agent `qa-reviewer` |
 | **Scope in / out** | Trong / ngoài phạm vi test. Ghi cả mục ngoài phạm vi để biết là đã cân nhắc | Cột `scope` trong `viewpoint.csv` |

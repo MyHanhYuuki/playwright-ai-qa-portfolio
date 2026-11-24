@@ -1,7 +1,7 @@
 # Bài 2: Phân tích yêu cầu (test-design) và HITL #1
 
 > Chức năng thực hành: **Đăng nhập SauceDemo** (ticket mô phỏng SD-101)
-> Kết quả: [`qa-runs/saucedemo-login/`](../../qa-runs/saucedemo-login/)
+> Kết quả: [`qa-runs/saucedemo-login-screen/`](../../qa-runs/saucedemo-login-screen/)
 
 ## 🧭 Chúng ta đang test cái gì?
 Cần phân biệt 2 thứ:
@@ -56,7 +56,7 @@ Chi tiết mục đích, công cụ, phạm vi và tiến độ: xem [Tổng qua
 ## 👨‍🏫 Làm mẫu: các bước đã làm
 
 ### Bước 1: Chuẩn bị requirement
-Tạo [`requirement/requirement.md`](../../qa-runs/saucedemo-login/requirement/requirement.md) theo dạng ticket thật: user story + 7 AC. Ticket được **cố ý để lại chỗ mơ hồ** để tập phát hiện.
+Tạo [`requirement/requirement.md`](../../qa-runs/saucedemo-login-screen/requirement/requirement.md) theo dạng ticket thật: user story + 7 AC. Ticket được **cố ý để lại chỗ mơ hồ** để tập phát hiện.
 
 ### Bước 2: Review requirement theo checklist 7 mục
 | Mục | Hỏi gì |
@@ -96,19 +96,19 @@ Kết quả: 15 viewpoint ban đầu. Sau HITL #1 và review thì có **25 viewp
 
 ### Bước 7: HITL #1, chốt câu trả lời
 - Người duyệt xem gợi ý, **góp ý sửa 4 gợi ý chưa chuẩn** (Q2, Q3, Q5, Q10) và **tự phát hiện thêm 1 vấn đề**: icon ✕ trong ô nhập dễ bị hiểu nhầm là nút xóa (O-20, Q11).
-- Kết quả: [`q-and-a.md`](../../qa-runs/saucedemo-login/q-and-a.md). Câu hỏi và câu trả lời nằm **chung một file** (Q&A sheet), mỗi câu có trạng thái Open/Answered và **ảnh hưởng tới test**.
+- Kết quả: [`q-and-a.md`](../../qa-runs/saucedemo-login-screen/q-and-a.md). Câu hỏi và câu trả lời nằm **chung một file** (Q&A sheet), mỗi câu có trạng thái Open/Answered và **ảnh hưởng tới test**.
 - Câu trả lời làm **thay đổi viewpoint**: Q6 = bug thì thêm **TVP-016**. Q4 làm rõ expected của TVP-011.
-- Những điểm không phải bug nhưng nên sửa được gom vào [`improvements.md`](../../qa-runs/saucedemo-login/improvements.md) (5 đề xuất).
+- Những điểm không phải bug nhưng nên sửa được gom vào [`improvements.md`](../../qa-runs/saucedemo-login-screen/improvements.md) (5 đề xuất).
 - Quy tắc dùng lại được lưu vào [`kb/q-and-a-archive.md`](../../kb/q-and-a-archive.md).
 
 > ⚠️ Ngoài thực tế, đừng **"OK hết"** theo thói quen. Đề xuất mặc định chỉ để tiết kiệm thời gian. Người duyệt vẫn phải đọc và hiểu từng câu, vì sau này bug lọt thì người ký duyệt là người chịu trách nhiệm.
 
 ### Bước 8: Review lại toàn bộ (qa-reviewer)
-Sau khi chốt Q&A, review lại toàn bộ theo góc nhìn QC Lead và ISTQB ([`review-test-design.md`](../../qa-runs/saucedemo-login/review-test-design.md)). Phát hiện thêm:
+Sau khi chốt Q&A, review lại toàn bộ theo góc nhìn QC Lead và ISTQB ([`review-test-design.md`](../../qa-runs/saucedemo-login-screen/review-test-design.md)). Phát hiện thêm:
 - 🔴 **Lỗ hổng bảo mật**: tự tạo cookie `session-username` là vào được trang bên trong mà không cần đăng nhập (O-21, KB-02).
 - Thiếu 4 viewpoint: đăng nhập lại sau khi đăng xuất, thử lại sau lỗi, giữ phiên khi tải lại trang, trang chi tiết sản phẩm.
 - Hai file câu hỏi bị trùng và lệch nhau, nên **gộp thành một phiếu Q&A**.
-- Bug thấy sớm được ghi vào [`known-issues.md`](../../qa-runs/saucedemo-login/known-issues.md), để lúc chạy test không bỏ sót.
+- Bug thấy sớm được ghi vào [`known-issues.md`](../../qa-runs/saucedemo-login-screen/known-issues.md), để lúc chạy test không bỏ sót.
 
 > 🏭 Ngoài thực tế: **review chéo (peer review)** sau mỗi bước là cách rẻ nhất để chặn lỗi lan sang bước sau. Theo ISTQB, phát hiện lỗi càng sớm thì chi phí sửa càng thấp.
 
@@ -138,7 +138,7 @@ Mở terminal **trong thư mục dự án** rồi chạy Claude Code. Agent và 
 cd playwright-ai-qa-portfolio
 claude
 # trong Claude Code:
-/qa-orchestrator saucedemo-login
+/qa-orchestrator saucedemo-login-screen
 ```
 
 ## ⚠️ Lỗi hay gặp

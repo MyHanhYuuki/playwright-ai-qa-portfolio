@@ -1,6 +1,6 @@
 # Bài 3: Thiết kế test case (test-impl) và HITL #2
 
-> Bước **[2] test-impl** trong pipeline. Kết quả: [`test-cases.csv`](../../qa-runs/saucedemo-login/test-cases.csv) (mở bằng Excel), [`test-data.md`](../../qa-runs/saucedemo-login/test-data.md)
+> Bước **[2] test-impl** trong pipeline. Kết quả: [`test-cases.csv`](../../qa-runs/saucedemo-login-screen/test-cases.csv) (mở bằng Excel), [`test-data.md`](../../qa-runs/saucedemo-login-screen/test-data.md)
 
 ## 🎯 Tại sao học
 Viewpoint mới nói **"test cái gì"**. Test case nói **"test thế nào"**: bước, dữ liệu, kết quả mong đợi. Test case chính là đầu vào để viết code automation. Test case sai hoặc thiếu thì code đúng cũng vô ích.

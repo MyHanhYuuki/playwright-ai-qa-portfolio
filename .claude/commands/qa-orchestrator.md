@@ -4,7 +4,7 @@ Chạy QA pipeline đầy đủ cho một chức năng: 5 agent chạy tuần t�
 
 ## Cách dùng
 ```
-/qa-orchestrator <feature>            # vd: /qa-orchestrator saucedemo-login
+/qa-orchestrator <feature>            # vd: /qa-orchestrator saucedemo-login-screen
 /qa-orchestrator <feature> --from=<bước>  # chạy tiếp từ bước: design|impl|script|execute|report
 ```
 `<feature>` ứng với thư mục `qa-runs/<feature>/`. Thư mục này phải có `requirement/requirement.md`.
@@ -48,7 +48,7 @@ requirement
 ## State: `qa-runs/<feature>/.qa-state.json`
 Chỉ lưu những thứ **không suy ra được từ file kết quả** (file này không commit):
 ```json
-{ "feature": "saucedemo-login", "hitl_pending": null, "heal_counters": {}, "last_run_id": null, "last_error": null }
+{ "feature": "saucedemo-login-screen", "hitl_pending": null, "heal_counters": {}, "last_run_id": null, "last_error": null }
 ```
 - `hitl_pending`: `"HITL #1"` | `"HITL #2"` | `"HITL #3"` | `null`
 - `heal_counters`: `{ "TC-003": 1 }`
