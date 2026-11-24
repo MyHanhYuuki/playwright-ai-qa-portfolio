@@ -68,6 +68,7 @@ Step-by-step notes written while building this project with an AI agent:
 0. [Lời dặn trước khi bắt đầu](docs/learning/00-loi-dan-truoc-khi-bat-dau.md)
 1. [Cấu trúc dự án Playwright](docs/learning/01-cau-truc-du-an.md)
 2. [Phân tích yêu cầu (test-design) và HITL #1](docs/learning/02-phan-tich-yeu-cau.md)
+3. [Thiết kế test case (test-impl) và HITL #2](docs/learning/03-thiet-ke-test-case.md)
 
 ## Progress
 - [x] Project setup (Playwright 1.65, Chromium, Playwright MCP)
