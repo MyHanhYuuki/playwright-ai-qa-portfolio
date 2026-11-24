@@ -81,7 +81,8 @@ Step-by-step notes written while building this project with an AI agent:
 - [x] Project setup (Playwright 1.65, Chromium, Playwright MCP)
 - [x] AI agent QA pipeline (5 agents + reviewer + orchestrator + 3 HITL)
 - [x] SauceDemo Login: full pipeline run ([bug reports](qa-runs/saucedemo-login-screen/defects.md) · [RTM](qa-runs/saucedemo-login-screen/rtm.md))
-- [ ] SauceDemo Cart → Checkout
+- [ ] SauceDemo Products + Product detail + Cart
+- [ ] SauceDemo Cart → Checkout (E2E)
 - [ ] Bug reports (problem_user, error_user…)
 - [ ] API tests (Restful Booker)
 - [ ] CI + published report

@@ -66,9 +66,10 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | 5 | Chạy test và phân loại lỗi | triage.md, báo cáo HTML | ✅ |
 | 6 | Sửa test hỏng (healer) | healing-log.md | ⏭ Lần này không có script-issue |
 | 7 | Bug report + RTM | defects.md, rtm.md / rtm-report.html (`npm run rtm`) | ✅ |
-| 8 | Giỏ hàng → Thanh toán (cả pipeline) | Bộ test E2E mua hàng | ⏳ |
-| 9 | Test API: Restful Booker | `tests/api` | ⏳ |
-| 10 | Hoàn thiện CI, README, tổng kết | Báo cáo tổng kết | ⏳ |
+| 8 | Sản phẩm + Chi tiết + Giỏ hàng (cả pipeline) | `qa-runs/saucedemo-products-cart/` | 🔄 Phân tích yêu cầu xong, đang review, kế tiếp HITL #1 |
+| 9 | Giỏ hàng → Thanh toán → Hoàn tất (cả pipeline, E2E mua hàng) | `qa-runs/saucedemo-checkout/` | ⏳ |
+| 10 | Test API: Restful Booker | `tests/api` | ⏳ |
+| 11 | Hoàn thiện CI, README, tổng kết | Báo cáo tổng kết | ⏳ |
 
 ## 8. Sản phẩm bàn giao
 - **Tài liệu QA** cho mỗi chức năng (`qa-runs/<feature>/`): requirement, spec review, viewpoint, test case, triage, bug report, RTM.
@@ -109,3 +110,4 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | Đăng nhập: code test | 33 test (POM: 2 Page Object, 3 fixture gồm evidence), 5 test smoke (+1 seed = 6 khi chạy `test:smoke`) |
 | Đăng nhập: kết quả chạy | 31 Passed + 2 Failed (bug đã biết, fail đúng chỗ), 0 chập chờn (chạy lặp 66/66). Lần chạy mới nhất `run-20261124-184137`: 17,9 giây |
 | Đăng nhập: RTM | 7/7 AC có test case, 5/7 AC đạt, 2 bug đang mở (1 High bảo mật, 1 Low giao diện) |
+| Sản phẩm + giỏ: phân tích yêu cầu | 7 AC, 28 quan sát, 33 viewpoint (27 trong phạm vi), 13 câu hỏi, 6 đề xuất cải tiến, 13 bug phát hiện sớm (BUG-05 → BUG-17) |
