@@ -1,7 +1,7 @@
 # RTM: saucedemo-login-screen
 
 > Ma trận truy vết **AC → viewpoint → test case → kết quả → bug**. Tạo tự động bởi `npm run rtm`, đừng sửa tay.
-> Nguồn: [requirement](requirement/requirement.md) · [viewpoint.csv](viewpoint.csv) · [test-cases.csv](test-cases.csv) · kết quả [run-20261124-150906.json](run-results/run-20261124-150906.json) · [defects.md](defects.md)
+> Nguồn: [requirement](requirement/requirement.md) · [viewpoint.csv](viewpoint.csv) · [test-cases.csv](test-cases.csv) · kết quả [run-20261124-184137.json](run-results/run-20261124-184137.json) · [defects.md](defects.md)
 
 ## Tóm tắt
 | Chỉ số | Giá trị |

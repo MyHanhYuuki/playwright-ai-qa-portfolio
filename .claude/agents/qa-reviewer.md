@@ -59,6 +59,9 @@ Mức: 🔴 Critical (sai làm hỏng các bước sau) · 🟠 Major · 🟡 Mi
 - [ ] Expected trích từ **AC / câu trả lời Q&A**, không phải ý kiến cá nhân. Actual mô tả đúng cái thấy được
 - [ ] Severity (ảnh hưởng) tách khỏi Priority (mức ưu tiên sửa). Có lý do. Khớp với quyết định ở HITL #3
 - [ ] Evidence link mở được, ảnh đúng chỗ lỗi. Có môi trường, tần suất, TC / AC liên quan
+- [ ] Đã thử **biến thể** của bug (chiều ngược lại, dữ liệu khác, trang khác). TC bắt bug phủ mọi biến thể
+- [ ] Ảnh tái hiện bằng tay nằm riêng trong `manual/`, không lẫn với ảnh do test tự động sinh ra
+- [ ] Tần suất và kết quả chạy trích dẫn được file trong `run-results/`
 - [ ] Tiêu đề bug: `[Chức năng] hành vi sai`, đọc là hiểu, không chung chung kiểu "Lỗi đăng nhập"
 - [ ] RTM: mọi AC có TC, số liệu khớp `triage.md` và `run-results`, bug gắn đúng AC. Viewpoint ngoài phạm vi có lý do
 

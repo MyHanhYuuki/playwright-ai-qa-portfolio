@@ -164,7 +164,7 @@ ${warnings.length ? `<div class="warn"><b>⚠️ Cảnh báo</b><ul>${warnings.m
 <div class="card">Test case Failed<b>${sum.failed}</b></div>
 <div class="card">Skipped · Flaky · Not run<b>${sum.skipped} · ${sum.flaky} · ${sum.notRun}</b></div>
 <div class="card">Bug đang mở<b>${openBugs.length}</b></div></div>
-<p class="mute">Kết quả so với expected của test case. Test bug đã biết dùng <code>test.fail()</code>: Playwright ghi "passed", RTM ghi Failed.</p>
+<p class="mute">Kết quả so với expected của test case. Test bug đã biết dùng <code>test.fail()</code>: Playwright ghi "passed", RTM ghi Failed. Link tới file <code>.md</code> nên xem trên GitHub (trình duyệt chỉ hiện text thô).</p>
 <h2>Theo AC</h2><div class="wrap"><table><tr><th>AC</th><th>Yêu cầu</th><th>Viewpoint</th><th>TC</th><th>Passed</th><th>Failed</th><th>Khác</th><th>Bug</th><th>Trạng thái</th></tr>
 ${perAc.map((a) => `<tr><td>${a.id}</td><td>${esc(a.text)}</td><td>${esc(vpCount(a.vps))}</td><td>${a.rows.length}</td><td>${a.passed}</td><td>${a.failed}</td><td>${a.other}</td><td class="nw">${a.bugs.map(htmlBug).join(', ') || '–'}</td><td class="${{ pass: 'ok', fail: 'ng' }[a.status] ?? 'na'}">${label[a.status]}</td></tr>`).join('\n')}
 </table></div>

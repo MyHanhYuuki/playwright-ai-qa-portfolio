@@ -55,10 +55,16 @@
 | # | Xử lý |
 |---|---|
 | A1 | ✅ Tái hiện cả 2 chiều (`evidence/bugs/[id_bug_1]_BUG-01/manual/`), viết lại tiêu đề và mô tả BUG-01. Người duyệt chọn **không thêm TC mới**: sửa TC-028 kiểm tra cả 2 chiều (`expect.soft`), cập nhật test-cases.csv, viewpoint TVP-016, known-issues, triage, chụp lại evidence cả 2 chiều. Kiểm chứng: bỏ `test.fail()` thì test fail đúng 2 chỗ (chiều 1 và chiều 2) |
-| A2, B1, E2 | ✅ Ảnh tái hiện bằng tay trên 4 trang trong `manual/`, liệt kê đủ 6 trang và `httpOnly: false` trong BUG-02 |
-| B2 | ✅ Thêm cửa sổ ẩn danh và `allow pasting` vào bước tái hiện |
+| A2, B1 | ✅ Ảnh tái hiện bằng tay trên 4 trang trong `manual/`, liệt kê đủ 6 trang và `httpOnly: false` trong BUG-02 |
+| E2 | ✅ Thêm vào checklist `defects` của qa-reviewer và bước 6 của orchestrator: thử biến thể, ảnh tay để riêng trong `manual/`, tần suất phải trích được file kết quả |
+| B2 | ✅ Thêm cửa sổ ẩn danh và `allow pasting` vào bước tái hiện. Chưa thêm cách tạo cookie qua tab Application (cách Console đủ dùng) |
 | B3 | ✅ Priority có lý do riêng |
 | B4, C2 | ✅ Ghi rõ nguồn tần suất và lần chụp evidence. Chỉ 1 lần chạy có file kết quả: chấp nhận |
-| B5, D1–D6, E3, C1 | ✅ Sửa `build-rtm.mjs`: skip / flaky / chưa chạy / "bug có vẻ đã sửa" không tính AC đạt; thêm số Skipped, Flaky, cần làm tay; cảnh báo khi run không full, số TC lệch, TC thừa; bug mở đọc trạng thái từ `defects.md`; escape `\|`; slug giữ `_`; link bug có anchor trong HTML; chú thích `test.fail()`. Kiểm chứng: cố tình skip TC-001, xóa TC-026, cho TC-028 pass → RTM báo đúng cả 3 |
+| B5, D1, D2, E3, C1 | ✅ Sửa `build-rtm.mjs`: skip / flaky / chưa chạy / "bug có vẻ đã sửa" không tính AC đạt; thêm số Skipped, Flaky, cần làm tay; cảnh báo khi số TC lệch, TC thừa; chú thích `test.fail()`. Kiểm chứng: cố tình skip TC-001, xóa TC-026, cho TC-028 pass → RTM báo đúng cả 3 |
+| D3 | 🟡 Một phần: trạng thái bug đọc từ `defects.md`. BUG-xx chưa có trong defects vẫn hiện là đang mở, kèm cảnh báo (an toàn hơn là ẩn đi) |
+| D4 | 🟡 Một phần: chỉ **cảnh báo** khi lần chạy mới nhất không phải full, chưa tự ghép kết quả nhiều lần chạy. Đủ dùng khi luôn chạy full trước khi tạo RTM |
+| D5 | 🟡 Một phần: escape `\|`, slug giữ `_` và dấu. Chưa xử lý heading trùng (chưa có trường hợp này) |
+| D6 | ✅ Link bug có anchor ở cả 2 bảng HTML, thêm ghi chú link `.md` nên xem trên GitHub |
+| Thêm (soát lại sau review) | ✅ RTM đang lấy kết quả từ lần chạy **trước khi** sửa TC-028. Đã chạy lại full: `run-20261124-184137` (31 Passed / 2 Failed), RTM tạo lại từ lần chạy này. Sửa dòng tần suất BUG-01: chiều 2 chỉ được xác nhận từ lần chạy mới |
 | B6, D8, E1 | ✅ Link `improvements.md`, tiêu đề BUG-01 nêu tình huống, thêm mục "Khi log ticket thật" |
 | D7 | ⏭ Backlog: khung khoanh vùng đổi màu khác đỏ (cần chụp lại toàn bộ evidence) |

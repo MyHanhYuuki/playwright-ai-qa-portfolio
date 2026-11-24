@@ -133,7 +133,8 @@ Mỗi bug đã duyệt ghi theo mẫu:
 - **Evidence**: `evidence/bugs/[id_bug_n]_BUG-xx/TC-xxx/` (ảnh khoanh đỏ + video)
 ```
 Đầu file có bảng tổng hợp: `| Bug | Ticket | TC | Tiêu đề | Severity | Priority | Trạng thái |`. Cuối file ghi các BUG-xx trong `known-issues.md` **không** đưa vào report, kèm lý do.
-Tự làm lại các bước tái hiện trên trình duyệt sạch trước khi ghi.
+Tự làm lại các bước tái hiện trên trình duyệt sạch trước khi ghi. Thử cả **biến thể** (chiều ngược lại, dữ liệu khác, trang khác). Ảnh tái hiện bằng tay lưu riêng vào `evidence/bugs/<ticket>_BUG-xx/manual/` kèm README (thao tác, kết quả, thời điểm).
+Có biến thể thì **mở rộng TC đang bắt bug** để kiểm tra mọi biến thể (`expect.soft`), không tạo TC mới, và chụp lại evidence cho mọi biến thể.
 Test của bug đã duyệt giữ nguyên trạng thái **fail**. Có thể đánh dấu `test.fail()` kèm comment `// BUG-001` để CI xanh nhưng vẫn theo dõi bug: test sẽ báo lỗi khi bug được sửa.
 
 ## Bước 7: RTM → `npm run rtm` → `rtm.md` + `rtm-report.html`

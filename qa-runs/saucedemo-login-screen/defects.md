@@ -1,6 +1,6 @@
 # Bug report: SD-101 Đăng nhập
 
-> Bug đã được người duyệt xác nhận ở **HITL #3** (2026-11-24), từ lần chạy [`run-20261124-150906`](run-results/run-20261124-150906.json) · Phân loại: [`triage.md`](triage.md).
+> Bug đã được người duyệt xác nhận ở **HITL #3** (2026-11-24), từ lần chạy [`run-20261124-150906`](run-results/run-20261124-150906.json). Chạy lại sau khi sửa TC-028 (kiểm tra cả 2 chiều): [`run-20261124-184137`](run-results/run-20261124-184137.json), kết quả không đổi · Phân loại: [`triage.md`](triage.md).
 > Ticket chưa log lên hệ thống quản lý bug nên tạm ghi `[id_bug_n]`. Cách thay khi đã log: xem [cuối file](#khi-log-ticket-thật).
 > Ảnh evidence tự động lấy từ lần chụp evidence mới nhất (`npm run test:evidence`, 2026-11-24 17:23), cùng code test với lần chạy trên. Ảnh tái hiện bằng tay nằm trong thư mục `manual/` của từng bug.
 
@@ -20,7 +20,7 @@
 | **Ticket** | `[id_bug_1]` |
 | **Severity / Priority** | **Low**: lỗi giao diện, không chặn đăng nhập nhưng gây hiểu nhầm. **P3** (đề xuất): sửa khi tiện, không cần chặn release |
 | **Môi trường** | https://www.saucedemo.com · Chromium (Playwright 1.65.1, Desktop Chrome) · 2026-11-24 |
-| **Tần suất** | 100%: mọi lần chạy (run-20261124-150906, chạy lặp ×2, lần chụp evidence) và tái hiện bằng tay. Lưu kết quả: 1 lần chạy trong `run-results/` |
+| **Tần suất** | 100%. Chiều 1: mọi lần chạy (run-20261124-150906, chạy lặp ×2, run-20261124-184137, các lần chụp evidence) và tái hiện bằng tay. Chiều 2 (phát hiện sau review): run-20261124-184137, lần chụp evidence 18:14 và tái hiện bằng tay. Kết quả đã lưu: 2 lần chạy trong `run-results/` |
 | **Liên quan** | AC-3 · TVP-016 · TC-028 · Q6 · O-03 |
 
 **Điều kiện trước**: chưa đăng nhập, đang ở trang đăng nhập `/`.
@@ -48,7 +48,7 @@ Người dùng dễ tưởng ô mình đã nhập đúng là bị sai.
 | **Ticket** | `[id_bug_2]` |
 | **Severity / Priority** | **High**: vượt qua đăng nhập, vi phạm AC-6. Với hệ thống thật là **Critical**. **P1** (đề xuất): lỗi bảo mật, ai biết tên user là vào được mọi trang kể cả thanh toán, nên sửa trước release |
 | **Môi trường** | https://www.saucedemo.com · Chromium (Playwright 1.65.1, Desktop Chrome) · 2026-11-24 |
-| **Tần suất** | 100%: mọi lần chạy (run-20261124-150906, chạy lặp ×2, lần chụp evidence) và tái hiện bằng tay. Lưu kết quả: 1 lần chạy trong `run-results/` |
+| **Tần suất** | 100%: mọi lần chạy (run-20261124-150906, chạy lặp ×2, run-20261124-184137, các lần chụp evidence) và tái hiện bằng tay. Kết quả đã lưu: 2 lần chạy trong `run-results/` |
 | **Liên quan** | AC-6 · TVP-020 · TC-033 · Q12 · O-21 · tag `@security` |
 
 **Điều kiện trước**: chưa đăng nhập, trình duyệt sạch (vd: mở **cửa sổ ẩn danh** Chrome, Ctrl+Shift+N).
