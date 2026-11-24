@@ -16,6 +16,7 @@
 ## Real Bugs (→ HITL #3)
 
 ### TC-028: Chỉ ô bị thiếu mới bị đánh dấu lỗi (BUG-01)
+> Cập nhật sau [review-defects](review-defects.md) A1: bug xảy ra cả chiều ngược lại. TC-028 đã sửa để kiểm tra **cả 2 chiều**, evidence chụp lại cả 2 chiều. Phần dưới là kết quả của lần chạy gốc (chỉ chiều 1).
 - **Error**: `expect(locator).not.toHaveClass(/input_error/)`. Locator `getByPlaceholder('Username')`, received `"input_error form_input error"`
 - **Expected** (AC-3, Q6): chỉ ô Password bị đánh dấu lỗi
 - **Actual**: ô Username (đã nhập `standard_user`) cũng bị tô đỏ và có icon lỗi
