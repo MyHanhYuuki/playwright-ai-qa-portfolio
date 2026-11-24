@@ -60,8 +60,8 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 |---|---|---|---|
 | 0 | Lời dặn, nguyên tắc làm việc | `docs/learning/00-…` | ✅ |
 | 1 | Dựng dự án, CI, pipeline AI agent | Cấu trúc repo, CI chạy tự động | ✅ |
-| 2 | Phân tích yêu cầu: Đăng nhập | spec-review, viewpoint, câu hỏi | 🔄 Chờ HITL #1 |
-| 3 | Thiết kế test case: Đăng nhập | test-cases.csv, test-data | ⏳ |
+| 2 | Phân tích yêu cầu: Đăng nhập | spec-review, viewpoint, Q&A, đề xuất cải tiến | ✅ |
+| 3 | Thiết kế test case: Đăng nhập | test-cases.csv, test-data | 🔄 |
 | 4 | Viết code test (POM) | `tests/pages`, `tests/specs` | ⏳ |
 | 5 | Chạy test và phân loại lỗi | triage.md, báo cáo HTML | ⏳ |
 | 6 | Sửa test hỏng (healer) | healing-log.md | ⏳ |
@@ -103,4 +103,4 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | Chỉ số | Giá trị |
 |---|---|
 | Thời gian CI | 11 phút 8 giây → 36 giây ở lần đo đầu. Lần sau 5,5 phút do bước apt của Ubuntu không ổn định. **Đo lại và xử lý ở Bài 10** (dùng Docker image Playwright) |
-| Đăng nhập: quan sát khi khám phá | 19 quan sát, 15 viewpoint, 10 câu hỏi làm rõ |
+| Đăng nhập: phân tích yêu cầu | 7 AC, 20 quan sát, 16 viewpoint, 11 câu hỏi làm rõ, 5 đề xuất cải tiến |
