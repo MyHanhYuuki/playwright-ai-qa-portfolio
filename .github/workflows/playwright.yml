@@ -1,25 +1,53 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
+  workflow_dispatch:        # allow manual runs from the Actions tab
+
+# Cancel an older run of the same branch when a newer commit is pushed
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
-    timeout-minutes: 60
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v7
       with:
         node-version: lts/*
+        cache: npm                       # reuse downloaded npm packages
+
     - name: Install dependencies
       run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+
+    # Cache the Chromium binary, keyed by the installed Playwright version
+    - name: Get Playwright version
+      id: pw
+      run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+    - name: Cache Playwright browsers
+      id: pw-cache
+      uses: actions/cache@v6
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-chromium-${{ runner.os }}-${{ steps.pw.outputs.version }}
+
+    # Only Chromium is used (see playwright.config.ts → projects)
+    - name: Install Chromium + system deps (cache miss)
+      if: steps.pw-cache.outputs.cache-hit != 'true'
+      run: npx playwright install --with-deps chromium
+    - name: Install system deps only (cache hit)
+      if: steps.pw-cache.outputs.cache-hit == 'true'
+      run: npx playwright install-deps chromium
+
     - name: Run Playwright tests
       run: npx playwright test
-    - uses: actions/upload-artifact@v4
+
+    - uses: actions/upload-artifact@v7
       if: ${{ !cancelled() }}
       with:
         name: playwright-report

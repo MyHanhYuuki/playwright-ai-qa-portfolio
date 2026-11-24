@@ -83,6 +83,16 @@ playwright-ai-qa-portfolio/
 ### `.github/workflows/playwright.yml`: CI
 - **CI (Continuous Integration)**: mỗi lần push code, GitHub tự dựng máy ảo, cài thư viện, chạy toàn bộ test và lưu báo cáo.
 - Nhờ vậy, ai mở repo cũng thấy test đang **pass (xanh)** hay **fail (đỏ)**.
+- **Tối ưu thời gian chạy CI.** Lần chạy đầu mất 11 phút, trong đó 10 phút 52 giây là cài trình duyệt. Đã sửa:
+
+| Thay đổi | Tác dụng |
+|---|---|
+| `npx playwright install --with-deps chromium` thay vì cài cả 3 trình duyệt | Dự án chỉ dùng Chromium, không tải Firefox/WebKit thừa |
+| `actions/cache` cho thư mục `~/.cache/ms-playwright`, key theo phiên bản Playwright | Từ lần chạy thứ 2 không phải tải lại Chromium. Nâng cấp Playwright thì key đổi và tự tải bản mới |
+| `setup-node` với `cache: npm` | Dùng lại các package npm đã tải |
+| `concurrency` + `cancel-in-progress` | Push liên tiếp thì hủy lần chạy cũ, không tốn thời gian vô ích |
+| Nâng `checkout`/`setup-node`/`upload-artifact` lên v7 | Hết cảnh báo "Node.js 20 is deprecated" |
+| `workflow_dispatch` | Có thể bấm chạy tay trong tab Actions |
 
 ### `.mcp.json` và `.claude/agents/`: phần AI
 - **MCP (Model Context Protocol)**: giao thức giúp AI (Claude) dùng được công cụ bên ngoài, ở đây là điều khiển trình duyệt thật.
