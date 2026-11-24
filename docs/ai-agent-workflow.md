@@ -1,6 +1,6 @@
 # Sơ đồ làm việc của AI agent trong dự án
 
-> Pipeline QA gồm **5 AI agent** do **1 orchestrator** điều phối, có **3 điểm dừng để người duyệt (HITL)**.
+> Pipeline QA gồm **5 AI agent** do **1 orchestrator** điều phối, **1 agent review (qa-reviewer) soát lại sau mỗi bước**, có **3 điểm dừng để người duyệt (HITL)**.
 > Bản sơ đồ tương tác (bấm vào từng khối để xem chi tiết): [ai-agent-workflow.html](ai-agent-workflow.html)
 >
 > Phát triển tiếp từ repo v1 [learn-ai-automation-test](https://github.com/MyHanhYuuki/learn-ai-automation-test):
@@ -27,7 +27,7 @@ Dự án playwright-ai-qa-portfolio
 │     │
 │     ├── [1] 🔍 test-design   phân tích yêu cầu
 │     │     ├── Vào:  requirement + (tùy chọn) tự khám phá web bằng trình duyệt
-│     │     └── Ra:   spec-review.md, viewpoint.csv, internal-question.md
+│     │     └── Ra:   spec-review.md, viewpoint.csv, q-and-a.md, known-issues.md, improvements.md
 │     │
 │     ├── [2] 📝 test-impl     viết test case
 │     │     ├── Vào:  viewpoint.csv + câu trả lời HITL #1
@@ -50,6 +50,11 @@ Dự án playwright-ai-qa-portfolio
 │           ├── Luật: KHÔNG đụng real-bug, KHÔNG sửa kết quả mong đợi, tối đa 2 vòng
 │           └── Ra:   code đã sửa, healing-log.md
 │
+├── 🔍 qa-reviewer  (QC Lead, chuẩn ISTQB)
+│     ├── Chạy: sau mỗi bước test-design, test-impl, script-gen, executor, TRƯỚC HITL
+│     ├── Làm:  soát thiếu sót, sai kỹ thuật, không nhất quán giữa các file; kiểm chứng trên web
+│     └── Ra:   review-<bước>.md (chỉ báo cáo, không tự sửa)
+│
 ├── 🔌 CÔNG CỤ
 │     ├── Playwright MCP (.mcp.json): cầu nối để agent điều khiển trình duyệt thật
 │     └── Playwright Test: chạy test, ghi trace, xuất báo cáo
@@ -64,11 +69,13 @@ Dự án playwright-ai-qa-portfolio
 ```mermaid
 flowchart TD
     R[/"📄 requirement<br/>(hoặc khám phá web)"/] --> TD["[1] 🔍 test-design"]
-    TD --> A1[/"spec-review.md<br/>viewpoint.csv<br/>internal-question.md"/]
-    A1 --> H1{"⏸ HITL #1<br/>Người trả lời câu hỏi"}
+    TD --> A1[/"spec-review.md<br/>viewpoint.csv<br/>q-and-a.md<br/>known-issues.md"/]
+    A1 --> RV1["🔍 qa-reviewer"]
+    RV1 --> H1{"⏸ HITL #1<br/>Người trả lời câu hỏi"}
     H1 --> TI["[2] 📝 test-impl"]
     TI --> A2[/"test-cases.csv<br/>test-data.md"/]
-    A2 --> H2{"⏸ HITL #2<br/>Người duyệt test case"}
+    A2 --> RV2["🔍 qa-reviewer"]
+    RV2 --> H2{"⏸ HITL #2<br/>Người duyệt test case"}
     H2 -- "Cần sửa" --> TI
     H2 -- "Duyệt" --> SG["[3] ✍️ script-gen<br/>+ Playwright MCP"]
     SG --> A3[/"tests/pages/*.ts<br/>tests/specs/*.spec.ts"/]
@@ -91,7 +98,8 @@ flowchart TD
 | Bước | Vai | Đầu vào | Đầu ra | Công cụ đặc biệt |
 |---|---|---|---|---|
 | 1 | 🔍 test-design | requirement | spec-review, viewpoint, câu hỏi | Trình duyệt (khám phá web) |
-| ⏸ | 👤 HITL #1 | câu hỏi | `qa/q-and-a.md` | – |
+| 🔍 | qa-reviewer | kết quả bước vừa xong | `review-<bước>.md` | Trình duyệt (kiểm chứng) |
+| ⏸ | 👤 HITL #1 | câu hỏi Open | cột Trả lời trong `q-and-a.md` | – |
 | 2 | 📝 test-impl | viewpoint + Q&A | test-cases.csv, test-data.md | – |
 | ⏸ | 👤 HITL #2 | test case | duyệt / góp ý | – |
 | 3 | ✍️ script-gen | test-cases.csv | Page Object + spec | Trình duyệt (kiểm tra locator) |
@@ -107,8 +115,10 @@ qa-runs/<tên-chức-năng>/          ← mỗi chức năng một thư mục (v
   requirement/requirement.md       ← đầu vào
   spec-review.md                   ← [1]
   viewpoint.csv                    ← [1]
-  internal-question.md             ← [1]
-  qa/q-and-a.md                    ← HITL #1
+  q-and-a.md                       ← [1] đặt câu hỏi, HITL #1 trả lời (một file duy nhất)
+  known-issues.md                  ← [1] bug thấy sớm + lưu ý cho bước sau
+  improvements.md                  ← [1] đề xuất cải tiến (không phải bug)
+  review-<bước>.md                 ← 🔍 qa-reviewer
   test-cases.csv, test-data.md     ← [2]
   run-results/run-*.json           ← [4]
   triage.md                        ← [4]

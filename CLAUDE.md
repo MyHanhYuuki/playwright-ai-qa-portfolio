@@ -4,7 +4,7 @@ Dự án portfolio học test automation bằng **Playwright + TypeScript** vớ
 Đọc trước: [docs/tong-quan-du-an.md](docs/tong-quan-du-an.md) (mục đích, phạm vi, tiến độ) · [docs/ai-agent-workflow.md](docs/ai-agent-workflow.md) (pipeline).
 
 ## Cấu trúc
-- `.claude/agents/`: 5 agent (test-design, test-impl, script-gen, executor, healer). `.claude/commands/qa-orchestrator.md`: điều phối.
+- `.claude/agents/`: 5 agent (test-design, test-impl, script-gen, executor, healer) + `qa-reviewer` (soát sau mỗi bước). `.claude/commands/qa-orchestrator.md`: điều phối.
 - `qa-runs/<feature>/`: tài liệu QA từng chức năng (requirement → spec-review → viewpoint → test case → triage → defects → RTM).
 - `tests/`: `pages/` (Page Object), `specs/`, `data/`, `fixtures/`, `seed.spec.ts` (seed cho Playwright MCP + smoke check).
 - `docs/learning/NN-*.md`: ghi chú từng bài học. `docs/ai-log.md`: nhật ký dùng AI. `docs/thuat-ngu.md`: thuật ngữ.

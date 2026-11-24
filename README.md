@@ -23,6 +23,7 @@ requirement → [1] test-design → ⏸ HITL#1 → [2] test-impl → ⏸ HITL#2
 | `script-gen` | Generate Page Object Model tests, locators verified on the live site | browser + generator log |
 | `executor` | Run tests, triage failures: flaky / script-issue / real-bug | – |
 | `healer` | Fix script issues only (never hides real bugs), max 2 rounds | test debug + locator tools |
+| `qa-reviewer` | QC-lead review (ISTQB) after every step, before each human checkpoint | verification on the live site |
 
 Run the whole pipeline in Claude Code: `/qa-orchestrator <feature>`
 📊 Diagrams: [workflow (Markdown)](docs/ai-agent-workflow.md) · [interactive (HTML)](docs/ai-agent-workflow.html)
@@ -70,7 +71,7 @@ Step-by-step notes written while building this project with an AI agent:
 
 ## Progress
 - [x] Project setup (Playwright 1.65, Chromium, Playwright MCP)
-- [x] AI agent QA pipeline (5 agents + orchestrator + 3 HITL)
+- [x] AI agent QA pipeline (5 agents + reviewer + orchestrator + 3 HITL)
 - [ ] SauceDemo Login: full pipeline run
 - [ ] SauceDemo Cart → Checkout
 - [ ] Bug reports (problem_user, error_user…)

@@ -1,6 +1,6 @@
 # qa-orchestrator
 
-Chạy QA pipeline đầy đủ cho một chức năng: 5 agent chạy tuần tự, có 3 điểm dừng HITL để người duyệt.
+Chạy QA pipeline đầy đủ cho một chức năng: 5 agent chạy tuần tự, **qa-reviewer soát lại sau mỗi bước**, có 3 điểm dừng HITL để người duyệt.
 
 ## Cách dùng
 ```
@@ -15,15 +15,21 @@ Chạy QA pipeline đầy đủ cho một chức năng: 5 agent chạy tuần t�
 ```
 requirement
   ↓
-[1] test-design ──→ spec-review.md, viewpoint.csv, internal-question.md
+[1] test-design ──→ spec-review.md, viewpoint.csv, q-and-a.md, known-issues.md, improvements.md
   ↓
-⏸ HITL #1: người trả lời câu hỏi → qa/q-and-a.md
+🔍 qa-reviewer ──→ review-test-design.md
+  ↓
+⏸ HITL #1: người trả lời câu hỏi (cột Trả lời trong q-and-a.md) + xem review
   ↓
 [2] test-impl ────→ test-cases.csv, test-data.md
+  ↓
+🔍 qa-reviewer ──→ review-test-impl.md
   ↓
 ⏸ HITL #2: người duyệt viewpoint + test case
   ↓
 [3] script-gen ───→ tests/pages/*, tests/specs/<feature>.spec.ts
+  ↓
+🔍 qa-reviewer ──→ review-script-gen.md
   ↓
 [4] executor ─────→ run-results/<run_id>.json, triage.md
   ↓
@@ -53,21 +59,29 @@ Trạng thái từng bước suy ra từ việc file kết quả đã tồn tạ
 
 ## Bước 1: test-design
 Gọi agent `test-design` với: `qa-runs/<feature>/requirement/`, `kb/q-and-a-archive.md`.
-Kiểm tra: `spec-review.md` có nội dung, `viewpoint.csv` có ≥1 dòng, `internal-question.md` tồn tại, mỗi AC có ≥1 viewpoint.
+Kiểm tra: `spec-review.md` có nội dung, `viewpoint.csv` có ≥1 dòng, `q-and-a.md` tồn tại, mỗi AC có ≥1 viewpoint.
+
+## 🔍 Review sau mỗi bước
+Sau **mỗi** bước test-design, test-impl, script-gen, executor: gọi agent `qa-reviewer` với tên bước.
+- Kết luận 🔴 "Phải làm lại": gọi lại bước đó kèm `review-<bước>.md` (tối đa 1 lần), rồi review lại.
+- Kết luận ⚠️ hoặc ✅: đưa `review-<bước>.md` vào thông báo HITL kế tiếp để người duyệt quyết định sửa gì.
+
 Đặt `hitl_pending = "HITL #1"`.
 
 ## ⏸ HITL #1: trả lời câu hỏi
 **Dừng pipeline**, thông báo:
 ```
 ⏸ HITL #1: test-design đã xong.
-📋 Câu hỏi cần trả lời: [liệt kê từ internal-question.md, kèm "đề xuất mặc định"]
-Trả lời trong chat (mình ghi vào qa/q-and-a.md) hoặc tự sửa file, rồi gõ: "HITL #1 done"
+🔍 Review: [kết luận + số phát hiện trong review-test-design.md]
+📋 Câu hỏi Open: [liệt kê từ q-and-a.md, kèm "Đề xuất"]
+Trả lời trong chat (mình ghi vào cột Trả lời) hoặc tự sửa file, rồi gõ: "HITL #1 done"
 ```
-Khi người dùng xác nhận: ghi câu trả lời vào `qa/q-and-a.md`, thêm các câu có giá trị dùng lại vào `kb/q-and-a-archive.md`, đặt `hitl_pending = null`.
+Khi người dùng xác nhận: ghi câu trả lời vào cột **Trả lời** của `q-and-a.md`, đổi trạng thái thành `Answered`, cập nhật viewpoint/known-issues theo câu trả lời, thêm các câu có giá trị dùng lại vào `kb/q-and-a-archive.md`, đặt `hitl_pending = null`.
 
 ## Bước 2: test-impl
-Gọi agent `test-impl` với: `viewpoint.csv`, `qa/q-and-a.md`, `spec-review.md`.
-Kiểm tra: `test-cases.csv` có ≥1 TC, mọi TC có `linked_ac`, mọi viewpoint có ≥1 TC.
+Gọi agent `test-impl` với: `viewpoint.csv`, `q-and-a.md`, `known-issues.md`, `spec-review.md`.
+Kiểm tra: `test-cases.csv` có ≥1 TC, mọi TC có `linked_ac`, mọi viewpoint `scope=in` có ≥1 TC, mọi KB có TC.
+Gọi `qa-reviewer` (test-impl).
 Đặt `hitl_pending = "HITL #2"`.
 
 ## ⏸ HITL #2: duyệt test design
@@ -83,9 +97,11 @@ Nếu có feedback thì gọi lại `test-impl` kèm feedback. Nếu approved th
 ## Bước 3: script-gen
 Gọi agent `script-gen` với: `test-cases.csv`, `test-data.md`, `spec-review.md`, thư mục `tests/`.
 Kiểm tra: `npx playwright test --list tests/specs/<feature>.spec.ts` chạy được, số test khớp số TC `automatable`.
+Gọi `qa-reviewer` (script-gen).
 
 ## Bước 4: executor
 Gọi agent `executor` (phạm vi: cả feature). Đọc `triage.md` (mục mới nhất), lưu `last_run_id`.
+Gọi `qa-reviewer` (executor) để soát phân loại, nhất là đối chiếu với `known-issues.md`.
 - Có `script-issue` → **Vòng lặp healer**
 - Có `real-bug` → **HITL #3**
 - Tất cả pass hoặc chỉ flaky → **Bước 6/7**
@@ -133,7 +149,7 @@ Cuối cùng in tóm tắt: số TC, pass/fail, số bug, coverage. Gợi ý com
 ## Resume
 - `hitl_pending != null` → đang chờ người duyệt HITL đó
 - Có `spec-review.md` + `viewpoint.csv` → bước 1 xong
-- Có `qa/q-and-a.md` → HITL #1 xong
+- `q-and-a.md` không còn câu blocking `Open` → HITL #1 xong
 - Có `test-cases.csv` và các TC ở trạng thái `approved` → HITL #2 xong
 - Có `tests/specs/<feature>.spec.ts` → bước 3 xong
 - Có `triage.md` → bước 4 xong

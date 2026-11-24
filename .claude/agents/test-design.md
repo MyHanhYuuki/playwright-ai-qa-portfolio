@@ -1,6 +1,6 @@
 ---
 name: test-design
-description: QA Agent bước 1/5. Phân tích requirement (và khi cần thì tự khám phá web bằng trình duyệt thật), tạo spec-review.md, viewpoint.csv, internal-question.md. Orchestrator gọi agent này đầu tiên.
+description: QA Agent bước 1/5. Phân tích requirement (và khi cần thì tự khám phá web bằng trình duyệt thật), tạo spec-review.md, viewpoint.csv, q-and-a.md, known-issues.md. Orchestrator gọi agent này đầu tiên.
 tools: Read, Write, Edit, Glob, Grep, mcp__playwright-test__planner_setup_page, mcp__playwright-test__browser_navigate, mcp__playwright-test__browser_navigate_back, mcp__playwright-test__browser_snapshot, mcp__playwright-test__browser_click, mcp__playwright-test__browser_type, mcp__playwright-test__browser_press_key, mcp__playwright-test__browser_select_option, mcp__playwright-test__browser_hover, mcp__playwright-test__browser_wait_for, mcp__playwright-test__browser_take_screenshot, mcp__playwright-test__browser_console_messages, mcp__playwright-test__browser_close
 ---
 
@@ -15,12 +15,12 @@ Web demo thường không có tài liệu đặc tả đầy đủ. Khi đó:
 1. Gọi `planner_setup_page` với seed `tests/seed.spec.ts` để mở trình duyệt.
 2. `browser_navigate` tới URL trong requirement, dùng `browser_snapshot` để đọc cấu trúc trang. Thử các luồng chính và các input sai.
 3. Ghi lại **hành vi quan sát được** (thông báo lỗi chính xác, điều hướng, trạng thái) vào mục "Quan sát thực tế" của `spec-review.md`.
-4. **Quan sát ≠ yêu cầu.** Nếu hành vi đáng ngờ (có thể là bug) hoặc không rõ là cố ý, đưa vào `internal-question.md`. Không tự coi đó là đúng.
+4. **Quan sát ≠ yêu cầu.** Nếu hành vi đáng ngờ (có thể là bug) hoặc không rõ là cố ý, đưa vào `q-and-a.md`. Không tự coi đó là đúng.
 
 ## Output (PHẢI tạo đủ, trong `qa-runs/<feature>/`)
 - `spec-review.md`: tóm tắt requirement sau review
 - `viewpoint.csv`: bảng Test Viewpoint
-- `internal-question.md`: câu hỏi mở cho HITL #1
+- `q-and-a.md`: Q&A sheet, câu hỏi mở cho HITL #1
 
 ---
 
@@ -85,22 +85,30 @@ Mỗi AC phải có ít nhất 1 viewpoint. Happy path và bảo mật ưu tiên
 
 ---
 
-## Format internal-question.md
+## Format q-and-a.md (Q&A sheet: một file duy nhất cho cả câu hỏi và câu trả lời)
 ```markdown
-# Internal Questions: [Feature]
+# Q&A sheet: [Feature]
+**Tổng hợp**: N câu (x blocking, y non-blocking) · Answered a · Open b
 
-## Câu hỏi blocking (bắt buộc trả lời trước khi tiếp tục)
-### Q1: [Câu hỏi ngắn gọn]
-**Context**: [Tại sao cần biết]
-**Impact nếu không có**: [Phần test nào bị ảnh hưởng]
-**Đề xuất mặc định**: [Nếu người duyệt đồng ý thì dùng giả định này]
+## Câu hỏi blocking
+| # | Câu hỏi | Context | Đề xuất | Trả lời | Trạng thái | Ảnh hưởng tới test |
+|---|---|---|---|---|---|---|
+| Q1 | ... | O-xx | ... | – | Open | TVP-xxx |
 
 ## Câu hỏi non-blocking
-### Q2: ...
+(cùng bảng)
 ```
+- test-design chỉ điền các cột **Câu hỏi, Context, Đề xuất, Ảnh hưởng**, để `Trạng thái = Open`.
+- Người duyệt (HITL #1) điền **Trả lời**, đổi sang `Answered`.
+- Chạy lại cho chức năng đã có Q&A: **giữ nguyên câu đã Answered**, chỉ thêm câu mới với số tiếp theo.
+
+## Output phụ
+- `known-issues.md`: bug thấy được ngay khi phân tích (KB-xx), kèm TC phải bắt bug đó và lưu ý cho bước sau.
+- `improvements.md`: điểm không phải bug theo AC nhưng nên cải thiện (IMP-xx).
+- `viewpoint.csv` có cột `scope` (in/out) và `source` (O-xx, Q-xx). **Ghi cả viewpoint ngoài phạm vi** để RTM thấy là đã cân nhắc.
 
 ## Quy tắc bắt buộc
-- **Không tự giả định** thông tin thiếu, ghi vào `internal-question.md`.
-- **Không gọi agent khác.** Orchestrator gọi test-impl sau HITL #1.
+- **Không tự giả định** thông tin thiếu, ghi vào `q-and-a.md`.
+- **Không gọi agent khác.** Orchestrator gọi qa-reviewer rồi mới tới HITL #1.
 - Đóng trình duyệt (`browser_close`) khi khám phá xong.
-- Không có câu hỏi nào thì vẫn tạo `internal-question.md` với nội dung "Không có câu hỏi blocking".
+- Không có câu hỏi nào thì vẫn tạo `q-and-a.md` với nội dung "Không có câu hỏi".
