@@ -51,6 +51,7 @@ docs/                workflow diagrams, learning notes
 
 ## Learning notes (Vietnamese)
 Step-by-step notes written while building this project with an AI agent:
+0. [Lời dặn trước khi bắt đầu](docs/learning/00-loi-dan-truoc-khi-bat-dau.md)
 1. [Cấu trúc dự án Playwright](docs/learning/01-cau-truc-du-an.md)
 
 ## Progress
