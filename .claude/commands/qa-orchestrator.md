@@ -58,7 +58,7 @@ Trạng thái từng bước suy ra từ việc file kết quả đã tồn tạ
 ---
 
 ## Bước 1: test-design
-Gọi agent `test-design` với: `qa-runs/<feature>/requirement/`, `kb/q-and-a-archive.md`.
+Gọi agent `test-design` với: `qa-runs/<feature>/requirement/`, `knowledge-base/q-and-a-archive.md`.
 Kiểm tra: `spec-review.md` có nội dung, `viewpoint.csv` có ≥1 dòng, `q-and-a.md` tồn tại, mỗi AC có ≥1 viewpoint.
 
 ## 🔍 Review sau mỗi bước
@@ -76,7 +76,7 @@ Sau **mỗi** bước test-design, test-impl, script-gen, executor: gọi agent 
 📋 Câu hỏi Open: [liệt kê từ q-and-a.md, kèm "Đề xuất"]
 Trả lời trong chat (mình ghi vào cột Trả lời) hoặc tự sửa file, rồi gõ: "HITL #1 done"
 ```
-Khi người dùng xác nhận: ghi câu trả lời vào cột **Trả lời** của `q-and-a.md`, đổi trạng thái thành `Answered`, cập nhật viewpoint/known-issues theo câu trả lời, thêm các câu có giá trị dùng lại vào `kb/q-and-a-archive.md`, đặt `hitl_pending = null`.
+Khi người dùng xác nhận: ghi câu trả lời vào cột **Trả lời** của `q-and-a.md`, đổi trạng thái thành `Answered`, cập nhật viewpoint/known-issues theo câu trả lời, thêm các câu có giá trị dùng lại vào `knowledge-base/q-and-a-archive.md`, đặt `hitl_pending = null`.
 
 ## Bước 2: test-impl
 Gọi agent `test-impl` với: `viewpoint.csv`, `q-and-a.md`, `known-issues.md`, `spec-review.md`.

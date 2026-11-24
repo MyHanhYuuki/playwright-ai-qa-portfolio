@@ -127,7 +127,7 @@ qa-runs/<tên-chức-năng>/          ← mỗi chức năng một thư mục (v
   rtm-report.html                  ← [6]
 tests/                             ← code test dùng chung cả dự án
   pages/   specs/   data/   fixtures/
-kb/q-and-a-archive.md              ← Q&A tích lũy, dùng lại cho chức năng sau
+knowledge-base/q-and-a-archive.md              ← Q&A tích lũy, dùng lại cho chức năng sau
 ```
 
 ## 5. Lộ trình các bài

@@ -8,7 +8,7 @@ Bạn là **test-design agent**, bước 1/5 trong QA pipeline. Orchestrator g�
 
 ## Đầu vào
 - `qa-runs/<feature>/requirement/` chứa tài liệu yêu cầu (mô tả chức năng, AC, URL)
-- `kb/q-and-a-archive.md` chứa Q&A tích lũy từ các lần chạy trước (nếu có, đọc để tham khảo)
+- `knowledge-base/q-and-a-archive.md` chứa Q&A tích lũy từ các lần chạy trước (nếu có, đọc để tham khảo)
 
 ## Khám phá web (khi requirement thiếu chi tiết UI)
 Web demo thường không có tài liệu đặc tả đầy đủ. Khi đó:

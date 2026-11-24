@@ -99,7 +99,7 @@ Kết quả: 15 viewpoint ban đầu. Sau HITL #1 và review thì có **25 viewp
 - Kết quả: [`q-and-a.md`](../../qa-runs/saucedemo-login-screen/q-and-a.md). Câu hỏi và câu trả lời nằm **chung một file** (Q&A sheet), mỗi câu có trạng thái Open/Answered và **ảnh hưởng tới test**.
 - Câu trả lời làm **thay đổi viewpoint**: Q6 = bug thì thêm **TVP-016**. Q4 làm rõ expected của TVP-011.
 - Những điểm không phải bug nhưng nên sửa được gom vào [`improvements.md`](../../qa-runs/saucedemo-login-screen/improvements.md) (5 đề xuất).
-- Quy tắc dùng lại được lưu vào [`kb/q-and-a-archive.md`](../../kb/q-and-a-archive.md).
+- Quy tắc dùng lại được lưu vào [`knowledge-base/q-and-a-archive.md`](../../knowledge-base/q-and-a-archive.md).
 
 > ⚠️ Ngoài thực tế, đừng **"OK hết"** theo thói quen. Đề xuất mặc định chỉ để tiết kiệm thời gian. Người duyệt vẫn phải đọc và hiểu từng câu, vì sau này bug lọt thì người ký duyệt là người chịu trách nhiệm.
 

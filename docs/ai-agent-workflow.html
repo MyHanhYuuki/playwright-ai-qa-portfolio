@@ -127,7 +127,7 @@ var N=[
  inp:["Từ [1] test-design"],out:["Đọc bởi HITL #1 và [2] test-impl"],rules:["Lưu trong qa-runs/<chức-năng>/"],rel:["test-design","hitl1","test-impl"]},
 {id:"hitl1",type:"hitl",x:200,y:235,w:320,h:44,t1:"HITL #1",t2:"người trả lời câu hỏi",title:"HITL #1: trả lời câu hỏi mở",
  desc:"Người trả lời các câu hỏi mở của AI về requirement. Câu trả lời được lưu để test-impl dùng.",
- inp:["q-and-a.md (câu Open)","review-test-design.md"],out:["q-and-a.md (điền cột Trả lời)","kb/q-and-a-archive.md (Q&A tích lũy, dùng lại cho chức năng sau)"],
+ inp:["q-and-a.md (câu Open)","review-test-design.md"],out:["q-and-a.md (điền cột Trả lời)","knowledge-base/q-and-a-archive.md (Q&A tích lũy, dùng lại cho chức năng sau)"],
  rules:["Pipeline dừng tới khi người trả lời xong"],rel:["a1","test-impl","orch"]},
 {id:"test-impl",type:"agent",x:200,y:310,w:320,h:44,t1:"[2] test-impl",t2:"viết test case",title:"[2] test-impl",
  desc:"Viết test case có cấu trúc từ viewpoint và câu trả lời của người.",

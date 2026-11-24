@@ -54,7 +54,7 @@ Optional environment variables: see [.env.example](.env.example).
 .claude/agents/      5 QA agents          .claude/commands/   /qa-orchestrator
 qa-runs/<feature>/   requirement, viewpoints, test cases, triage, defects, RTM
 tests/               pages/ (POM) · specs/ · data/ · fixtures/
-kb/                  Q&A archive reused across features
+knowledge-base/                  Q&A archive reused across features
 docs/                workflow diagrams, learning notes
 ```
 

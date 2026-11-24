@@ -29,7 +29,7 @@ playwright-ai-qa-portfolio/
 ├── .github/workflows/
 │   └── playwright.yml       # CI: GitHub tự chạy test mỗi khi push code
 ├── docs/                    # Tài liệu: sơ đồ AI agent, sổ tay học
-├── kb/q-and-a-archive.md    # Q&A tích lũy, AI dùng lại cho chức năng sau
+├── knowledge-base/q-and-a-archive.md    # Q&A tích lũy, AI dùng lại cho chức năng sau
 ├── qa-runs/<feature>/       # Kết quả từng lần chạy pipeline: requirement, test case, triage, bug, RTM
 ├── tests/
 │   ├── pages/               # Page Object: mô tả từng trang web
