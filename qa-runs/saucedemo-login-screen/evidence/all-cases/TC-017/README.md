@@ -1,6 +1,6 @@
 # TC-017 mật khẩu thừa khoảng trắng cuối bị từ chối
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-4
 - **Thời điểm**: 2026-11-24T09:45:09.883Z
 - **Video**: [video.webm](video.webm)

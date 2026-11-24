@@ -1,6 +1,6 @@
 # TC-026 đăng xuất về trang đăng nhập và xóa phiên
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-7 @smoke
 - **Thời điểm**: 2026-11-24T09:45:13.363Z
 - **Video**: [video.webm](video.webm)

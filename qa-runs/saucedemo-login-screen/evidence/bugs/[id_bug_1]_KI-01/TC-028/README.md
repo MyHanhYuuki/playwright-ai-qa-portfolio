@@ -1,6 +1,6 @@
 # TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`failed` (bug đã biết: test được dự kiến FAIL)
+- **Kết quả**: ❌ Failed · Bug: KI-01
 - **Tags**: @AC-3 @KI-01
 - **Thời điểm**: 2026-11-24T09:45:13.672Z
 - **Video**: [video.webm](video.webm)

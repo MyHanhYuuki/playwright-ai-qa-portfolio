@@ -21,7 +21,7 @@ for (const feature of fs.readdirSync(qaRuns)) {
     return fs.existsSync(d) ? fs.readdirSync(d).sort() : [];
   };
   const firstLine = (p) => (fs.existsSync(p) ? fs.readFileSync(p, 'utf8').split('\n')[0].replace(/^# /, '') : '');
-  const resultLine = (p) => (fs.existsSync(p) ? (fs.readFileSync(p, 'utf8').match(/\*\*Kết quả\*\*: ([^·]+)/)?.[1] ?? '').trim() : '');
+  const resultLine = (p) => (fs.existsSync(p) ? (fs.readFileSync(p, 'utf8').match(/\*\*Kết quả\*\*: (.+)/)?.[1] ?? '').trim() : '');
   const lines = [
     `# Evidence: ${feature}`,
     '',

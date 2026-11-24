@@ -1,6 +1,6 @@
 # TC-007 user hợp lệ error_user đăng nhập được
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-2
 - **Thời điểm**: 2026-11-24T09:45:05.792Z
 - **Video**: [video.webm](video.webm)

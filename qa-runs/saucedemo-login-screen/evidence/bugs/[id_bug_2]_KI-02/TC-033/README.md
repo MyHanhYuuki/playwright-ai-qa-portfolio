@@ -1,6 +1,6 @@
 # TC-033 cookie phiên tự tạo không được vào trang bên trong
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`failed` (bug đã biết: test được dự kiến FAIL)
+- **Kết quả**: ❌ Failed · Bug: KI-02
 - **Tags**: @AC-6 @KI-02 @security
 - **Thời điểm**: 2026-11-24T09:45:18.785Z
 - **Video**: [video.webm](video.webm)

@@ -1,6 +1,6 @@
 # TC-020 tài khoản bị khóa không đăng nhập được
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-5 @smoke
 - **Thời điểm**: 2026-11-24T09:45:11.585Z
 - **Video**: [video.webm](video.webm)

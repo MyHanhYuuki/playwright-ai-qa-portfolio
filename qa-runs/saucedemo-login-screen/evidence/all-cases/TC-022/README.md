@@ -1,6 +1,6 @@
 # TC-022 đóng thông báo lỗi bằng nút X
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-3
 - **Thời điểm**: 2026-11-24T09:45:07.990Z
 - **Video**: [video.webm](video.webm)

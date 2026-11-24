@@ -101,12 +101,19 @@ export class Evidence {
       await video.saveAs(target);
       for (const d of this.bugDirs) fs.copyFileSync(target, path.join(d, 'video.webm'));
     }
-    const status = this.info.status === this.info.expectedStatus ? '✅ Đúng như mong đợi' : '❌ Khác mong đợi';
-    const expectedFail = this.info.expectedStatus === 'failed' ? ' (bug đã biết: test được dự kiến FAIL)' : '';
+    // QC result = compared with the EXPECTED RESULT of the test case (not Playwright's "expected status").
+    const kis = this.info.tags.filter((t) => /^@KI-\d+$/.test(t)).map((t) => t.slice(1)).join(', ');
+    const s = this.info.status;
+    const result =
+      s === 'passed' ? '✅ Passed' : s === 'skipped' ? '⏭ Skipped' : s === 'timedOut' ? '❌ Failed (timeout)' : '❌ Failed';
+    const remark =
+      kis && s === 'failed' ? ` · Bug: ${kis}`
+      : kis && s === 'passed' ? ` · ⚠️ Bug ${kis} có vẻ đã được sửa: kiểm tra lại rồi bỏ test.fail()`
+      : '';
     const readme = [
       `# ${this.info.title}`,
       '',
-      `- **Kết quả**: ${status} · status=\`${this.info.status}\`${expectedFail}`,
+      `- **Kết quả**: ${result}${remark}`,
       `- **Tags**: ${this.info.tags.join(' ')}`,
       `- **Thời điểm**: ${new Date().toISOString()}`,
       `- **Video**: ${video ? '[video.webm](video.webm)' : '(không có)'}`,

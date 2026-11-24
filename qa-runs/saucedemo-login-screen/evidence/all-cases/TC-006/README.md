@@ -1,6 +1,6 @@
 # TC-006 user hợp lệ performance_glitch_user đăng nhập được
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-2
 - **Thời điểm**: 2026-11-24T09:45:12.448Z
 - **Video**: [video.webm](video.webm)

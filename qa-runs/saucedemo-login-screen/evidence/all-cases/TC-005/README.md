@@ -1,6 +1,6 @@
 # TC-005 user hợp lệ problem_user đăng nhập được
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-2
 - **Thời điểm**: 2026-11-24T09:45:06.023Z
 - **Video**: [video.webm](video.webm)

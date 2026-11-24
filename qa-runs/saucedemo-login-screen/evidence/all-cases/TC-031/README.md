@@ -1,6 +1,6 @@
 # TC-031 tải lại trang vẫn giữ phiên đăng nhập
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-2
 - **Thời điểm**: 2026-11-24T09:45:08.004Z
 - **Video**: [video.webm](video.webm)

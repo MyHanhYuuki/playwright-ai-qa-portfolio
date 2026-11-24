@@ -1,6 +1,6 @@
 # TC-023 mở thẳng /inventory.html khi chưa đăng nhập bị chặn
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-6 @smoke
 - **Thời điểm**: 2026-11-24T09:45:11.769Z
 - **Video**: [video.webm](video.webm)

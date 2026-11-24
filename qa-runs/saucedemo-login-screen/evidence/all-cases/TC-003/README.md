@@ -1,6 +1,6 @@
 # TC-003 standard_user đăng nhập thành công
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-2 @smoke
 - **Thời điểm**: 2026-11-24T09:45:05.796Z
 - **Video**: [video.webm](video.webm)

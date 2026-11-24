@@ -1,6 +1,6 @@
 # TC-004 đăng nhập bằng phím Enter
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-2
 - **Thời điểm**: 2026-11-24T09:45:06.620Z
 - **Video**: [video.webm](video.webm)

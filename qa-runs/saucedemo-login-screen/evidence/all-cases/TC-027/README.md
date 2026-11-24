@@ -1,6 +1,6 @@
 # TC-027 đăng xuất rồi bấm Back không xem lại được trang sản phẩm
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-6 @AC-7
 - **Thời điểm**: 2026-11-24T09:45:14.016Z
 - **Video**: [video.webm](video.webm)

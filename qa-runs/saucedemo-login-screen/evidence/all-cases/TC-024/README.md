@@ -1,6 +1,6 @@
 # TC-024 mở thẳng /cart.html khi chưa đăng nhập bị chặn
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-6
 - **Thời điểm**: 2026-11-24T09:45:11.813Z
 - **Video**: [video.webm](video.webm)

@@ -1,6 +1,6 @@
 # TC-013 username không tồn tại
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-4
 - **Thời điểm**: 2026-11-24T09:45:08.673Z
 - **Video**: [video.webm](video.webm)

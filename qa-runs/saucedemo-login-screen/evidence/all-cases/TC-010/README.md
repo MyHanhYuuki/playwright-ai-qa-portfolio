@@ -1,6 +1,6 @@
 # TC-010 R2: có Username + trống Password
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-3
 - **Thời điểm**: 2026-11-24T09:45:07.644Z
 - **Video**: [video.webm](video.webm)

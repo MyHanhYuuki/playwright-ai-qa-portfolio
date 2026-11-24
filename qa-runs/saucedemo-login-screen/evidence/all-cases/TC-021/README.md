@@ -1,6 +1,6 @@
 # TC-021 tài khoản bị khóa + sai mật khẩu không lộ trạng thái khóa
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-5
 - **Thời điểm**: 2026-11-24T09:45:11.829Z
 - **Video**: [video.webm](video.webm)

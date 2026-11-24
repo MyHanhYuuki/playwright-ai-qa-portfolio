@@ -1,6 +1,6 @@
 # TC-014 sai cả username và mật khẩu
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-4
 - **Thời điểm**: 2026-11-24T09:45:09.610Z
 - **Video**: [video.webm](video.webm)

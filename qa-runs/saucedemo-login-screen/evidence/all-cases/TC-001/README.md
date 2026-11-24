@@ -1,6 +1,6 @@
 # TC-001 hiển thị đủ ô Username, Password và nút Login
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-1 @smoke
 - **Thời điểm**: 2026-11-24T09:45:05.433Z
 - **Video**: [video.webm](video.webm)

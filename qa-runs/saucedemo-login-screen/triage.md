@@ -7,8 +7,8 @@
 ## Summary
 | Status | Count | Ghi chú |
 |--------|-------|---------|
-| passed | 31 | |
-| expected fail (bug đã biết) | 2 | TC-028 (KI-01), TC-033 (KI-02): fail **đúng assertion** của bug |
+| **Passed** | 31 | |
+| **Failed** | 2 | TC-028 (KI-01), TC-033 (KI-02): bug đã biết, fail **đúng assertion** của bug. Playwright báo "passed" vì có `test.fail()`, nhưng kết quả test case là **Failed** |
 | flaky | 0 | |
 | script-issue | 0 | Không cần healer |
 | real-bug | **2** | HITL #3: ✅ approved (KI-01 Low, KI-02 High), 2026-11-24 |

@@ -1,6 +1,6 @@
 # TC-030 thử lại sau lỗi: thông báo cập nhật, nhập đúng thì vào được
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-2 @AC-4
 - **Thời điểm**: 2026-11-24T09:45:10.687Z
 - **Video**: [video.webm](video.webm)

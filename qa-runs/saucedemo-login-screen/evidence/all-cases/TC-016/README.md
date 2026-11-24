@@ -1,6 +1,6 @@
 # TC-016 username có khoảng trắng đầu bị từ chối
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-4
 - **Thời điểm**: 2026-11-24T09:45:10.027Z
 - **Video**: [video.webm](video.webm)

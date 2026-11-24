@@ -1,6 +1,6 @@
 # TC-012 sai mật khẩu
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-4
 - **Thời điểm**: 2026-11-24T09:45:08.595Z
 - **Video**: [video.webm](video.webm)

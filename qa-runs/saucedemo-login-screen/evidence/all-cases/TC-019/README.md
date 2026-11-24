@@ -1,6 +1,6 @@
 # TC-019 username 1000 ký tự không làm lỗi trang
 
-- **Kết quả**: ✅ Đúng như mong đợi · status=`passed`
+- **Kết quả**: ✅ Passed
 - **Tags**: @AC-4
 - **Thời điểm**: 2026-11-24T09:45:10.321Z
 - **Video**: [video.webm](video.webm)
