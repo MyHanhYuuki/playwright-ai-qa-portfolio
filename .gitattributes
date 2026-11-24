@@ -9,3 +9,5 @@
 *.png binary
 *.jpg binary
 *.zip binary
+*.webm binary
+*.jpeg binary

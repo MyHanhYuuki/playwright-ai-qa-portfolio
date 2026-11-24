@@ -35,6 +35,9 @@ export default defineConfig({
     trace: 'on-first-retry',
     /* Keep evidence for failed tests (used by executor triage & bug reports) */
     screenshot: 'only-on-failure',
+
+    /* Evidence mode (npm run test:evidence): record a video of every test case */
+    video: process.env.EVIDENCE ? { mode: 'on', size: { width: 1280, height: 720 } } : 'off',
   },
 
   /* Configure projects for major browsers */

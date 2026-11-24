@@ -9,6 +9,7 @@
     "test:smoke": "playwright test --grep @smoke",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
+    "test:evidence": "node scripts/run-evidence.mjs",
     "report": "playwright show-report"
   },
   "keywords": [

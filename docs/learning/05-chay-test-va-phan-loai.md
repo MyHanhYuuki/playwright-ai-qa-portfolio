@@ -49,6 +49,24 @@ npm run report
 ```
 Mở từng test để xem các bước, thời gian, lỗi, ảnh chụp lúc fail.
 
+### 6. Evidence (bằng chứng test)
+```bash
+npm run test:evidence
+```
+Tự động tạo trong `qa-runs/saucedemo-login-screen/evidence/`:
+```
+evidence/
+├── README.md                          ← mục lục: mọi TC + kết quả + link
+├── all-cases/TC-001 … TC-033/         ← mỗi TC: ảnh từng bước + video + README
+└── bugs/[id_bug_1]_KI-01/TC-028/      ← bản sao cho TC có bug, đặt tên theo ticket
+         [id_bug_2]_KI-02/TC-033/         (log bug xong thì sửa tên trong tests/data/bugs.ts)
+```
+- Mỗi ảnh có **nhãn** `TC-xxx · Bước n`, **khung đỏ** khoanh vùng cần xem, dòng **"🔍 Cần xem: …"** nói rõ người review phải kiểm tra gì.
+- Mỗi TC có **video** quay lại toàn bộ thao tác.
+- Chỉ bật khi chạy `test:evidence`. CI và các lần chạy thường không chụp, nên vẫn nhanh.
+
+> 🏭 Ngoài thực tế: evidence tốt là evidence **người khác xem một mình vẫn hiểu**, không cần hỏi người chụp. Ảnh trần không ghi chú thì 3 tháng sau chính mình cũng không nhớ chụp để làm gì.
+
 ## 👉 Bạn tự làm
 1. Chạy `npm run report`, mở **TC-033**, đọc phần lỗi, chỉ ra dòng nào chứng minh bug.
 2. Chạy `npx playwright test -g "TC-006" --headed`, đếm xem đăng nhập mất bao lâu.

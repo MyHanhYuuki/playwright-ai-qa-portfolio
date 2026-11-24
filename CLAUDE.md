@@ -14,6 +14,7 @@ Dự án portfolio học test automation bằng **Playwright + TypeScript** vớ
 npm test               # chạy toàn bộ test
 npm run test:smoke     # chỉ test @smoke
 npm run test:ui        # UI mode
+npm run test:evidence  # chạy kèm evidence: ảnh khoanh đỏ + ghi chú + video → qa-runs/<feature>/evidence/
 npm run report         # mở báo cáo HTML
 ```
 
