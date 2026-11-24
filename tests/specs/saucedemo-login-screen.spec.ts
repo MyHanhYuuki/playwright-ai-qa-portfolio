@@ -136,19 +136,36 @@ test.describe('AC-3: Empty fields (decision table)', () => {
     await evidence.shot('Sau khi bấm X', { highlight: loginPage.usernameInput, note: 'Khung lỗi và icon X biến mất; ô Username vẫn giữ standard_user' });
   });
 
-  test('TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi', { tag: ['@AC-3', '@BUG-01'] }, async ({ loginPage, evidence }) => {
-    // BUG-01 (O-03): the Username field is also marked as error. Known bug → expected to fail.
+  test('TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi (cả 2 chiều)', { tag: ['@AC-3', '@BUG-01'] }, async ({ loginPage, evidence }) => {
+    // BUG-01 (O-03, review A1): with ANY "required" error, BOTH fields are marked as error. Known bug → expected to fail.
+    // Both directions are checked with expect.soft, so the test keeps failing until BOTH are fixed.
     // Remove test.fail() when the bug is fixed.
-    test.fail(true, 'BUG-01: ô Username bị tô đỏ dù đã nhập');
+    test.fail(true, 'BUG-01: ô đã nhập cũng bị tô đỏ (cả 2 chiều)');
+
+    // Chiều 1: có Username, trống Password
     await loginPage.fill(standard.username, '');
-    await evidence.shot('Có Username, trống Password', { highlight: loginPage.usernameInput, note: 'Ô Username ĐÃ nhập standard_user' });
+    await evidence.shot('Chiều 1: có Username, trống Password', { highlight: loginPage.usernameInput, note: 'Ô Username ĐÃ nhập standard_user, ô Password để trống' });
     await loginPage.loginButton.click();
+    await expect(loginPage.errorMessage).toHaveText(MSG.passwordRequired);
     await expect(loginPage.passwordInput).toHaveClass(/input_error/);
-    await evidence.shot('Kết quả: BUG', {
+    await evidence.shot('Chiều 1 kết quả: BUG', {
       highlight: loginPage.usernameInput,
-      note: 'BUG-01: ô Username đã nhập đúng nhưng vẫn bị viền đỏ + icon X. Mong đợi: chỉ ô Password bị đánh dấu',
+      note: 'BUG-01 chiều 1: ô Username đã nhập nhưng vẫn bị viền đỏ + icon X. Mong đợi: chỉ ô Password bị đánh dấu',
     });
-    await expect(loginPage.usernameInput).not.toHaveClass(/input_error/);
+    await expect.soft(loginPage.usernameInput, 'Chiều 1: ô Username đã nhập không được bị đánh dấu lỗi').not.toHaveClass(/input_error/);
+
+    // Chiều 2: trống Username, có Password (trang sạch)
+    await loginPage.goto();
+    await loginPage.fill('', standard.password);
+    await evidence.shot('Chiều 2: trống Username, có Password', { highlight: loginPage.passwordInput, note: 'Ô Password ĐÃ nhập, ô Username để trống' });
+    await loginPage.loginButton.click();
+    await expect(loginPage.errorMessage).toHaveText(MSG.usernameRequired);
+    await expect(loginPage.usernameInput).toHaveClass(/input_error/);
+    await evidence.shot('Chiều 2 kết quả: BUG', {
+      highlight: loginPage.passwordInput,
+      note: 'BUG-01 chiều 2: ô Password đã nhập nhưng vẫn bị viền đỏ + icon X. Mong đợi: chỉ ô Username bị đánh dấu',
+    });
+    await expect.soft(loginPage.passwordInput, 'Chiều 2: ô Password đã nhập không được bị đánh dấu lỗi').not.toHaveClass(/input_error/);
   });
 });
 

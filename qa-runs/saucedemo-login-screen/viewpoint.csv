@@ -14,7 +14,7 @@ TVP-012,functional,"Đóng thông báo lỗi bằng nút X: thông báo và tr�
 TVP-013,flow,"Chưa đăng nhập mà mở thẳng trang bên trong (sản phẩm, chi tiết sản phẩm, giỏ hàng, thanh toán) thì bị đưa về trang đăng nhập kèm thông báo",high,AC-6,in,O-15
 TVP-014,flow,"Đăng xuất: về trang đăng nhập, phiên (cookie) bị xóa",high,AC-7,in,O-16
 TVP-015,flow,"Sau khi đăng xuất bấm Back không xem lại được trang sản phẩm",high,AC-6;AC-7,in,O-17
-TVP-016,functional,"Chỉ ô bị thiếu mới được đánh dấu lỗi (tô đỏ), ô đã nhập không bị đánh dấu",low,AC-3,in,O-03;Q6
+TVP-016,functional,"Chỉ ô bị thiếu mới được đánh dấu lỗi (tô đỏ), ô đã nhập không bị đánh dấu. Kiểm tra cả 2 chiều (thiếu Password / thiếu Username)",low,AC-3,in,O-03;Q6
 TVP-017,flow,"Đăng xuất rồi đăng nhập lại thành công",medium,AC-2;AC-7,in,review B1
 TVP-018,flow,"Thử lại sau khi lỗi: thông báo cập nhật theo lần thử mới nhất, nhập đúng thì vào được",medium,AC-2;AC-4,in,O-24
 TVP-019,flow,"Đã đăng nhập, tải lại trang (F5) vẫn giữ phiên",medium,AC-2,in,O-22
