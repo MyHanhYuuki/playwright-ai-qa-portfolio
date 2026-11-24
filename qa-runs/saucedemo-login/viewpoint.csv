@@ -1,17 +1,26 @@
-viewpoint_id,axis,description,priority,linked_ac
-TVP-001,functional,"Trang đăng nhập hiển thị đủ ô Username, ô Password, nút Login",high,AC-1
-TVP-002,functional,"Ô Password ẩn ký tự khi nhập (type=password)",medium,AC-1
-TVP-003,functional,"Happy path: standard_user đăng nhập đúng thì vào trang Products (/inventory.html)",high,AC-2
-TVP-004,functional,"Đăng nhập bằng phím Enter thay vì bấm nút Login",medium,AC-2
-TVP-005,data,"Phân vùng tương đương các user hợp lệ: problem_user, performance_glitch_user, error_user, visual_user đều đăng nhập được",medium,AC-2
-TVP-006,data,"Bảng quyết định ô trống: (Username trống/có) x (Password trống/có) thì hiện đúng thông báo, không đăng nhập",high,AC-3
-TVP-007,data,"Phân vùng thông tin sai: sai password, sai username, sai cả hai thì cùng một thông báo không khớp",high,AC-4
-TVP-008,data,"Phân biệt hoa thường và khoảng trắng đầu/cuối của username và password",medium,AC-4
-TVP-009,data,"Giá trị biên độ dài: username rất dài (1000 ký tự) không làm treo hoặc lỗi trang",low,AC-4
-TVP-010,functional,"Tài khoản bị khóa + đúng password thì hiện thông báo bị khóa, không đăng nhập",high,AC-5
-TVP-011,data,"Tài khoản bị khóa + sai password thì báo 'không khớp', không lộ trạng thái khóa (Q4)",medium,AC-5
-TVP-012,functional,"Đóng thông báo lỗi bằng nút X: thông báo và trạng thái lỗi của ô nhập biến mất",low,AC-3
-TVP-013,flow,"Chưa đăng nhập mà mở thẳng trang bên trong (inventory, cart, checkout) thì bị đưa về trang đăng nhập kèm thông báo",high,AC-6
-TVP-014,flow,"Đăng xuất: về trang đăng nhập, phiên (cookie) bị xóa",high,AC-7
-TVP-015,flow,"Sau khi đăng xuất bấm Back không xem lại được trang sản phẩm",high,"AC-6,AC-7"
-TVP-016,functional,"Chỉ ô bị thiếu mới được đánh dấu lỗi (tô đỏ), ô đã nhập không bị đánh dấu (Q6)",low,AC-3
+viewpoint_id,axis,description,priority,linked_ac,scope,source
+TVP-001,functional,"Trang đăng nhập hiển thị đủ ô Username, ô Password, nút Login",high,AC-1,in,O-01
+TVP-002,functional,"Ô Password ẩn ký tự khi nhập (type=password)",medium,AC-1,in,O-01
+TVP-003,functional,"Happy path: standard_user đăng nhập đúng thì vào trang Products (/inventory.html)",high,AC-2,in,O-11
+TVP-004,functional,"Đăng nhập bằng phím Enter thay vì bấm nút Login",medium,AC-2,in,O-11
+TVP-005,data,"Các user hợp lệ có hành vi đặc biệt (problem, performance_glitch, error, visual) đều đăng nhập được",medium,AC-2,in,O-13;O-14
+TVP-006,data,"Bảng quyết định ô trống: (Username trống/có) x (Password trống/có) thì hiện đúng thông báo, không đăng nhập",high,AC-3,in,O-02;O-03;O-04;Q3
+TVP-007,data,"Phân vùng thông tin sai: sai password, sai username, sai cả hai thì cùng một thông báo không khớp",high,AC-4,in,O-05
+TVP-008,data,"Phân biệt hoa thường và khoảng trắng đầu/cuối của username và password",medium,AC-4,in,O-06;O-07;Q2
+TVP-009,data,"Username rất dài (1000 ký tự) không làm treo hoặc lỗi trang",low,AC-4,in,O-05;Q14
+TVP-010,functional,"Tài khoản bị khóa + đúng password thì hiện thông báo bị khóa, không đăng nhập",high,AC-5,in,O-08
+TVP-011,data,"Tài khoản bị khóa + sai password thì báo 'không khớp', không lộ trạng thái khóa",medium,AC-5,in,O-09;Q4
+TVP-012,functional,"Đóng thông báo lỗi bằng nút X: thông báo và trạng thái lỗi của ô nhập biến mất",low,AC-3,in,O-10
+TVP-013,flow,"Chưa đăng nhập mà mở thẳng trang bên trong (sản phẩm, chi tiết sản phẩm, giỏ hàng, thanh toán) thì bị đưa về trang đăng nhập kèm thông báo",high,AC-6,in,O-15
+TVP-014,flow,"Đăng xuất: về trang đăng nhập, phiên (cookie) bị xóa",high,AC-7,in,O-16
+TVP-015,flow,"Sau khi đăng xuất bấm Back không xem lại được trang sản phẩm",high,AC-6;AC-7,in,O-17
+TVP-016,functional,"Chỉ ô bị thiếu mới được đánh dấu lỗi (tô đỏ), ô đã nhập không bị đánh dấu",low,AC-3,in,O-03;Q6
+TVP-017,flow,"Đăng xuất rồi đăng nhập lại thành công",medium,AC-2;AC-7,in,review B1
+TVP-018,flow,"Thử lại sau khi lỗi: thông báo cập nhật theo lần thử mới nhất, nhập đúng thì vào được",medium,AC-2;AC-4,in,O-24
+TVP-019,flow,"Đã đăng nhập, tải lại trang (F5) vẫn giữ phiên",medium,AC-2,in,O-22
+TVP-020,non-functional,"Bảo mật: cookie phiên tự tạo (không đăng nhập) không được truy cập trang bên trong",high,AC-6,in,O-21;Q12
+TVP-021,non-functional,"Hiệu năng: thời gian đăng nhập trong ngưỡng chấp nhận",medium,AC-2,out,O-14;Q5;IMP-03
+TVP-022,non-functional,"Accessibility: ô nhập có label, có autocomplete, điều hướng được bằng bàn phím",medium,AC-1,out,O-01;Q10;IMP-04
+TVP-023,flow,"Phiên hết hạn sau 10 phút thì phải đăng nhập lại",low,AC-6,out,O-12;Q9
+TVP-024,flow,"Đã đăng nhập mở lại trang / thì tự chuyển vào trang sản phẩm",low,AC-2,out,O-23;Q13;IMP-06
+TVP-025,functional,"Đăng nhập lỗi thì ô Password được xóa trắng",low,AC-4,out,O-10;Q7

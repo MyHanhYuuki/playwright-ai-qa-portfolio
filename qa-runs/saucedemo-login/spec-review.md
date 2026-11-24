@@ -7,16 +7,16 @@ Người dùng đăng nhập bằng username và password để vào trang danh 
 | AC-ID | Mô tả | Testable? | Ghi chú |
 |-------|-------|-----------|---------|
 | AC-1 | Hiển thị ô Username, ô Password (ẩn ký tự), nút Login | ✅ | |
-| AC-2 | Đúng thông tin thì vào trang sản phẩm | ✅ | Chưa có ngưỡng thời gian phản hồi (Q5) |
-| AC-3 | Bỏ trống thì báo lỗi "tương ứng" | ⚠️ | Không nêu nội dung lỗi, không nêu lỗi nào ưu tiên khi trống cả hai (Q1, Q3) |
-| AC-4 | Sai thông tin thì báo lỗi | ⚠️ | Không nêu nội dung lỗi, không nói có phân biệt hoa thường hay cắt khoảng trắng không (Q1, Q2) |
-| AC-5 | Tài khoản khóa thì báo bị khóa | ⚠️ | Không nói trường hợp tài khoản khóa và sai mật khẩu (Q4) |
-| AC-6 | Chưa đăng nhập không vào được trang bên trong | ✅ | |
-| AC-7 | Đăng xuất về trang đăng nhập | ✅ | Không nói phiên đăng nhập hết hạn (Q9) |
+| AC-2 | Đúng thông tin thì vào trang sản phẩm | ✅ | Chưa có ngưỡng thời gian phản hồi. Đã chốt ở Q5 |
+| AC-3 | Bỏ trống thì báo lỗi "tương ứng" | ✅ (sau Q&A) | Ban đầu ⚠️: không nêu nội dung lỗi. Đã làm rõ ở Q1, Q3 |
+| AC-4 | Sai thông tin thì báo lỗi | ✅ (sau Q&A) | Ban đầu ⚠️: không nêu nội dung lỗi, hoa thường, khoảng trắng. Đã làm rõ ở Q1, Q2. Độ dài tối đa chờ Q14 |
+| AC-5 | Tài khoản khóa thì báo bị khóa | ✅ (sau Q&A) | Ban đầu ⚠️: không nói trường hợp khóa + sai mật khẩu. Đã làm rõ ở Q4 |
+| AC-6 | Chưa đăng nhập không vào được trang bên trong | ✅ | ⚠️ Cookie tự tạo vượt qua được (O-21, Q12, KB-02) |
+| AC-7 | Đăng xuất về trang đăng nhập | ✅ | Không nói phiên hết hạn (Q9: ngoài phạm vi) |
 
 ## Business Rules (rút ra từ requirement và quan sát)
 - BR-1: Danh sách user hợp lệ gồm 6 user, dùng chung một mật khẩu.
-- BR-2: Phiên đăng nhập lưu trong cookie `session-username`. Đăng xuất thì xóa cookie này.
+- BR-2: Phiên đăng nhập lưu trong cookie `session-username`. Đăng xuất thì xóa cookie này. ⚠️ Web chỉ dựa vào cookie này để xác thực, nên tự tạo cookie là vào được (O-21).
 - BR-3: Kiểm tra theo thứ tự: Username trống → Password trống → sai thông tin → tài khoản bị khóa.
 
 ## Quan sát thực tế (khám phá web ngày 2026-11-24, Chromium)
@@ -40,8 +40,13 @@ Người dùng đăng nhập bằng username và password để vào trang danh 
 | O-16 | Đăng xuất (Menu → Logout) | Về `/`, cookie bị xóa, ô Username trống | ✅ |
 | O-17 | Đăng xuất rồi bấm Back | Ở lại `/` với thông báo "You can only access '/inventory.html'…", không thấy sản phẩm | ✅ |
 | O-18 | Bị chặn ở O-15 rồi mở lại `/` | Thông báo lỗi cũ **vẫn còn** hiển thị | (Q8) |
-| O-20 | Bị báo lỗi, rồi gõ lại vào ô / bấm vào icon ✕ trong ô | Icon ✕ (hình trang trí `svg role=img`) **vẫn hiện khi đang gõ**, bấm vào không có tác dụng | Dễ hiểu nhầm là nút xóa (Q11, người duyệt phát hiện) |
 | O-19 | Console khi tải trang | 2 lỗi 401 tới `events.backtrace.io` (dịch vụ theo dõi lỗi bên thứ 3), cảnh báo thiếu `autocomplete` | Không ảnh hưởng chức năng (Q10) |
+| O-20 | Bị báo lỗi, rồi gõ lại vào ô / bấm vào icon ✕ trong ô | Icon ✕ (hình trang trí `svg role=img`) **vẫn hiện khi đang gõ**, bấm vào không có tác dụng | Dễ hiểu nhầm là nút xóa (Q11, người duyệt phát hiện) |
+| O-21 | Chưa đăng nhập, **tự tạo cookie** `session-username=standard_user` rồi mở `/inventory.html` | **Vào được**, thấy 6 sản phẩm | 🔴 Vượt qua đăng nhập (Q12, KB-02) |
+| O-22 | Đã đăng nhập, tải lại trang (F5) | Vẫn ở `/inventory.html` | ✅ Giữ phiên |
+| O-23 | Đã đăng nhập, mở lại `/` | Vẫn hiện form đăng nhập, không tự chuyển vào trang sản phẩm | (Q13) |
+| O-24 | Bấm Login khi trống → nhập sai mật khẩu → nhập đúng | Thông báo đổi đúng theo từng lần thử, lần cuối vào `/inventory.html` | ✅ |
+| O-25 | Chưa đăng nhập, mở `/inventory-item.html?id=4` | Bị đưa về `/`, thông báo `…'/inventory-item.html' when you are logged in.` | ✅ |
 
 > **Bài học từ lần khám phá:** lần chạy đầu cho kết quả sai ở O-13/O-14 (user không chuyển trang, lỗi cũ dính sang bước sau). Nguyên nhân là **script khám phá** dùng chung một phiên trình duyệt và chờ chưa đủ lâu. Chạy lại với phiên sạch thì kết quả đúng.
 > Đây là `script-issue`, không phải bug của web. Hãy nghi script của mình trước khi kết luận web có bug.
@@ -51,8 +56,8 @@ Người dùng đăng nhập bằng username và password để vào trang danh 
 - `events.backtrace.io`: dịch vụ theo dõi lỗi bên thứ 3, đang lỗi 401 (không ảnh hưởng đăng nhập)
 
 ## Phạm vi test
-- **Trong phạm vi**: AC-1 → AC-7, 6 tài khoản test, đăng nhập bằng chuột và bằng phím Enter, truy cập trực tiếp trang được bảo vệ, đăng xuất và nút Back.
-- **Ngoài phạm vi**: đăng ký, quên mật khẩu, kiểm thử hiệu năng và bảo mật chuyên sâu. Các mục Q5, Q9, Q10 chờ trả lời ở HITL #1.
+- **Trong phạm vi**: AC-1 → AC-7, 6 tài khoản test, đăng nhập bằng chuột và phím Enter, truy cập trực tiếp trang được bảo vệ (kể cả bằng cookie tự tạo), đăng xuất, nút Back, đăng nhập lại, giữ phiên khi tải lại trang.
+- **Ngoài phạm vi** (đã ghi trong `viewpoint.csv` với `scope=out`): đăng ký, quên mật khẩu, hiệu năng (Q5), accessibility (Q10), phiên hết hạn (Q9), tự chuyển trang khi đã đăng nhập (Q13), bảo mật chuyên sâu.
 
 ## Review checklist
 | Mục | Kết quả | Ghi chú |
@@ -62,5 +67,7 @@ Người dùng đăng nhập bằng username và password để vào trang danh 
 | Validation và error handling? | ⚠️ | Không nói phân biệt hoa thường, khoảng trắng, độ dài tối đa |
 | Ràng buộc kỹ thuật / business? | ⚠️ | Thứ tự kiểm tra lỗi không được ghi (đã suy ra BR-3 từ quan sát) |
 | Dependency được liệt kê? | ❌ | Requirement không nhắc cookie phiên, dịch vụ bên thứ 3 |
-| Edge case, negative? | ❌ | Không đề cập. Đã bổ sung qua khám phá (O-05 → O-10, O-17, O-18) |
-| Có câu hỏi blocking? | ✅ | 5 câu blocking, 5 câu non-blocking: xem `internal-question.md` |
+| Edge case, negative? | ❌ | Không đề cập. Đã bổ sung qua khám phá (O-05 → O-10, O-17, O-18, O-21 → O-25) |
+| Có câu hỏi blocking? | ✅ | 14 câu (6 blocking, 8 non-blocking): xem [`q-and-a.md`](q-and-a.md). Còn mở: Q12, Q13, Q14 |
+
+**Bug phát hiện sớm**: xem [`known-issues.md`](known-issues.md) (KB-01 → KB-04).

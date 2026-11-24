@@ -9,3 +9,4 @@
 | IMP-03 | Bổ sung AC hiệu năng: đăng nhập **≤ 3 giây**. Điều tra `performance_glitch_user` | Mất khoảng 5,1 giây, các user khác khoảng 0,07 giây, chậm khoảng 70 lần (O-14) | High | Q5 |
 | IMP-04 | Ticket accessibility: thêm `<label>` cho ô nhập, thêm `autocomplete` (`username`, `current-password`) | Chỉ có placeholder (O-01). Console cảnh báo thiếu autocomplete (O-19) | Medium | Q10 |
 | IMP-05 | Icon ✕ báo lỗi trong ô nhập dễ bị hiểu nhầm là nút xóa. Nên **ẩn icon khi người dùng bắt đầu gõ lại**, hoặc đổi sang icon cảnh báo (⚠) | Icon là hình trang trí (`svg role=img`), bấm không có tác dụng, vẫn hiện khi đang gõ (O-20) | Low | Q11 |
+| IMP-06 | Đã đăng nhập mà mở lại `/` thì **tự chuyển vào trang sản phẩm**, không hiện lại form đăng nhập | Hiện vẫn thấy form đăng nhập dù phiên còn hiệu lực (O-23) | Low | Q13 |

@@ -13,6 +13,7 @@
 | 3 | 2026-11-24 | Tối ưu CI | Phân tích thời gian từng bước, đề xuất cache | **Kết luận vội từ một lần đo**: lần sau bước apt mất 5,5 phút | Ghi nhận, để Bài 10 đo nhiều lần rồi mới chốt số liệu |
 | 4 | 2026-11-24 | Khám phá web (Bài 2) | Khám phá SauceDemo bằng trình duyệt, khoảng 20 tình huống | Lần đầu **báo nhầm 3 user không đăng nhập được** (script-issue) | Chạy lại với phiên sạch, xác nhận không phải bug |
 | 5 | 2026-11-24 | Seed test | – | Test seed mặc định **rỗng nhưng vẫn pass**, làm CI xanh giả | Đổi thành smoke check, **chứng minh test fail được** khi đổi URL sai |
+| 6 | 2026-11-24 | Review sau bước test-design | Review lại toàn bộ theo vai QC Lead + ISTQB | AI **tự bỏ sót** ở bước trước: lỗ hổng cookie, 4 viewpoint, 2 file câu hỏi trùng, ghi sai kỹ thuật BVA | Người yêu cầu thêm bước review sau mỗi bước, tạo agent `qa-reviewer` |
 
 ---
 
@@ -40,3 +41,8 @@
 - **Chuyện xảy ra**: `tests/seed.spec.ts` do Playwright tạo sẵn không có bước nào nhưng vẫn **pass**, nên CI xanh mà không test gì.
 - **Xử lý**: đổi thành smoke check (mở trang, kiểm tra tiêu đề và nút Login). Chạy với `BASE_URL=https://example.com` thì test **fail đúng như mong đợi**.
 - **Bài học**: lời dặn số 4: test không thể fail là test vô dụng.
+
+### #6: AI bỏ sót ở bước trước, chỉ lộ ra khi review lại
+- **Chuyện xảy ra**: sau khi chốt HITL #1, người duyệt yêu cầu review lại toàn bộ theo góc nhìn QC Lead. AI phát hiện chính nó đã bỏ sót: **tự tạo cookie là vượt qua được đăng nhập** (lỗi bảo mật, vi phạm AC-6), 4 viewpoint (đăng nhập lại, thử lại sau lỗi, tải lại trang, trang có tham số URL), 2 file câu hỏi trùng nhau, và ghi sai kỹ thuật "BVA" cho TC không có biên.
+- **Xử lý**: bổ sung viewpoint, test case, phiếu Q&A gộp, `known-issues.md`. Thêm agent `qa-reviewer` chạy **sau mỗi bước, trước HITL**.
+- **Bài học**: AI làm một lượt thường **thiếu chiều sâu ở các luồng chuyển trạng thái và bảo mật**. Một vòng review riêng, có checklist, bắt được nhiều hơn hẳn.
