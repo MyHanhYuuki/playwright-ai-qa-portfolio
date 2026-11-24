@@ -71,11 +71,12 @@ Step-by-step notes written while building this project with an AI agent:
 3. [Thiết kế test case (test-impl) và HITL #2](docs/learning/03-thiet-ke-test-case.md)
 4. [Viết code test (script-gen) theo Page Object Model](docs/learning/04-viet-code-test.md)
 5. [Chạy test và phân loại kết quả (executor)](docs/learning/05-chay-test-va-phan-loai.md)
+7. [Viết bug report và RTM](docs/learning/07-bug-report-va-rtm.md) (Bài 6 healer: bỏ qua lần này vì không có test hỏng)
 
 ## Progress
 - [x] Project setup (Playwright 1.65, Chromium, Playwright MCP)
 - [x] AI agent QA pipeline (5 agents + reviewer + orchestrator + 3 HITL)
-- [ ] SauceDemo Login: full pipeline run
+- [x] SauceDemo Login: full pipeline run ([bug reports](qa-runs/saucedemo-login-screen/defects.md) · [RTM](qa-runs/saucedemo-login-screen/rtm.md))
 - [ ] SauceDemo Cart → Checkout
 - [ ] Bug reports (problem_user, error_user…)
 - [ ] API tests (Restful Booker)

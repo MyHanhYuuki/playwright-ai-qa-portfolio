@@ -52,3 +52,8 @@
 - **Nguyên nhân gốc**: script gọi `npx` qua shell (`shell: true`). Ký tự đặc biệt `| & < > ^` bị shell xử lý trước khi tới Playwright.
 - **Xử lý**: gọi thẳng Playwright bằng Node, **không qua shell**, nên tham số đi nguyên vẹn trên mọi hệ điều hành. Thêm cảnh báo khi exit code khác 0 (có test fail hoặc không có test nào chạy).
 - **Bài học**: sau mỗi lần chạy, **đối chiếu số test đã chạy với số dự kiến** (chọn 2 TC thì phải thấy "2 passed"). Không thấy dòng đó thì chưa được kết luận gì.
+
+### #8: Bug report chỉ mô tả một chiều của bug
+- **Chuyện xảy ra**: AI viết BUG-01 là "thiếu Password thì ô Username cũng bị tô đỏ". qa-reviewer thử chiều ngược lại (thiếu Username) và thấy **ô Password cũng bị tô đỏ**. Nếu dev chỉ sửa một chiều, TC-028 sẽ pass dù bug vẫn còn. Reviewer cũng bắt được lỗi trong script RTM: TC bị **skip** vẫn được tính là AC "Đạt", tức là RTM có thể che việc dùng `test.skip` để giấu bug.
+- **Xử lý**: tái hiện lại cả 2 chiều, lưu ảnh vào `manual/`, viết lại BUG-01. Người duyệt chọn sửa TC-028 để kiểm tra **cả 2 chiều** thay vì thêm TC mới, evidence chụp lại cả 2 chiều. Sửa script RTM: skip / flaky / chưa chạy thì AC hiện "Cần xem lại", có cảnh báo khi số TC lệch. Kiểm chứng bằng cách cố tình làm sai dữ liệu chạy (skip 1 TC, xóa 1 TC) và xem RTM có báo không.
+- **Bài học**: tìm thấy bug thì **thử các biến thể** (chiều ngược lại, dữ liệu khác, trang khác) trước khi viết report. Báo cáo tổng hợp cũng phải "có thể fail": thử làm sai đầu vào xem nó có báo không.

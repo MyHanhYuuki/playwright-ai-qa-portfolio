@@ -65,7 +65,7 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | 4 | Viết code test (POM) | `tests/pages`, `tests/specs` | ✅ |
 | 5 | Chạy test và phân loại lỗi | triage.md, báo cáo HTML | ✅ |
 | 6 | Sửa test hỏng (healer) | healing-log.md | ⏭ Lần này không có script-issue |
-| 7 | Bug report + RTM | defects.md, rtm-report.html | 🔄 Chờ HITL #3 |
+| 7 | Bug report + RTM | defects.md, rtm.md / rtm-report.html (`npm run rtm`) | ✅ |
 | 8 | Giỏ hàng → Thanh toán (cả pipeline) | Bộ test E2E mua hàng | ⏳ |
 | 9 | Test API: Restful Booker | `tests/api` | ⏳ |
 | 10 | Hoàn thiện CI, README, tổng kết | Báo cáo tổng kết | ⏳ |
@@ -108,3 +108,4 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | Đăng nhập: test case | 33 TC, phủ 20/20 viewpoint, 7/7 AC |
 | Đăng nhập: code test | 33 test (POM: 2 Page Object, 2 fixture), 5 test smoke |
 | Đăng nhập: kết quả chạy | 31 pass + 2 bug đã biết fail đúng chỗ, 0 chập chờn (chạy lặp 66/66), 15,8 giây |
+| Đăng nhập: RTM | 7/7 AC có test case, 5/7 AC đạt, 2 bug đang mở (1 High bảo mật, 1 Low giao diện) |

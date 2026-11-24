@@ -124,23 +124,24 @@ Bug bị từ chối (báo nhầm) thì chuyển lại thành script-issue để
 ## Bước 6: bug report → `defects.md`
 Mỗi bug đã duyệt ghi theo mẫu:
 ```markdown
-### BUG-001: [Feature]: [hành vi sai, ngắn gọn]
-- **Severity / Priority**: High / P2
-- **Môi trường**: Chromium, <baseURL>, user: <username>
-- **Steps to reproduce**: 1. … 2. … 3. …
-- **Expected** (AC-x): …
-- **Actual**: …
-- **Evidence**: `test-results/…/test-failed-1.png`, trace
-- **Linked**: TC-xxx · AC-x · run_id
+### BUG-01: [Chức năng] hành vi sai, ngắn gọn
+- **Ticket**: `[id_bug_n]` (chưa log) · **Severity / Priority**: High / P2 (đề xuất, PO chốt), kèm lý do
+- **Môi trường**: <baseURL>, Chromium, ngày · **Tần suất**: x/y lần
+- **Liên quan**: AC-x · TVP-xxx · TC-xxx · Qx
+- **Điều kiện trước**, **Các bước tái hiện** (đánh số, dữ liệu cụ thể)
+- **Kết quả mong đợi** (trích AC / Q&A) · **Kết quả thực tế**
+- **Evidence**: `evidence/bugs/[id_bug_n]_BUG-xx/TC-xxx/` (ảnh khoanh đỏ + video)
 ```
-Đầu file có bảng tổng hợp: `| Bug ID | TC | Title | Severity | Status |`.
+Đầu file có bảng tổng hợp: `| Bug | Ticket | TC | Tiêu đề | Severity | Priority | Trạng thái |`. Cuối file ghi các BUG-xx trong `known-issues.md` **không** đưa vào report, kèm lý do.
+Tự làm lại các bước tái hiện trên trình duyệt sạch trước khi ghi.
 Test của bug đã duyệt giữ nguyên trạng thái **fail**. Có thể đánh dấu `test.fail()` kèm comment `// BUG-001` để CI xanh nhưng vẫn theo dõi bug: test sẽ báo lỗi khi bug được sửa.
 
-## Bước 7: RTM → `rtm-report.html`
+## Bước 7: RTM → `npm run rtm` → `rtm.md` + `rtm-report.html`
 Ma trận: **AC → viewpoint → TC → kết quả lần chạy cuối → bug**.
 Cột: `AC | TVP | TC | Title | Technique | Auto? | Result | Bug`.
-Tổng hợp: % AC có ≥1 TC pass, các AC chưa có TC (gap), số bug theo AC, số TC flaky / needs-manual-fix.
-HTML tự chứa (CSS inline), có thể mở trực tiếp trong trình duyệt.
+Tổng hợp: % AC có TC, % AC đạt (mọi TC liên quan Passed; skip / flaky / chưa chạy thì **không** tính đạt), các AC chưa có TC (gap), số bug đang mở theo AC, số TC flaky / cần làm tay. Có cảnh báo khi lần chạy không full hoặc số TC lệch.
+Tạo bằng `scripts/build-rtm.mjs` (không làm tay): `rtm.md` xem trên GitHub, `rtm-report.html` tự chứa, mở bằng trình duyệt.
+Sau bước 6 + 7 gọi `qa-reviewer` với bước `defects` → `review-defects.md`.
 
 Cuối cùng in tóm tắt: số TC, pass/fail, số bug, coverage. Gợi ý commit.
 
