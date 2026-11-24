@@ -151,3 +151,32 @@ Bài 10 CI GitHub Actions + hoàn thiện README ..... ⚙️
 2. **Người chốt ở 3 điểm HITL.** AI có thể sai mà trông vẫn rất đúng.
 3. **Phân biệt "test sai" với "web lỗi".** Healer chỉ sửa test sai, không bao giờ sửa test cho pass để che bug.
 4. **Truy vết đầy đủ:** requirement → AC → viewpoint → test case → code → kết quả → bug.
+
+## 7. So với 3 agent có sẵn của Playwright
+
+Từ bản 1.56, Playwright có sẵn 3 agent (`npx playwright init-agents`): **planner** (khám phá web, viết kế hoạch test dạng Markdown), **generator** (biến kế hoạch thành code test), **healer** (chạy và tự sửa test hỏng).
+
+| Pipeline của dự án | Agent Playwright tương ứng | Khác biệt |
+|---|---|---|
+| test-design (đọc requirement, viewpoint, Q&A) | planner (một phần) | planner đi từ **web đang chạy**, không đọc requirement, không hỏi lại BA/PO |
+| test-impl (test case có kỹ thuật, có duyệt) | planner (một phần) | Kế hoạch của planner không có kỹ thuật EP/BVA, không có bước duyệt |
+| script-gen | generator | Cùng việc. Dự án dùng chung công cụ trình duyệt (Playwright MCP) |
+| executor (chạy + phân loại flaky / script-issue / real-bug) | không có | Playwright không có bước phân loại |
+| healer | healer | healer của Playwright có thể tự `test.fixme()` test không sửa được, dễ che bug. Healer của dự án chỉ sửa script-issue |
+| qa-reviewer, 3 HITL, bug report, RTM | không có | Phần quy trình QA, Playwright không làm |
+
+**Nói gọn:** agent của Playwright lo phần **viết và sửa code test**. Pipeline của dự án bọc thêm **quy trình QA** ở trước (phân tích yêu cầu, thiết kế test case) và ở sau (phân loại lỗi, bug report, truy vết), có người duyệt ở giữa.
+
+**Ngoài thực tế** (tính đến cuối 2026): AI agent cho testing còn mới, **chưa có chuẩn chung**.
+- Team nhỏ, cần nhanh, test hồi quy cho web có sẵn: thường dùng thẳng agent có sẵn (Playwright, Copilot…).
+- Team cần **truy vết, có người duyệt**: tự dựng pipeline nhiều agent theo quy trình của mình, giống dự án này. Ví dụ dự án outsource có khách yêu cầu viewpoint, RTM, hoặc ngành tài chính, y tế.
+- Cái "chuẩn" nằm ở **quy trình QA** (ISTQB: phân tích → thiết kế → thực thi → báo cáo). AI chỉ làm từng bước nhanh hơn, không thay quy trình.
+
+**Khi nào chọn cách nào:**
+| Tình huống | Nên dùng |
+|---|---|
+| Có requirement, cần test case được duyệt, cần RTM | Pipeline như dự án này |
+| Web có sẵn, chưa có tài liệu, cần nhanh bộ test smoke/hồi quy | Agent có sẵn của Playwright |
+| Bộ test cũ hay hỏng vì đổi giao diện | healer (của Playwright hoặc của dự án), có người xem lại trước khi merge |
+
+Đánh đổi: pipeline của dự án tốn nhiều token và thời gian hơn, nhiều file phải bảo trì hơn. Đổi lại, mọi test đều truy được về yêu cầu và có người chịu trách nhiệm duyệt.
