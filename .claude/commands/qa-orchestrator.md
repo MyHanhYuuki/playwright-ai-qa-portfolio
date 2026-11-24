@@ -99,6 +99,8 @@ Gọi agent `script-gen` với: `test-cases.csv`, `test-data.md`, `spec-review.m
 Kiểm tra: `npx playwright test --list tests/specs/<feature>.spec.ts` chạy được, số test khớp số TC `automatable`.
 Gọi `qa-reviewer` (script-gen).
 
+**Đổi quy ước giữa chừng** (vd thêm cột `screen`): liệt kê các file đã tạo bị ảnh hưởng, cập nhật chúng trước HITL tiếp theo.
+
 ## Bước 4: executor
 Gọi agent `executor` (phạm vi: cả feature, `npm run test:run -- <feature>`). Đọc `triage.md` (mục mới nhất), lưu `last_run_id`.
 Không còn script-issue thì executor chụp evidence: `npm run test:evidence -- <feature>`.

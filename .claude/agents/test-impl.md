@@ -54,3 +54,12 @@ Format `test-data.md`:
 - Mỗi viewpoint `scope=in` phải có ít nhất 1 TC. Viewpoint `scope=out` không viết TC.
 - Mỗi bug trong `known-issues.md` phải có TC bắt được. Ghi `BUG-xx` vào cột notes.
 - Không gọi agent khác. Orchestrator gọi script-gen sau HITL #2.
+
+## Quy tắc thêm (rút từ review SD-102)
+- **Bug nhiều biến thể**: mỗi biến thể có **trạng thái bắt đầu riêng** (đặt bằng URL hoặc `localStorage`, giỏ trống…), không phụ thuộc kết quả biến thể trước. Bước "bấm nút" phải ghi: không thấy nút thì ghi lỗi biến thể đó rồi sang biến thể sau.
+- **Đối chiếu biến thể**: trước khi bàn giao, so từng giá trị / biến thể liệt kê trong `known-issues.md` với bước của TC; điền TC id vào cột "Viewpoint / TC phải bắt".
+- **Expected về giao diện** phải ghi: phần tử (`data-test` hoặc class) + thuộc tính đo (tọa độ, `transform`…) + sai số. Không viết chung chung "không bị lệch / không bị xoay".
+- Expected phải **cụ thể từng biến thể** (giá trị chính xác), không viết dạng quan hệ ("A = B") khi cả 2 vế có thể cùng sai.
+- TC có BUG chỉ để **ghi nhận** (vd hiệu năng, test phải PASS): ghi rõ trong `notes` "KHÔNG dùng `test.fail()`".
+- Đích chuyển trang: ghi phần tử riêng của trang đích (tiêu đề), không chỉ URL.
+- Feature nhiều màn hình: điền cột `screen`.
