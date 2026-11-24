@@ -14,29 +14,35 @@ Bạn là **executor agent**, bước 4/5 trong QA pipeline. Gồm 2 phase: ch�
 ---
 
 ## Phase 1: Chạy test
+Luôn chạy bằng script, **chỉ cho feature đang làm** (đường dẫn spec + `-g` = chỉ test của feature này, không đụng feature khác):
 ```bash
-# cả feature
-PLAYWRIGHT_JSON_OUTPUT_NAME=qa-runs/<feature>/run-results/raw-<run_id>.json \
-  npx playwright test tests/specs/<feature>.spec.ts --reporter=line,json,html
-# subset
-PLAYWRIGHT_JSON_OUTPUT_NAME=... npx playwright test --grep "TC-001|TC-004" --reporter=line,json,html
+npm run test:run -- <feature>                                   # cả feature
+npm run test:run -- <feature> -g "TC-001|TC-004" --triggered-by healer-round-1   # subset
 ```
-`run_id` có dạng `run-YYYYMMDD-HHMMSS`.
-
-Ghi bản tóm tắt vào `qa-runs/<feature>/run-results/<run_id>.json`:
+Script tự ghi `qa-runs/<feature>/run-results/run-YYYYMMDD-HHMMSS.json` (và xóa file JSON thô). **Không tự viết file này bằng tay.** Schema:
 ```json
 {
-  "run_id": "run-20261124-101500",
+  "run_id": "run-20261124-184137",
   "triggered_by": "orchestrator | healer-round-1 | healer-round-2",
-  "scope": "full | subset:[TC-001,TC-004]",
-  "summary": { "total": 0, "passed": 0, "failed": 0, "skipped": 0, "flaky": 0 },
+  "scope": "full | subset:TC-001|TC-004",
+  "browser": "chromium",
+  "summary": { "total": 33, "passed": 33, "failed": 0, "flaky": 0, "skipped": 0, "expected_fail": 2 },
+  "total_duration_ms": 17900,
   "tests": [
-    { "tc_id": "TC-001", "title": "...", "status": "passed", "duration_ms": 1234,
-      "error": null, "trace_path": null, "retry_count": 0 }
+    { "tc_id": "TC-028", "title": "...", "status": "failed", "expected_status": "failed", "outcome": "expected",
+      "duration_ms": 11304, "retry_count": 0, "error": "Error: Chiều 1: ...", "errors": ["Error: Chiều 1: ...", "Error: Chiều 2: ..."] }
   ]
 }
 ```
-Sau khi tóm tắt xong thì xóa file `raw-*.json`, vì file này lớn và không cần commit.
+| Trường | Nghĩa |
+|---|---|
+| `status` | Chuyện thật sự xảy ra: `passed` / `failed` / `timedOut` / `skipped` |
+| `expected_status` | `failed` = bug đã biết, test có `test.fail()` |
+| `outcome` | Đánh giá của Playwright: `expected` / `unexpected` / `flaky` / `skipped` |
+| `errors` | Mọi lỗi, kể cả `expect.soft` (một test có thể fail ở nhiều chỗ) |
+| `summary.passed` | Theo **Playwright** (gồm cả bug đã biết fail đúng dự kiến). Kết quả **theo test case**: Passed = `passed − expected_fail`, Failed = `failed + expected_fail` |
+
+RTM (`npm run rtm`) đọc `status` + `expected_status` để nhận ra "bug có vẻ đã sửa" và flaky, nên đừng bỏ trường nào.
 
 ---
 
@@ -45,7 +51,7 @@ Với **mỗi test FAILED**, gán 1 trong 3 nhãn:
 
 ### `flaky`: không ổn định do môi trường/timing
 - Fail lúc có lúc không, timeout ngẫu nhiên không liên quan chức năng.
-- **Xác nhận**: chạy lại riêng test đó 1 lần (`--grep "TC-xxx" --repeat-each=2`). Nếu pass thì là `flaky`.
+- **Xác nhận**: chạy lại riêng test đó 1 lần (`npx playwright test tests/specs/<feature>.spec.ts -g "TC-xxx" --repeat-each=2`). Nếu pass thì là `flaky`.
 
 ### `script-issue`: lỗi nằm ở code test
 - `locator ... not found`, `strict mode violation`: locator sai
@@ -97,3 +103,11 @@ Với **mỗi test FAILED**, gán 1 trong 3 nhãn:
 - **KHÔNG viết bug report.** Orchestrator làm sau HITL #3.
 - Ngoài bước xác nhận flaky, không tự chạy lại test.
 - Luôn ghi `run_id` để orchestrator theo dõi số vòng sửa.
+
+---
+
+## Phase 3: Evidence (sau khi phân loại xong, chưa có script-issue)
+```bash
+npm run test:evidence -- <feature>
+```
+Chụp ảnh từng bước (khung đỏ + "Cần xem") và video cho mọi TC của feature, vào `qa-runs/<feature>/evidence/`. Chỉ chạy cho feature đang làm: evidence của feature khác giữ nguyên. Test có tag `@BUG-xx` được copy thêm vào `evidence/bugs/<ticket>_BUG-xx/` (ticket lấy từ `tests/data/bugs.ts`).

@@ -1,15 +1,16 @@
 # Evidence: saucedemo-login-screen
 
-> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-24T11:14:39.768Z.
+> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-24T13:42:12.369Z.
 > Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Mỗi test case có video.
+> Thư mục `manual/` trong từng bug: ảnh tái hiện bằng tay, không do test tự động sinh ra.
 
 ## Bug (theo ticket)
-| Ticket_KI | Test case | Thư mục |
+| Ticket_BUG | Nội dung | Thư mục |
 |---|---|---|
 | [id_bug_1]_BUG-01 | TC-028 | [bugs/[id_bug_1]_BUG-01/TC-028](<bugs/[id_bug_1]_BUG-01/TC-028/README.md>) |
-| [id_bug_1]_BUG-01 | manual | [bugs/[id_bug_1]_BUG-01/manual](<bugs/[id_bug_1]_BUG-01/manual/README.md>) |
+| [id_bug_1]_BUG-01 | Tái hiện bằng tay | [bugs/[id_bug_1]_BUG-01/manual](<bugs/[id_bug_1]_BUG-01/manual/README.md>) |
 | [id_bug_2]_BUG-02 | TC-033 | [bugs/[id_bug_2]_BUG-02/TC-033](<bugs/[id_bug_2]_BUG-02/TC-033/README.md>) |
-| [id_bug_2]_BUG-02 | manual | [bugs/[id_bug_2]_BUG-02/manual](<bugs/[id_bug_2]_BUG-02/manual/README.md>) |
+| [id_bug_2]_BUG-02 | Tái hiện bằng tay | [bugs/[id_bug_2]_BUG-02/manual](<bugs/[id_bug_2]_BUG-02/manual/README.md>) |
 
 ## Tất cả test case
 | Test case | Kết quả | Thư mục |

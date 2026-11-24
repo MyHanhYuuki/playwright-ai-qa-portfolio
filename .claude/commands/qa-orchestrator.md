@@ -100,7 +100,8 @@ Kiểm tra: `npx playwright test --list tests/specs/<feature>.spec.ts` chạy đ
 Gọi `qa-reviewer` (script-gen).
 
 ## Bước 4: executor
-Gọi agent `executor` (phạm vi: cả feature). Đọc `triage.md` (mục mới nhất), lưu `last_run_id`.
+Gọi agent `executor` (phạm vi: cả feature, `npm run test:run -- <feature>`). Đọc `triage.md` (mục mới nhất), lưu `last_run_id`.
+Không còn script-issue thì executor chụp evidence: `npm run test:evidence -- <feature>`.
 Gọi `qa-reviewer` (executor) để soát phân loại, nhất là đối chiếu với `known-issues.md`.
 - Có `script-issue` → **Vòng lặp healer**
 - Có `real-bug` → **HITL #3**
@@ -110,7 +111,7 @@ Gọi `qa-reviewer` (executor) để soát phân loại, nhất là đối chi�
 1. Với mỗi TC script-issue: nếu `heal_counters[tc] >= 2` thì đánh dấu `needs-manual-fix` và bỏ qua.
 2. Gọi agent `healer` với danh sách TC và số vòng. Tăng `heal_counters[tc]`.
 3. TC healer báo `reclassify: real-bug` → chuyển sang danh sách real-bug.
-4. Gọi `executor` chạy lại subset các TC đã sửa → đọc lại `triage.md` → lặp lại.
+4. Gọi `executor` chạy lại subset các TC đã sửa (`npm run test:run -- <feature> -g "TC-001|TC-004" --triggered-by healer-round-N`) → đọc lại `triage.md` → lặp lại.
 
 ## ⏸ HITL #3: duyệt bug
 **Dừng pipeline**, đặt `hitl_pending = "HITL #3"`:
@@ -135,13 +136,13 @@ Mỗi bug đã duyệt ghi theo mẫu:
 Đầu file có bảng tổng hợp: `| Bug | Ticket | TC | Tiêu đề | Severity | Priority | Trạng thái |`. Cuối file ghi các BUG-xx trong `known-issues.md` **không** đưa vào report, kèm lý do.
 Tự làm lại các bước tái hiện trên trình duyệt sạch trước khi ghi. Thử cả **biến thể** (chiều ngược lại, dữ liệu khác, trang khác). Ảnh tái hiện bằng tay lưu riêng vào `evidence/bugs/<ticket>_BUG-xx/manual/` kèm README (thao tác, kết quả, thời điểm).
 Có biến thể thì **mở rộng TC đang bắt bug** để kiểm tra mọi biến thể (`expect.soft`), không tạo TC mới, và chụp lại evidence cho mọi biến thể.
-Test của bug đã duyệt giữ nguyên trạng thái **fail**. Có thể đánh dấu `test.fail()` kèm comment `// BUG-001` để CI xanh nhưng vẫn theo dõi bug: test sẽ báo lỗi khi bug được sửa.
+Test của bug đã duyệt giữ nguyên trạng thái **fail**: `test.fail(true, 'BUG-xx: …')` + tag `@BUG-xx` để CI xanh nhưng vẫn theo dõi bug (test báo khi bug được sửa). Thêm `'BUG-xx': '[id_bug_n]'` vào `tests/data/bugs.ts`, ghi `BUG-xx` vào cột `notes` của TC (RTM đọc cột này), rồi chụp lại evidence: `npm run test:evidence -- <feature> -g "TC-xxx"`.
 
 ## Bước 7: RTM → `npm run rtm` → `rtm.md` + `rtm-report.html`
 Ma trận: **AC → viewpoint → TC → kết quả lần chạy cuối → bug**.
 Cột: `AC | TVP | TC | Title | Technique | Auto? | Result | Bug`.
 Tổng hợp: % AC có TC, % AC đạt (mọi TC liên quan Passed; skip / flaky / chưa chạy thì **không** tính đạt), các AC chưa có TC (gap), số bug đang mở theo AC, số TC flaky / cần làm tay. Có cảnh báo khi lần chạy không full hoặc số TC lệch.
-Tạo bằng `scripts/build-rtm.mjs` (không làm tay): `rtm.md` xem trên GitHub, `rtm-report.html` tự chứa, mở bằng trình duyệt.
+Tạo bằng `npm run rtm -- <feature>` (không làm tay, chỉ feature đang làm): `rtm.md` xem trên GitHub, `rtm-report.html` tự chứa, mở bằng trình duyệt.
 Sau bước 6 + 7 gọi `qa-reviewer` với bước `defects` → `review-defects.md`.
 
 Cuối cùng in tóm tắt: số TC, pass/fail, số bug, coverage. Gợi ý commit.
