@@ -9,7 +9,7 @@
 |---|---|---|---|---|---|
 | BUG-01 | Báo thiếu một ô nhưng **cả 2 ô đều bị tô đỏ** và có icon lỗi, **cả 2 chiều**: thiếu Password thì ô Username bị tô đỏ, thiếu Username thì ô Password bị tô đỏ (chiều 2 phát hiện ở review-defects A1) | O-03 | Low (giao diện) | TC-028 (cả 2 chiều) dự kiến **FAIL** | ✅ Xác nhận khi chạy test (run-20261124-150906). HITL #3 approved |
 | BUG-02 | **Tự tạo cookie `session-username` là vào được trang bên trong mà không cần đăng nhập**, vi phạm AC-6 | O-21 | Critical nếu là hệ thống thật (bảo mật) | TC-033 dự kiến **FAIL** | ✅ Xác nhận khi chạy test (run-20261124-150906). HITL #3 approved |
-| BUG-03 | `performance_glitch_user` đăng nhập mất **~5,1 giây** (user khác ~0,07 giây) | O-14 | Vấn đề hiệu năng, chưa có AC | TC-006 **PASS** (không đánh fail theo thời gian). Ghi lại thời gian thực tế | Đo được: TC-006 mất 10,4 giây cả test. Báo kèm IMP-03 |
+| BUG-03 | `performance_glitch_user` đăng nhập mất **~5,1 giây** (user khác ~0,07 giây) | O-14 | Vấn đề hiệu năng, chưa có AC | TC-006 **PASS** (không đánh fail theo thời gian). Ghi lại thời gian thực tế | Đo được: bước đăng nhập ~5,2 giây (cả test TC-006 ~10 giây), ngưỡng chờ 10 giây còn dư một nửa. Báo kèm IMP-03 |
 | BUG-04 | Thông báo "You can only access…" **không tự mất** khi mở lại trang đăng nhập | O-18 | Low (quan sát) | Không có TC (Q8) | Theo dõi |
 
 ## Vấn đề không phải bug (đề xuất cải tiến)

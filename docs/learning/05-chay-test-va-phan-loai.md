@@ -17,6 +17,11 @@ npx playwright test tests/specs/saucedemo-login-screen.spec.ts --reporter=line,j
 ```
 Kết quả: **33 passed (15,8 giây)**, 9 test chạy song song.
 
+Từ Bài 7 có lệnh gọn hơn, tự lưu kết quả vào `run-results/` (chỉ chạy test của feature này):
+```bash
+npm run test:run -- saucedemo-login-screen
+```
+
 ### 2. Đừng vội tin "33 passed"
 Trong 33 test có 2 test **bug đã biết** dùng `test.fail()`. "Pass" ở đây nghĩa là "đã fail đúng như dự kiến". Nhưng `test.fail()` cũng tính là pass nếu test fail vì **lỗi khác** (vd: locator sai). Vì vậy phải mở báo cáo, đọc lỗi chi tiết:
 
@@ -41,7 +46,9 @@ npx playwright test tests/specs/saucedemo-login-screen.spec.ts --repeat-each=2
 | `script-issue` | Code test sai (locator, chờ, logic) → healer sửa | 0 |
 | `real-bug` | Web làm sai so với AC → người duyệt ở HITL #3 | **2** (BUG-01, BUG-02) |
 
-Thêm một ghi nhận: TC-006 mất 10,4 giây, **sát ngưỡng** 10 giây. Đây là nguy cơ chập chờn, cần theo dõi.
+Thêm một ghi nhận: TC-006 mất 10,4 giây. Lúc đầu mình kết luận "sát ngưỡng 10 giây, nguy cơ chập chờn". **Kết luận này sai** (review-final A1): 10,4 giây là thời gian **cả test** (mở trình duyệt, tải trang…), còn ngưỡng 10 giây chỉ áp cho **bước chờ đăng nhập**, bước này mất khoảng 5,2 giây, mới dùng một nửa ngưỡng.
+
+> ⚠️ Bài học: muốn so với ngưỡng nào thì phải đo **đúng bước** mà ngưỡng đó áp vào, đừng lấy thời gian cả test.
 
 ### 5. Xem báo cáo HTML
 ```bash
@@ -51,7 +58,7 @@ Mở từng test để xem các bước, thời gian, lỗi, ảnh chụp lúc f
 
 ### 6. Evidence (bằng chứng test)
 ```bash
-npm run test:evidence
+npm run test:evidence -- saucedemo-login-screen
 ```
 Tự động tạo trong `qa-runs/saucedemo-login-screen/evidence/`:
 ```

@@ -15,5 +15,5 @@
 ## Lưu ý
 | # | Vấn đề | Mức | Đề xuất |
 |---|---|---|---|
-| E1 | TC-006 mất 10,4 giây, sát ngưỡng 10 giây | 🟡 Minor | Theo dõi trên CI. Nếu chập chờn thì tăng timeout cho riêng TC-006 (không tăng `retries`) |
+| E1 | TC-006 mất 10,4 giây, sát ngưỡng 10 giây | 🟡 Minor | Theo dõi trên CI. Nếu chập chờn thì tăng timeout cho riêng TC-006 (không tăng `retries`). **Sửa sau (review-final A1): nhận định sai, bước đăng nhập chỉ ~5,2 giây / ngưỡng 10 giây** |
 | E2 | "33 passed" trong báo cáo dễ gây hiểu nhầm là không có bug | 🟡 Minor | Khi báo cáo, luôn ghi rõ: **31 pass + 2 bug đã biết (expected fail)** |

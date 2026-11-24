@@ -106,6 +106,6 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | Đăng nhập: phân tích yêu cầu | 7 AC, 25 quan sát, 25 viewpoint (20 trong phạm vi), 14 câu hỏi, 6 đề xuất cải tiến |
 | Đăng nhập: bug phát hiện sớm (trước khi chạy test) | 4, trong đó 1 lỗi bảo mật: vượt đăng nhập bằng cookie tự tạo |
 | Đăng nhập: test case | 33 TC, phủ 20/20 viewpoint, 7/7 AC |
-| Đăng nhập: code test | 33 test (POM: 2 Page Object, 2 fixture), 5 test smoke |
-| Đăng nhập: kết quả chạy | 31 pass + 2 bug đã biết fail đúng chỗ, 0 chập chờn (chạy lặp 66/66), 15,8 giây |
+| Đăng nhập: code test | 33 test (POM: 2 Page Object, 3 fixture gồm evidence), 5 test smoke (+1 seed = 6 khi chạy `test:smoke`) |
+| Đăng nhập: kết quả chạy | 31 Passed + 2 Failed (bug đã biết, fail đúng chỗ), 0 chập chờn (chạy lặp 66/66). Lần chạy mới nhất `run-20261124-184137`: 17,9 giây |
 | Đăng nhập: RTM | 7/7 AC có test case, 5/7 AC đạt, 2 bug đang mở (1 High bảo mật, 1 Low giao diện) |

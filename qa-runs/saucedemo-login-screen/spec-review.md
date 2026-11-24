@@ -9,7 +9,7 @@ Người dùng đăng nhập bằng username và password để vào trang danh 
 | AC-1 | Hiển thị ô Username, ô Password (ẩn ký tự), nút Login | ✅ | |
 | AC-2 | Đúng thông tin thì vào trang sản phẩm | ✅ | Chưa có ngưỡng thời gian phản hồi. Đã chốt ở Q5 |
 | AC-3 | Bỏ trống thì báo lỗi "tương ứng" | ✅ (sau Q&A) | Ban đầu ⚠️: không nêu nội dung lỗi. Đã làm rõ ở Q1, Q3 |
-| AC-4 | Sai thông tin thì báo lỗi | ✅ (sau Q&A) | Ban đầu ⚠️: không nêu nội dung lỗi, hoa thường, khoảng trắng. Đã làm rõ ở Q1, Q2. Độ dài tối đa chờ Q14 |
+| AC-4 | Sai thông tin thì báo lỗi | ✅ (sau Q&A) | Ban đầu ⚠️: không nêu nội dung lỗi, hoa thường, khoảng trắng. Đã làm rõ ở Q1, Q2. Độ dài tối đa: Q14 đã chốt |
 | AC-5 | Tài khoản khóa thì báo bị khóa | ✅ (sau Q&A) | Ban đầu ⚠️: không nói trường hợp khóa + sai mật khẩu. Đã làm rõ ở Q4 |
 | AC-6 | Chưa đăng nhập không vào được trang bên trong | ✅ | ⚠️ Cookie tự tạo vượt qua được (O-21, Q12, BUG-02) |
 | AC-7 | Đăng xuất về trang đăng nhập | ✅ | Không nói phiên hết hạn (Q9: ngoài phạm vi) |
@@ -68,6 +68,6 @@ Người dùng đăng nhập bằng username và password để vào trang danh 
 | Ràng buộc kỹ thuật / business? | ⚠️ | Thứ tự kiểm tra lỗi không được ghi (đã suy ra BR-3 từ quan sát) |
 | Dependency được liệt kê? | ❌ | Requirement không nhắc cookie phiên, dịch vụ bên thứ 3 |
 | Edge case, negative? | ❌ | Không đề cập. Đã bổ sung qua khám phá (O-05 → O-10, O-17, O-18, O-21 → O-25) |
-| Có câu hỏi blocking? | ✅ | 14 câu (6 blocking, 8 non-blocking): xem [`q-and-a.md`](q-and-a.md). Còn mở: Q12, Q13, Q14 |
+| Có câu hỏi blocking? | ✅ | 14 câu (6 blocking, 8 non-blocking): xem [`q-and-a.md`](q-and-a.md). Đã chốt hết (Q1–Q14, Open 0) |
 
 **Bug phát hiện sớm**: xem [`known-issues.md`](known-issues.md) (BUG-01 → BUG-04).

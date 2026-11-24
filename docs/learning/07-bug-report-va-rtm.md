@@ -19,7 +19,7 @@
 | Tiêu đề | `[Chức năng] hành vi sai`, đọc là hiểu | [Login] Tự tạo cookie là vào được trang bên trong |
 | Severity / Priority | Kèm lý do. Priority do PO chốt, QC đề xuất | High / P1 (đề xuất) |
 | Môi trường | URL, trình duyệt, phiên bản, ngày | saucedemo.com · Chromium · 2026-11-24 |
-| Tần suất | Bao nhiêu lần tái hiện / bao nhiêu lần thử | 100% (3/3) |
+| Tần suất | Bao nhiêu lần tái hiện / bao nhiêu lần thử | 100%: 2 lần chạy có file kết quả + tái hiện bằng tay |
 | Điều kiện trước | Trạng thái trước khi làm | Chưa đăng nhập, trình duyệt sạch |
 | Các bước | Đánh số, dữ liệu cụ thể, ai cũng làm theo được | Mở web → F12 → chạy lệnh tạo cookie → mở `/inventory.html` |
 | Expected | **Trích từ AC hoặc câu trả lời Q&A** | AC-6, Q12: bị đưa về trang đăng nhập |
@@ -34,7 +34,7 @@ Mẹo: viết xong thì **tự làm lại theo đúng các bước mình viết*
 
 ### 3. RTM tự động
 ```bash
-npm run rtm
+npm run rtm -- saucedemo-login-screen
 ```
 Script `scripts/build-rtm.mjs` đọc `requirement.md` (AC), `viewpoint.csv`, `test-cases.csv`, kết quả chạy mới nhất trong `run-results/` và `defects.md`, rồi tạo:
 - `rtm.md`: xem trực tiếp trên GitHub

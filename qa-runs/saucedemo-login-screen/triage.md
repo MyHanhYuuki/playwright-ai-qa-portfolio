@@ -34,13 +34,13 @@
 Mỗi bug được làm lại trong một phiên trình duyệt sạch, dùng locator khác với code test (`#user-name`, `#login-button`), có chụp ảnh:
 | Bug | Kết quả | Bằng chứng |
 |---|---|---|
-| BUG-01 | ✅ Tái hiện được: cả ô Username và Password đều có class `input_error`, 2 icon ✕ | [Ảnh + video](<evidence/bugs/[id_bug_1]_BUG-01/TC-028/README.md>) |
-| BUG-02 | ✅ Tái hiện được: chỉ với cookie giả đã vào được trang Products (6 sản phẩm). **Phát hiện thêm**: vào được cả `/checkout-step-one.html`, tức ảnh hưởng tới **toàn bộ** trang bên trong | [Ảnh + video](<evidence/bugs/[id_bug_2]_BUG-02/TC-033/README.md>) |
+| BUG-01 | ✅ Tái hiện được: cả ô Username và Password đều có class `input_error`, 2 icon ✕ | [Ảnh tái hiện bằng tay](<evidence/bugs/[id_bug_1]_BUG-01/manual/README.md>) · [evidence tự động](<evidence/bugs/[id_bug_1]_BUG-01/TC-028/README.md>) |
+| BUG-02 | ✅ Tái hiện được: chỉ với cookie giả đã vào được trang Products (6 sản phẩm). **Phát hiện thêm**: vào được cả `/checkout-step-one.html`, tức ảnh hưởng tới **toàn bộ** trang bên trong | [Ảnh tái hiện bằng tay](<evidence/bugs/[id_bug_2]_BUG-02/manual/README.md>) · [evidence tự động](<evidence/bugs/[id_bug_2]_BUG-02/TC-033/README.md>) |
 
 Evidence đầy đủ của 33 test case (ảnh có khoanh đỏ + ghi chú, video): [`evidence/README.md`](evidence/README.md)
 
 ## Ghi nhận khác
 | # | Nội dung |
 |---|---|
-| N1 | TC-006 (`performance_glitch_user`) mất **10,4 giây** cả test, đã sát ngưỡng chờ 10 giây của bước kiểm tra URL. **Nguy cơ chập chờn** nếu mạng chậm hơn. Theo dõi, kèm BUG-03 / IMP-03 |
+| N1 | TC-006 (`performance_glitch_user`) mất 10,4 giây **cả test**. Riêng bước đăng nhập ~5,2 giây, ngưỡng chờ 10 giây còn dư một nửa, **chưa có nguy cơ chập chờn**. (Bản đầu kết luận "sát ngưỡng" là sai, sửa theo review-final A1.) Ghi nhận kèm BUG-03 / IMP-03 |
 | N2 | BUG-04 (thông báo cũ không tự mất) không có TC theo Q8, không xuất hiện trong lần chạy này |
