@@ -62,7 +62,7 @@ function build(dir, feature) {
     return { ...ac, rows, vps: tvps.filter((v) => split(v.linked_ac).includes(ac.id)), passed, failed, other, status, bugs: [...new Set(rows.flatMap((r) => r.bugs))] };
   });
   const outScope = tvps.filter((v) => v.scope === 'out');
-  const inScopeNoTc = tvps.filter((v) => v.scope === 'in' && !tcs.some((tc) => tc.viewpoint_id === v.viewpoint_id));
+  const inScopeNoTc = tvps.filter((v) => v.scope === 'in' && !tcs.some((tc) => split(tc.viewpoint_id).includes(v.viewpoint_id)));
   const results = tcs.map((tc) => resultOf[tc.tc_id] ?? 'Not run');
   const count = (f) => results.filter(f).length;
   const openBugs = [...new Set(tcs.flatMap(bugsOf))].filter((b) => !/closed|fixed|done|đóng|đã sửa/i.test(bugStatus[b] ?? ''));
