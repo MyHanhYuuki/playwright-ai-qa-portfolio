@@ -79,6 +79,7 @@ evidence/
 | Thấy fail là báo bug ngay | Đọc lỗi: locator không tìm thấy thì thường là script-issue |
 | Test chập chờn thì tăng `retries` | Tìm nguyên nhân gốc, chỉ tăng timeout đúng chỗ cần |
 | Chỉ chạy 1 lần rồi kết luận | Chạy lặp (`--repeat-each`) trước khi kết luận ổn định |
+| Không để ý **số test đã chạy** (vd: lọc `-g "A\|B"` bị shell cắt, 0 test chạy) | Luôn đối chiếu dòng "N passed" với số TC mình chọn. Script gọi Playwright không qua shell (ai-log #7) |
 
 ## ✅ Checklist
 - [ ] Phân biệt được flaky, script-issue, real-bug, mỗi loại một ví dụ

@@ -3,13 +3,19 @@
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import { createRequire } from 'node:module';
 
+// Run the Playwright CLI with Node directly, WITHOUT a shell.
+// (With a shell, Windows cmd treats | & < > as commands: -g "TC-028|TC-033" was cut at "|" and no test ran.)
+const cli = createRequire(import.meta.url).resolve('@playwright/test/cli');
 const args = process.argv.slice(2);
-const run = spawnSync('npx', ['playwright', 'test', 'tests/specs', ...args], {
+const run = spawnSync(process.execPath, [cli, 'test', 'tests/specs', ...args], {
   stdio: 'inherit',
-  shell: true,
   env: { ...process.env, EVIDENCE: '1' },
 });
+if (run.status !== 0) {
+  console.error(`\n⚠️  Playwright exit code ${run.status}: có test Failed hoặc KHÔNG có test nào chạy. Đọc kỹ log ở trên trước khi tin evidence.\n`);
+}
 
 // Build qa-runs/<feature>/evidence/README.md
 const qaRuns = path.resolve('qa-runs');

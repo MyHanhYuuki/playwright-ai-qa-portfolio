@@ -46,3 +46,9 @@
 - **Chuyện xảy ra**: sau khi chốt HITL #1, người duyệt yêu cầu review lại toàn bộ theo góc nhìn QC Lead. AI phát hiện chính nó đã bỏ sót: **tự tạo cookie là vượt qua được đăng nhập** (lỗi bảo mật, vi phạm AC-6), 4 viewpoint (đăng nhập lại, thử lại sau lỗi, tải lại trang, trang có tham số URL), 2 file câu hỏi trùng nhau, và ghi sai kỹ thuật "BVA" cho TC không có biên.
 - **Xử lý**: bổ sung viewpoint, test case, phiếu Q&A gộp, `known-issues.md`. Thêm agent `qa-reviewer` chạy **sau mỗi bước, trước HITL**.
 - **Bài học**: AI làm một lượt thường **thiếu chiều sâu ở các luồng chuyển trạng thái và bảo mật**. Một vòng review riêng, có checklist, bắt được nhiều hơn hẳn.
+
+### #7: Lệnh chạy evidence không chạy test nào mà không ai để ý
+- **Chuyện xảy ra**: `npm run test:evidence -- -g "TC-028|TC-033"` trên Windows bị cmd cắt ở dấu `|` (hiểu là "nối lệnh"), nên **0 test chạy**. Script vẫn tạo lại mục lục evidence như bình thường, AI chỉ đọc vài dòng cuối nên suýt báo "đã chụp lại xong".
+- **Nguyên nhân gốc**: script gọi `npx` qua shell (`shell: true`). Ký tự đặc biệt `| & < > ^` bị shell xử lý trước khi tới Playwright.
+- **Xử lý**: gọi thẳng Playwright bằng Node, **không qua shell**, nên tham số đi nguyên vẹn trên mọi hệ điều hành. Thêm cảnh báo khi exit code khác 0 (có test fail hoặc không có test nào chạy).
+- **Bài học**: sau mỗi lần chạy, **đối chiếu số test đã chạy với số dự kiến** (chọn 2 TC thì phải thấy "2 passed"). Không thấy dòng đó thì chưa được kết luận gì.
