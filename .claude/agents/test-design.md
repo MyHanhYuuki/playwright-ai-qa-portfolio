@@ -103,7 +103,7 @@ Mỗi AC phải có ít nhất 1 viewpoint. Happy path và bảo mật ưu tiên
 - Chạy lại cho chức năng đã có Q&A: **giữ nguyên câu đã Answered**, chỉ thêm câu mới với số tiếp theo.
 
 ## Output phụ
-- `known-issues.md`: bug thấy được ngay khi phân tích (KB-xx), kèm TC phải bắt bug đó và lưu ý cho bước sau.
+- `known-issues.md`: bug thấy được ngay khi phân tích (KI-xx), kèm TC phải bắt bug đó và lưu ý cho bước sau.
 - `improvements.md`: điểm không phải bug theo AC nhưng nên cải thiện (IMP-xx).
 - `viewpoint.csv` có cột `scope` (in/out) và `source` (O-xx, Q-xx). **Ghi cả viewpoint ngoài phạm vi** để RTM thấy là đã cân nhắc.
 

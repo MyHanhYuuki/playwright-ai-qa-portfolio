@@ -3,7 +3,7 @@
 - **Ngày**: 2026-11-24 · **Reviewer**: AI (vai QC Lead, theo ISTQB) · **Người duyệt cuối**: MyHanhYuuki
 - **Phạm vi**: requirement, spec-review, viewpoint, internal-question, q-and-a, improvements, test-cases (nháp), test-data
 - **Kết luận**: ⚠️ **Cần sửa trước khi duyệt HITL #2**: 1 vấn đề nghiêm trọng (bảo mật), 4 thiếu sót viewpoint, 5 điểm không nhất quán.
-- **Xử lý**: ✅ Người duyệt chấp nhận toàn bộ. **Đã sửa hết** (2026-11-24). Q12–Q14 còn Open, chờ trả lời.
+- **Xử lý**: ✅ Người duyệt chấp nhận toàn bộ. **Đã sửa hết** (2026-11-24). Q12–Q14 đã chốt theo đề xuất.
 
 ## A. Phát hiện mới (đã kiểm chứng trên web)
 | # | Phát hiện | Mức | Đề xuất |

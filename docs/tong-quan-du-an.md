@@ -61,8 +61,8 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | 0 | Lời dặn, nguyên tắc làm việc | `docs/learning/00-…` | ✅ |
 | 1 | Dựng dự án, CI, pipeline AI agent | Cấu trúc repo, CI chạy tự động | ✅ |
 | 2 | Phân tích yêu cầu: Đăng nhập | spec-review, viewpoint, Q&A, đề xuất cải tiến | ✅ |
-| 3 | Thiết kế test case: Đăng nhập | test-cases.csv, test-data | 🔄 Chờ HITL #2 |
-| 4 | Viết code test (POM) | `tests/pages`, `tests/specs` | ⏳ |
+| 3 | Thiết kế test case: Đăng nhập | test-cases.csv, test-data | ✅ |
+| 4 | Viết code test (POM) | `tests/pages`, `tests/specs` | 🔄 |
 | 5 | Chạy test và phân loại lỗi | triage.md, báo cáo HTML | ⏳ |
 | 6 | Sửa test hỏng (healer) | healing-log.md | ⏳ |
 | 7 | Bug report + RTM | defects.md, rtm-report.html | ⏳ |

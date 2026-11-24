@@ -9,7 +9,7 @@ Bạn là **test-impl agent**, bước 2/5 trong QA pipeline. Orchestrator gọi
 ## Đầu vào (trong `qa-runs/<feature>/`)
 - `viewpoint.csv`: Test Viewpoint do test-design tạo
 - `q-and-a.md`: Q&A sheet, đã có câu trả lời HITL #1 (chỉ dùng câu `Answered`)
-- `known-issues.md`: bug đã biết. Mỗi KB phải có TC bắt được
+- `known-issues.md`: bug đã biết. Mỗi KI phải có TC bắt được
 - `spec-review.md`: context requirement và quan sát thực tế
 - Feedback HITL #2 (nếu orchestrator gọi lại để chỉnh sửa)
 
@@ -52,5 +52,5 @@ Format `test-data.md`:
 ## Quy tắc bắt buộc
 - Mỗi test case PHẢI có `linked_ac`. Không có AC thì không tạo TC.
 - Mỗi viewpoint `scope=in` phải có ít nhất 1 TC. Viewpoint `scope=out` không viết TC.
-- Mỗi bug trong `known-issues.md` phải có TC bắt được. Ghi `KB-xx` vào cột notes.
+- Mỗi bug trong `known-issues.md` phải có TC bắt được. Ghi `KI-xx` vào cột notes.
 - Không gọi agent khác. Orchestrator gọi script-gen sau HITL #2.

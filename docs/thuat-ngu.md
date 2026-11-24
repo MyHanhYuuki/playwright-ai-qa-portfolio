@@ -24,7 +24,7 @@
 | **Exit criteria** | Tiêu chí hoàn thành: khi nào coi là test xong | Mục 10 trong tổng quan dự án |
 | **RTM** (Requirement Traceability Matrix) | Ma trận truy vết: requirement → AC → TC → kết quả → bug | `rtm-report.html` |
 | **Q&A sheet** | Phiếu hỏi đáp: câu hỏi và câu trả lời nằm chung một file, có trạng thái Open/Answered | `qa-runs/saucedemo-login-screen/q-and-a.md` |
-| **Known issue** | Bug đã biết từ trước khi chạy test. Test phải bắt được | `known-issues.md` (KB-xx) |
+| **Known issue** | Bug đã biết từ trước khi chạy test. Test phải bắt được | `known-issues.md` (KI-xx) |
 | **Peer review** (review chéo) | Người khác (hoặc agent khác) soát lại kết quả trước khi đi tiếp | Agent `qa-reviewer` |
 | **Scope in / out** | Trong / ngoài phạm vi test. Ghi cả mục ngoài phạm vi để biết là đã cân nhắc | Cột `scope` trong `viewpoint.csv` |
 | **Coverage** | Độ phủ: bao nhiêu % yêu cầu đã được test | % AC có ≥1 TC pass |

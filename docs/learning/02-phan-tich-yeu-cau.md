@@ -105,7 +105,7 @@ Kết quả: 15 viewpoint ban đầu. Sau HITL #1 và review thì có **25 viewp
 
 ### Bước 8: Review lại toàn bộ (qa-reviewer)
 Sau khi chốt Q&A, review lại toàn bộ theo góc nhìn QC Lead và ISTQB ([`review-test-design.md`](../../qa-runs/saucedemo-login-screen/review-test-design.md)). Phát hiện thêm:
-- 🔴 **Lỗ hổng bảo mật**: tự tạo cookie `session-username` là vào được trang bên trong mà không cần đăng nhập (O-21, KB-02).
+- 🔴 **Lỗ hổng bảo mật**: tự tạo cookie `session-username` là vào được trang bên trong mà không cần đăng nhập (O-21, KI-02).
 - Thiếu 4 viewpoint: đăng nhập lại sau khi đăng xuất, thử lại sau lỗi, giữ phiên khi tải lại trang, trang chi tiết sản phẩm.
 - Hai file câu hỏi bị trùng và lệch nhau, nên **gộp thành một phiếu Q&A**.
 - Bug thấy sớm được ghi vào [`known-issues.md`](../../qa-runs/saucedemo-login-screen/known-issues.md), để lúc chạy test không bỏ sót.
