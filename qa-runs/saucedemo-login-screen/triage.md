@@ -33,8 +33,10 @@
 Mỗi bug được làm lại trong một phiên trình duyệt sạch, dùng locator khác với code test (`#user-name`, `#login-button`), có chụp ảnh:
 | Bug | Kết quả | Bằng chứng |
 |---|---|---|
-| KI-01 | ✅ Tái hiện được: cả ô Username và Password đều có class `input_error`, 2 icon ✕ | [`evidence/KI-01-username-highlighted.png`](evidence/KI-01-username-highlighted.png) |
-| KI-02 | ✅ Tái hiện được: chỉ với cookie giả đã vào được trang Products (6 sản phẩm). **Phát hiện thêm**: vào được cả `/checkout-step-one.html`, tức ảnh hưởng tới **toàn bộ** trang bên trong | [`evidence/KI-02-forged-cookie-access.png`](evidence/KI-02-forged-cookie-access.png) |
+| KI-01 | ✅ Tái hiện được: cả ô Username và Password đều có class `input_error`, 2 icon ✕ | [Ảnh + video](<evidence/bugs/[id_bug_1]_KI-01/TC-028/README.md>) |
+| KI-02 | ✅ Tái hiện được: chỉ với cookie giả đã vào được trang Products (6 sản phẩm). **Phát hiện thêm**: vào được cả `/checkout-step-one.html`, tức ảnh hưởng tới **toàn bộ** trang bên trong | [Ảnh + video](<evidence/bugs/[id_bug_2]_KI-02/TC-033/README.md>) |
+
+Evidence đầy đủ của 33 test case (ảnh có khoanh đỏ + ghi chú, video): [`evidence/README.md`](evidence/README.md)
 
 ## Ghi nhận khác
 | # | Nội dung |
