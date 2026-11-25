@@ -30,11 +30,11 @@ Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `revi
 3. Chạy `/qa-orchestrator <feature>`, đi qua từng bước và 3 điểm HITL.
 4. Đánh số:
    - `TC-xxx`, `TVP-xxx`, `Qn`, `O-xx`, `IMP-xx`: **riêng từng feature**, bắt đầu từ 001 / 1.
-   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, sản phẩm + giỏ BUG-05 → BUG-21, feature sau bắt đầu từ **BUG-22**).
+   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, sản phẩm + giỏ BUG-05 → BUG-21, thanh toán BUG-22 → BUG-36, feature sau bắt đầu từ **BUG-37**).
    - Bug mới hay **biến thể** của bug cũ: cùng thành phần / cùng chỗ sửa → ghi là biến thể của bug cũ (giữ số cũ); khác form / khác điểm kiểm → cấp số mới. Ghi rõ lý do trong `known-issues.md`.
 5. Bug đã biết: ghi `BUG-xx` vào **câu đầu** cột `notes` của TC, vd `Bug đã biết BUG-08 (O-18): dự kiến FAIL. …` (RTM chỉ đọc câu đầu; nhắc BUG id ở câu sau chỉ là tham khảo), thêm vào `tests/data/bugs.ts`, test dùng `test.fail()` + tag `@BUG-xx`.
 6. Dữ liệu dùng chung: thêm vào `tests/data/users.ts`, `messages.ts` (nhóm mới cho feature), không tạo file trùng.
-7. Feature gồm **nhiều màn hình**: mọi tài liệu phải **ghi rõ màn hình** để không nhầm. `q-and-a.md`, `known-issues.md` chia mục theo màn hình (mục "Chung" cho thứ ảnh hưởng nhiều màn hình); bảng quan sát, `improvements.md` có cột "Màn hình"; `viewpoint.csv`, `test-cases.csv` có cột `screen` (nhiều màn hình ghi `A + B`, `A → B` hoặc `Cả n`; RTM tự tách để đếm theo màn hình). Code: `test.describe('Màn hình n: …')` cho từng màn hình và `test.describe('Chung: …')` cho test đi qua nhiều màn hình (mục lục evidence nhóm theo tên describe), tag màn hình kiểu `@list` / `@detail` / `@cart`.
+7. Feature gồm **nhiều màn hình**: mọi tài liệu phải **ghi rõ màn hình** để không nhầm. `q-and-a.md`, `known-issues.md` chia mục theo màn hình (mục "Chung" cho thứ ảnh hưởng nhiều màn hình); bảng quan sát, `improvements.md` có cột "Màn hình"; `viewpoint.csv`, `test-cases.csv` có cột `screen` (nhiều màn hình ghi `A + B`, `A → B` hoặc `Cả n`; RTM tự tách để đếm theo màn hình). Code: `test.describe('Màn hình n: …')` cho từng màn hình và `test.describe('Chung: …')` cho test đi qua nhiều màn hình (mục lục evidence nhóm theo tên describe), tag màn hình kiểu `@list` / `@detail` / `@cart`. Xếp describe theo cột `screen`: một màn hình hoặc `A → B` vào **màn hình A** (nơi có thao tác); `A + B`, `Cả n` vào "Chung" (từ SD-103; SD-102 đã xếp `A → B` theo màn hình đích, giữ nguyên).
 
 ## Quy ước viết test
 - Locator: `getByRole` → `getByLabel`/`getByPlaceholder` → `getByTestId` (thuộc tính `data-test`) → CSS. Không dùng XPath, không dùng `.nth()` cố định.
