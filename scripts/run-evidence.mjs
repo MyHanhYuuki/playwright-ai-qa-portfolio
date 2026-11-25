@@ -6,6 +6,7 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { csv } from './lib/csv.mjs';
 
 const [feature, ...args] = process.argv.slice(2);
 const spec = `tests/specs/${feature}.spec.ts`;
@@ -40,30 +41,47 @@ if (fs.existsSync(evDir)) {
   };
   const firstLine = (p) => (fs.existsSync(p) ? fs.readFileSync(p, 'utf8').split('\n')[0].replace(/^# /, '') : '');
   const resultLine = (p) => (fs.existsSync(p) ? (fs.readFileSync(p, 'utf8').match(/\*\*Kết quả\*\*: (.+)/)?.[1] ?? '').trim() : '');
+  const field = (p, name) => (fs.existsSync(p) ? (fs.readFileSync(p, 'utf8').match(new RegExp(String.raw`\*\*${name}\*\*: (.+)`))?.[1] ?? '').trim() : '');
+  // Screen of each TC (multi-screen features have a `screen` column in test-cases.csv, CLAUDE.md point 7)
+  const csvPath = path.resolve('qa-runs', feature, 'test-cases.csv');
+  const screenOf = Object.fromEntries(
+    (fs.existsSync(csvPath) ? csv(fs.readFileSync(csvPath, 'utf8')) : []).filter((r) => r.screen).map((r) => [r.tc_id, r.screen])
+  );
+  const hasScreens = Object.keys(screenOf).length > 0;
+  const caseReadme = (tc) => path.join(evDir, 'all-cases', tc, 'README.md');
+  // Group = the test.describe of the spec (= screen section, same split as q-and-a / known-issues)
+  const groupOf = (tc) => field(caseReadme(tc), 'Nhóm') || '(chưa có nhóm: chạy lại evidence)';
+  const cases = list('all-cases');
+  // Screen sections first (Màn hình 1, 2, 3…), the shared "Chung" section last, like q-and-a / known-issues
+  const groups = [...new Set(cases.map(groupOf))].sort((a, b) => Number(a.startsWith('Chung')) - Number(b.startsWith('Chung')) || a.localeCompare(b, 'vi', { numeric: true }));
+  const bugNo = (b) => Number(b.match(/BUG-(\d+)/)?.[1] ?? 0);
+  const bugRows = list('bugs')
+    .sort((a, b) => bugNo(a) - bugNo(b))
+    .flatMap((b) =>
+      list(path.join('bugs', b)).map((sub) => {
+        const label = sub === 'manual' ? 'Tái hiện bằng tay' : sub;
+        const screen = hasScreens ? ` ${screenOf[sub] ?? ''} |` : '';
+        return `| ${b} |${screen} ${label} | [bugs/${b}/${sub}](<bugs/${b}/${sub}/README.md>) |`;
+      })
+    );
+  const caseRow = (tc) => `| ${firstLine(caseReadme(tc))} |${hasScreens ? ` ${screenOf[tc] ?? ''} |` : ''} ${resultLine(caseReadme(tc))} | [all-cases/${tc}](all-cases/${tc}/README.md) |`;
+  const caseHead = hasScreens ? ['| Test case | Màn hình của TC | Kết quả | Thư mục |', '|---|---|---|---|'] : ['| Test case | Kết quả | Thư mục |', '|---|---|---|'];
   const lines = [
     `# Evidence: ${feature}`,
     '',
     `> Tạo tự động bởi \`npm run test:evidence\` lúc ${new Date().toISOString()}.`,
-    '> Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Mỗi test case có video.',
+    '> Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Test case có bug (hoặc kết quả bất thường) có thêm video.',
     '> Thư mục `manual/` trong từng bug: ảnh tái hiện bằng tay, không do test tự động sinh ra.',
     '',
     '## Bug (theo ticket)',
-    '| Ticket_BUG | Nội dung | Thư mục |',
-    '|---|---|---|',
-    ...list('bugs').flatMap((b) =>
-      list(path.join('bugs', b)).map((sub) => {
-        const label = sub === 'manual' ? 'Tái hiện bằng tay' : sub;
-        return `| ${b} | ${label} | [bugs/${b}/${sub}](<bugs/${b}/${sub}/README.md>) |`;
-      })
-    ),
+    hasScreens ? '| Ticket_BUG | Màn hình của TC | Nội dung | Thư mục |' : '| Ticket_BUG | Nội dung | Thư mục |',
+    hasScreens ? '|---|---|---|---|' : '|---|---|---|',
+    ...bugRows,
     '',
     '## Tất cả test case',
-    '| Test case | Kết quả | Thư mục |',
-    '|---|---|---|',
-    ...list('all-cases').map((tc) => {
-      const readme = path.join(evDir, 'all-cases', tc, 'README.md');
-      return `| ${firstLine(readme)} | ${resultLine(readme)} | [all-cases/${tc}](all-cases/${tc}/README.md) |`;
-    }),
+    ...(groups.length > 1
+      ? groups.flatMap((g) => ['', `### ${g}`, ...caseHead, ...cases.filter((tc) => groupOf(tc) === g).map(caseRow)])
+      : [...caseHead, ...cases.map(caseRow)]),
     '',
   ];
   fs.writeFileSync(path.join(evDir, 'README.md'), lines.join('\n'));

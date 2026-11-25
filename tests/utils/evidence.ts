@@ -5,6 +5,8 @@ import { BUG_TICKETS } from '../data/bugs';
 
 /** Evidence is only captured when EVIDENCE=1 (npm run test:evidence). Normal runs and CI stay fast. */
 export const EVIDENCE_ENABLED = !!process.env.EVIDENCE;
+/** EVIDENCE_ALL_VIDEOS=1: also record a video for passing test cases (default: only known-bug / unexpected results). */
+const ALL_VIDEOS = !!process.env.EVIDENCE_ALL_VIDEOS;
 
 type ShotOptions = {
   /** Element(s) to circle in red. */
@@ -17,7 +19,7 @@ type ShotOptions = {
  * Captures annotated step screenshots + video for one test case.
  *
  * qa-runs/<spec-name>/evidence/
- *   all-cases/TC-xxx/  01-<step>.jpg, 02-<step>.jpg, video.webm, README.md
+ *   all-cases/TC-xxx/  01-<step>.jpg, 02-<step>.jpg, README.md (+ video.webm for known-bug / unexpected results)
  *   bugs/<ticket>_<BUG>/  copies for test cases tagged @BUG-xx
  */
 export class Evidence {
@@ -39,8 +41,10 @@ export class Evidence {
       .map((id) => path.join(root, 'bugs', `${BUG_TICKETS[id] ?? '[id_bug]'}_${id}`, this.tcId));
     if (EVIDENCE_ENABLED) {
       for (const d of [this.dir, ...this.bugDirs]) {
-        fs.rmSync(d, { recursive: true, force: true });
         fs.mkdirSync(d, { recursive: true });
+        // Clear the previous run, but KEEP an existing video: passing test cases no longer record one,
+        // and videos recorded by earlier runs stay (decision 2026-11-25). A new video overwrites it.
+        for (const f of fs.readdirSync(d)) if (f !== 'video.webm') fs.rmSync(path.join(d, f), { recursive: true, force: true });
       }
     }
   }
@@ -49,10 +53,19 @@ export class Evidence {
   async shot(name: string, opts: ShotOptions = {}) {
     if (!EVIDENCE_ENABLED) return;
     this.step++;
-    const marks = opts.highlight ? ([] as Locator[]).concat(opts.highlight) : [];
+    // Let images finish loading so boxes are measured on the final layout (TC-005 box was a sliver).
+    await this.page
+      .waitForFunction(() => Array.from(document.images).every((i) => i.complete), null, { timeout: 3_000 })
+      .catch(() => {});
+    // A locator may match several elements (e.g. all 6 prices): box EACH one.
+    // boundingBox() on a multi-match throws a strict-mode error, and the .catch below used to hide it (no red box).
+    const marks: Locator[] = [];
+    for (const m of opts.highlight ? ([] as Locator[]).concat(opts.highlight) : []) marks.push(...(await m.all()));
     const boxes = [];
     for (const m of marks) {
-      const b = await m.boundingBox().catch(() => null);
+      // Short timeout: an element that is NOT on the page (often the very sign of the bug) must not block the test.
+      // Without it, boundingBox() waited until the test timeout and hid the remaining checks (TC-018 evidence run).
+      const b = await m.boundingBox({ timeout: 1_000 }).catch(() => null);
       if (b) boxes.push(b);
     }
     const header = `${this.tcId} · Bước ${this.step}: ${name}`;
@@ -94,12 +107,21 @@ export class Evidence {
   /** Called by the fixture after the test: save video + README. */
   async finish(page: Page) {
     if (!EVIDENCE_ENABLED) return;
+    // Video only where it helps: test cases of a known bug, or a test that did not end as expected (to debug it).
+    // Passing test cases keep their screenshots only (videos made the evidence folder ~5x larger).
+    const keepVideo = ALL_VIDEOS || this.bugDirs.length > 0 || this.info.status !== this.info.expectedStatus;
     const video = page.video();
+    let savedVideo = false;
     if (video) {
       await page.close();
-      const target = path.join(this.dir, 'video.webm');
-      await video.saveAs(target);
-      for (const d of this.bugDirs) fs.copyFileSync(target, path.join(d, 'video.webm'));
+      if (keepVideo) {
+        const target = path.join(this.dir, 'video.webm');
+        await video.saveAs(target);
+        for (const d of this.bugDirs) fs.copyFileSync(target, path.join(d, 'video.webm'));
+        savedVideo = true;
+      } else {
+        await video.delete();
+      }
     }
     // QC result = compared with the EXPECTED RESULT of the test case (not Playwright's "expected status").
     const bugs = this.info.tags.filter((t) => /^@BUG-\d+$/.test(t)).map((t) => t.slice(1)).join(', ');
@@ -110,13 +132,28 @@ export class Evidence {
       bugs && s === 'failed' ? ` · Bug: ${bugs}`
       : bugs && s === 'passed' ? ` · ⚠️ Bug ${bugs} có vẻ đã được sửa: kiểm tra lại rồi bỏ test.fail()`
       : '';
+    // test.fail() turns every error into "expected": flag errors that come from the test code, not from the app.
+    // Same pattern as scripts/run-tests.mjs (SCRIPT_ERROR).
+    // Scan the FULL message: with expect.soft(x, 'name') the first line is only the name (review-executor D1).
+    const SCRIPT_ERROR = /Test timeout of|Target page.*closed|ReferenceError|TypeError|SyntaxError|strict mode violation/;
+    const scriptError = this.info.errors
+      .map((e) => (e.message ?? '').replace(/\x1b\[[0-9;]*m/g, ''))
+      .filter((m) => SCRIPT_ERROR.test(m))
+      .map((m) => `${m.split('\n')[0]} → ${m.match(SCRIPT_ERROR)![0]}`)[0];
+    if (scriptError) console.warn(`⚠️  ${this.tcId}: lỗi giống lỗi code test (${scriptError}). Evidence chưa đủ tin cậy, kiểm tra lại.`);
     const readme = [
       `# ${this.info.title}`,
       '',
       `- **Kết quả**: ${result}${remark}`,
+      ...(scriptError ? [`- ⚠️ **Lỗi code test**: \`${scriptError}\` (không phải bug, cần sửa test rồi chạy lại)`] : []),
+      `- **Nhóm**: ${this.info.titlePath.slice(1, -1).join(' › ') || '(không có)'}`,
       `- **Tags**: ${this.info.tags.join(' ')}`,
       `- **Thời điểm**: ${new Date().toISOString()}`,
-      `- **Video**: ${video ? '[video.webm](video.webm)' : '(không có)'}`,
+      `- **Video**: ${
+        savedVideo ? '[video.webm](video.webm)'
+        : fs.existsSync(path.join(this.dir, 'video.webm')) ? `[video.webm](video.webm) (quay ở lần chạy ngày ${fs.statSync(path.join(this.dir, 'video.webm')).mtime.toISOString().slice(0, 10)}, không quay lại vì test pass)`
+        : '(chỉ quay video cho test có bug hoặc kết quả bất thường)'
+      }`,
       '',
       '| Bước | Thao tác | Cần xem | Ảnh |',
       '|---|---|---|---|',

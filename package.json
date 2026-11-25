@@ -12,7 +12,8 @@
     "test:run": "node scripts/run-tests.mjs",
     "test:evidence": "node scripts/run-evidence.mjs",
     "report": "playwright show-report",
-    "rtm": "node scripts/build-rtm.mjs"
+    "rtm": "node scripts/build-rtm.mjs",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "playwright",
@@ -24,6 +25,7 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.65.1",
-    "@types/node": "^26.6.6"
+    "@types/node": "^26.6.6",
+    "typescript": "^5.9.3"
   }
 }

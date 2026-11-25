@@ -42,7 +42,12 @@ if (!fs.existsSync(raw)) {
 }
 
 const j = JSON.parse(fs.readFileSync(raw, 'utf8'));
-const clean = (s) => String(s ?? '').replace(/\x1b\[[0-9;]*m/g, '').split('\n')[0];
+const strip = (s) => String(s ?? '').replace(/\x1b\[[0-9;]*m/g, '');
+const clean = (s) => strip(s).split('\n')[0];
+// Full message without the call log: keeps Expected / Received so triage can quote real values.
+// The repo path is removed too, so no machine path ends up in the committed JSON.
+const repoRoot = process.cwd();
+const detail = (s) => strip(s).split(/\n\s*Call log:/)[0].split(repoRoot).join('<repo>').trim().slice(0, 1500);
 const tests = [];
 const walk = (s) => {
   (s.suites ?? []).forEach(walk);
@@ -50,6 +55,7 @@ const walk = (s) => {
     for (const t of sp.tests) {
       const r = t.results.at(-1) ?? {};
       const errors = (r.errors ?? []).map((e) => clean(e.message)).filter(Boolean);
+      const error_details = (r.errors ?? []).map((e) => detail(e.message)).filter(Boolean);
       tests.push({
         tc_id: sp.title.match(/TC-\d+/)?.[0] ?? sp.title,
         title: sp.title,
@@ -59,7 +65,13 @@ const walk = (s) => {
         duration_ms: r.duration,
         retry_count: r.retry ?? 0,
         error: errors[0] ?? null,
-        errors, // every error, incl. expect.soft
+        errors, // every error, incl. expect.soft (first line = assertion name)
+        error_details, // same errors, full text with Expected / Received
+        // test.info().annotations (e.g. BUG-17 timings, BUG-12 dialog text), without duplicates
+        // Only type + description: Playwright adds `location.file` = absolute path on THIS machine (must not be committed)
+        annotations: [...(t.annotations ?? []), ...(r.annotations ?? [])]
+          .map((a) => ({ type: a.type, description: a.description }))
+          .filter((a, i, all) => all.findIndex((b) => b.type === a.type && b.description === a.description) === i),
       });
     }
 };
@@ -86,5 +98,13 @@ const out = path.join(outDir, `${runId}.json`);
 fs.writeFileSync(out, JSON.stringify(summary, null, 2) + '\n');
 fs.rmSync(raw);
 const s = summary.summary;
+// test.fail() turns EVERY error into "expected", including errors of the test code itself.
+// Flag known-bug tests whose errors look like a script problem, so they are not reported as the bug (executor: script-issue).
+const SCRIPT_ERROR = /Test timeout of|Target page.*closed|ReferenceError|TypeError|SyntaxError|strict mode violation/;
+// Scan the FULL text: with expect.soft(x, 'name') the first line is only the name (review-executor D1).
+for (const t of tests.filter((x) => x.expected_status === 'failed' && x.error_details.some((e) => SCRIPT_ERROR.test(e)))) {
+  const hit = t.error_details.find((e) => SCRIPT_ERROR.test(e));
+  console.warn(`⚠️  ${t.tc_id}: test bug đã biết nhưng có lỗi giống lỗi code test (${hit.split('\n')[0]} → ${hit.match(SCRIPT_ERROR)[0]}). Phân loại script-issue, đừng tính là bug.`);
+}
 console.log(`\nKết quả: ${out.replace(/\\/g, '/')} · ${s.total} test · Passed theo TC ${s.passed - s.expected_fail} · Failed theo TC ${s.failed + s.expected_fail} (bug đã biết ${s.expected_fail}) · flaky ${s.flaky} · skipped ${s.skipped}`);
 process.exit(run.status ?? 1);

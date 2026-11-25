@@ -44,6 +44,11 @@ jobs:
       if: steps.pw-cache.outputs.cache-hit == 'true'
       run: npx playwright install-deps chromium
 
+    # Playwright runs TypeScript WITHOUT type checking: a typo (e.g. an undefined variable)
+    # only shows at run time, and inside a test.fail() test it is counted as "the bug". Catch it here first.
+    - name: Type check
+      run: npm run typecheck
+
     - name: Run Playwright tests
       run: npx playwright test
 

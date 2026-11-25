@@ -6,6 +6,7 @@
 // Output: rtm.md (readable on GitHub) + rtm-report.html (open in a browser).
 import fs from 'node:fs';
 import path from 'node:path';
+import { csv } from './lib/csv.mjs';
 
 const root = path.resolve('qa-runs');
 const features = process.argv[2]
@@ -34,7 +35,9 @@ function build(dir, feature) {
     defects.split('\n').map((l) => l.match(/^\| \[?(BUG-\d+)\]?.*\| ([^|]+) \|$/)).filter(Boolean).map((m) => [m[1], m[2].trim()])
   );
   const split = (s) => (s ?? '').split(';').map((x) => x.trim()).filter(Boolean);
-  const bugsOf = (tc) => [...new Set((tc.notes ?? '').match(/BUG-\d+/g) ?? [])];
+  // Only the FIRST sentence of notes names the bug(s) the TC catches ("Bug đã biết BUG-08 …").
+  // BUG ids later in the notes are references only (e.g. SD-102 TC-033 "… vì giá sai (BUG-14, TC-013)").
+  const bugsOf = (tc) => [...new Set((tc.notes ?? '').split(/\.\s/)[0].match(/BUG-\d+/g) ?? [])];
   const evidence = (id) => (fs.existsSync(path.join(dir, 'evidence', 'all-cases', id)) ? `evidence/all-cases/${id}/README.md` : null);
   const anchor = (b) => (bugTitle[b] ? `defects.md#${slug(`${b}: ${bugTitle[b]}`)}` : null);
 
@@ -200,28 +203,4 @@ function icon(r) {
 /** GitHub heading anchor: lowercase, drop punctuation (keep letters, marks, digits, space, _ and -), space → -. */
 function slug(s) {
   return s.toLowerCase().replace(/[^\p{L}\p{M}\p{N}\s_-]/gu, '').trim().replace(/\s/g, '-');
-}
-
-/** Minimal CSV parser (quotes, commas and newlines inside quotes). */
-function csv(text) {
-  const rows = [];
-  let row = [], cell = '', q = false;
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
-    if (q) {
-      if (ch === '"' && text[i + 1] === '"') { cell += '"'; i++; }
-      else if (ch === '"') q = false;
-      else cell += ch;
-    } else if (ch === '"') q = true;
-    else if (ch === ',') { row.push(cell); cell = ''; }
-    else if (ch === '\n' || ch === '\r') {
-      if (ch === '\r' && text[i + 1] === '\n') i++;
-      row.push(cell); cell = '';
-      if (row.some((x) => x !== '')) rows.push(row);
-      row = [];
-    } else cell += ch;
-  }
-  if (cell || row.length) { row.push(cell); rows.push(row); }
-  const [head, ...body] = rows;
-  return body.map((r) => Object.fromEntries(head.map((h, i) => [h.trim(), (r[i] ?? '').trim()])));
 }
