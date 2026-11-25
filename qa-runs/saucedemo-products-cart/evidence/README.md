@@ -1,28 +1,46 @@
 # Evidence: saucedemo-products-cart
 
-> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-25T05:35:58.820Z.
+> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-25T08:14:05.518Z.
 > Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Test case có bug (hoặc kết quả bất thường) có thêm video.
-> Thư mục `manual/` trong từng bug: ảnh tái hiện bằng tay, không do test tự động sinh ra.
+> Thư mục `manual/` trong từng bug: ảnh **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi ảnh của test tự động.
 
 ## Bug (theo ticket)
 | Ticket_BUG | Màn hình của TC | Nội dung | Thư mục |
 |---|---|---|---|
 | [id_bug_2]_BUG-02 | Chi tiết + Giỏ | TC-045 | [bugs/[id_bug_2]_BUG-02/TC-045](<bugs/[id_bug_2]_BUG-02/TC-045/README.md>) |
+| [id_bug_2]_BUG-02 |  | Tái hiện độc lập | [bugs/[id_bug_2]_BUG-02/manual](<bugs/[id_bug_2]_BUG-02/manual/README.md>) |
 | [id_bug_5]_BUG-05 | Cả 3 | TC-041 | [bugs/[id_bug_5]_BUG-05/TC-041](<bugs/[id_bug_5]_BUG-05/TC-041/README.md>) |
+| [id_bug_5]_BUG-05 |  | Tái hiện độc lập | [bugs/[id_bug_5]_BUG-05/manual](<bugs/[id_bug_5]_BUG-05/manual/README.md>) |
 | [id_bug_6]_BUG-06 | Chi tiết + Giỏ | TC-025 | [bugs/[id_bug_6]_BUG-06/TC-025](<bugs/[id_bug_6]_BUG-06/TC-025/README.md>) |
+| [id_bug_6]_BUG-06 |  | Tái hiện độc lập | [bugs/[id_bug_6]_BUG-06/manual](<bugs/[id_bug_6]_BUG-06/manual/README.md>) |
 | [id_bug_7]_BUG-07 | Danh sách + Giỏ | TC-040 | [bugs/[id_bug_7]_BUG-07/TC-040](<bugs/[id_bug_7]_BUG-07/TC-040/README.md>) |
+| [id_bug_7]_BUG-07 |  | Tái hiện độc lập | [bugs/[id_bug_7]_BUG-07/manual](<bugs/[id_bug_7]_BUG-07/manual/README.md>) |
 | [id_bug_8]_BUG-08 | Danh sách | TC-004 | [bugs/[id_bug_8]_BUG-08/TC-004](<bugs/[id_bug_8]_BUG-08/TC-004/README.md>) |
+| [id_bug_8]_BUG-08 |  | Tái hiện độc lập | [bugs/[id_bug_8]_BUG-08/manual](<bugs/[id_bug_8]_BUG-08/manual/README.md>) |
 | [id_bug_9]_BUG-09 | Danh sách | TC-011 | [bugs/[id_bug_9]_BUG-09/TC-011](<bugs/[id_bug_9]_BUG-09/TC-011/README.md>) |
+| [id_bug_9]_BUG-09 |  | Tái hiện độc lập | [bugs/[id_bug_9]_BUG-09/manual](<bugs/[id_bug_9]_BUG-09/manual/README.md>) |
 | [id_bug_10]_BUG-10 | Danh sách + Chi tiết | TC-018 | [bugs/[id_bug_10]_BUG-10/TC-018](<bugs/[id_bug_10]_BUG-10/TC-018/README.md>) |
+| [id_bug_10]_BUG-10 |  | Tái hiện độc lập | [bugs/[id_bug_10]_BUG-10/manual](<bugs/[id_bug_10]_BUG-10/manual/README.md>) |
 | [id_bug_11]_BUG-11 | Danh sách + Giỏ → Chi tiết | TC-024 | [bugs/[id_bug_11]_BUG-11/TC-024](<bugs/[id_bug_11]_BUG-11/TC-024/README.md>) |
+| [id_bug_11]_BUG-11 |  | Tái hiện độc lập | [bugs/[id_bug_11]_BUG-11/manual](<bugs/[id_bug_11]_BUG-11/manual/README.md>) |
 | [id_bug_12]_BUG-12 | Danh sách | TC-012 | [bugs/[id_bug_12]_BUG-12/TC-012](<bugs/[id_bug_12]_BUG-12/TC-012/README.md>) |
+| [id_bug_12]_BUG-12 |  | Tái hiện độc lập | [bugs/[id_bug_12]_BUG-12/manual](<bugs/[id_bug_12]_BUG-12/manual/README.md>) |
 | [id_bug_13]_BUG-13 | Danh sách + Chi tiết | TC-019 | [bugs/[id_bug_13]_BUG-13/TC-019](<bugs/[id_bug_13]_BUG-13/TC-019/README.md>) |
+| [id_bug_13]_BUG-13 |  | Tái hiện độc lập | [bugs/[id_bug_13]_BUG-13/manual](<bugs/[id_bug_13]_BUG-13/manual/README.md>) |
 | [id_bug_14]_BUG-14 | Cả 3 | TC-013 | [bugs/[id_bug_14]_BUG-14/TC-013](<bugs/[id_bug_14]_BUG-14/TC-013/README.md>) |
+| [id_bug_14]_BUG-14 |  | Tái hiện độc lập | [bugs/[id_bug_14]_BUG-14/manual](<bugs/[id_bug_14]_BUG-14/manual/README.md>) |
 | [id_bug_15]_BUG-15 | Danh sách | TC-005 | [bugs/[id_bug_15]_BUG-15/TC-005](<bugs/[id_bug_15]_BUG-15/TC-005/README.md>) |
+| [id_bug_15]_BUG-15 |  | Tái hiện độc lập | [bugs/[id_bug_15]_BUG-15/manual](<bugs/[id_bug_15]_BUG-15/manual/README.md>) |
 | [id_bug_16]_BUG-16 | Cả 3 | TC-035 | [bugs/[id_bug_16]_BUG-16/TC-035](<bugs/[id_bug_16]_BUG-16/TC-035/README.md>) |
+| [id_bug_16]_BUG-16 |  | Tái hiện độc lập | [bugs/[id_bug_16]_BUG-16/manual](<bugs/[id_bug_16]_BUG-16/manual/README.md>) |
 | [id_bug_18]_BUG-18 | Giỏ | TC-036 | [bugs/[id_bug_18]_BUG-18/TC-036](<bugs/[id_bug_18]_BUG-18/TC-036/README.md>) |
+| [id_bug_18]_BUG-18 |  | Tái hiện độc lập | [bugs/[id_bug_18]_BUG-18/manual](<bugs/[id_bug_18]_BUG-18/manual/README.md>) |
 | [id_bug_19]_BUG-19 | Giỏ | TC-030 | [bugs/[id_bug_19]_BUG-19/TC-030](<bugs/[id_bug_19]_BUG-19/TC-030/README.md>) |
+| [id_bug_19]_BUG-19 |  | Tái hiện độc lập | [bugs/[id_bug_19]_BUG-19/manual](<bugs/[id_bug_19]_BUG-19/manual/README.md>) |
 | [id_bug_20]_BUG-20 | Chi tiết | TC-026 | [bugs/[id_bug_20]_BUG-20/TC-026](<bugs/[id_bug_20]_BUG-20/TC-026/README.md>) |
+| [id_bug_20]_BUG-20 |  | Tái hiện độc lập | [bugs/[id_bug_20]_BUG-20/manual](<bugs/[id_bug_20]_BUG-20/manual/README.md>) |
+| [id_bug_21]_BUG-21 | Chi tiết | TC-046 | [bugs/[id_bug_21]_BUG-21/TC-046](<bugs/[id_bug_21]_BUG-21/TC-046/README.md>) |
+| [id_bug_21]_BUG-21 |  | Tái hiện độc lập | [bugs/[id_bug_21]_BUG-21/manual](<bugs/[id_bug_21]_BUG-21/manual/README.md>) |
 
 ## Tất cả test case
 
@@ -56,6 +74,7 @@
 | TC-024 problem_user: bấm tên hoặc ảnh ở danh sách và bấm tên ở trang giỏ mở đúng trang chi tiết | Danh sách + Giỏ → Chi tiết | ❌ Failed · Bug: BUG-11 | [all-cases/TC-024](all-cases/TC-024/README.md) |
 | TC-025 số trên giỏ luôn bằng số sản phẩm thật | Chi tiết + Giỏ | ❌ Failed · Bug: BUG-06 | [all-cases/TC-025](all-cases/TC-025/README.md) |
 | TC-026 id sai định dạng xử lý như sản phẩm không tồn tại | Chi tiết | ❌ Failed · Bug: BUG-20 | [all-cases/TC-026](all-cases/TC-026/README.md) |
+| TC-046 error_user: trang chi tiết hiển thị đủ thông tin, không có lỗi JavaScript hay báo lỗi | Chi tiết | ❌ Failed · Bug: BUG-21 | [all-cases/TC-046](all-cases/TC-046/README.md) |
 
 ### Màn hình 3: Giỏ hàng (/cart.html)
 | Test case | Màn hình của TC | Kết quả | Thư mục |
@@ -80,7 +99,7 @@
 | TC-037 menu All Items về danh sách từ trang chi tiết và trang giỏ | Cả 3 | ✅ Passed | [all-cases/TC-037](all-cases/TC-037/README.md) |
 | TC-038 giỏ giữ nguyên khi tải lại, chuyển trang, mở tab mới | Cả 3 | ✅ Passed | [all-cases/TC-038](all-cases/TC-038/README.md) |
 | TC-039 giỏ giữ nguyên sau khi đăng xuất rồi đăng nhập lại cùng tài khoản | Danh sách + Giỏ | ✅ Passed | [all-cases/TC-039](all-cases/TC-039/README.md) |
-| TC-040 tài khoản khác không thấy và không sửa được giỏ của người trước | Danh sách + Giỏ | ❌ Failed · Bug: BUG-07 | [all-cases/TC-040](all-cases/TC-040/README.md) |
+| TC-040 tài khoản khác không thấy, không sửa, không xóa được giỏ của người trước | Danh sách + Giỏ | ❌ Failed · Bug: BUG-07 | [all-cases/TC-040](all-cases/TC-040/README.md) |
 | TC-041 Reset App State cập nhật ngay ở danh sách, chi tiết, giỏ | Cả 3 | ❌ Failed · Bug: BUG-05 | [all-cases/TC-041](all-cases/TC-041/README.md) |
 | TC-042 Back / Forward của trình duyệt sau khi đổi giỏ | Danh sách + Giỏ | ✅ Passed | [all-cases/TC-042](all-cases/TC-042/README.md) |
 | TC-043 đăng xuất ở trang giỏ hoặc chi tiết rồi bấm Back không xem lại được | Chi tiết + Giỏ | ✅ Passed | [all-cases/TC-043](all-cases/TC-043/README.md) |

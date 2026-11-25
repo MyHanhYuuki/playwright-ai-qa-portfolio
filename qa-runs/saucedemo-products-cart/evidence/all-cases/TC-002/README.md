@@ -3,7 +3,7 @@
 - **Kết quả**: ✅ Passed
 - **Nhóm**: Màn hình 1: Danh sách sản phẩm (/inventory.html)
 - **Tags**: @AC-1 @list
-- **Thời điểm**: 2026-11-25T05:06:24.822Z
+- **Thời điểm**: 2026-11-25T08:12:36.817Z
 - **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-25, không quay lại vì test pass)
 
 | Bước | Thao tác | Cần xem | Ảnh |

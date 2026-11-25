@@ -3,7 +3,7 @@
 - **Kết quả**: ✅ Passed
 - **Nhóm**: Màn hình 2: Chi tiết sản phẩm (/inventory-item.html?id=<n>)
 - **Tags**: @AC-5 @list @detail
-- **Thời điểm**: 2026-11-25T05:06:32.583Z
+- **Thời điểm**: 2026-11-25T08:12:42.250Z
 - **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-25, không quay lại vì test pass)
 
 | Bước | Thao tác | Cần xem | Ảnh |

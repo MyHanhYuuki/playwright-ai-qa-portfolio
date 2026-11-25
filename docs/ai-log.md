@@ -20,6 +20,7 @@
 | 10 | 2026-11-25 | Test bug đã biết (`test.fail()`) | – | `test.fail()` tính **mọi lỗi** là "fail như mong đợi": test hết giờ (TC-024), lỗi biến chưa khai báo (TC-025), ảnh evidence treo 120 giây (TC-018) đều bị che | Đọc từng dòng lỗi; thêm `typecheck`, cảnh báo tự động trong `test:run` và evidence (đã thử bằng lỗi cố tình) |
 | 11 | 2026-11-25 | Lưu thêm dữ liệu vào kết quả chạy | Thêm `annotations` vào run JSON | Playwright tự gắn **đường dẫn máy** (`location.file`) vào mỗi annotation, suýt bị commit | Quét thông tin cá nhân trước khi commit; script chỉ giữ trường cần, thay đường dẫn repo bằng `<repo>` |
 | 12 | 2026-11-25 | Kiểm lại phát hiện của reviewer | Thử tái hiện lỗi console của `error_user` | AI kết luận vội "không tái hiện được" vì chỉ nghe sự kiện `console`, trong khi lỗi là `pageerror` | Người dùng yêu cầu trao đổi lại với reviewer; reviewer kiểm 3 lần, AI kiểm lại: đúng là `pageerror` |
+| 13 | 2026-11-25 | Bug report SD-102 (BUG-21) | Báo lỗi console của `error_user` ở trang chi tiết | AI ghi "giao diện vẫn đúng", chấm Low; thực tế **mất mô tả sản phẩm**. Cũng gọi ảnh do script chụp là "tái hiện bằng tay" | Review cuối so với `standard_user` phát hiện; người dùng nâng Medium; TC-046 kiểm thêm mô tả; đổi tên "tái hiện độc lập", lưu script trong repo |
 
 ---
 
@@ -88,4 +89,11 @@
 - **Kiểm soát**: người dùng không chấp nhận ngay, yêu cầu trao đổi lại với qa-reviewer. Reviewer kiểm 24 tình huống × 3 lần: lỗi có thật, nhưng là **lỗi JavaScript không được bắt** (`pageerror`), không phải thông báo console. DevTools in cả hai loại ở tab Console nên khi xem bằng tay rất dễ nhầm.
 - **Xử lý**: thêm MSG-05, MSG-06; TC-019 ghi lại `pageerror` làm bằng chứng; sửa O-23, BUG-13 cho đúng loại lỗi.
 - **Bài học**: "không tái hiện được" là một kết luận cần bằng chứng như mọi kết luận khác: ghi rõ đã thử **cách nào**, và nghĩ xem cách thử đó có thể bỏ sót gì.
+
+### #13: "Giao diện vẫn đúng" mà chưa so với tài khoản chuẩn
+- **Chuyện xảy ra**: review bug report thấy `error_user` có lỗi console khi mở trang chi tiết. AI tách thành BUG-21, ghi "lỗi ngầm, giao diện vẫn đúng" nên đề xuất Low. Review cuối đặt ảnh cạnh `standard_user`: trang chi tiết của `error_user` **không có phần mô tả** ở cả 6 sản phẩm, vi phạm AC-5. Chính ảnh tái hiện của AI đã cho thấy điều này nhưng không ai so.
+- **Lỗi kéo theo**: test dương tính TC-032 chỉ kiểm URL và tên ở trang chi tiết nên vẫn pass (bỏ sót, false negative).
+- **Xử lý**: người dùng nâng BUG-21 lên Medium; TC-046 kiểm mô tả, giá, lỗi console, request báo lỗi; hàm kiểm trang chi tiết kiểm mặc định cả mô tả, giá; thêm bài học L12 cho qa-reviewer.
+- **Cùng đợt**: ảnh "tái hiện bằng tay" thật ra do một script chưa lưu chụp. Đổi tên thành "tái hiện độc lập", lưu script vào `tests/repro/`, ai cũng chạy lại được (`npm run repro -- <feature>`).
+- **Bài học**: kết luận về giao diện phải dựa trên **so sánh với chuẩn**, từng trường mà AC liệt kê. Gọi đúng tên việc mình đã làm (script khác bằng tay).
 

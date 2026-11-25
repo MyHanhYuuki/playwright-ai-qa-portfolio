@@ -1,0 +1,1161 @@
+{
+  "run_id": "run-20261125-150817",
+  "triggered_by": "orchestrator",
+  "scope": "full",
+  "browser": "chromium",
+  "summary": {
+    "total": 46,
+    "passed": 46,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "expected_fail": 17
+  },
+  "total_duration_ms": 84444,
+  "tests": [
+    {
+      "tc_id": "TC-001",
+      "title": "TC-001 danh sách hiển thị đủ 6 sản phẩm",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1793,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-002",
+      "title": "TC-002 tên và giá 6 sản phẩm đúng dữ liệu chuẩn",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1696,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-003",
+      "title": "TC-003 ảnh 6 sản phẩm đúng (standard_user)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1353,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-004",
+      "title": "TC-004 ảnh 6 sản phẩm đúng (problem_user)",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 13468,
+      "retry_count": 0,
+      "error": "Error: ảnh của Sauce Labs Backpack",
+      "errors": [
+        "Error: ảnh của Sauce Labs Backpack",
+        "Error: ảnh của Sauce Labs Bike Light",
+        "Error: ảnh của Sauce Labs Bolt T-Shirt",
+        "Error: ảnh của Sauce Labs Fleece Jacket",
+        "Error: ảnh của Sauce Labs Onesie",
+        "Error: ảnh của Test.allTheThings() T-Shirt (Red)"
+      ],
+      "error_details": [
+        "Error: ảnh của Sauce Labs Backpack\n\nexpect(locator).toHaveAttribute(expected) failed\n\nLocator: getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Backpack', { exact: true }) }).getByRole('img')\nExpected pattern: /sauce-backpack/\nReceived string:  \"/assets/sl-404-Cq1a9k9X.jpg\"\nTimeout: 2000ms",
+        "Error: ảnh của Sauce Labs Bike Light\n\nexpect(locator).toHaveAttribute(expected) failed\n\nLocator: getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Bike Light', { exact: true }) }).getByRole('img')\nExpected pattern: /bike-light/\nReceived string:  \"/assets/sl-404-Cq1a9k9X.jpg\"\nTimeout: 2000ms",
+        "Error: ảnh của Sauce Labs Bolt T-Shirt\n\nexpect(locator).toHaveAttribute(expected) failed\n\nLocator: getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Bolt T-Shirt', { exact: true }) }).getByRole('img')\nExpected pattern: /bolt-shirt/\nReceived string:  \"/assets/sl-404-Cq1a9k9X.jpg\"\nTimeout: 2000ms",
+        "Error: ảnh của Sauce Labs Fleece Jacket\n\nexpect(locator).toHaveAttribute(expected) failed\n\nLocator: getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Fleece Jacket', { exact: true }) }).getByRole('img')\nExpected pattern: /sauce-pullover/\nReceived string:  \"/assets/sl-404-Cq1a9k9X.jpg\"\nTimeout: 2000ms",
+        "Error: ảnh của Sauce Labs Onesie\n\nexpect(locator).toHaveAttribute(expected) failed\n\nLocator: getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Onesie', { exact: true }) }).getByRole('img')\nExpected pattern: /red-onesie/\nReceived string:  \"/assets/sl-404-Cq1a9k9X.jpg\"\nTimeout: 2000ms",
+        "Error: ảnh của Test.allTheThings() T-Shirt (Red)\n\nexpect(locator).toHaveAttribute(expected) failed\n\nLocator: getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Test.allTheThings() T-Shirt (Red)', { exact: true }) }).getByRole('img')\nExpected pattern: /red-tatt/\nReceived string:  \"/assets/sl-404-Cq1a9k9X.jpg\"\nTimeout: 2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-08: problem_user thấy ảnh lỗi sl-404 cho cả 6 sản phẩm"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-005",
+      "title": "TC-005 ảnh 6 sản phẩm đúng (visual_user)",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 3419,
+      "retry_count": 0,
+      "error": "Error: ảnh của Sauce Labs Backpack",
+      "errors": [
+        "Error: ảnh của Sauce Labs Backpack"
+      ],
+      "error_details": [
+        "Error: ảnh của Sauce Labs Backpack\n\nexpect(locator).toHaveAttribute(expected) failed\n\nLocator: getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Backpack', { exact: true }) }).getByRole('img')\nExpected pattern: /sauce-backpack/\nReceived string:  \"/assets/sl-404-Cq1a9k9X.jpg\"\nTimeout: 2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-15: ảnh Backpack của visual_user là ảnh lỗi sl-404"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-006",
+      "title": "TC-006 mặc định sắp xếp theo tên A → Z",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1459,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-007",
+      "title": "TC-007 sắp xếp Name (Z to A)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1363,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-008",
+      "title": "TC-008 sắp xếp Price (low to high)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1477,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-009",
+      "title": "TC-009 sắp xếp Price (high to low)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1511,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-010",
+      "title": "TC-010 chọn lại A → Z sau khi đã sắp kiểu khác",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1298,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-011",
+      "title": "TC-011 problem_user: sắp xếp hoạt động",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 13131,
+      "retry_count": 0,
+      "error": "Error: za: nhãn dropdown",
+      "errors": [
+        "Error: za: nhãn dropdown",
+        "Error: za: thứ tự",
+        "Error: lohi: nhãn dropdown",
+        "Error: lohi: thứ tự",
+        "Error: hilo: nhãn dropdown",
+        "Error: hilo: thứ tự"
+      ],
+      "error_details": [
+        "Error: za: nhãn dropdown\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('active-option')\nExpected: \"Name (Z to A)\"\nReceived: \"Name (A to Z)\"\nTimeout:  2000ms",
+        "Error: za: thứ tự\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 5\n+ Received  + 5\n\n  Array [\n-   \"Test.allTheThings() T-Shirt (Red)\",\n-   \"Sauce Labs Onesie\",\n-   \"Sauce Labs Fleece Jacket\",\n-   \"Sauce Labs Bolt T-Shirt\",\n-   \"Sauce Labs Bike Light\",\n    \"Sauce Labs Backpack\",\n+   \"Sauce Labs Bike Light\",\n+   \"Sauce Labs Bolt T-Shirt\",\n+   \"Sauce Labs Fleece Jacket\",\n+   \"Sauce Labs Onesie\",\n+   \"Test.allTheThings() T-Shirt (Red)\",\n  ]",
+        "Error: lohi: nhãn dropdown\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('active-option')\nExpected: \"Price (low to high)\"\nReceived: \"Name (A to Z)\"\nTimeout:  2000ms",
+        "Error: lohi: thứ tự\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 3\n+ Received  + 3\n\n  Array [\n-   \"Sauce Labs Onesie\",\n+   \"Sauce Labs Backpack\",\n    \"Sauce Labs Bike Light\",\n    \"Sauce Labs Bolt T-Shirt\",\n-   \"Test.allTheThings() T-Shirt (Red)\",\n-   \"Sauce Labs Backpack\",\n    \"Sauce Labs Fleece Jacket\",\n+   \"Sauce Labs Onesie\",\n+   \"Test.allTheThings() T-Shirt (Red)\",\n  ]",
+        "Error: hilo: nhãn dropdown\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('active-option')\nExpected: \"Price (high to low)\"\nReceived: \"Name (A to Z)\"\nTimeout:  2000ms",
+        "Error: hilo: thứ tự\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 3\n+ Received  + 3\n\n  Array [\n-   \"Sauce Labs Fleece Jacket\",\n    \"Sauce Labs Backpack\",\n-   \"Sauce Labs Bolt T-Shirt\",\n-   \"Test.allTheThings() T-Shirt (Red)\",\n    \"Sauce Labs Bike Light\",\n+   \"Sauce Labs Bolt T-Shirt\",\n+   \"Sauce Labs Fleece Jacket\",\n    \"Sauce Labs Onesie\",\n+   \"Test.allTheThings() T-Shirt (Red)\",\n  ]"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-09: problem_user chọn sắp xếp nhưng danh sách không đổi"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-012",
+      "title": "TC-012 error_user: sắp xếp hoạt động với cả 3 kiểu, không báo lỗi",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 13408,
+      "retry_count": 0,
+      "error": "Error: za: nhãn dropdown",
+      "errors": [
+        "Error: za: nhãn dropdown",
+        "Error: za: thứ tự",
+        "Error: za: không được có hộp thoại lỗi",
+        "Error: lohi: nhãn dropdown",
+        "Error: lohi: thứ tự",
+        "Error: lohi: không được có hộp thoại lỗi",
+        "Error: hilo: nhãn dropdown",
+        "Error: hilo: thứ tự",
+        "Error: hilo: không được có hộp thoại lỗi"
+      ],
+      "error_details": [
+        "Error: za: nhãn dropdown\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('active-option')\nExpected: \"Name (Z to A)\"\nReceived: \"Name (A to Z)\"\nTimeout:  2000ms",
+        "Error: za: thứ tự\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 5\n+ Received  + 5\n\n  Array [\n-   \"Test.allTheThings() T-Shirt (Red)\",\n-   \"Sauce Labs Onesie\",\n-   \"Sauce Labs Fleece Jacket\",\n-   \"Sauce Labs Bolt T-Shirt\",\n-   \"Sauce Labs Bike Light\",\n    \"Sauce Labs Backpack\",\n+   \"Sauce Labs Bike Light\",\n+   \"Sauce Labs Bolt T-Shirt\",\n+   \"Sauce Labs Fleece Jacket\",\n+   \"Sauce Labs Onesie\",\n+   \"Test.allTheThings() T-Shirt (Red)\",\n  ]",
+        "Error: za: không được có hộp thoại lỗi\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"Sorting is broken! This error has been reported to Backtrace.\",\n+ ]\n\n  177 |       await expect.soft(inv.itemNames, `${key}: thứ tự`).toHaveText(names(sortOrders[key]), QUICK);\n  178 |       for (const d of dialogs) test.info().annotations.push({ type: `hộp thoại (${key})`, description: d });\n> 179 |       expect.soft(dialogs, `${key}: không được có hộp thoại lỗi`).toEqual([]);\n      |                                                                   ^\n  180 |       // Known-issues note 7: record WHICH dialog appeared. A dialog other than MSG-01 means the bug changed.\n  181 |       expect.soft(dialogs.filter((d) => d !== MSG_SHOP.sortingBroken), `${key}: hộp thoại lạ (khác MSG-01)`).toEqual([]);\n  182 |       await evidence.shot(`Sau khi chọn ${sortLabels[key]}`, {\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:179:67",
+        "Error: lohi: nhãn dropdown\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('active-option')\nExpected: \"Price (low to high)\"\nReceived: \"Name (A to Z)\"\nTimeout:  2000ms",
+        "Error: lohi: thứ tự\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 3\n+ Received  + 3\n\n  Array [\n-   \"Sauce Labs Onesie\",\n+   \"Sauce Labs Backpack\",\n    \"Sauce Labs Bike Light\",\n    \"Sauce Labs Bolt T-Shirt\",\n-   \"Test.allTheThings() T-Shirt (Red)\",\n-   \"Sauce Labs Backpack\",\n    \"Sauce Labs Fleece Jacket\",\n+   \"Sauce Labs Onesie\",\n+   \"Test.allTheThings() T-Shirt (Red)\",\n  ]",
+        "Error: lohi: không được có hộp thoại lỗi\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"Sorting is broken! This error has been reported to Backtrace.\",\n+ ]\n\n  177 |       await expect.soft(inv.itemNames, `${key}: thứ tự`).toHaveText(names(sortOrders[key]), QUICK);\n  178 |       for (const d of dialogs) test.info().annotations.push({ type: `hộp thoại (${key})`, description: d });\n> 179 |       expect.soft(dialogs, `${key}: không được có hộp thoại lỗi`).toEqual([]);\n      |                                                                   ^\n  180 |       // Known-issues note 7: record WHICH dialog appeared. A dialog other than MSG-01 means the bug changed.\n  181 |       expect.soft(dialogs.filter((d) => d !== MSG_SHOP.sortingBroken), `${key}: hộp thoại lạ (khác MSG-01)`).toEqual([]);\n  182 |       await evidence.shot(`Sau khi chọn ${sortLabels[key]}`, {\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:179:67",
+        "Error: hilo: nhãn dropdown\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('active-option')\nExpected: \"Price (high to low)\"\nReceived: \"Name (A to Z)\"\nTimeout:  2000ms",
+        "Error: hilo: thứ tự\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 3\n+ Received  + 3\n\n  Array [\n-   \"Sauce Labs Fleece Jacket\",\n    \"Sauce Labs Backpack\",\n-   \"Sauce Labs Bolt T-Shirt\",\n-   \"Test.allTheThings() T-Shirt (Red)\",\n    \"Sauce Labs Bike Light\",\n+   \"Sauce Labs Bolt T-Shirt\",\n+   \"Sauce Labs Fleece Jacket\",\n    \"Sauce Labs Onesie\",\n+   \"Test.allTheThings() T-Shirt (Red)\",\n  ]",
+        "Error: hilo: không được có hộp thoại lỗi\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"Sorting is broken! This error has been reported to Backtrace.\",\n+ ]\n\n  177 |       await expect.soft(inv.itemNames, `${key}: thứ tự`).toHaveText(names(sortOrders[key]), QUICK);\n  178 |       for (const d of dialogs) test.info().annotations.push({ type: `hộp thoại (${key})`, description: d });\n> 179 |       expect.soft(dialogs, `${key}: không được có hộp thoại lỗi`).toEqual([]);\n      |                                                                   ^\n  180 |       // Known-issues note 7: record WHICH dialog appeared. A dialog other than MSG-01 means the bug changed.\n  181 |       expect.soft(dialogs.filter((d) => d !== MSG_SHOP.sortingBroken), `${key}: hộp thoại lạ (khác MSG-01)`).toEqual([]);\n  182 |       await evidence.shot(`Sau khi chọn ${sortLabels[key]}`, {\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:179:67"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-12: error_user chọn sắp xếp bị hộp thoại \"Sorting is broken!\""
+        },
+        {
+          "type": "hộp thoại (za)",
+          "description": "Sorting is broken! This error has been reported to Backtrace."
+        },
+        {
+          "type": "hộp thoại (lohi)",
+          "description": "Sorting is broken! This error has been reported to Backtrace."
+        },
+        {
+          "type": "hộp thoại (hilo)",
+          "description": "Sorting is broken! This error has been reported to Backtrace."
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-013",
+      "title": "TC-013 visual_user: giá ở danh sách đúng và khớp trang chi tiết, giỏ",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 12991,
+      "retry_count": 0,
+      "error": "Error: giá của Sauce Labs Backpack",
+      "errors": [
+        "Error: giá của Sauce Labs Backpack",
+        "Error: giá của Sauce Labs Bike Light",
+        "Error: giá của Sauce Labs Bolt T-Shirt",
+        "Error: giá của Sauce Labs Fleece Jacket",
+        "Error: giá của Sauce Labs Onesie",
+        "Error: giá của Test.allTheThings() T-Shirt (Red)",
+        "Error: giá ở danh sách = giá ở chi tiết, giỏ"
+      ],
+      "error_details": [
+        "Error: giá của Sauce Labs Backpack\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Backpack', { exact: true }) }).getByTestId('inventory-item-price')\nExpected: \"$29.99\"\nReceived: \"$72.82\"\nTimeout:  2000ms",
+        "Error: giá của Sauce Labs Bike Light\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Bike Light', { exact: true }) }).getByTestId('inventory-item-price')\nExpected: \"$9.99\"\nReceived: \"$55.07\"\nTimeout:  2000ms",
+        "Error: giá của Sauce Labs Bolt T-Shirt\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Bolt T-Shirt', { exact: true }) }).getByTestId('inventory-item-price')\nExpected: \"$15.99\"\nReceived: \"$56.75\"\nTimeout:  2000ms",
+        "Error: giá của Sauce Labs Fleece Jacket\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Fleece Jacket', { exact: true }) }).getByTestId('inventory-item-price')\nExpected: \"$49.99\"\nReceived: \"$2.39\"\nTimeout:  2000ms",
+        "Error: giá của Sauce Labs Onesie\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Onesie', { exact: true }) }).getByTestId('inventory-item-price')\nExpected: \"$7.99\"\nReceived: \"$97.94\"\nTimeout:  2000ms",
+        "Error: giá của Test.allTheThings() T-Shirt (Red)\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Test.allTheThings() T-Shirt (Red)', { exact: true }) }).getByTestId('inventory-item-price')\nExpected: \"$15.99\"\nReceived: \"$0.83\"\nTimeout:  2000ms",
+        "Error: giá ở danh sách = giá ở chi tiết, giỏ\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"$29.99\"\nReceived: \"$72.82\"\n\n  470 |     await evidence.shot('Giá ở giỏ', { highlight: cart.line(backpack).getByTestId('inventory-item-price'), note: `Mong đợi: $29.99, bằng giá ở danh sách (danh sách hiện ${listPrice})` });\n  471 |     await expect.soft(cart.line(backpack).getByTestId('inventory-item-price'), 'giá ở giỏ').toHaveText(priceText(backpack));\n> 472 |     expect.soft(listPrice, 'giá ở danh sách = giá ở chi tiết, giỏ').toBe(priceText(backpack));\n      |                                                                     ^\n  473 |   });\n  474 |\n  475 |   test('TC-035 visual_user: bố cục giống standard_user ở cả 3 màn hình', { tag: ['@AC-1', '@AC-3', '@AC-6', '@list', '@detail', '@cart', '@BUG-16'] }, async ({ page, loginAs, otherSession, productDetailPage: detail, cartPage: cart, evidence }) => {\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:472:69"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-14: visual_user thấy giá sai, đổi ngẫu nhiên ở danh sách"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-014",
+      "title": "TC-014 sắp xếp khi giỏ có hàng: nút Remove đi theo đúng sản phẩm",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1436,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-015",
+      "title": "TC-015 thêm 1 sản phẩm vào giỏ",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1479,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-016",
+      "title": "TC-016 thêm lần lượt cả 6 sản phẩm: số giỏ đếm đúng",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1606,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-017",
+      "title": "TC-017 bỏ sản phẩm ở danh sách, giỏ trống thì không hiện số",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1614,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-018",
+      "title": "TC-018 problem_user: thêm và bỏ được cả 6 sản phẩm ở danh sách và chi tiết",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 56942,
+      "retry_count": 0,
+      "error": "Error: Danh sách, Remove Sauce Labs Backpack: nút",
+      "errors": [
+        "Error: Danh sách, Remove Sauce Labs Backpack: nút",
+        "Error: Danh sách, Remove Sauce Labs Backpack: số giỏ",
+        "Error: Chi tiết, Remove Sauce Labs Backpack: nút",
+        "Error: Chi tiết, Remove Sauce Labs Backpack: số giỏ",
+        "Error: Danh sách, Remove Sauce Labs Bike Light: nút",
+        "Error: Danh sách, Remove Sauce Labs Bike Light: số giỏ",
+        "Error: Chi tiết, Remove Sauce Labs Bike Light: nút",
+        "Error: Chi tiết, Remove Sauce Labs Bike Light: số giỏ",
+        "Error: Danh sách, Add Sauce Labs Bolt T-Shirt: nút",
+        "Error: Danh sách, Add Sauce Labs Bolt T-Shirt: số giỏ",
+        "Error: Chi tiết, Add Sauce Labs Bolt T-Shirt: nút",
+        "Error: Chi tiết, Add Sauce Labs Bolt T-Shirt: số giỏ",
+        "Error: Danh sách, Add Sauce Labs Fleece Jacket: nút",
+        "Error: Danh sách, Add Sauce Labs Fleece Jacket: số giỏ",
+        "Error: Chi tiết, Add Sauce Labs Fleece Jacket: nút",
+        "Error: Chi tiết, Add Sauce Labs Fleece Jacket: số giỏ",
+        "Error: Danh sách, Remove Sauce Labs Onesie: nút",
+        "Error: Danh sách, Remove Sauce Labs Onesie: số giỏ",
+        "Error: Chi tiết, Remove Sauce Labs Onesie: nút",
+        "Error: Chi tiết, Remove Sauce Labs Onesie: số giỏ",
+        "Error: Danh sách, Add Test.allTheThings() T-Shirt (Red): nút",
+        "Error: Danh sách, Add Test.allTheThings() T-Shirt (Red): số giỏ",
+        "Error: Chi tiết, Add Test.allTheThings() T-Shirt (Red): nút",
+        "Error: Chi tiết, Add Test.allTheThings() T-Shirt (Red): số giỏ"
+      ],
+      "error_details": [
+        "Error: Danh sách, Remove Sauce Labs Backpack: nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Backpack', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Add to cart\"\nReceived: \"Remove\"\nTimeout:  2000ms",
+        "Error: Danh sách, Remove Sauce Labs Backpack: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Chi tiết, Remove Sauce Labs Backpack: nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Add to cart' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Remove Sauce Labs Backpack: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Danh sách, Remove Sauce Labs Bike Light: nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Bike Light', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Add to cart\"\nReceived: \"Remove\"\nTimeout:  2000ms",
+        "Error: Danh sách, Remove Sauce Labs Bike Light: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Chi tiết, Remove Sauce Labs Bike Light: nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Add to cart' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Remove Sauce Labs Bike Light: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Danh sách, Add Sauce Labs Bolt T-Shirt: nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Bolt T-Shirt', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Remove\"\nReceived: \"Add to cart\"\nTimeout:  2000ms",
+        "Error: Danh sách, Add Sauce Labs Bolt T-Shirt: số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Sauce Labs Bolt T-Shirt: nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Remove' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Sauce Labs Bolt T-Shirt: số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Danh sách, Add Sauce Labs Fleece Jacket: nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Fleece Jacket', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Remove\"\nReceived: \"Add to cart\"\nTimeout:  2000ms",
+        "Error: Danh sách, Add Sauce Labs Fleece Jacket: số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Sauce Labs Fleece Jacket: nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Remove' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Sauce Labs Fleece Jacket: số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Danh sách, Remove Sauce Labs Onesie: nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Onesie', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Add to cart\"\nReceived: \"Remove\"\nTimeout:  2000ms",
+        "Error: Danh sách, Remove Sauce Labs Onesie: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Chi tiết, Remove Sauce Labs Onesie: nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Add to cart' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Remove Sauce Labs Onesie: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Danh sách, Add Test.allTheThings() T-Shirt (Red): nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Test.allTheThings() T-Shirt (Red)', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Remove\"\nReceived: \"Add to cart\"\nTimeout:  2000ms",
+        "Error: Danh sách, Add Test.allTheThings() T-Shirt (Red): số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Test.allTheThings() T-Shirt (Red): nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Remove' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Test.allTheThings() T-Shirt (Red): số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-10: problem_user không thêm / bỏ được 3 sản phẩm"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-019",
+      "title": "TC-019 error_user: thêm và bỏ được cả 6 sản phẩm ở danh sách và chi tiết",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 57092,
+      "retry_count": 0,
+      "error": "Error: Danh sách, Remove Sauce Labs Backpack: nút",
+      "errors": [
+        "Error: Danh sách, Remove Sauce Labs Backpack: nút",
+        "Error: Danh sách, Remove Sauce Labs Backpack: số giỏ",
+        "Error: Chi tiết, Remove Sauce Labs Backpack: nút",
+        "Error: Chi tiết, Remove Sauce Labs Backpack: số giỏ",
+        "Error: Danh sách, Remove Sauce Labs Bike Light: nút",
+        "Error: Danh sách, Remove Sauce Labs Bike Light: số giỏ",
+        "Error: Chi tiết, Remove Sauce Labs Bike Light: nút",
+        "Error: Chi tiết, Remove Sauce Labs Bike Light: số giỏ",
+        "Error: Danh sách, Add Sauce Labs Bolt T-Shirt: nút",
+        "Error: Danh sách, Add Sauce Labs Bolt T-Shirt: số giỏ",
+        "Error: Chi tiết, Add Sauce Labs Bolt T-Shirt: nút",
+        "Error: Chi tiết, Add Sauce Labs Bolt T-Shirt: số giỏ",
+        "Error: Danh sách, Add Sauce Labs Fleece Jacket: nút",
+        "Error: Danh sách, Add Sauce Labs Fleece Jacket: số giỏ",
+        "Error: Chi tiết, Add Sauce Labs Fleece Jacket: nút",
+        "Error: Chi tiết, Add Sauce Labs Fleece Jacket: số giỏ",
+        "Error: Danh sách, Remove Sauce Labs Onesie: nút",
+        "Error: Danh sách, Remove Sauce Labs Onesie: số giỏ",
+        "Error: Chi tiết, Remove Sauce Labs Onesie: nút",
+        "Error: Chi tiết, Remove Sauce Labs Onesie: số giỏ",
+        "Error: Danh sách, Add Test.allTheThings() T-Shirt (Red): nút",
+        "Error: Danh sách, Add Test.allTheThings() T-Shirt (Red): số giỏ",
+        "Error: Chi tiết, Add Test.allTheThings() T-Shirt (Red): nút",
+        "Error: Chi tiết, Add Test.allTheThings() T-Shirt (Red): số giỏ"
+      ],
+      "error_details": [
+        "Error: Danh sách, Remove Sauce Labs Backpack: nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Backpack', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Add to cart\"\nReceived: \"Remove\"\nTimeout:  2000ms",
+        "Error: Danh sách, Remove Sauce Labs Backpack: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Chi tiết, Remove Sauce Labs Backpack: nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Add to cart' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Remove Sauce Labs Backpack: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Danh sách, Remove Sauce Labs Bike Light: nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Bike Light', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Add to cart\"\nReceived: \"Remove\"\nTimeout:  2000ms",
+        "Error: Danh sách, Remove Sauce Labs Bike Light: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Chi tiết, Remove Sauce Labs Bike Light: nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Add to cart' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Remove Sauce Labs Bike Light: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Danh sách, Add Sauce Labs Bolt T-Shirt: nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Bolt T-Shirt', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Remove\"\nReceived: \"Add to cart\"\nTimeout:  2000ms",
+        "Error: Danh sách, Add Sauce Labs Bolt T-Shirt: số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Sauce Labs Bolt T-Shirt: nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Remove' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Sauce Labs Bolt T-Shirt: số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Danh sách, Add Sauce Labs Fleece Jacket: nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Fleece Jacket', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Remove\"\nReceived: \"Add to cart\"\nTimeout:  2000ms",
+        "Error: Danh sách, Add Sauce Labs Fleece Jacket: số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Sauce Labs Fleece Jacket: nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Remove' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Sauce Labs Fleece Jacket: số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Danh sách, Remove Sauce Labs Onesie: nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Onesie', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Add to cart\"\nReceived: \"Remove\"\nTimeout:  2000ms",
+        "Error: Danh sách, Remove Sauce Labs Onesie: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Chi tiết, Remove Sauce Labs Onesie: nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Add to cart' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Remove Sauce Labs Onesie: số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Danh sách, Add Test.allTheThings() T-Shirt (Red): nút\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Test.allTheThings() T-Shirt (Red)', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Remove\"\nReceived: \"Add to cart\"\nTimeout:  2000ms",
+        "Error: Danh sách, Add Test.allTheThings() T-Shirt (Red): số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Test.allTheThings() T-Shirt (Red): nút\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Remove' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Chi tiết, Add Test.allTheThings() T-Shirt (Red): số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-13: error_user không thêm / bỏ được 3 sản phẩm"
+        },
+        {
+          "type": "pageerror (MSG-06)",
+          "description": "Failed to remove item from cart."
+        },
+        {
+          "type": "pageerror (MSG-05)",
+          "description": "Failed to add item to the cart."
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-020",
+      "title": "TC-020 bấm tên mở đúng trang chi tiết (cả 6 sản phẩm)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2317,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-021",
+      "title": "TC-021 mở chi tiết bằng ảnh và bằng phím Enter",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1228,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-022",
+      "title": "TC-022 thêm / bỏ ở trang chi tiết đồng bộ với danh sách",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1370,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-023",
+      "title": "TC-023 quay lại danh sách bằng nút và bằng Back của trình duyệt",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1208,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-024",
+      "title": "TC-024 problem_user: bấm tên hoặc ảnh ở danh sách và bấm tên ở trang giỏ mở đúng trang chi tiết",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 78294,
+      "retry_count": 0,
+      "error": "Error: Sauce Labs Backpack (bấm tên): URL",
+      "errors": [
+        "Error: Sauce Labs Backpack (bấm tên): URL",
+        "Error: Sauce Labs Backpack (bấm tên): tên",
+        "Error: Sauce Labs Backpack (bấm ảnh): URL",
+        "Error: Sauce Labs Backpack (bấm ảnh): tên",
+        "Error: Sauce Labs Backpack (bấm tên ở giỏ): URL",
+        "Error: Sauce Labs Backpack (bấm tên ở giỏ): tên",
+        "Error: Sauce Labs Bike Light (bấm tên): URL",
+        "Error: Sauce Labs Bike Light (bấm tên): tên",
+        "Error: Sauce Labs Bike Light (bấm ảnh): URL",
+        "Error: Sauce Labs Bike Light (bấm ảnh): tên",
+        "Error: Sauce Labs Bike Light (bấm tên ở giỏ): URL",
+        "Error: Sauce Labs Bike Light (bấm tên ở giỏ): tên",
+        "Error: Sauce Labs Bolt T-Shirt (bấm tên): URL",
+        "Error: Sauce Labs Bolt T-Shirt (bấm tên): tên",
+        "Error: Sauce Labs Bolt T-Shirt (bấm ảnh): URL",
+        "Error: Sauce Labs Bolt T-Shirt (bấm ảnh): tên",
+        "Error: Sauce Labs Bolt T-Shirt (bấm tên ở giỏ): URL",
+        "Error: Sauce Labs Bolt T-Shirt (bấm tên ở giỏ): tên",
+        "Error: Sauce Labs Fleece Jacket (bấm tên): URL",
+        "Error: Sauce Labs Fleece Jacket (bấm tên): tên",
+        "Error: Sauce Labs Fleece Jacket (bấm ảnh): URL",
+        "Error: Sauce Labs Fleece Jacket (bấm ảnh): tên",
+        "Error: Sauce Labs Fleece Jacket (bấm tên ở giỏ): URL",
+        "Error: Sauce Labs Fleece Jacket (bấm tên ở giỏ): tên",
+        "Error: Sauce Labs Onesie (bấm tên): URL",
+        "Error: Sauce Labs Onesie (bấm tên): tên",
+        "Error: Sauce Labs Onesie (bấm ảnh): URL",
+        "Error: Sauce Labs Onesie (bấm ảnh): tên",
+        "Error: Sauce Labs Onesie (bấm tên ở giỏ): URL",
+        "Error: Sauce Labs Onesie (bấm tên ở giỏ): tên",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm tên): URL",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm tên): tên",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm ảnh): URL",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm ảnh): tên",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm tên ở giỏ): URL",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm tên ở giỏ): tên"
+      ],
+      "error_details": [
+        "Error: Sauce Labs Backpack (bấm tên): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=4$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=5\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Backpack (bấm tên): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Backpack\"\nReceived: \"Sauce Labs Fleece Jacket\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Backpack (bấm ảnh): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=4$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=5\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Backpack (bấm ảnh): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Backpack\"\nReceived: \"Sauce Labs Fleece Jacket\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Backpack (bấm tên ở giỏ): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=4$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=5\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Backpack (bấm tên ở giỏ): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Backpack\"\nReceived: \"Sauce Labs Fleece Jacket\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Bike Light (bấm tên): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=0$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=1\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Bike Light (bấm tên): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Bike Light\"\nReceived: \"Sauce Labs Bolt T-Shirt\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Bike Light (bấm ảnh): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=0$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=1\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Bike Light (bấm ảnh): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Bike Light\"\nReceived: \"Sauce Labs Bolt T-Shirt\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Bike Light (bấm tên ở giỏ): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=0$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=1\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Bike Light (bấm tên ở giỏ): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Bike Light\"\nReceived: \"Sauce Labs Bolt T-Shirt\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Bolt T-Shirt (bấm tên): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=1$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=2\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Bolt T-Shirt (bấm tên): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Bolt T-Shirt\"\nReceived: \"Sauce Labs Onesie\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Bolt T-Shirt (bấm ảnh): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=1$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=2\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Bolt T-Shirt (bấm ảnh): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Bolt T-Shirt\"\nReceived: \"Sauce Labs Onesie\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Bolt T-Shirt (bấm tên ở giỏ): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=1$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=2\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Bolt T-Shirt (bấm tên ở giỏ): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Bolt T-Shirt\"\nReceived: \"Sauce Labs Onesie\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Fleece Jacket (bấm tên): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=5$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=6\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Fleece Jacket (bấm tên): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Fleece Jacket\"\nReceived: \"ITEM NOT FOUND\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Fleece Jacket (bấm ảnh): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=5$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=6\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Fleece Jacket (bấm ảnh): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Fleece Jacket\"\nReceived: \"ITEM NOT FOUND\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Fleece Jacket (bấm tên ở giỏ): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=5$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=6\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Fleece Jacket (bấm tên ở giỏ): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Fleece Jacket\"\nReceived: \"ITEM NOT FOUND\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Onesie (bấm tên): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=2$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=3\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Onesie (bấm tên): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Onesie\"\nReceived: \"Test.allTheThings() T-Shirt (Red)\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Onesie (bấm ảnh): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=2$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=3\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Onesie (bấm ảnh): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Onesie\"\nReceived: \"Test.allTheThings() T-Shirt (Red)\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Onesie (bấm tên ở giỏ): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=2$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=3\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Onesie (bấm tên ở giỏ): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Onesie\"\nReceived: \"Test.allTheThings() T-Shirt (Red)\"\nTimeout:  2000ms",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm tên): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=3$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=4\"\nTimeout: 2000ms",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm tên): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Test.allTheThings() T-Shirt (Red)\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm ảnh): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=3$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=4\"\nTimeout: 2000ms",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm ảnh): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Test.allTheThings() T-Shirt (Red)\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm tên ở giỏ): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=3$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=4\"\nTimeout: 2000ms",
+        "Error: Test.allTheThings() T-Shirt (Red) (bấm tên ở giỏ): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Test.allTheThings() T-Shirt (Red)\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-11: problem_user bấm sản phẩm mở sai trang chi tiết"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-025",
+      "title": "TC-025 số trên giỏ luôn bằng số sản phẩm thật",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 24104,
+      "retry_count": 0,
+      "error": "Error: id=6: không được có nút Add to cart",
+      "errors": [
+        "Error: id=6: không được có nút Add to cart",
+        "Error: id=6: không được có số giỏ",
+        "Error: id=99: không được có nút Add to cart",
+        "Error: id=99: không được có số giỏ",
+        "Error: id=-1: không được có nút Add to cart",
+        "Error: id=-1: không được có số giỏ",
+        "Error: trùng id: số giỏ",
+        "Error: trùng id: số dòng trong giỏ",
+        "Error: trùng id: dòng là Backpack",
+        "Error: trùng id: số lượng",
+        "Error: id lạ: số giỏ"
+      ],
+      "error_details": [
+        "Error: id=6: không được có nút Add to cart\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByRole('button', { name: 'Add to cart' })\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: id=6: không được có số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: id=99: không được có nút Add to cart\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByRole('button', { name: 'Add to cart' })\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: id=99: không được có số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: id=-1: không được có nút Add to cart\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByRole('button', { name: 'Add to cart' })\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: id=-1: không được có số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: trùng id: số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: \"1\"\nReceived: \"2\"\nTimeout:  2000ms",
+        "Error: trùng id: số dòng trong giỏ\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('inventory-item')\nExpected: 1\nReceived: 2\nTimeout:  2000ms",
+        "Error: trùng id: dòng là Backpack\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 0\n+ Received  + 1\n\n  Array [\n    \"Sauce Labs Backpack\",\n+   \"Sauce Labs Backpack\",\n  ]",
+        "Error: trùng id: số lượng\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item').getByTestId('item-quantity')\nTimeout: 2000ms\n- Expected  - 0\n+ Received  + 1\n\n  Array [\n    \"1\",\n+   \"1\",\n  ]",
+        "Error: id lạ: số giỏ\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: \"1\"\nReceived: \"2\"\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-06: sản phẩm không tồn tại / dữ liệu giỏ sai làm số giỏ lệch giỏ thật"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-026",
+      "title": "TC-026 id sai định dạng xử lý như sản phẩm không tồn tại",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 19115,
+      "retry_count": 0,
+      "error": "Error: id=4abc",
+      "errors": [
+        "Error: id=4abc",
+        "Error: id=04",
+        "Error: id=4.9",
+        "Error: id=0x4",
+        "Error: id=%204",
+        "Error: id=%2B4",
+        "Error: id=-0",
+        "Error: id=4e0"
+      ],
+      "error_details": [
+        "Error: id=4abc\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"ITEM NOT FOUND\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms",
+        "Error: id=04\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"ITEM NOT FOUND\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms",
+        "Error: id=4.9\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"ITEM NOT FOUND\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms",
+        "Error: id=0x4\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"ITEM NOT FOUND\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms",
+        "Error: id=%204\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"ITEM NOT FOUND\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms",
+        "Error: id=%2B4\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"ITEM NOT FOUND\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms",
+        "Error: id=-0\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"ITEM NOT FOUND\"\nReceived: \"Sauce Labs Bike Light\"\nTimeout:  2000ms",
+        "Error: id=4e0\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"ITEM NOT FOUND\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-20: id sai định dạng (4abc, 04, 4.9, 0x4, khoảng trắng, +4, 4e0, -0) vẫn mở sản phẩm"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-027",
+      "title": "TC-027 trang giỏ liệt kê đúng sản phẩm theo thứ tự thêm",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1060,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-028",
+      "title": "TC-028 bỏ sản phẩm ở trang giỏ",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1125,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-029",
+      "title": "TC-029 điều hướng từ trang giỏ",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1465,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-030",
+      "title": "TC-030 giỏ trống không sang được bước thanh toán",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 4920,
+      "retry_count": 0,
+      "error": "Error: vẫn ở trang giỏ",
+      "errors": [
+        "Error: vẫn ở trang giỏ",
+        "Error: không sang bước thanh toán"
+      ],
+      "error_details": [
+        "Error: vẫn ở trang giỏ\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /cart\\.html$/\nReceived string:  \"https://www.saucedemo.com/checkout-step-one.html\"\nTimeout: 2000ms",
+        "Error: không sang bước thanh toán\n\nexpect(locator).not.toHaveText(expected) failed\n\nLocator:  getByTestId('title')\nExpected: not \"Checkout: Your Information\"\nReceived: \"Checkout: Your Information\"\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-19: giỏ trống vẫn bấm Checkout sang bước thanh toán"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-031",
+      "title": "TC-031 problem_user: các thao tác không lỗi vẫn đúng (giá, bố cục, trang giỏ)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2074,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-032",
+      "title": "TC-032 error_user: các thao tác không lỗi vẫn đúng (ảnh, giá, bố cục, mở chi tiết, trang giỏ)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 4981,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-033",
+      "title": "TC-033 visual_user: các thao tác không lỗi vẫn đúng (sắp xếp, thêm / bỏ, mở chi tiết, trang giỏ)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5690,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-034",
+      "title": "TC-034 performance_glitch_user: mọi thao tác thành công (không đánh fail theo thời gian)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 27645,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "thời gian sắp xếp (BUG-17)",
+          "description": "Name (Z to A): 5033 ms"
+        },
+        {
+          "type": "thời gian sắp xếp (BUG-17)",
+          "description": "Price (low to high): 5032 ms"
+        },
+        {
+          "type": "thời gian sắp xếp (BUG-17)",
+          "description": "Price (high to low): 5030 ms"
+        },
+        {
+          "type": "thời gian sắp xếp (BUG-17)",
+          "description": "Name (A to Z): 5030 ms"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-035",
+      "title": "TC-035 visual_user: bố cục giống standard_user ở cả 3 màn hình",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 2695,
+      "retry_count": 0,
+      "error": "Error: Danh sách: biểu tượng giỏ lệch ngang (px)",
+      "errors": [
+        "Error: Danh sách: biểu tượng giỏ lệch ngang (px)",
+        "Error: Danh sách: biểu tượng giỏ lệch dọc (px)",
+        "Error: Danh sách: biểu tượng giỏ bị xoay",
+        "Error: Danh sách: biểu tượng menu bị xoay",
+        "Error: Danh sách: nút Add của Red T-Shirt lệch ngang (px)",
+        "Error: Chi tiết: biểu tượng giỏ lệch ngang (px)",
+        "Error: Chi tiết: biểu tượng giỏ lệch dọc (px)",
+        "Error: Chi tiết: biểu tượng giỏ bị xoay",
+        "Error: Chi tiết: biểu tượng menu bị xoay",
+        "Error: Giỏ: biểu tượng giỏ lệch ngang (px)",
+        "Error: Giỏ: biểu tượng giỏ lệch dọc (px)",
+        "Error: Giỏ: biểu tượng giỏ bị xoay",
+        "Error: Giỏ: biểu tượng menu bị xoay"
+      ],
+      "error_details": [
+        "Error: Danh sách: biểu tượng giỏ lệch ngang (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    186.019287109375\n\n  65 |   const ref = new InventoryPage(base);\n  66 |   const [a, b] = [await box(app.cartIcon), await box(ref.cartIcon)];\n> 67 |   expect.soft(Math.abs(a.x - b.x), `${where}: biểu tượng giỏ lệch ngang (px)`).toBeLessThanOrEqual(5);\n     |                                                                                ^\n  68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n  69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n  70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:67:80)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:483:5",
+        "Error: Danh sách: biểu tượng giỏ lệch dọc (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    28.980690002441406\n\n  66 |   const [a, b] = [await box(app.cartIcon), await box(ref.cartIcon)];\n  67 |   expect.soft(Math.abs(a.x - b.x), `${where}: biểu tượng giỏ lệch ngang (px)`).toBeLessThanOrEqual(5);\n> 68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n     |                                                                              ^\n  69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n  70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n  71 | }\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:68:78)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:483:5",
+        "Error: Danh sách: biểu tượng giỏ bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n  67 |   expect.soft(Math.abs(a.x - b.x), `${where}: biểu tượng giỏ lệch ngang (px)`).toBeLessThanOrEqual(5);\n  68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n> 69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n     |                                                                                        ^\n  70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n  71 | }\n  72 | /** Cart page flow that must work for every account: line, Remove, Continue Shopping, Checkout. */\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:69:88)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:483:5",
+        "Error: Danh sách: biểu tượng menu bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n  68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n  69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n> 70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n     |                                                                                         ^\n  71 | }\n  72 | /** Cart page flow that must work for every account: line, Remove, Continue Shopping, Checkout. */\n  73 | async function expectCartFlow(page: Page, inv: InventoryPage, cart: CartPage) {\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:70:89)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:483:5",
+        "Error: Danh sách: nút Add của Red T-Shirt lệch ngang (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    54\n\n  483 |     await expectLayoutLike(inv, base, 'Danh sách');\n  484 |     const [a, b] = [await box(inv.cartButton(redTShirt)), await box(baseInv.cartButton(redTShirt))];\n> 485 |     expect.soft(Math.abs(a.x - b.x), 'Danh sách: nút Add của Red T-Shirt lệch ngang (px)').toBeLessThanOrEqual(5);\n      |                                                                                            ^\n  486 |     expect.soft(Math.abs(a.y - b.y), 'Danh sách: nút Add của Red T-Shirt lệch dọc (px)').toBeLessThanOrEqual(5);\n  487 |     await inv.cartButton(redTShirt).scrollIntoViewIfNeeded();\n  488 |     await evidence.shot('Nút Add của Red T-Shirt (visual_user)', { highlight: inv.cartButton(redTShirt), note: `Mong đợi: cùng vị trí với standard_user (đang lệch ngang ${Math.round(Math.abs(a.x - b.x))} px)` });\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:485:92",
+        "Error: Chi tiết: biểu tượng giỏ lệch ngang (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    186.019287109375\n\n  65 |   const ref = new InventoryPage(base);\n  66 |   const [a, b] = [await box(app.cartIcon), await box(ref.cartIcon)];\n> 67 |   expect.soft(Math.abs(a.x - b.x), `${where}: biểu tượng giỏ lệch ngang (px)`).toBeLessThanOrEqual(5);\n     |                                                                                ^\n  68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n  69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n  70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:67:80)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:496:5",
+        "Error: Chi tiết: biểu tượng giỏ lệch dọc (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    28.980690002441406\n\n  66 |   const [a, b] = [await box(app.cartIcon), await box(ref.cartIcon)];\n  67 |   expect.soft(Math.abs(a.x - b.x), `${where}: biểu tượng giỏ lệch ngang (px)`).toBeLessThanOrEqual(5);\n> 68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n     |                                                                              ^\n  69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n  70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n  71 | }\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:68:78)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:496:5",
+        "Error: Chi tiết: biểu tượng giỏ bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n  67 |   expect.soft(Math.abs(a.x - b.x), `${where}: biểu tượng giỏ lệch ngang (px)`).toBeLessThanOrEqual(5);\n  68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n> 69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n     |                                                                                        ^\n  70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n  71 | }\n  72 | /** Cart page flow that must work for every account: line, Remove, Continue Shopping, Checkout. */\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:69:88)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:496:5",
+        "Error: Chi tiết: biểu tượng menu bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n  68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n  69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n> 70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n     |                                                                                         ^\n  71 | }\n  72 | /** Cart page flow that must work for every account: line, Remove, Continue Shopping, Checkout. */\n  73 | async function expectCartFlow(page: Page, inv: InventoryPage, cart: CartPage) {\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:70:89)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:496:5",
+        "Error: Giỏ: biểu tượng giỏ lệch ngang (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    186.019287109375\n\n  65 |   const ref = new InventoryPage(base);\n  66 |   const [a, b] = [await box(app.cartIcon), await box(ref.cartIcon)];\n> 67 |   expect.soft(Math.abs(a.x - b.x), `${where}: biểu tượng giỏ lệch ngang (px)`).toBeLessThanOrEqual(5);\n     |                                                                                ^\n  68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n  69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n  70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:67:80)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:504:5",
+        "Error: Giỏ: biểu tượng giỏ lệch dọc (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    28.980690002441406\n\n  66 |   const [a, b] = [await box(app.cartIcon), await box(ref.cartIcon)];\n  67 |   expect.soft(Math.abs(a.x - b.x), `${where}: biểu tượng giỏ lệch ngang (px)`).toBeLessThanOrEqual(5);\n> 68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n     |                                                                              ^\n  69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n  70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n  71 | }\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:68:78)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:504:5",
+        "Error: Giỏ: biểu tượng giỏ bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n  67 |   expect.soft(Math.abs(a.x - b.x), `${where}: biểu tượng giỏ lệch ngang (px)`).toBeLessThanOrEqual(5);\n  68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n> 69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n     |                                                                                        ^\n  70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n  71 | }\n  72 | /** Cart page flow that must work for every account: line, Remove, Continue Shopping, Checkout. */\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:69:88)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:504:5",
+        "Error: Giỏ: biểu tượng menu bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n  68 |   expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);\n  69 |   expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n> 70 |   expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');\n     |                                                                                         ^\n  71 | }\n  72 | /** Cart page flow that must work for every account: line, Remove, Continue Shopping, Checkout. */\n  73 | async function expectCartFlow(page: Page, inv: InventoryPage, cart: CartPage) {\n    at expectLayoutLike (<repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:70:89)\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:504:5"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-16: visual_user lệch / xoay biểu tượng giỏ, menu, nút Add"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-036",
+      "title": "TC-036 visual_user: nút Checkout ở trang giỏ đúng vị trí",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 1898,
+      "retry_count": 0,
+      "error": "Error: visual_user: Checkout cùng hàng với Continue Shopping (px)",
+      "errors": [
+        "Error: visual_user: Checkout cùng hàng với Continue Shopping (px)"
+      ],
+      "error_details": [
+        "Error: visual_user: Checkout cùng hàng với Continue Shopping (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    412\n\n  450 |     await evidence.shot('Trang giỏ (visual_user)', { highlight: [cart.checkoutButton, cart.continueShoppingButton], note: 'Mong đợi: nút Checkout cùng hàng với Continue Shopping' });\n  451 |     expect.soft(Math.abs(bco.y - bcs.y), 'standard_user: 2 nút cùng hàng (mốc so sánh)').toBeLessThanOrEqual(5);\n> 452 |     expect.soft(Math.abs(co.y - cs.y), 'visual_user: Checkout cùng hàng với Continue Shopping (px)').toBeLessThanOrEqual(5);\n      |                                                                                                      ^\n  453 |   });\n  454 | });\n  455 |\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:452:102"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-18: visual_user có nút Checkout bị đẩy lên vùng tiêu đề"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-037",
+      "title": "TC-037 menu All Items về danh sách từ trang chi tiết và trang giỏ",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 3436,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-038",
+      "title": "TC-038 giỏ giữ nguyên khi tải lại, chuyển trang, mở tab mới",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2257,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-039",
+      "title": "TC-039 giỏ giữ nguyên sau khi đăng xuất rồi đăng nhập lại cùng tài khoản",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2190,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-040",
+      "title": "TC-040 tài khoản khác không thấy, không sửa, không xóa được giỏ của người trước",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 28262,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1: visual_user không được có số giỏ",
+      "errors": [
+        "Error: Biến thể 1: visual_user không được có số giỏ",
+        "Error: Biến thể 1: giỏ của visual_user phải trống",
+        "Error: Biến thể 2: standard_user không được có số giỏ",
+        "Error: Biến thể 2: giỏ của standard_user phải trống",
+        "Error: Biến thể 3: số giỏ của standard_user",
+        "Error: Biến thể 3: giỏ của standard_user không bị người sau sửa",
+        "Error: Biến thể 4: số giỏ của standard_user",
+        "Error: Biến thể 4: giỏ của standard_user không bị người sau xóa"
+      ],
+      "error_details": [
+        "Error: Biến thể 1: visual_user không được có số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 1: giỏ của visual_user phải trống\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('inventory-item')\nExpected: 0\nReceived: 2\nTimeout:  2000ms",
+        "Error: Biến thể 2: standard_user không được có số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 2: giỏ của standard_user phải trống\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('inventory-item')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 3: số giỏ của standard_user\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: \"2\"\nReceived: \"3\"\nTimeout:  2000ms",
+        "Error: Biến thể 3: giỏ của standard_user không bị người sau sửa\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 0\n+ Received  + 1\n\n  Array [\n    \"Sauce Labs Backpack\",\n    \"Sauce Labs Bike Light\",\n+   \"Sauce Labs Onesie\",\n  ]",
+        "Error: Biến thể 4: số giỏ của standard_user\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: \"2\"\nReceived: \"1\"\nTimeout:  2000ms",
+        "Error: Biến thể 4: giỏ của standard_user không bị người sau xóa\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 1\n+ Received  + 0\n\n  Array [\n-   \"Sauce Labs Backpack\",\n    \"Sauce Labs Bike Light\",\n  ]"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-07: người đăng nhập sau thấy, sửa, xóa được giỏ của người trước"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-041",
+      "title": "TC-041 Reset App State cập nhật ngay ở danh sách, chi tiết, giỏ",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 13118,
+      "retry_count": 0,
+      "error": "Error: Danh sách: nút Backpack",
+      "errors": [
+        "Error: Danh sách: nút Backpack",
+        "Error: Chi tiết: nút Add to cart",
+        "Error: Giỏ: số dòng"
+      ],
+      "error_details": [
+        "Error: Danh sách: nút Backpack\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item').filter({ has: getByTestId('inventory-item-name').getByText('Sauce Labs Backpack', { exact: true }) }).getByRole('button', { name: /^(Add to cart|Remove)$/ })\nExpected: \"Add to cart\"\nReceived: \"Remove\"\nTimeout:  2000ms",
+        "Error: Chi tiết: nút Add to cart\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Add to cart' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Giỏ: số dòng\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('inventory-item')\nExpected: 0\nReceived: 1\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-05: Reset App State không cập nhật giao diện"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-042",
+      "title": "TC-042 Back / Forward của trình duyệt sau khi đổi giỏ",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 957,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-043",
+      "title": "TC-043 đăng xuất ở trang giỏ hoặc chi tiết rồi bấm Back không xem lại được",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 3350,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-044",
+      "title": "TC-044 hai tab: thay đổi giỏ ở tab này, tab kia thấy đúng",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1657,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-045",
+      "title": "TC-045 phiên giả mạo không vào được trang giỏ và trang chi tiết",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 12939,
+      "retry_count": 0,
+      "error": "Error: /cart.html: phải về trang đăng nhập",
+      "errors": [
+        "Error: /cart.html: phải về trang đăng nhập",
+        "Error: /cart.html: thông báo",
+        "Error: /cart.html: không được thấy nội dung",
+        "Error: /inventory-item.html?id=4: phải về trang đăng nhập",
+        "Error: /inventory-item.html?id=4: thông báo",
+        "Error: /inventory-item.html?id=4: không được thấy nội dung"
+      ],
+      "error_details": [
+        "Error: /cart.html: phải về trang đăng nhập\n\nexpect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/cart.html\"\nTimeout:  2000ms\n\n\n  844 |     for (const [path, shown] of [['/cart.html', '/cart.html'], ['/inventory-item.html?id=4', '/inventory-item.html']] as const) {\n  845 |       await page.goto(path);\n> 846 |       await expect.soft(page, `${path}: phải về trang đăng nhập`).toHaveURL(isLoginScreen, QUICK);\n      |                                                                   ^\n  847 |       await expect.soft(loginPage.errorMessage, `${path}: thông báo`).toHaveText(MSG.notLoggedIn(shown), QUICK);\n  848 |       await expect.soft(path === '/cart.html' ? cart.cartList : detail.backButton, `${path}: không được thấy nội dung`).toBeHidden(QUICK);\n  849 |       await evidence.shot(`Mở ${shown} bằng cookie giả`, { note: 'Mong đợi: bị đưa về trang đăng nhập, không thấy nội dung' });\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:846:67",
+        "Error: /cart.html: thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Epic sadface: You can only access '/cart.html' when you are logged in.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: /cart.html: không được thấy nội dung\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('cart-list')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: /inventory-item.html?id=4: phải về trang đăng nhập\n\nexpect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/inventory-item.html?id=4\"\nTimeout:  2000ms\n\n\n  844 |     for (const [path, shown] of [['/cart.html', '/cart.html'], ['/inventory-item.html?id=4', '/inventory-item.html']] as const) {\n  845 |       await page.goto(path);\n> 846 |       await expect.soft(page, `${path}: phải về trang đăng nhập`).toHaveURL(isLoginScreen, QUICK);\n      |                                                                   ^\n  847 |       await expect.soft(loginPage.errorMessage, `${path}: thông báo`).toHaveText(MSG.notLoggedIn(shown), QUICK);\n  848 |       await expect.soft(path === '/cart.html' ? cart.cartList : detail.backButton, `${path}: không được thấy nội dung`).toBeHidden(QUICK);\n  849 |       await evidence.shot(`Mở ${shown} bằng cookie giả`, { note: 'Mong đợi: bị đưa về trang đăng nhập, không thấy nội dung' });\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:846:67",
+        "Error: /inventory-item.html?id=4: thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Epic sadface: You can only access '/inventory-item.html' when you are logged in.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: /inventory-item.html?id=4: không được thấy nội dung\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByRole('button', { name: 'Back to products' })\nExpected: hidden\nReceived: visible\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-02 (biến thể): tự tạo cookie là vào được trang giỏ, chi tiết"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-046",
+      "title": "TC-046 error_user: trang chi tiết hiển thị đủ thông tin, không có lỗi JavaScript hay báo lỗi",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 15909,
+      "retry_count": 0,
+      "error": "Error: Sauce Labs Backpack: mô tả",
+      "errors": [
+        "Error: Sauce Labs Backpack: mô tả",
+        "Error: Sauce Labs Backpack: không được có lỗi console / JavaScript",
+        "Error: Sauce Labs Backpack: không được gửi báo lỗi tới submit.backtrace.io",
+        "Error: Sauce Labs Bike Light: mô tả",
+        "Error: Sauce Labs Bike Light: không được có lỗi console / JavaScript",
+        "Error: Sauce Labs Bike Light: không được gửi báo lỗi tới submit.backtrace.io",
+        "Error: Sauce Labs Bolt T-Shirt: mô tả",
+        "Error: Sauce Labs Bolt T-Shirt: không được có lỗi console / JavaScript",
+        "Error: Sauce Labs Bolt T-Shirt: không được gửi báo lỗi tới submit.backtrace.io",
+        "Error: Sauce Labs Fleece Jacket: mô tả",
+        "Error: Sauce Labs Fleece Jacket: không được có lỗi console / JavaScript",
+        "Error: Sauce Labs Fleece Jacket: không được gửi báo lỗi tới submit.backtrace.io",
+        "Error: Sauce Labs Onesie: mô tả",
+        "Error: Sauce Labs Onesie: không được có lỗi console / JavaScript",
+        "Error: Sauce Labs Onesie: không được gửi báo lỗi tới submit.backtrace.io",
+        "Error: Test.allTheThings() T-Shirt (Red): mô tả",
+        "Error: Test.allTheThings() T-Shirt (Red): không được có lỗi console / JavaScript",
+        "Error: Test.allTheThings() T-Shirt (Red): không được gửi báo lỗi tới submit.backtrace.io"
+      ],
+      "error_details": [
+        "Error: Sauce Labs Backpack: mô tả\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-desc')\nExpected: \"carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Sauce Labs Backpack: không được có lỗi console / JavaScript\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"Error: This component failed to render!\",\n+ ]\n\n  357 |       await expectDetailOf(page, detail, p); // name, description, price like standard_user\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n> 359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n      |                                                                                ^\n  360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:359:80",
+        "Error: Sauce Labs Backpack: không được gửi báo lỗi tới submit.backtrace.io\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n  359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n> 360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n      |                                                                                                ^\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n  363 |         note: `Mong đợi: có mô tả \"${p.description.slice(0, 30)}…\", không lỗi. Thực tế: mô tả ${(await detail.description.count()) ? 'có' : 'KHÔNG có'}; console: ${errors.length ? errors.join(' | ') : 'không lỗi'}; báo lỗi gửi đi: ${reports.length}`,\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:360:96",
+        "Error: Sauce Labs Bike Light: mô tả\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-desc')\nExpected: \"A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Sauce Labs Bike Light: không được có lỗi console / JavaScript\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"Error: This component failed to render!\",\n+ ]\n\n  357 |       await expectDetailOf(page, detail, p); // name, description, price like standard_user\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n> 359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n      |                                                                                ^\n  360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:359:80",
+        "Error: Sauce Labs Bike Light: không được gửi báo lỗi tới submit.backtrace.io\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n  359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n> 360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n      |                                                                                                ^\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n  363 |         note: `Mong đợi: có mô tả \"${p.description.slice(0, 30)}…\", không lỗi. Thực tế: mô tả ${(await detail.description.count()) ? 'có' : 'KHÔNG có'}; console: ${errors.length ? errors.join(' | ') : 'không lỗi'}; báo lỗi gửi đi: ${reports.length}`,\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:360:96",
+        "Error: Sauce Labs Bolt T-Shirt: mô tả\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-desc')\nExpected: \"Get your testing superhero on with the Sauce Labs bolt T-shirt. From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Sauce Labs Bolt T-Shirt: không được có lỗi console / JavaScript\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"Error: This component failed to render!\",\n+ ]\n\n  357 |       await expectDetailOf(page, detail, p); // name, description, price like standard_user\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n> 359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n      |                                                                                ^\n  360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:359:80",
+        "Error: Sauce Labs Bolt T-Shirt: không được gửi báo lỗi tới submit.backtrace.io\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n  359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n> 360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n      |                                                                                                ^\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n  363 |         note: `Mong đợi: có mô tả \"${p.description.slice(0, 30)}…\", không lỗi. Thực tế: mô tả ${(await detail.description.count()) ? 'có' : 'KHÔNG có'}; console: ${errors.length ? errors.join(' | ') : 'không lỗi'}; báo lỗi gửi đi: ${reports.length}`,\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:360:96",
+        "Error: Sauce Labs Fleece Jacket: mô tả\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-desc')\nExpected: \"It's not every day that you come across a midweight quarter-zip fleece jacket capable of handling everything from a relaxing day outdoors to a busy day at the office.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Sauce Labs Fleece Jacket: không được có lỗi console / JavaScript\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"Error: This component failed to render!\",\n+ ]\n\n  357 |       await expectDetailOf(page, detail, p); // name, description, price like standard_user\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n> 359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n      |                                                                                ^\n  360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:359:80",
+        "Error: Sauce Labs Fleece Jacket: không được gửi báo lỗi tới submit.backtrace.io\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n  359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n> 360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n      |                                                                                                ^\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n  363 |         note: `Mong đợi: có mô tả \"${p.description.slice(0, 30)}…\", không lỗi. Thực tế: mô tả ${(await detail.description.count()) ? 'có' : 'KHÔNG có'}; console: ${errors.length ? errors.join(' | ') : 'không lỗi'}; báo lỗi gửi đi: ${reports.length}`,\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:360:96",
+        "Error: Sauce Labs Onesie: mô tả\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-desc')\nExpected: \"Rib snap infant onesie for the junior automation engineer in development. Reinforced 3-snap bottom closure, two-needle hemmed sleeved and bottom won't unravel.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Sauce Labs Onesie: không được có lỗi console / JavaScript\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"Error: This component failed to render!\",\n+ ]\n\n  357 |       await expectDetailOf(page, detail, p); // name, description, price like standard_user\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n> 359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n      |                                                                                ^\n  360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:359:80",
+        "Error: Sauce Labs Onesie: không được gửi báo lỗi tới submit.backtrace.io\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n  359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n> 360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n      |                                                                                                ^\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n  363 |         note: `Mong đợi: có mô tả \"${p.description.slice(0, 30)}…\", không lỗi. Thực tế: mô tả ${(await detail.description.count()) ? 'có' : 'KHÔNG có'}; console: ${errors.length ? errors.join(' | ') : 'không lỗi'}; báo lỗi gửi đi: ${reports.length}`,\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:360:96",
+        "Error: Test.allTheThings() T-Shirt (Red): mô tả\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-desc')\nExpected: \"This classic Sauce Labs t-shirt is perfect to wear when cozying up to your keyboard to automate a few tests. Super-soft and comfy ringspun combed cotton.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Test.allTheThings() T-Shirt (Red): không được có lỗi console / JavaScript\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"Error: This component failed to render!\",\n+ ]\n\n  357 |       await expectDetailOf(page, detail, p); // name, description, price like standard_user\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n> 359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n      |                                                                                ^\n  360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:359:80",
+        "Error: Test.allTheThings() T-Shirt (Red): không được gửi báo lỗi tới submit.backtrace.io\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  358 |       for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });\n  359 |       expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);\n> 360 |       expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);\n      |                                                                                                ^\n  361 |       await evidence.shot(`Chi tiết ${p.name} (error_user)`, {\n  362 |         highlight: [detail.name, detail.price],\n  363 |         note: `Mong đợi: có mô tả \"${p.description.slice(0, 30)}…\", không lỗi. Thực tế: mô tả ${(await detail.description.count()) ? 'có' : 'KHÔNG có'}; console: ${errors.length ? errors.join(' | ') : 'không lỗi'}; báo lỗi gửi đi: ${reports.length}`,\n    at <repo>\\tests\\specs\\saucedemo-products-cart.spec.ts:360:96"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-21: error_user mở trang chi tiết thì mất mô tả sản phẩm, console báo lỗi render, gửi báo lỗi ra ngoài"
+        },
+        {
+          "type": "lỗi ở chi tiết Sauce Labs Backpack",
+          "description": "Error: This component failed to render!"
+        },
+        {
+          "type": "lỗi ở chi tiết Sauce Labs Bike Light",
+          "description": "Error: This component failed to render!"
+        },
+        {
+          "type": "lỗi ở chi tiết Sauce Labs Bolt T-Shirt",
+          "description": "Error: This component failed to render!"
+        },
+        {
+          "type": "lỗi ở chi tiết Sauce Labs Fleece Jacket",
+          "description": "Error: This component failed to render!"
+        },
+        {
+          "type": "lỗi ở chi tiết Sauce Labs Onesie",
+          "description": "Error: This component failed to render!"
+        },
+        {
+          "type": "lỗi ở chi tiết Test.allTheThings() T-Shirt (Red)",
+          "description": "Error: This component failed to render!"
+        }
+      ]
+    }
+  ]
+}

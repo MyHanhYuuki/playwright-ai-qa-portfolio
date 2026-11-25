@@ -30,7 +30,7 @@
 | Framework test | **Playwright Test 1.65** | UI và API test |
 | Ngôn ngữ | **TypeScript** | Chạy trên Node.js |
 | Trình duyệt | Chromium | Firefox/WebKit bổ sung sau |
-| AI agent | **Claude Code** + 5 agent tự định nghĩa + 1 agent review | `.claude/agents/` |
+| AI agent | **Claude Code** + 6 agent tự định nghĩa (gồm bug-reporter) + 1 agent review | `.claude/agents/` |
 | Cầu nối AI ↔ trình duyệt | **Playwright MCP** | Agent thao tác trên web thật |
 | Quản lý mã nguồn | Git + GitHub | |
 | CI | **GitHub Actions** | Tự chạy test mỗi lần push |
@@ -42,10 +42,10 @@
 - **Ngoài phạm vi**: kiểm thử hiệu năng, bảo mật chuyên sâu, kiểm thử trên mobile thật. Các mục này chỉ ghi nhận quan sát, không đánh pass/fail.
 
 ## 6. Cách tiếp cận
-**Pipeline 5 AI agent, có 3 điểm người duyệt (HITL):**
+**Pipeline 6 AI agent, có 3 điểm người duyệt (HITL):**
 ```
 Requirement → [1] Phân tích yêu cầu → ⏸ Làm rõ yêu cầu → [2] Thiết kế test case → ⏸ Duyệt test case
-           → [3] Viết code test → [4] Chạy và phân loại lỗi → [5] Sửa test sai → ⏸ Duyệt bug → Bug report + RTM
+           → [3] Viết code test → [4] Chạy và phân loại lỗi → [5] Sửa test sai → ⏸ Duyệt bug → [6] Bug report (bug-reporter) → RTM
 ```
 Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](ai-agent-workflow.html)
 
@@ -66,7 +66,7 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | 5 | Chạy test và phân loại lỗi | triage.md, báo cáo HTML | ✅ |
 | 6 | Sửa test hỏng (healer) | healing-log.md | ⏭ Lần này không có script-issue |
 | 7 | Bug report + RTM | defects.md, rtm.md / rtm-report.html (`npm run rtm`) | ✅ |
-| 8 | Sản phẩm + Chi tiết + Giỏ hàng (cả pipeline) | `qa-runs/saucedemo-products-cart/` | 🔄 HITL #1, #2 xong (45 test case đã duyệt); đang viết code test |
+| 8 | Sản phẩm + Chi tiết + Giỏ hàng (cả pipeline) | `qa-runs/saucedemo-products-cart/`: 46 TC, 17 bug, RTM, evidence chia theo màn hình | ✅ Xong (review cuối đã xử lý) |
 | 9 | Giỏ hàng → Thanh toán → Hoàn tất (cả pipeline, E2E mua hàng) | `qa-runs/saucedemo-checkout/` | ⏳ |
 | 10 | Test API: Restful Booker | `tests/api` | ⏳ |
 | 11 | Hoàn thiện CI, README, tổng kết | Báo cáo tổng kết | ⏳ |
@@ -110,4 +110,9 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | Đăng nhập: code test | 33 test (POM: 2 Page Object, 3 fixture gồm evidence), 5 test smoke (+1 seed = 6 khi chạy `test:smoke`) |
 | Đăng nhập: kết quả chạy | 31 Passed + 2 Failed (bug đã biết, fail đúng chỗ), 0 chập chờn (chạy lặp 66/66). Lần chạy mới nhất `run-20261124-184137`: 17,9 giây |
 | Đăng nhập: RTM | 7/7 AC có test case, 5/7 AC đạt, 2 bug đang mở (1 High bảo mật, 1 Low giao diện) |
-| Sản phẩm + giỏ: phân tích yêu cầu | 7 AC, 35 quan sát, ma trận 6 tài khoản × 3 trang, 43 viewpoint (35 trong phạm vi), 14 câu hỏi, 8 đề xuất cải tiến, 15 bug phát hiện sớm (BUG-05 → BUG-19) + 1 biến thể BUG-02. Review tìm thêm 2 bug và 5 biến thể |
+| Sản phẩm + giỏ: phân tích yêu cầu | 7 AC, 36 quan sát, ma trận 6 tài khoản × 3 trang, 45 viewpoint (36 trong phạm vi), 14 câu hỏi, 8 đề xuất cải tiến, tổng 17 bug (BUG-05 → BUG-21) + 1 biến thể BUG-02: khám phá ban đầu thấy phần lớn, các vòng review tìm thêm BUG-20, BUG-21 và nhiều biến thể (BUG-07 chiều ghi, xóa; BUG-11 ở trang giỏ; BUG-21 mất mô tả…) |
+| Sản phẩm + giỏ: test case | 46 TC (45 duyệt ở HITL #2 + TC-046 cho BUG-21), phủ 36/36 viewpoint trong phạm vi, 7/7 AC |
+| Sản phẩm + giỏ: code test | 46 test, 4 Page Object (AppPage dùng chung + 3 màn hình), tag theo màn hình `@list` / `@detail` / `@cart`; script tái hiện độc lập riêng (`npm run repro`) |
+| Sản phẩm + giỏ: kết quả chạy | 29 Passed + 17 Failed (bug đã biết, fail đúng chỗ), 0 chập chờn (chạy lặp 92/92). Lần chạy `run-20261125-150817`: 84 giây |
+| Sản phẩm + giỏ: bug report | 17 bug: 1 Critical (sai giá), 7 High (gồm 2 bảo mật), 5 Medium, 4 Low; BUG-17 chỉ ghi nhận (hiệu năng). Tái hiện độc lập 2/2 lần cho mọi bug |
+| Sản phẩm + giỏ: RTM | 7/7 AC có test case, 0/7 AC đạt (AC nào cũng có bug), 17 bug đang mở |

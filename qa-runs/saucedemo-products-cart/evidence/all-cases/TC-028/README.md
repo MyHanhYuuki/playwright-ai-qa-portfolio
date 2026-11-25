@@ -3,7 +3,7 @@
 - **Kết quả**: ✅ Passed
 - **Nhóm**: Màn hình 3: Giỏ hàng (/cart.html)
 - **Tags**: @AC-4 @AC-6 @cart
-- **Thời điểm**: 2026-11-25T05:06:34.609Z
+- **Thời điểm**: 2026-11-25T08:12:45.248Z
 - **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-25, không quay lại vì test pass)
 
 | Bước | Thao tác | Cần xem | Ảnh |

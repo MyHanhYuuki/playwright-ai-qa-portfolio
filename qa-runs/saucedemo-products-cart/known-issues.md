@@ -2,7 +2,7 @@
 
 > Các bug và vấn đề **đã thấy trong lúc phân tích, trước khi chạy test**. Mỗi bug phải được test tương ứng bắt được (fail đúng chỗ). Bug nào không bắt được tức là test sai.
 > Bug chỉ chính thức thành **defect** sau khi chạy test và duyệt ở HITL #3 (`defects.md`).
-> **BUG-xx đánh số chung cả repo**: SD-101 đã dùng BUG-01 → BUG-04, nên ở đây là BUG-05 → BUG-20.
+> **BUG-xx đánh số chung cả repo**: SD-101 đã dùng BUG-01 → BUG-04, nên ở đây là BUG-05 → BUG-21 (BUG-21 thêm sau review-defects).
 > HITL #1 (2026-11-24) đồng ý mọi đề xuất: các bug dưới đây đều giữ, tài khoản đặc biệt phải hoạt động như `standard_user` (Q1). Cột "Viewpoint / TC phải bắt": TC do test-impl điền.
 
 ## Bug đã biết (chia theo màn hình)
@@ -12,7 +12,7 @@
 |---|---|---|---|---|---|---|
 | BUG-05 | Cả 3 | **Reset App State** xóa giỏ nhưng giao diện không cập nhật: nút vẫn `Remove` (danh sách, chi tiết), trang giỏ vẫn hiện sản phẩm, tới khi tải lại trang | O-17 | Medium (người dùng tưởng giỏ còn hàng) | TVP-019 · TC-041, kiểm **cả 3 trang**, dự kiến **FAIL** | Q4 đã chốt: là bug |
 | BUG-06 | Chi tiết + Giỏ | Số trên giỏ **không khớp** giỏ thật: trang chi tiết sản phẩm không tồn tại (`?id=99`) vẫn cho `Add to cart`, số giỏ là 1 nhưng giỏ trống. Biến thể: dữ liệu giỏ `[4,4]` hiện 2 dòng cùng sản phẩm, số giỏ đếm theo độ dài dữ liệu (O-31) | O-08, O-09, O-31 | **Medium** (HITL #3 nâng từ Low: số trên giỏ sai làm người dùng tin giỏ có hàng) | TVP-011, TVP-036 · TC-025 (5 biến thể), dự kiến **FAIL** | Q2 đã chốt: là bug |
-| BUG-07 | Danh sách + Giỏ | Giỏ hàng **không gắn với tài khoản**: người đăng nhập sau trên cùng trình duyệt **thấy** giỏ của người trước (cả 2 chiều: `standard_user` → `visual_user` và ngược lại) và **sửa được** giỏ đó: người trước đăng nhập lại thấy hàng do người sau thêm (review-test-impl-r2 A2) | O-16 | High nếu là hệ thống thật (lộ và sửa được dữ liệu trên máy dùng chung) | TVP-018 · TC-040: 3 biến thể (đọc 2 chiều, ghi), dự kiến **FAIL** | Q3 đã chốt: là bug |
+| BUG-07 | Danh sách + Giỏ | Giỏ hàng **không gắn với tài khoản**: người đăng nhập sau trên cùng trình duyệt **thấy** giỏ của người trước (cả 2 chiều: `standard_user` → `visual_user` và ngược lại) và **sửa được** giỏ đó: người trước đăng nhập lại thấy hàng do người sau thêm (review-test-impl-r2 A2), hoặc **mất** hàng người sau đã bỏ (review-defects A2) | O-16 | High nếu là hệ thống thật (lộ và sửa được dữ liệu trên máy dùng chung) | TVP-018 · TC-040: 4 biến thể (đọc 2 chiều, ghi, xóa), dự kiến **FAIL** | Q3 đã chốt: là bug |
 | BUG-10 | Danh sách + Chi tiết | `problem_user`: **Add to cart không có tác dụng** với Bolt T-Shirt, Fleece Jacket, Red T-Shirt; **Remove không có tác dụng** với Backpack, Bike Light, Onesie. Lỗi ở **danh sách và trang chi tiết**; bỏ ở trang giỏ thì được | O-20 | High (không mua được 3/6 sản phẩm) | TVP-022 · TC-018: thêm và bỏ **cả 6 sản phẩm ở cả 2 trang** (`expect.soft`), dự kiến **FAIL** | Q1 đã chốt: là bug |
 | BUG-13 | Danh sách + Chi tiết | `error_user`: Add / Remove lỗi giống BUG-10 (cùng 3 + 3 sản phẩm, **danh sách và trang chi tiết**). Lỗi JavaScript (`pageerror`, MSG-05 / MSG-06): Add → `Failed to add item to the cart.`, Remove → `Failed to remove item from cart.` | O-23 | High | TVP-022 · TC-019: cả 6 sản phẩm ở cả 2 trang, dự kiến **FAIL** | Q1 đã chốt: là bug |
 | BUG-02 (biến thể) | Chi tiết + Giỏ | Bug của SD-101: tự tạo cookie phiên là vào được **trang giỏ** và **trang chi tiết** (SD-101 TC-033 chỉ kiểm `/inventory.html`). Không cấp số mới | O-30 | High (như BUG-02) | TVP-037 · TC-045, dự kiến **FAIL**, tag `@BUG-02` | Đã duyệt ở SD-101 |
@@ -33,6 +33,7 @@
 | ID | Màn hình | Mô tả | Bằng chứng | Mức (dự kiến) | Viewpoint / TC phải bắt | Trạng thái |
 |---|---|---|---|---|---|---|
 | BUG-20 | Chi tiết | Tham số `id` sai định dạng vẫn **mở sản phẩm** thay vì báo không tìm thấy: `4abc`, `04`, `4.9`, `0x4`, ` 4` (khoảng trắng), `+4`, `4e0` mở Backpack; `-0` mở Bike Light (id được đọc như số, review-test-impl-r2 A3) | O-33 | Low (phải sửa URL tay mới gặp) | TVP-035 · TC-026 (10 giá trị), dự kiến **FAIL** | Q2 đã chốt: là bug (thêm sau HITL #1) |
+| BUG-21 | Chi tiết | `error_user`: **mỗi lần mở trang chi tiết**: **mất phần mô tả sản phẩm**, console báo `Error: This component failed to render!` (MSG-07), trang gửi 1 request báo lỗi tới `submit.backtrace.io`. Tên, giá, ảnh vẫn đúng; `standard_user` không bị. Phát hiện ở review-defects A3, phần mất mô tả ở review-final A1 | O-36 | Medium (thiếu thông tin sản phẩm, vi phạm AC-5) | TVP-045 · TC-046 (mô tả, giá, lỗi console, request báo lỗi × 6 trang), dự kiến **FAIL** | Người duyệt chốt là bug (2026-11-25): Low, sau review cuối nâng **Medium** |
 
 ### Màn hình 3: Giỏ hàng (`/cart.html`)
 | ID | Màn hình | Mô tả | Bằng chứng | Mức (dự kiến) | Viewpoint / TC phải bắt | Trạng thái |

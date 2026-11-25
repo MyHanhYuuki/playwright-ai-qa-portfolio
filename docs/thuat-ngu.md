@@ -64,6 +64,9 @@
 | **Seed test** | Test khởi đầu để AI agent mở trình duyệt ở đúng trang | `tests/seed.spec.ts` |
 | **Tag** | Nhãn để lọc test | `@smoke`, `@AC-1` |
 | **Codegen** | Thao tác tay trên web, Playwright tự ghi thành code | `npx playwright codegen` |
+| **`expect.soft`** | Kiểm tra "mềm": sai thì ghi lỗi nhưng test **chạy tiếp**, để một biến thể sai không che các biến thể sau | TC-040 kiểm 4 biến thể của BUG-07 trong một test |
+| **`test.fail()`** | Đánh dấu test của **bug đã biết**: test fail thì CI vẫn xanh, bug được sửa thì test báo để bỏ đánh dấu. Cẩn thận: mọi lỗi (kể cả lỗi code test) đều bị coi là "fail như dự kiến" | 17 test bug của SD-102 |
+| **`pageerror`** | Lỗi JavaScript **không được bắt** trên trang. Playwright nghe bằng `page.on('pageerror')`, khác với thông báo console (`page.on('console')`). DevTools hiện cả hai ở tab Console | BUG-13: `Failed to add item to the cart.` |
 
 ## AI agent
 | Thuật ngữ | Nghĩa | Ví dụ |

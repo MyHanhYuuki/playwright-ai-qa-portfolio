@@ -16,13 +16,13 @@ TVP-014,flow,"Continue Shopping về danh sách, Checkout sang bước thanh to�
 TVP-015,functional,Giỏ trống: không cho bấm Checkout sang bước thanh toán,medium,AC-6,in,O-13;Q5;BUG-19,Giỏ
 TVP-016,flow,"Giỏ giữ nguyên khi tải lại trang, chuyển trang, mở tab mới",high,AC-7,in,O-14,Cả 3
 TVP-017,flow,Giỏ giữ nguyên sau khi đăng xuất rồi đăng nhập lại cùng tài khoản,medium,AC-7,in,O-15,Cả 3
-TVP-018,non-functional,Bảo mật và toàn vẹn: giỏ của tài khoản này không hiện cho tài khoản khác (cả 2 chiều) và không bị tài khoản khác sửa trên cùng trình duyệt (yêu cầu bổ sung từ Q3),high,AC-7,in,O-16;Q3,Cả 3
+TVP-018,non-functional,Bảo mật và toàn vẹn: giỏ của tài khoản này không hiện cho tài khoản khác (cả 2 chiều) và không bị tài khoản khác sửa hay xóa trên cùng trình duyệt (yêu cầu bổ sung từ Q3),high,AC-7,in,O-16;Q3,Cả 3
 TVP-019,flow,"Reset App State: giỏ trống và mọi nút về Add to cart ngay lập tức ở danh sách, chi tiết, giỏ",medium,AC-3;AC-4;AC-7,in,O-17;Q4,Cả 3
 TVP-020,data,"Ảnh sản phẩm đúng với mọi tài khoản đăng nhập được (problem_user, visual_user…)",medium,AC-1,in,O-18;O-25;Q1,Danh sách
 TVP-021,data,problem_user và error_user: sắp xếp hoạt động giống standard_user (test-impl tách TC theo tài khoản),high,AC-2,in,O-19;O-22;Q1,Danh sách
 TVP-022,data,problem_user và error_user: thêm và bỏ được cả 6 sản phẩm ở danh sách và trang chi tiết (tách TC theo tài khoản),high,AC-3;AC-4;AC-5,in,O-20;O-23;Q1,Danh sách;Chi tiết
 TVP-023,data,"problem_user: bấm tên hoặc ảnh ở danh sách, bấm tên ở trang giỏ: mở đúng trang chi tiết",high,AC-5,in,O-21;Q1,Danh sách;Chi tiết;Giỏ
-TVP-024,data,"visual_user: giá ở danh sách đúng và khớp với trang chi tiết, giỏ",high,AC-1,in,O-24;Q1,Danh sách;Chi tiết;Giỏ
+TVP-024,data,"visual_user: giá ở danh sách đúng và khớp với trang chi tiết, giỏ",high,AC-1;AC-5,in,O-24;Q1,Danh sách;Chi tiết;Giỏ
 TVP-025,non-functional,"visual_user: bố cục giống standard_user (biểu tượng giỏ, biểu tượng menu ở cả 3 màn hình; nút Add ở danh sách; nút Checkout ở trang giỏ)",low,AC-1;AC-3;AC-6,in,O-25;O-29;Q1;Q11,Cả 3
 TVP-026,data,"performance_glitch_user: sắp xếp, thêm giỏ, mở chi tiết, mở giỏ đều thành công (không đánh fail theo thời gian)",medium,AC-1;AC-2;AC-3;AC-5;AC-6,in,O-26;Q1;Q10,Cả 3
 TVP-027,flow,Menu All Items từ trang chi tiết và trang giỏ về danh sách,low,AC-5;AC-6,in,O-27,Chi tiết;Giỏ
@@ -43,3 +43,4 @@ TVP-041,flow,Đăng xuất ở trang giỏ hoặc trang chi tiết rồi bấm B
 TVP-042,flow,Sắp xếp khi giỏ đang có hàng: nút Remove đi theo đúng sản phẩm,medium,AC-2;AC-3,in,O-34;review B3,Danh sách
 TVP-043,flow,"Hai tab mở cùng lúc: thay đổi giỏ ở tab này, tab kia thấy đúng sau khi chuyển trang hoặc tải lại",low,AC-7,in,review B3,Cả 3
 TVP-044,data,Dữ liệu giỏ trong trình duyệt bị hỏng (không phải JSON): trang vẫn dùng được,low,AC-3;AC-6,out,O-32;Q14;IMP-07,Cả 3
+TVP-045,non-functional,"Tài khoản đặc biệt: trang chi tiết hiển thị đủ tên, mô tả, giá như standard_user; mở trang không sinh lỗi JavaScript / console, không gửi báo lỗi ra ngoài",medium,AC-5,in,O-36;review-defects A3,Chi tiết

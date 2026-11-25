@@ -3,7 +3,7 @@
 - **Kết quả**: ✅ Passed
 - **Nhóm**: Chung: nhiều màn hình (tài khoản, giỏ, menu, kiểm soát truy cập)
 - **Tags**: @AC-7 @list @detail @cart @smoke
-- **Thời điểm**: 2026-11-25T05:07:01.301Z
+- **Thời điểm**: 2026-11-25T08:13:09.460Z
 - **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-25, không quay lại vì test pass)
 
 | Bước | Thao tác | Cần xem | Ảnh |

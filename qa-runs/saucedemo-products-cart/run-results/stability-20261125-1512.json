@@ -1,12 +1,12 @@
 {
-  "id": "stability-20261125-1206",
-  "command": "npx playwright test tests/specs/saucedemo-products-cart.spec.ts --repeat-each=2 --retries=0",
+  "id": "stability-20261125-1512",
+  "command": "npm run test:stability -- saucedemo-products-cart 2",
   "stats": {
-    "expected": 90,
+    "expected": 92,
     "unexpected": 0,
     "flaky": 0,
     "skipped": 0,
-    "duration_ms": 125679
+    "duration_ms": 163380
   },
   "not_expected": [],
   "per_test": {
@@ -95,6 +95,10 @@
       "expected"
     ],
     "TC-025": [
+      "expected",
+      "expected"
+    ],
+    "TC-046": [
       "expected",
       "expected"
     ],

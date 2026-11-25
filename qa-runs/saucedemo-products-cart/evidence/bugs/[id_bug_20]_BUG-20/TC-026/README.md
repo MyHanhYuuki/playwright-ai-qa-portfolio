@@ -3,7 +3,7 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-20
 - **Nhóm**: Màn hình 2: Chi tiết sản phẩm (/inventory-item.html?id=<n>)
 - **Tags**: @AC-5 @detail @BUG-20
-- **Thời điểm**: 2026-11-25T05:06:57.033Z
+- **Thời điểm**: 2026-11-25T08:13:05.258Z
 - **Video**: [video.webm](video.webm)
 
 | Bước | Thao tác | Cần xem | Ảnh |

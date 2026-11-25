@@ -3,7 +3,7 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-08
 - **Nhóm**: Màn hình 1: Danh sách sản phẩm (/inventory.html)
 - **Tags**: @AC-1 @list @BUG-08
-- **Thời điểm**: 2026-11-25T05:06:39.785Z
+- **Thời điểm**: 2026-11-25T08:12:51.390Z
 - **Video**: [video.webm](video.webm)
 
 | Bước | Thao tác | Cần xem | Ảnh |

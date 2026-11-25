@@ -18,9 +18,9 @@ Người dùng đã đăng nhập xem danh sách 6 sản phẩm, sắp xếp, m�
 ## Business Rules (rút ra từ requirement)
 - BR-1: Có 6 sản phẩm, id 0 → 5. Trang chi tiết đọc id từ URL `?id=<n>` (suy ra từ AC-5 và quan sát O-06).
 
-**Hành vi hiện tại, chưa phải quy tắc** (chờ trả lời, không dùng làm expected):
-- Giỏ lưu ở `localStorage` khóa `cart-contents` (mảng id theo thứ tự thêm), **không gắn với tài khoản** (O-14, O-16). Chờ Q3.
-- Mỗi sản phẩm chỉ thêm được 1 lần qua giao diện, số lượng hiện là 1. Sửa tay dữ liệu thì có thể ra 2 dòng cùng sản phẩm (O-31). Chờ Q2.
+**Hành vi hiện tại, chưa phải quy tắc** (lúc phân tích; nay đã có trả lời, xem dòng cuối mỗi ý):
+- Giỏ lưu ở `localStorage` khóa `cart-contents` (mảng id theo thứ tự thêm), **không gắn với tài khoản** (O-14, O-16). Q3 đã trả lời: giỏ theo tài khoản, hiện trạng là bug (BUG-07).
+- Mỗi sản phẩm chỉ thêm được 1 lần qua giao diện, số lượng hiện là 1. Sửa tay dữ liệu thì có thể ra 2 dòng cùng sản phẩm (O-31). Q2 đã trả lời (bổ sung 2026-11-25): dữ liệu trùng bị bỏ qua, mỗi sản phẩm tối đa 1 (BUG-06).
 
 ## Quan sát thực tế (khám phá web ngày 2026-11-24, Chromium, mỗi tình huống một phiên trình duyệt sạch)
 Cột **Màn hình**: Danh sách = `/inventory.html` · Chi tiết = `/inventory-item.html?id=<n>` · Giỏ = `/cart.html` · Cả 3 = mọi màn hình của chức năng.
@@ -42,7 +42,7 @@ Cột **Màn hình**: Danh sách = `/inventory.html` · Chi tiết = `/inventory
 | O-13 | Giỏ | Giỏ trống, mở giỏ, bấm Checkout | Không có thông báo "giỏ trống". Nút Checkout bấm được, sang `/checkout-step-one.html` | (Q5, BUG-19) |
 | O-14 | Cả 3 | Có hàng trong giỏ: tải lại trang, mở tab mới | Giỏ giữ nguyên | ✅ |
 | O-15 | Cả 3 | Đăng xuất rồi đăng nhập lại **cùng** tài khoản | Giỏ còn nguyên | ✅ |
-| O-16 | Cả 3 | `standard_user` thêm 2 sản phẩm, đăng xuất, **`visual_user`** đăng nhập trên cùng trình duyệt | `visual_user` thấy giỏ **2 sản phẩm của người trước**. Chiều ngược (`visual_user` trước) cũng vậy. `visual_user` thêm Onesie rồi đăng xuất, `standard_user` đăng nhập lại thấy cả Onesie: **người sau sửa được giỏ người trước** (review-test-impl-r2 A2, kiểm lại 2026-11-25) | 🔴 Lộ và sửa được giỏ của tài khoản khác (Q3, BUG-07) |
+| O-16 | Cả 3 | `standard_user` thêm 2 sản phẩm, đăng xuất, **`visual_user`** đăng nhập trên cùng trình duyệt | `visual_user` thấy giỏ **2 sản phẩm của người trước**. Chiều ngược (`visual_user` trước) cũng vậy. `visual_user` thêm Onesie rồi đăng xuất, `standard_user` đăng nhập lại thấy cả Onesie: **người sau sửa được giỏ người trước** (review-test-impl-r2 A2, kiểm lại 2026-11-25); `visual_user` bỏ Backpack thì `standard_user` đăng nhập lại **mất** Backpack (review-defects A2) | 🔴 Lộ và sửa được giỏ của tài khoản khác (Q3, BUG-07) |
 | O-17 | Cả 3 | Menu → `Reset App State` ở danh sách, chi tiết, giỏ | Số giỏ và `localStorage` bị xóa, **nhưng** nút vẫn là `Remove` (danh sách, chi tiết) và trang giỏ **vẫn hiện sản phẩm**. Tải lại trang mới đúng | 🔴 Giao diện không cập nhật (Q4, BUG-05) |
 | O-18 | Danh sách | `problem_user`: xem danh sách | **Cả 6 ảnh** là cùng một ảnh lỗi `sl-404` | 🔴 (Q1, BUG-08) |
 | O-19 | Danh sách | `problem_user`: chọn 4 kiểu sắp xếp | Danh sách **không đổi**, dropdown vẫn `Name (A to Z)`, không báo lỗi | 🔴 (Q1, BUG-09) |
@@ -62,6 +62,7 @@ Cột **Màn hình**: Danh sách = `/inventory.html` · Chi tiết = `/inventory
 | O-33 | Chi tiết | Mở `?id=04`, `?id=4abc`, `?id=4.9`, `?id=0x4`, `?id=%204`, `?id=%2B4`, `?id=4e0`, `?id=-0` | 7 giá trị đầu mở Backpack, `-0` mở Bike Light (id được đọc như số; 4 giá trị sau thêm từ review-test-impl-r2 A3) | 🔴 (Q2 đã chốt: id sai định dạng phải báo không tìm thấy, BUG-20). Review A6 |
 | O-34 | Cả 3 | Trang giỏ của 4 tài khoản đặc biệt; Remove rồi Back / Forward; đăng xuất ở trang giỏ rồi Back; sắp xếp khi giỏ có hàng; Enter trên tên sản phẩm | **Không thấy lỗi**: giỏ liệt kê, giá, Remove, Continue Shopping, Checkout đúng; Back / Forward giữ đúng trạng thái giỏ; đăng xuất rồi Back bị chặn; nút `Remove` đi theo đúng sản phẩm khi sắp xếp; Enter mở chi tiết | ✅ Dùng làm test dương tính, phát hiện hồi quy. Review A7 |
 | O-35 | Danh sách | Liên kết tên và ảnh sản phẩm | Có `href="#"`: không mở được trong tab mới, không chia sẻ được link | (IMP-08). Review B6 |
+| O-36 | Chi tiết | `error_user`: mở trang chi tiết bất kỳ, so với `standard_user`, xem console và request mạng | **Mất phần mô tả sản phẩm**; console `Error: This component failed to render!`; 1 request tới `submit.backtrace.io`. Tên, giá, ảnh đúng. Danh sách, giỏ và `standard_user` không bị. Review-defects A3 (lỗi console), review-final A1 (mất mô tả), kiểm lại 2/2 lần | 🔴 Vi phạm AC-5 (BUG-21, Medium) |
 
 > **Lưu ý từ lần khám phá:** lần chạy đầu có 6 tình huống lỗi do **script khám phá** (đọc trang trước khi chuyển trang xong, vòng lặp bấm theo danh sách đã thay đổi). Reviewer cũng gặp kết quả giả khi bấm Back trước khi trang chi tiết vẽ xong. Quy tắc: sau mỗi lần chuyển trang phải chờ **phần tử riêng của trang đích**, không chỉ chờ URL; quan sát lạ phải chạy lại ≥2 lần.
 
@@ -72,7 +73,7 @@ Kết quả khám phá + review (✅ đúng như `standard_user` · ❌ lỗi ·
 |---|---|---|---|---|---|---|---|---|---|
 | `standard_user` | ✅ | ✅ | ✅ | ✅ / ✅ | ✅ / ✅ | ✅ | ✅ | ✅ | ✅ |
 | `problem_user` | ❌ BUG-08 | ✅ | ❌ BUG-09 | ❌ 3 SP / ❌ 3 SP (BUG-10) | ❌ 3 SP / ❌ 3 SP (BUG-10) | ❌ BUG-11 | ❌ BUG-11 | ✅ | ✅ |
-| `error_user` | ✅ | ✅ | ❌ BUG-12 | ❌ 3 SP / ❌ 3 SP (BUG-13) | ❌ 3 SP / ❌ 3 SP (BUG-13) | ✅ | ✅ | ✅ | ✅ |
+| `error_user` | ✅ | ✅ | ❌ BUG-12 | ❌ 3 SP / ❌ 3 SP (BUG-13) | ❌ 3 SP / ❌ 3 SP (BUG-13) | ⚠️ mở đúng sản phẩm, nhưng **mất mô tả** (BUG-21) | ✅ | ✅ | ✅ |
 | `visual_user` | ❌ 1 SP (BUG-15) | ❌ BUG-14 | ✅ (sắp theo giá thật; giá hiển thị sai là BUG-14) | ✅ / ✅ | ✅ / ✅ | ✅ | ✅ | ✅ | ❌ BUG-16, BUG-18 |
 | `performance_glitch_user` | ✅ | ✅ | ✅ chậm ~5 giây (BUG-17) | ✅ / ✅ | ✅ / ✅ | ✅ | ✅ | ✅ | ✅ |
 | `locked_out_user` | – | – | – | – | – | – | – | – | – (không đăng nhập được, SD-101) |
@@ -98,4 +99,4 @@ Kết quả khám phá + review (✅ đúng như `standard_user` · ❌ lỗi ·
 | Kiểm soát truy cập? | ⚠️ | Chưa đăng nhập: đã có ở SD-101. Phiên giả mạo vào trang giỏ, chi tiết: vào được (O-30) |
 | Có câu hỏi blocking? | ✅ | 14 câu (6 blocking, 8 non-blocking): xem [`q-and-a.md`](q-and-a.md). Đã chốt hết ở HITL #1 (Q1–Q14, Open 0) |
 
-**Bug phát hiện sớm**: xem [`known-issues.md`](known-issues.md) (BUG-05 → BUG-20, kèm biến thể của BUG-02).
+**Bug phát hiện sớm**: xem [`known-issues.md`](known-issues.md) (BUG-05 → BUG-21, kèm biến thể của BUG-02; BUG-21 thêm sau review).

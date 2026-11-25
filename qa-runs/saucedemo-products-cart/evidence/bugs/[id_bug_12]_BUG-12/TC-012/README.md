@@ -3,7 +3,7 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-12
 - **Nhóm**: Màn hình 1: Danh sách sản phẩm (/inventory.html)
 - **Tags**: @AC-2 @list @BUG-12
-- **Thời điểm**: 2026-11-25T05:06:41.794Z
+- **Thời điểm**: 2026-11-25T08:12:52.044Z
 - **Video**: [video.webm](video.webm)
 
 | Bước | Thao tác | Cần xem | Ảnh |

@@ -3,7 +3,7 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-05
 - **Nhóm**: Chung: nhiều màn hình (tài khoản, giỏ, menu, kiểm soát truy cập)
 - **Tags**: @AC-3 @AC-4 @AC-7 @list @detail @cart @BUG-05
-- **Thời điểm**: 2026-11-25T05:07:18.679Z
+- **Thời điểm**: 2026-11-25T08:13:26.038Z
 - **Video**: [video.webm](video.webm)
 
 | Bước | Thao tác | Cần xem | Ảnh |

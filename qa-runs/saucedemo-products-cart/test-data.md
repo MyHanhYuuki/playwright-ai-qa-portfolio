@@ -8,7 +8,7 @@
 |---|---|---|---|
 | TD-01 | User chuẩn | `standard_user` + mật khẩu hợp lệ | Hầu hết TC; TC-035, TC-036, TC-040 làm mốc so sánh |
 | TD-02 | `problem_user` | + mật khẩu hợp lệ | TC-004, 011, 018, 024, 031 |
-| TD-03 | `error_user` | + mật khẩu hợp lệ | TC-012, 019, 032 |
+| TD-03 | `error_user` | + mật khẩu hợp lệ | TC-012, 019, 032, 046 |
 | TD-04 | `visual_user` | + mật khẩu hợp lệ | TC-005, 013, 033, 035, 036, 040 |
 | TD-05 | `performance_glitch_user` | + mật khẩu hợp lệ | TC-034 |
 | TD-06 | Danh mục sản phẩm chuẩn (lấy từ `standard_user`, O-01) | 6 sản phẩm: id, tên, giá, mô tả, khóa ảnh (xem bảng dưới; mô tả đầy đủ trong `tests/data/products.ts`) | Mọi TC kiểm tên, giá, ảnh, thứ tự |
@@ -38,3 +38,4 @@ Thứ tự đúng của 4 kiểu sắp xếp tính từ bảng này (cùng giá 
 | MSG-04 | `Checkout: Your Information` (tiêu đề bước thanh toán đầu tiên, đích của nút Checkout; trong code: `MSG_SHOP.checkoutTitle`) |
 | MSG-05 | `Failed to add item to the cart.` (lỗi JavaScript không được bắt khi `error_user` bấm Add mà không có tác dụng; bắt bằng `page.on('pageerror')`, **không** phải console; DevTools vẫn in ở tab Console) |
 | MSG-06 | `Failed to remove item from cart.` (như MSG-05, khi bấm Remove không có tác dụng) |
+| MSG-07 | `Error: This component failed to render!` (console error của `error_user` mỗi lần mở trang chi tiết, kèm mất mô tả sản phẩm và 1 request tới `submit.backtrace.io`; bằng chứng BUG-21) |

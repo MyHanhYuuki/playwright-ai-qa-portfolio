@@ -3,7 +3,7 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-19
 - **Nhóm**: Màn hình 3: Giỏ hàng (/cart.html)
 - **Tags**: @AC-6 @cart @BUG-19
-- **Thời điểm**: 2026-11-25T05:06:41.277Z
+- **Thời điểm**: 2026-11-25T08:12:52.895Z
 - **Video**: [video.webm](video.webm)
 
 | Bước | Thao tác | Cần xem | Ảnh |
