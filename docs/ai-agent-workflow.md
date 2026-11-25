@@ -148,8 +148,8 @@ Bài 4  Viết code test (script-gen) ............... ✍️ Page Object Model, 
 Bài 5  Chạy test & phân loại (executor) .......... ▶️ báo cáo, trace, flaky
 Bài 6  Sửa test hỏng (healer) .................... 🩺 debug, giới hạn vòng sửa
 Bài 7  Bug report + RTM + HITL #3 ................ 🐞 problem_user của SauceDemo
-Bài 8  Pipeline: Sản phẩm + Chi tiết + Giỏ hàng .. 🎯 /qa-orchestrator saucedemo-products-cart
-Bài 9  Pipeline: Giỏ hàng → Thanh toán (E2E) ..... 🛒 /qa-orchestrator saucedemo-checkout
+Bài 8  Pipeline: Sản phẩm + Chi tiết + Giỏ hàng .. 🎯 /qa-orchestrator saucedemo-products-cart-screen
+Bài 9  Pipeline: Giỏ hàng → Thanh toán (E2E) ..... 🛒 /qa-orchestrator saucedemo-checkout-screen
 Bài 10 Test API (Restful Booker) ................. 🔗
 Bài 11 CI GitHub Actions + hoàn thiện README ..... ⚙️
 ```

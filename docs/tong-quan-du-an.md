@@ -66,8 +66,8 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | 5 | Chạy test và phân loại lỗi | triage.md, báo cáo HTML | ✅ |
 | 6 | Sửa test hỏng (healer) | healing-log.md | ⏭ Lần này không có script-issue |
 | 7 | Bug report + RTM | defects.md, rtm.md / rtm-report.html (`npm run rtm`) | ✅ |
-| 8 | Sản phẩm + Chi tiết + Giỏ hàng (cả pipeline) | `qa-runs/saucedemo-products-cart/`: 46 TC, 17 bug, RTM, evidence chia theo màn hình | ✅ Xong (review cuối đã xử lý) |
-| 9 | Giỏ hàng → Thanh toán → Hoàn tất (cả pipeline, E2E mua hàng) | `qa-runs/saucedemo-checkout/` | ⏳ |
+| 8 | Sản phẩm + Chi tiết + Giỏ hàng (cả pipeline) | `qa-runs/saucedemo-products-cart-screen/`: 46 TC, 17 bug, RTM, evidence chia theo màn hình | ✅ Xong (review cuối đã xử lý) |
+| 9 | Giỏ hàng → Thanh toán → Hoàn tất (cả pipeline, E2E mua hàng) | `qa-runs/saucedemo-checkout-screen/` | ⏳ |
 | 10 | Test API: Restful Booker | `tests/api` | ⏳ |
 | 11 | Hoàn thiện CI, README, tổng kết | Báo cáo tổng kết | ⏳ |
 

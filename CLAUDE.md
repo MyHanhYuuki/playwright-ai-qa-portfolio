@@ -25,7 +25,7 @@ Thêm `-g "TC-001|TC-004"` để chạy một nhóm test. Mọi lệnh có `<fea
 
 ## Bắt đầu chức năng mới (màn hình mới)
 Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `reviews/review-final.md`).
-1. Đặt tên `<feature>` theo màn hình, vd `saucedemo-checkout` (tên dùng cho Bài 9). **Tên này dùng chung** cho thư mục `qa-runs/<feature>/` và file `tests/specs/<feature>.spec.ts` (evidence lấy thư mục theo tên spec).
+1. Đặt tên `<feature>` theo màn hình, **kết thúc bằng `-screen`**, vd `saucedemo-login-screen`, `saucedemo-products-cart-screen`, `saucedemo-checkout-screen` (Bài 9). **Tên này dùng chung** cho thư mục `qa-runs/<feature>/` và file `tests/specs/<feature>.spec.ts` (evidence lấy thư mục theo tên spec).
 2. Tạo `qa-runs/<feature>/requirement/requirement.md` theo mẫu SD-101. AC **phải** viết dạng `- **AC-n**: …` (RTM đọc theo dạng này).
 3. Chạy `/qa-orchestrator <feature>`, đi qua từng bước và 3 điểm HITL.
 4. Đánh số:

@@ -11,7 +11,7 @@ export const MSG = {
 } as const;
 
 /**
- * SD-102 (products list, detail, cart): qa-runs/saucedemo-products-cart/test-data.md.
+ * SD-102 (products list, detail, cart): qa-runs/saucedemo-products-cart-screen/test-data.md.
  * MSG-02 of SD-102 is MSG.notLoggedIn above (same text).
  */
 export const MSG_SHOP = {

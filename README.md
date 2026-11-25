@@ -49,8 +49,8 @@ npm run test:ui              # interactive UI mode
 npm run test:run -- saucedemo-login-screen       # run one feature, save results to qa-runs/<feature>/run-results/
 npm run test:evidence -- saucedemo-login-screen  # screenshots (red boxes + notes) + video per test case
 npm run rtm -- saucedemo-login-screen            # build the traceability matrix (rtm.md + rtm-report.html)
-npm run test:stability -- saucedemo-products-cart  # run a feature N times (default 2), save a stability summary
-npm run repro -- saucedemo-products-cart         # independent bug reproduction (tests/repro/) → evidence/bugs/*/manual/
+npm run test:stability -- saucedemo-products-cart-screen  # run a feature N times (default 2), save a stability summary
+npm run repro -- saucedemo-products-cart-screen         # independent bug reproduction (tests/repro/) → evidence/bugs/*/manual/
 npm run typecheck            # TypeScript type check (Playwright does not type-check)
 npm run report               # open HTML report
 ```
@@ -86,7 +86,7 @@ Step-by-step notes written while building this project with an AI agent:
 - [x] Project setup (Playwright 1.65, Chromium, Playwright MCP)
 - [x] AI agent QA pipeline (6 agents incl. bug-reporter + reviewer + orchestrator + 3 HITL)
 - [x] SauceDemo Login: full pipeline run ([bug reports](qa-runs/saucedemo-login-screen/defects.md) · [RTM](qa-runs/saucedemo-login-screen/rtm.md))
-- [x] SauceDemo Products + Product detail + Cart: 46 TC, 17 bugs ([bug reports](qa-runs/saucedemo-products-cart/defects.md) · [RTM](qa-runs/saucedemo-products-cart/rtm.md))
+- [x] SauceDemo Products + Product detail + Cart: 46 TC, 17 bugs ([bug reports](qa-runs/saucedemo-products-cart-screen/defects.md) · [RTM](qa-runs/saucedemo-products-cart-screen/rtm.md))
 - [ ] SauceDemo Cart → Checkout (E2E)
 - [x] Bug reports for the special accounts (problem_user, error_user, visual_user…)
 - [ ] API tests (Restful Booker)

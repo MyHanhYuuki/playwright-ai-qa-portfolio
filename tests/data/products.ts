@@ -1,6 +1,6 @@
 /**
  * Product catalogue of SauceDemo = expected data (taken from standard_user, O-01 in
- * qa-runs/saucedemo-products-cart/spec-review.md). Tests compare the page with THIS data,
+ * qa-runs/saucedemo-products-cart-screen/spec-review.md). Tests compare the page with THIS data,
  * never the page with itself.
  *
  * - id:     value of ?id= on the detail page

@@ -1,6 +1,6 @@
 # Bài 8: Test một tính năng nhiều màn hình (danh sách, chi tiết, giỏ hàng)
 
-> Chạy **trọn pipeline** cho ticket SD-102 trên 3 màn hình. Kết quả: [`qa-runs/saucedemo-products-cart/`](../../qa-runs/saucedemo-products-cart/) · [`defects.md`](../../qa-runs/saucedemo-products-cart/defects.md) (17 bug) · [`rtm.md`](../../qa-runs/saucedemo-products-cart/rtm.md) · review: [`reviews/`](../../qa-runs/saucedemo-products-cart/reviews/)
+> Chạy **trọn pipeline** cho ticket SD-102 trên 3 màn hình. Kết quả: [`qa-runs/saucedemo-products-cart-screen/`](../../qa-runs/saucedemo-products-cart-screen/) · [`defects.md`](../../qa-runs/saucedemo-products-cart-screen/defects.md) (17 bug) · [`rtm.md`](../../qa-runs/saucedemo-products-cart-screen/rtm.md) · review: [`reviews/`](../../qa-runs/saucedemo-products-cart-screen/reviews/)
 
 ## 🎯 Tại sao học
 - Tính năng thật hiếm khi nằm trên **một** màn hình. Giỏ hàng có mặt ở danh sách, chi tiết, trang giỏ; một lỗi ở chỗ này hay kéo theo chỗ khác.
@@ -60,8 +60,8 @@ Test bug đã biết được đánh dấu `test.fail()`. Playwright coi **mọi
 Không tự đóng. Quay lại trao đổi với reviewer, hai bên chốt có bằng chứng, rồi báo người duyệt: khác ở đâu, chốt gì, phương án đề xuất. Ví dụ B5: mình chỉ nghe `console` nên "không tái hiện được"; reviewer kiểm lại 3 lần: lỗi có thật, là `pageerror`.
 
 ## 👉 Bạn tự làm
-1. Mở [`spec-review.md`](../../qa-runs/saucedemo-products-cart/spec-review.md), tìm ma trận. Tự tìm thêm **1 cột thao tác** chưa có (gợi ý: menu, nút Back của trình duyệt) và thử với `problem_user`.
-2. Chọn 1 bug trong [`defects.md`](../../qa-runs/saucedemo-products-cart/defects.md), làm lại đúng các bước trên cửa sổ ẩn danh. Có làm được trong 2 phút không? Bước nào khó hiểu?
+1. Mở [`spec-review.md`](../../qa-runs/saucedemo-products-cart-screen/spec-review.md), tìm ma trận. Tự tìm thêm **1 cột thao tác** chưa có (gợi ý: menu, nút Back của trình duyệt) và thử với `problem_user`.
+2. Chọn 1 bug trong [`defects.md`](../../qa-runs/saucedemo-products-cart-screen/defects.md), làm lại đúng các bước trên cửa sổ ẩn danh. Có làm được trong 2 phút không? Bước nào khó hiểu?
 3. Mở TC-022 trong spec, xóa dòng chờ `inventory-list` trong `backToProducts()`, chạy lại 10 lần với `--repeat-each=10`: test có còn kiểm đúng trang không?
 
 ## ⚠️ Lỗi hay gặp

@@ -6,7 +6,7 @@
 export const BUG_TICKETS: Record<string, string> = {
   'BUG-01': '[id_bug_1]',
   'BUG-02': '[id_bug_2]',
-  // SD-102 products + cart (qa-runs/saucedemo-products-cart/known-issues.md)
+  // SD-102 products + cart (qa-runs/saucedemo-products-cart-screen/known-issues.md)
   'BUG-05': '[id_bug_5]',
   'BUG-06': '[id_bug_6]',
   'BUG-07': '[id_bug_7]',
