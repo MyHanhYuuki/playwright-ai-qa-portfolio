@@ -77,12 +77,14 @@ Phân vùng test theo 4 trục:
 - **flow**: hành trình end-to-end, chuyển trạng thái
 - **non-functional**: hiệu năng, bảo mật, accessibility (chỉ khi có AC cụ thể)
 
-Format `viewpoint.csv`:
+Format `viewpoint.csv` (8 cột, đúng như file thật; RTM đọc `scope` để báo viewpoint trong phạm vi mà chưa có TC):
 ```
-viewpoint_id,axis,description,priority,linked_ac
-TVP-001,functional,"Happy path: user [action] thành công",high,AC-1
-TVP-002,data,"Invalid: [field] để trống",high,AC-3
+viewpoint_id,axis,description,priority,linked_ac,scope,source,screen
+TVP-001,functional,"Happy path: user [action] thành công",high,AC-1,in,O-01,Danh sách
+TVP-002,data,"Invalid: [field] để trống",high,AC-3,in,O-03;Q2,Chi tiết
+TVP-003,non-functional,"[ngoài phạm vi lần này]",low,-,out,Q9,Cả 3
 ```
+- `scope`: `in` | `out` (ngoài phạm vi thì `source` ghi câu hỏi / quyết định). `source`: quan sát O-xx, câu hỏi Qn, review. `screen`: màn hình (feature nhiều màn hình; nhiều màn hình ghi `Danh sách + Giỏ`, `Danh sách → Chi tiết`, hoặc `Cả 3`).
 Mỗi AC phải có ít nhất 1 viewpoint. Happy path và bảo mật ưu tiên `high`.
 Feature có trang bên trong thì **luôn có dòng kiểm soát truy cập** (chưa đăng nhập, phiên giả mạo): `scope=in`, hoặc `scope=out` kèm nguồn là TC đã có ở feature khác. Viewpoint ngoài phạm vi không gắn AC thì để `linked_ac` là `-`.
 

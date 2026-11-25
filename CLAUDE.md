@@ -4,7 +4,7 @@ Dự án portfolio học test automation bằng **Playwright + TypeScript** vớ
 Đọc trước: [docs/tong-quan-du-an.md](docs/tong-quan-du-an.md) (mục đích, phạm vi, tiến độ) · [docs/ai-agent-workflow.md](docs/ai-agent-workflow.md) (pipeline).
 
 ## Cấu trúc
-- `.claude/agents/`: 5 agent (test-design, test-impl, script-gen, executor, healer) + `qa-reviewer` (soát sau mỗi bước). `.claude/commands/qa-orchestrator.md`: điều phối.
+- `.claude/agents/`: 6 agent (test-design, test-impl, script-gen, executor, healer, bug-reporter) + `qa-reviewer` (soát sau mỗi bước). `.claude/commands/qa-orchestrator.md`: điều phối.
 - `qa-runs/<feature>/`: tài liệu QA từng chức năng (requirement → spec-review → viewpoint → test case → triage → defects → RTM). Mọi file review của qa-reviewer nằm chung trong `qa-runs/<feature>/reviews/`.
 - `tests/`: `pages/` (Page Object), `specs/`, `data/`, `fixtures/`, `seed.spec.ts` (seed cho Playwright MCP + smoke check).
 - `docs/learning/NN-*.md`: ghi chú từng bài học. `docs/ai-log.md`: nhật ký dùng AI. `docs/thuat-ngu.md`: thuật ngữ.
@@ -19,20 +19,21 @@ npm run test:evidence -- <feature>  # chạy kèm evidence: ảnh khoanh đỏ +
 npm run rtm -- <feature>            # tạo RTM (rtm.md + rtm-report.html) của feature
 npm run report         # mở báo cáo HTML
 npm run typecheck      # kiểm tra kiểu TypeScript (Playwright không tự kiểm)
+npm run repro          # tái hiện độc lập các bug (tests/repro/*.repro.ts) → evidence/bugs/*/manual/
 ```
 Thêm `-g "TC-001|TC-004"` để chạy một nhóm test. Mọi lệnh có `<feature>` chỉ đụng tới feature đó.
 
 ## Bắt đầu chức năng mới (màn hình mới)
 Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `reviews/review-final.md`).
-1. Đặt tên `<feature>` theo màn hình, vd `saucedemo-cart-checkout`. **Tên này dùng chung** cho thư mục `qa-runs/<feature>/` và file `tests/specs/<feature>.spec.ts` (evidence lấy thư mục theo tên spec).
+1. Đặt tên `<feature>` theo màn hình, vd `saucedemo-checkout` (tên dùng cho Bài 9). **Tên này dùng chung** cho thư mục `qa-runs/<feature>/` và file `tests/specs/<feature>.spec.ts` (evidence lấy thư mục theo tên spec).
 2. Tạo `qa-runs/<feature>/requirement/requirement.md` theo mẫu SD-101. AC **phải** viết dạng `- **AC-n**: …` (RTM đọc theo dạng này).
 3. Chạy `/qa-orchestrator <feature>`, đi qua từng bước và 3 điểm HITL.
 4. Đánh số:
    - `TC-xxx`, `TVP-xxx`, `Qn`, `O-xx`, `IMP-xx`: **riêng từng feature**, bắt đầu từ 001 / 1.
-   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, feature sau bắt đầu từ BUG-05).
+   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, sản phẩm + giỏ BUG-05 → BUG-21, feature sau bắt đầu từ **BUG-22**).
 5. Bug đã biết: ghi `BUG-xx` vào **câu đầu** cột `notes` của TC, vd `Bug đã biết BUG-08 (O-18): dự kiến FAIL. …` (RTM chỉ đọc câu đầu; nhắc BUG id ở câu sau chỉ là tham khảo), thêm vào `tests/data/bugs.ts`, test dùng `test.fail()` + tag `@BUG-xx`.
 6. Dữ liệu dùng chung: thêm vào `tests/data/users.ts`, `messages.ts` (nhóm mới cho feature), không tạo file trùng.
-7. Feature gồm **nhiều màn hình**: mọi tài liệu phải **ghi rõ màn hình** để không nhầm. `q-and-a.md`, `known-issues.md` chia mục theo màn hình (mục "Chung" cho thứ ảnh hưởng nhiều màn hình); bảng quan sát, `improvements.md` có cột "Màn hình"; `viewpoint.csv`, `test-cases.csv` có cột `screen`.
+7. Feature gồm **nhiều màn hình**: mọi tài liệu phải **ghi rõ màn hình** để không nhầm. `q-and-a.md`, `known-issues.md` chia mục theo màn hình (mục "Chung" cho thứ ảnh hưởng nhiều màn hình); bảng quan sát, `improvements.md` có cột "Màn hình"; `viewpoint.csv`, `test-cases.csv` có cột `screen` (nhiều màn hình ghi `A + B`, `A → B` hoặc `Cả n`; RTM tự tách để đếm theo màn hình). Code: `test.describe('Màn hình n: …')` cho từng màn hình và `test.describe('Chung: …')` cho test đi qua nhiều màn hình (mục lục evidence nhóm theo tên describe), tag màn hình kiểu `@list` / `@detail` / `@cart`.
 
 ## Quy ước viết test
 - Locator: `getByRole` → `getByLabel`/`getByPlaceholder` → `getByTestId` (thuộc tính `data-test`) → CSS. Không dùng XPath, không dùng `.nth()` cố định.

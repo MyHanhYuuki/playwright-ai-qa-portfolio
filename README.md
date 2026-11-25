@@ -13,7 +13,7 @@ built on Claude Code subagents + **Playwright MCP** (agents work on a real brows
 ```
 requirement → [1] test-design → ⏸ HITL#1 → [2] test-impl → ⏸ HITL#2
             → [3] script-gen → [4] executor ─┬─ script-issue → [5] healer → re-run (max 2 rounds)
-                                             ├─ real-bug → ⏸ HITL#3 → defects.md
+                                             ├─ real-bug → ⏸ HITL#3 → [6] bug-reporter → defects.md
                                              └─ pass → rtm-report.html (traceability matrix)
 ```
 | Agent | Role | Playwright MCP |
@@ -23,6 +23,7 @@ requirement → [1] test-design → ⏸ HITL#1 → [2] test-impl → ⏸ HITL#2
 | `script-gen` | Generate Page Object Model tests, locators verified on the live site | browser + generator log |
 | `executor` | Run tests, triage failures: flaky / script-issue / real-bug | – |
 | `healer` | Fix script issues only (never hides real bugs), max 2 rounds | test debug + locator tools |
+| `bug-reporter` | After bug approval: independent reproduction (separate repro script), variants, bug reports per ISTQB / ISO/IEC/IEEE 29119-3 | real-browser reproduction |
 | `qa-reviewer` | QC-lead review (ISTQB) after every step, before each human checkpoint | verification on the live site |
 
 Run the whole pipeline in Claude Code: `/qa-orchestrator <feature>`
@@ -48,16 +49,19 @@ npm run test:ui              # interactive UI mode
 npm run test:run -- saucedemo-login-screen       # run one feature, save results to qa-runs/<feature>/run-results/
 npm run test:evidence -- saucedemo-login-screen  # screenshots (red boxes + notes) + video per test case
 npm run rtm -- saucedemo-login-screen            # build the traceability matrix (rtm.md + rtm-report.html)
+npm run test:stability -- saucedemo-products-cart  # run a feature N times (default 2), save a stability summary
+npm run repro -- saucedemo-products-cart         # independent bug reproduction (tests/repro/) → evidence/bugs/*/manual/
+npm run typecheck            # TypeScript type check (Playwright does not type-check)
 npm run report               # open HTML report
 ```
 Optional environment variables: see [.env.example](.env.example).
 
 ## Project structure
 ```
-.claude/agents/      5 QA agents + qa-reviewer   .claude/commands/   /qa-orchestrator
+.claude/agents/      6 QA agents + qa-reviewer   .claude/commands/   /qa-orchestrator
 qa-runs/<feature>/   requirement, viewpoints, test cases, triage, defects, RTM
-tests/               pages/ (POM) · specs/ · data/ · fixtures/ · utils/ (evidence)
-scripts/             run-tests · run-evidence · build-rtm (Node, no shell)
+tests/               pages/ (POM) · specs/ · data/ · fixtures/ · utils/ (evidence) · repro/ (bug reproduction)
+scripts/             run-tests · run-evidence · run-stability · build-rtm (Node, no shell)
 knowledge-base/                  Q&A archive reused across features
 docs/                workflow diagrams, learning notes
 ```
@@ -76,13 +80,14 @@ Step-by-step notes written while building this project with an AI agent:
 4. [Viết code test (script-gen) theo Page Object Model](docs/learning/04-viet-code-test.md)
 5. [Chạy test và phân loại kết quả (executor)](docs/learning/05-chay-test-va-phan-loai.md)
 7. [Viết bug report và RTM](docs/learning/07-bug-report-va-rtm.md) (Bài 6 healer: bỏ qua lần này vì không có test hỏng)
+8. [Test một tính năng nhiều màn hình (danh sách, chi tiết, giỏ hàng)](docs/learning/08-tinh-nang-nhieu-man-hinh.md)
 
 ## Progress
 - [x] Project setup (Playwright 1.65, Chromium, Playwright MCP)
-- [x] AI agent QA pipeline (5 agents + reviewer + orchestrator + 3 HITL)
+- [x] AI agent QA pipeline (6 agents incl. bug-reporter + reviewer + orchestrator + 3 HITL)
 - [x] SauceDemo Login: full pipeline run ([bug reports](qa-runs/saucedemo-login-screen/defects.md) · [RTM](qa-runs/saucedemo-login-screen/rtm.md))
-- [ ] SauceDemo Products + Product detail + Cart
+- [x] SauceDemo Products + Product detail + Cart: 46 TC, 17 bugs ([bug reports](qa-runs/saucedemo-products-cart/defects.md) · [RTM](qa-runs/saucedemo-products-cart/rtm.md))
 - [ ] SauceDemo Cart → Checkout (E2E)
-- [ ] Bug reports (problem_user, error_user…)
+- [x] Bug reports for the special accounts (problem_user, error_user, visual_user…)
 - [ ] API tests (Restful Booker)
 - [ ] CI + published report

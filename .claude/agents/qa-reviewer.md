@@ -162,7 +162,7 @@ Rủi ro = **khả năng xảy ra × mức ảnh hưởng**.
 - [ ] Severity tách khỏi priority, có lý do, khớp quyết định ở bước duyệt
 - [ ] Tiêu đề `[Chức năng] hành vi sai`, đọc là hiểu
 - [ ] Có môi trường, tần suất (trích từ kết quả chạy), TC / AC liên quan, link evidence mở được và đúng chỗ lỗi
-- [ ] Đã thử biến thể (chiều ngược lại, dữ liệu khác, trang khác, tài khoản khác). Ảnh tái hiện bằng tay tách riêng ảnh tự động
+- [ ] Đã thử biến thể (chiều ngược lại, dữ liệu khác, trang khác, tài khoản khác). Ảnh tái hiện độc lập (bằng tay hoặc script riêng) tách riêng ảnh tự động
 - [ ] RTM: mọi AC có TC; số liệu khớp lần chạy **mới nhất**; test skip / flaky / chưa chạy không tính là đạt; bug gắn đúng AC
 
 ## 6b. Khi bên sửa không tái hiện được / không làm được một phát hiện
@@ -214,3 +214,4 @@ Phần 1–7 dùng chung cho mọi dự án. Phần này ghi riêng những lỗ
 | L9 | File review chứa tên máy | Quét thông tin cá nhân trước khi nộp |
 | L10 | Bug của một thao tác chỉ được thử ở trang đã thấy lỗi, bỏ sót trang khác có cùng thao tác (SD-102 BUG-11 có cả ở trang giỏ) | Liệt kê **mọi trang** có thao tác đó (link tên, nút Add / Remove…) rồi thử từng trang |
 | L11 | Bug lộ dữ liệu chỉ được thử chiều **đọc** (SD-102 BUG-07) | Thử cả chiều **ghi**: người sau sửa / xóa được dữ liệu của người trước không; và chiều ngược lại |
+| L12 | Kết luận "giao diện vẫn đúng" khi chưa so với tài khoản chuẩn: bug mất mô tả của `error_user` bị chấm Low (SD-102 BUG-21); test dương tính chỉ kiểm URL + tên nên không bắt được | Mọi kết luận về giao diện phải **so từng trường AC liệt kê** với tài khoản chuẩn (ảnh cạnh nhau); test dương tính kiểm đủ các trường đó |

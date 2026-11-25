@@ -38,7 +38,7 @@ requirement
   ├─ flaky        → ghi nhận, không chặn
   └─ all pass     → báo cáo
   ↓
-[6] bug-report → defects.md      [7] RTM → rtm-report.html
+[6] bug-reporter → defects.md + manual/      [7] RTM → rtm-report.html
 ```
 
 **Nguyên tắc**: chỉ orchestrator gọi agent. Agent không gọi nhau, chỉ trao đổi qua file trong `qa-runs/<feature>/`.
@@ -132,7 +132,7 @@ Gõ "HITL #3 approved" | "HITL #3 approved: TC-001, TC-003" | "HITL #3 rejected:
 Bug bị từ chối (báo nhầm) thì chuyển lại thành script-issue để healer xử lý.
 
 ## Bước 6: bug report → `defects.md`
-Mỗi bug đã duyệt ghi theo mẫu:
+Gọi agent **`bug-reporter`** (`.claude/agents/bug-reporter.md`, chuẩn ISTQB / ISO/IEC/IEEE 29119-3) với danh sách bug đã duyệt và severity đã chốt ở HITL #3. Agent tự tái hiện từng bug trên trình duyệt sạch, thử biến thể, viết `defects.md` và `evidence/bugs/<ticket>_BUG-xx/manual/`. Mẫu tối thiểu mỗi bug:
 ```markdown
 ### BUG-01: [Chức năng] hành vi sai, ngắn gọn
 - **Ticket**: `[id_bug_n]` (chưa log) · **Severity / Priority**: High / P2 (đề xuất, PO chốt), kèm lý do
@@ -143,7 +143,7 @@ Mỗi bug đã duyệt ghi theo mẫu:
 - **Evidence**: `evidence/bugs/[id_bug_n]_BUG-xx/TC-xxx/` (ảnh khoanh đỏ + video)
 ```
 Đầu file có bảng tổng hợp: `| Bug | Ticket | TC | Tiêu đề | Severity | Priority | Trạng thái |`. Cuối file ghi các BUG-xx trong `known-issues.md` **không** đưa vào report, kèm lý do.
-Tự làm lại các bước tái hiện trên trình duyệt sạch trước khi ghi. Thử cả **biến thể** (chiều ngược lại, dữ liệu khác, trang khác). Ảnh tái hiện bằng tay lưu riêng vào `evidence/bugs/<ticket>_BUG-xx/manual/` kèm README (thao tác, kết quả, thời điểm).
+Tự làm lại các bước tái hiện trên trình duyệt sạch trước khi ghi. Thử cả **biến thể** (chiều ngược lại, dữ liệu khác, trang khác). Tái hiện độc lập bằng script riêng `tests/repro/<feature>.repro.ts` (dùng `tests/repro/repro-kit.ts`, chạy `npm run repro -- <feature>`): ảnh + README (thao tác, kết quả, số lần lặp) vào `evidence/bugs/<ticket>_BUG-xx/manual/`. Tái hiện bằng tay thật thì ghi rõ "bằng tay".
 Có biến thể thì **mở rộng TC đang bắt bug** để kiểm tra mọi biến thể (`expect.soft`), không tạo TC mới, và chụp lại evidence cho mọi biến thể.
 Test của bug đã duyệt giữ nguyên trạng thái **fail**: `test.fail(true, 'BUG-xx: …')` + tag `@BUG-xx` để CI xanh nhưng vẫn theo dõi bug (test báo khi bug được sửa). Thêm `'BUG-xx': '[id_bug_n]'` vào `tests/data/bugs.ts`, ghi `BUG-xx` vào cột `notes` của TC (RTM đọc cột này), rồi chụp lại evidence: `npm run test:evidence -- <feature> -g "TC-xxx"`.
 

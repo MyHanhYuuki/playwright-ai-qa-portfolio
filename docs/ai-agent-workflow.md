@@ -1,6 +1,6 @@
 # Sơ đồ làm việc của AI agent trong dự án
 
-> Pipeline QA gồm **5 AI agent** do **1 orchestrator** điều phối, **1 agent review (qa-reviewer) soát lại sau mỗi bước**, có **3 điểm dừng để người duyệt (HITL)**.
+> Pipeline QA gồm **6 AI agent** do **1 orchestrator** điều phối, **1 agent review (qa-reviewer) soát lại sau mỗi bước**, có **3 điểm dừng để người duyệt (HITL)**.
 > Bản sơ đồ tương tác (bấm vào từng khối để xem chi tiết): [ai-agent-workflow.html](ai-agent-workflow.html)
 >
 > Phát triển tiếp từ repo v1 [learn-ai-automation-test](https://github.com/MyHanhYuuki/learn-ai-automation-test):
@@ -44,11 +44,17 @@ Dự án playwright-ai-qa-portfolio
 │     │     ├── Phân loại test fail:  flaky | script-issue (test sai) | real-bug (web lỗi)
 │     │     └── Ra:   run-results/*.json, triage.md
 │     │
-│     └── [5] 🩺 healer        sửa test sai
-│           ├── Vào:  các test bị gắn nhãn script-issue
-│           ├── Làm:  debug trên trình duyệt thật (Playwright MCP), sửa locator/timing/logic
-│           ├── Luật: KHÔNG đụng real-bug, KHÔNG sửa kết quả mong đợi, tối đa 2 vòng
-│           └── Ra:   code đã sửa, healing-log.md
+│     ├── [5] 🩺 healer        sửa test sai
+│     │     ├── Vào:  các test bị gắn nhãn script-issue
+│     │     ├── Làm:  debug trên trình duyệt thật (Playwright MCP), sửa locator/timing/logic
+│     │     ├── Luật: KHÔNG đụng real-bug, KHÔNG sửa kết quả mong đợi, tối đa 2 vòng
+│     │     └── Ra:   code đã sửa, healing-log.md
+│     │
+│     └── [6] 🐞 bug-reporter  viết bug report (sau HITL #3)
+│           ├── Vào:  bug đã duyệt, run-results, evidence tự động, AC / Q&A
+│           ├── Làm:  tái hiện độc lập trên trình duyệt sạch, thử biến thể, tìm quy luật
+│           ├── Luật: chuẩn ISTQB / ISO/IEC/IEEE 29119-3, KHÔNG đổi severity đã duyệt
+│           └── Ra:   defects.md, evidence/bugs/*/manual/
 │
 ├── 🔍 qa-reviewer  (QC Lead, chuẩn ISTQB)
 │     ├── Chạy: sau mỗi bước test-design, test-impl, script-gen, executor, TRƯỚC HITL
@@ -88,7 +94,8 @@ flowchart TD
     Q -- "flaky" --> FL[/"ghi nhận, không chặn"/]
     Q -- "real-bug" --> H3{"⏸ HITL #3<br/>Người duyệt bug"}
     Q -- "tất cả pass" --> RTM
-    H3 --> DF[/"defects.md<br/>(bug report)"/]
+    H3 --> BR["[6] 🐞 bug-reporter<br/>tái hiện độc lập (npm run repro)"]
+    BR --> DF[/"defects.md<br/>(bug report)"/]
     DF --> RTM[/"rtm-report.html<br/>ma trận truy vết"/]
     RTM --> DONE(["✅ Xong → commit → CI"])
 ```
@@ -106,7 +113,8 @@ flowchart TD
 | 4 | ▶️ executor | bộ test | run-results, triage.md | Playwright CLI |
 | 5 | 🩺 healer | script-issue | code đã sửa, healing-log | Trình duyệt + debug test |
 | ⏸ | 👤 HITL #3 | real-bug | duyệt bug | – |
-| 6 | 🎯 orchestrator | bug đã duyệt | defects.md, rtm-report.html | – |
+| 6 | 🐞 bug-reporter | bug đã duyệt | defects.md, ảnh tái hiện `manual/` | Trình duyệt (tái hiện độc lập) |
+| 7 | 🎯 orchestrator | test case + kết quả + defects | rtm.md, rtm-report.html (`npm run rtm`) | – |
 
 ## 4. Nơi lưu kết quả của một lần chạy
 

@@ -107,7 +107,7 @@ Với **mỗi test FAILED**, gán 1 trong 3 nhãn:
 
 ## Quy tắc bắt buộc
 - **KHÔNG sửa code**, kể cả khi biết cách sửa. Đó là việc của healer.
-- **KHÔNG viết bug report.** Orchestrator làm sau HITL #3.
+- **KHÔNG viết bug report.** Agent `bug-reporter` làm sau HITL #3.
 - Ngoài bước xác nhận flaky, không tự chạy lại test.
 - Luôn ghi `run_id` để orchestrator theo dõi số vòng sửa.
 

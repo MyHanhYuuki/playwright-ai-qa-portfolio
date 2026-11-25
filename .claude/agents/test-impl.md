@@ -27,11 +27,14 @@ Kỹ thuật thiết kế test case. Ghi kỹ thuật đã dùng vào cột `tec
 - **State Transition (chuyển trạng thái)**: test mỗi chuyển hợp lệ và các chuyển không hợp lệ.
 - **Error Guessing (đoán lỗi)**: các lỗi hay gặp (khoảng trắng, phân biệt hoa thường, double click...).
 
-Format `test-cases.csv` (15 cột):
+Format `test-cases.csv` (16 cột, đúng như file thật):
 ```
-tc_id,viewpoint_id,title,preconditions,steps,expected_result,test_data_ref,priority,type,technique,automation_feasibility,linked_ac,tags,status,notes
-TC-001,TVP-001,"Happy path: ...","Mở trang login","1. ...; 2. ...; 3. ...","[kết quả cụ thể, đo được]",TD-001,high,functional,EP,automatable,AC-1,"smoke,regression",draft,""
+tc_id,viewpoint_id,title,preconditions,steps,expected_result,test_data_ref,priority,type,technique,automation_feasibility,linked_ac,tags,status,notes,screen
+TC-001,TVP-001,"Happy path: ...","Phiên trình duyệt mới, giỏ trống; đã đăng nhập bằng standard_user (TD-01)","1. ...; 2. ...; 3. ...","[kết quả cụ thể, đo được]",TD-01;MSG-01,high,functional,EP,automatable,AC-1,regression;smoke,draft,"",Danh sách
+TC-002,TVP-005,"...","...","...","...",TD-02,high,negative,EP,automatable,AC-3,regression;security,draft,"Bug đã biết BUG-22 (O-05): dự kiến FAIL. …",Chi tiết + Giỏ
 ```
+- Nhiều giá trị trong một ô ngăn bằng `;` (`TVP-011;TVP-036`, `AC-1;AC-5`, `regression;smoke`). `status`: `draft` khi viết, đổi thành `approved` sau HITL #2.
+- `notes`: bug đã biết ghi BUG id ở **câu đầu** (RTM chỉ đọc câu đầu). `screen`: như `viewpoint.csv`.
 - `type`: `functional` | `negative` | `data` | `flow` | `non-functional`
 - `automation_feasibility`: `automatable` | `semi-auto` | `manual-only`
 - `expected_result` phải **cụ thể**: ghi đúng text thông báo, URL đích, trạng thái. Không ghi kiểu "hiển thị lỗi phù hợp".
@@ -43,9 +46,14 @@ Format `test-data.md`:
 ```markdown
 # Test Data Catalog: [Feature]
 
-## TD-001: [tên ngắn]
-- **Dùng cho**: TC-001, TC-005
-- **Data**: username = `standard_user`, password = biến môi trường `SAUCE_PASSWORD`
+| ID | Tên | Dữ liệu | Dùng cho |
+|---|---|---|---|
+| TD-01 | User chuẩn | `standard_user` + mật khẩu từ biến môi trường `SAUCE_PASSWORD` | TC-001, TC-005 |
+
+## Thông báo nguyên văn
+| ID | Nội dung |
+|---|---|
+| MSG-01 | `Epic sadface: …` (trích nguyên văn) |
 ```
 - **Không hardcode mật khẩu trong test case.** Tham chiếu biến môi trường hoặc `tests/data/`.
 
@@ -63,5 +71,6 @@ Format `test-data.md`:
 - TC có BUG chỉ để **ghi nhận** (vd hiệu năng, test phải PASS): ghi rõ trong `notes` "KHÔNG dùng `test.fail()`".
 - Đích chuyển trang: ghi phần tử riêng của trang đích (tiêu đề), không chỉ URL.
 - Feature nhiều màn hình: điền cột `screen`.
+- **Test dương tính của tài khoản / vai trò đặc biệt** kiểm **mọi trường** mà AC liệt kê ở mỗi trang (vd trang chi tiết: ảnh, tên, mô tả, giá), không chỉ URL + tên. Một trường biến mất phải làm test đỏ (review-final SD-102 A1, BUG-21).
 - **Điều kiện trước nêu cả trạng thái dữ liệu lưu trong trình duyệt** (vd "Phiên trình duyệt mới, giỏ trống"), không chỉ "đã đăng nhập". Dữ liệu `localStorage` còn lại sau đăng xuất, người chạy tay làm TC liên tiếp sẽ ra kết quả sai (review-test-impl-r2 B1).
 - Phát hiện biến thể / quan sát mới ở bước này: cập nhật O-xx, ma trận, `known-issues.md`, viewpoint **cùng lúc** với TC.
