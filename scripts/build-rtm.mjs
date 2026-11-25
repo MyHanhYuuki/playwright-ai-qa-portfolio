@@ -52,6 +52,25 @@ function build(dir, feature) {
   const noReport = [...new Set(tcs.flatMap(bugsOf))].filter((b) => !bugTitle[b]);
   if (has('defects.md') && noReport.length) warnings.push(`Bug được TC nhắc tới nhưng chưa có trong defects.md: ${noReport.join(', ')}`);
 
+  // Multi-screen feature: show the screen of each TC and a per-screen summary (CLAUDE.md point 7)
+  const hasScreen = tcs.some((tc) => tc.screen);
+  // A TC can touch several screens ("Danh sách + Giỏ → Chi tiết", "Cả 3"): count it under EACH screen it touches.
+  // Screen names come from the data itself (split on + → ; ,), so any feature works. "Cả <n>" / "Tất cả" = every screen.
+  const ALL_LABEL = /^(cả\s*\d+|tất cả)$/i;
+  const parts = (tc) => (tc.screen ?? '').split(/\s*(?:\+|→|;|,)\s*/).map((x) => x.trim()).filter(Boolean);
+  const ALL_SCREENS = [...new Set(tcs.flatMap(parts).filter((x) => !ALL_LABEL.test(x)))];
+  const screensOf = (tc) => (parts(tc).some((x) => ALL_LABEL.test(x)) ? ALL_SCREENS : parts(tc));
+  if (hasScreen) {
+    const noScreen = tcs.filter((tc) => !parts(tc).length).map((tc) => tc.tc_id);
+    if (noScreen.length) warnings.push(`TC thiếu cột screen: ${noScreen.join(', ')}`);
+  }
+  const perScreen = ALL_SCREENS.map((screen) => {
+    const list = tcs.filter((tc) => screensOf(tc).includes(screen)).map((tc) => ({ ...tc, result: resultOf[tc.tc_id] ?? 'Not run' }));
+    const passed = list.filter((r) => r.result === 'Passed').length;
+    const failed = list.filter((r) => r.result.startsWith('Failed')).length;
+    return { screen, total: list.length, passed, failed, other: list.length - passed - failed, bugs: [...new Set(list.flatMap(bugsOf))] };
+  });
+
   // 3. Matrix: one row per (AC, TC). A TC linked to 2 ACs appears under both.
   // AC is "pass" only if EVERY linked TC is plainly Passed. Skipped / flaky / not run / "bug seems fixed" → needs a look.
   const perAc = acs.map((ac) => {
@@ -120,14 +139,25 @@ function build(dir, feature) {
     '|---|---|---|---|---|---|---|---|---|',
     ...perAc.map((a) => `| ${a.id} | ${c(a.text)} | ${vpCount(a.vps)} | ${a.rows.length} | ${a.passed} | ${a.failed} | ${a.other} | ${a.bugs.map(mdBug).join(', ') || '–'} | ${label[a.status]} |`),
     '',
+    ...(hasScreen
+      ? [
+          '## Theo màn hình',
+          '> Một TC đi qua nhiều màn hình được đếm ở **mỗi** màn hình nó đi qua (cột `screen` của test-cases.csv; "Cả 3" = cả 3 màn hình), nên tổng các dòng lớn hơn số TC.',
+          '',
+          '| Màn hình | TC đi qua | Passed | Failed | Khác | Bug |',
+          '|---|---|---|---|---|---|',
+          ...perScreen.map((g) => `| ${c(g.screen)} | ${g.total} | ${g.passed} | ${g.failed} | ${g.other} | ${g.bugs.map(mdBug).join(', ') || '–'} |`),
+          '',
+        ]
+      : []),
     '## Chi tiết',
-    '| AC | Viewpoint | Test case | Kỹ thuật | Tự động | Kết quả | Bug |',
-    '|---|---|---|---|---|---|---|',
+    hasScreen ? '| AC | Viewpoint | Test case | Màn hình | Kỹ thuật | Tự động | Kết quả | Bug |' : '| AC | Viewpoint | Test case | Kỹ thuật | Tự động | Kết quả | Bug |',
+    hasScreen ? '|---|---|---|---|---|---|---|---|' : '|---|---|---|---|---|---|---|',
     ...perAc.flatMap((a) =>
       a.rows.map((r) => {
         const ev = evidence(r.tc_id);
         const tc = `${ev ? `[${r.tc_id}](${ev})` : r.tc_id} ${c(r.title)}`;
-        return `| ${a.id} | ${r.viewpoint_id} | ${tc} | ${c(r.technique || '–')} | ${c(r.automation_feasibility)} | ${icon(r.result)} | ${r.bugs.map(mdBug).join(', ') || '–'} |`;
+        return `| ${a.id} | ${r.viewpoint_id} | ${tc} |${hasScreen ? ` ${c(r.screen || '–')} |` : ''} ${c(r.technique || '–')} | ${c(r.automation_feasibility)} | ${icon(r.result)} | ${r.bugs.map(mdBug).join(', ') || '–'} |`;
       })
     ),
     '',
@@ -171,8 +201,11 @@ ${warnings.length ? `<div class="warn"><b>⚠️ Cảnh báo</b><ul>${warnings.m
 <h2>Theo AC</h2><div class="wrap"><table><tr><th>AC</th><th>Yêu cầu</th><th>Viewpoint</th><th>TC</th><th>Passed</th><th>Failed</th><th>Khác</th><th>Bug</th><th>Trạng thái</th></tr>
 ${perAc.map((a) => `<tr><td>${a.id}</td><td>${esc(a.text)}</td><td>${esc(vpCount(a.vps))}</td><td>${a.rows.length}</td><td>${a.passed}</td><td>${a.failed}</td><td>${a.other}</td><td class="nw">${a.bugs.map(htmlBug).join(', ') || '–'}</td><td class="${{ pass: 'ok', fail: 'ng' }[a.status] ?? 'na'}">${label[a.status]}</td></tr>`).join('\n')}
 </table></div>
-<h2>Chi tiết</h2><div class="wrap"><table><tr><th>AC</th><th>Viewpoint</th><th>Test case</th><th>Kỹ thuật</th><th>Tự động</th><th>Kết quả</th><th>Bug</th></tr>
-${perAc.flatMap((a) => a.rows.map((r) => { const ev = evidence(r.tc_id); return `<tr><td>${a.id}</td><td>${r.viewpoint_id}</td><td>${ev ? `<a href="${ev}">${r.tc_id}</a>` : r.tc_id} ${esc(r.title)}</td><td>${esc(r.technique || '–')}</td><td>${esc(r.automation_feasibility)}</td><td class="${cls(r.result)}">${esc(r.result)}</td><td class="nw">${r.bugs.map(htmlBug).join(', ') || '–'}</td></tr>`; })).join('\n')}
+${hasScreen ? `<h2>Theo màn hình</h2><div class="wrap"><table><tr><th>Màn hình</th><th>TC đi qua</th><th>Passed</th><th>Failed</th><th>Khác</th><th>Bug</th></tr>
+${perScreen.map((g) => `<tr><td>${esc(g.screen)}</td><td>${g.total}</td><td>${g.passed}</td><td>${g.failed}</td><td>${g.other}</td><td class="nw">${g.bugs.map(htmlBug).join(', ') || '–'}</td></tr>`).join('\n')}
+</table></div>` : ''}
+<h2>Chi tiết</h2><div class="wrap"><table><tr><th>AC</th><th>Viewpoint</th><th>Test case</th>${hasScreen ? '<th>Màn hình</th>' : ''}<th>Kỹ thuật</th><th>Tự động</th><th>Kết quả</th><th>Bug</th></tr>
+${perAc.flatMap((a) => a.rows.map((r) => { const ev = evidence(r.tc_id); return `<tr><td>${a.id}</td><td>${r.viewpoint_id}</td><td>${ev ? `<a href="${ev}">${r.tc_id}</a>` : r.tc_id} ${esc(r.title)}</td>${hasScreen ? `<td>${esc(r.screen || '–')}</td>` : ''}<td>${esc(r.technique || '–')}</td><td>${esc(r.automation_feasibility)}</td><td class="${cls(r.result)}">${esc(r.result)}</td><td class="nw">${r.bugs.map(htmlBug).join(', ') || '–'}</td></tr>`; })).join('\n')}
 </table></div>
 <h2>Viewpoint ngoài phạm vi</h2><div class="wrap"><table><tr><th>Viewpoint</th><th>AC</th><th>Nội dung</th><th>Nguồn quyết định</th></tr>
 ${outScope.map((v) => `<tr><td>${v.viewpoint_id}</td><td>${esc(v.linked_ac)}</td><td>${esc(v.description)}</td><td>${esc(v.source)}</td></tr>`).join('\n')}

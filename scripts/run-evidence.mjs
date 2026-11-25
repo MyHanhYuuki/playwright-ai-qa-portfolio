@@ -59,7 +59,7 @@ if (fs.existsSync(evDir)) {
     .sort((a, b) => bugNo(a) - bugNo(b))
     .flatMap((b) =>
       list(path.join('bugs', b)).map((sub) => {
-        const label = sub === 'manual' ? 'Tái hiện bằng tay' : sub;
+        const label = sub === 'manual' ? 'Tái hiện độc lập' : sub;
         const screen = hasScreens ? ` ${screenOf[sub] ?? ''} |` : '';
         return `| ${b} |${screen} ${label} | [bugs/${b}/${sub}](<bugs/${b}/${sub}/README.md>) |`;
       })
@@ -71,7 +71,7 @@ if (fs.existsSync(evDir)) {
     '',
     `> Tạo tự động bởi \`npm run test:evidence\` lúc ${new Date().toISOString()}.`,
     '> Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Test case có bug (hoặc kết quả bất thường) có thêm video.',
-    '> Thư mục `manual/` trong từng bug: ảnh tái hiện bằng tay, không do test tự động sinh ra.',
+    '> Thư mục `manual/` trong từng bug: ảnh **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi ảnh của test tự động.',
     '',
     '## Bug (theo ticket)',
     hasScreens ? '| Ticket_BUG | Màn hình của TC | Nội dung | Thư mục |' : '| Ticket_BUG | Nội dung | Thư mục |',

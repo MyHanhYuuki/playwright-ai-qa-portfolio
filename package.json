@@ -11,9 +11,11 @@
     "test:headed": "playwright test --headed",
     "test:run": "node scripts/run-tests.mjs",
     "test:evidence": "node scripts/run-evidence.mjs",
+    "test:stability": "node scripts/run-stability.mjs",
     "report": "playwright show-report",
     "rtm": "node scripts/build-rtm.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "repro": "playwright test --config=playwright.repro.config.ts"
   },
   "keywords": [
     "playwright",

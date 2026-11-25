@@ -9,5 +9,5 @@
     "esModuleInterop": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"]
   },
-  "include": ["tests/**/*.ts", "playwright.config.ts"]
+  "include": ["tests/**/*.ts", "playwright.config.ts", "playwright.repro.config.ts"]
 }
