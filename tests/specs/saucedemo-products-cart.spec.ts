@@ -1,7 +1,7 @@
 /**
  * SD-102: Products list, product detail, cart (SauceDemo)
- * Test cases: qa-runs/saucedemo-products-cart/test-cases.csv (45 TC, approved at HITL #2)
- * Known bugs: qa-runs/saucedemo-products-cart/known-issues.md (BUG-05 → BUG-20 + BUG-02 variant, expected to FAIL)
+ * Test cases: qa-runs/saucedemo-products-cart/test-cases.csv (46 TC: 45 approved at HITL #2, TC-046 added for BUG-21 after review-defects)
+ * Known bugs: qa-runs/saucedemo-products-cart/known-issues.md (BUG-05 → BUG-21 + BUG-02 variant, expected to FAIL)
  *
  * Convention: 1 test = 1 TC, title starts with the TC id. Tags: @AC-x, screen (@list / @detail / @cart),
  * @smoke, @BUG-xx (known bug → test.fail()), @security.
@@ -36,11 +36,19 @@ async function expectPrices(inv: InventoryPage) {
     await expect.soft(inv.item(p).getByTestId('inventory-item-price'), `giá của ${p.name}`).toHaveText(priceText(p), QUICK);
   }
 }
-/** Detail page shows product p (waits for an element unique to the detail page first). */
-async function expectDetailOf(page: Page, detail: ProductDetailPage, p: Product, label = p.name) {
+/**
+ * Detail page shows product p (waits for an element unique to the detail page first).
+ * Checks URL and name, and by default the description and price too (AC-5: "ảnh, tên, mô tả, giá giống ở danh sách").
+ * `fieldsToo: false` only where another TC owns that field's bug (e.g. TC-024 wrong product, TC-032 description = BUG-21 / TC-046).
+ */
+async function expectDetailOf(page: Page, detail: ProductDetailPage, p: Product, label = p.name, fieldsToo = true) {
   await expect(detail.backButton).toBeVisible();
   await expect.soft(page, `${label}: URL`).toHaveURL(new RegExp(`inventory-item\\.html\\?id=${p.id}$`), QUICK);
   await expect.soft(detail.name, `${label}: tên`).toHaveText(p.name, QUICK);
+  if (fieldsToo) {
+    await expect.soft(detail.description, `${label}: mô tả`).toHaveText(p.description, QUICK);
+    await expect.soft(detail.price, `${label}: giá`).toHaveText(priceText(p), QUICK);
+  }
 }
 /** Wait until every image on the page has finished loading, so element positions are final. */
 async function imagesLoaded(page: Page) {
@@ -294,7 +302,7 @@ test.describe('Màn hình 2: Chi tiết sản phẩm (/inventory-item.html?id=<n
           await inv.goto();
           await (how === 'tên' ? inv.nameLink(p) : inv.imageLink(p)).click();
         }
-        await expectDetailOf(page, detail, p, `${p.name} (bấm ${how})`);
+        await expectDetailOf(page, detail, p, `${p.name} (bấm ${how})`, false); // BUG-11 = wrong product: URL + name are enough
         if (!page.url().endsWith(`id=${p.id}`)) {
           await evidence.shot(`Bấm ${how} ${p.name}`, { highlight: detail.name, note: `Mong đợi: chi tiết ${p.name} (id=${p.id}). Đang mở: ${new URL(page.url()).search}` });
         }
@@ -326,6 +334,35 @@ test.describe('Màn hình 2: Chi tiết sản phẩm (/inventory-item.html?id=<n
       // Quantity of every line: expected exactly one line, quantity 1 (review-executor C1: line(backpack) matched 2 lines)
       if (raw === '[4,4]') await expect.soft(cart.items.getByTestId('item-quantity'), `${label}: số lượng`).toHaveText(['1'], QUICK);
       await evidence.shot(`Giỏ với dữ liệu ${label} ${raw}`, { highlight: [cart.cartList, cart.cartBadge], note: `Mong đợi: số giỏ 1, 1 dòng Backpack${raw === '[4,4]' ? ' số lượng 1' : ''}` });
+    }
+  });
+
+  test('TC-046 error_user: trang chi tiết hiển thị đủ thông tin, không có lỗi JavaScript hay báo lỗi', { tag: ['@AC-5', '@detail', '@BUG-21'] }, async ({ page, loginAs, productDetailPage: detail, evidence }) => {
+    test.fail(true, 'BUG-21: error_user mở trang chi tiết thì mất mô tả sản phẩm, console báo lỗi render, gửi báo lỗi ra ngoài');
+    // Browser noise seen for every account on page load, not app errors: excluded
+    const NOISE = /Permissions policy violation|Failed to load resource/;
+    const errors: string[] = [];
+    const reports: string[] = [];
+    page.on('console', (m) => { if (m.type() === 'error' && !NOISE.test(m.text())) errors.push(m.text().split('\n')[0]); });
+    page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
+    // Only submit.backtrace.io = an error report. events.backtrace.io is sent at login for EVERY account (not an error)
+    page.on('request', (r) => { if (new URL(r.url()).host === 'submit.backtrace.io') reports.push(r.url()); });
+    const inv = await loginAs(users.error);
+    for (const p of allProducts) {
+      errors.length = 0;
+      reports.length = 0;
+      await inv.nameLink(p).click();
+      // The render error comes right after the page appears: wait for it (bounded), not a fixed sleep
+      await page.waitForEvent('console', { predicate: (m) => m.type() === 'error' && !NOISE.test(m.text()), timeout: 2_000 }).catch(() => {});
+      await expectDetailOf(page, detail, p); // name, description, price like standard_user
+      for (const e of errors) test.info().annotations.push({ type: `lỗi ở chi tiết ${p.name}`, description: e });
+      expect.soft(errors, `${p.name}: không được có lỗi console / JavaScript`).toEqual([]);
+      expect.soft(reports.length, `${p.name}: không được gửi báo lỗi tới submit.backtrace.io`).toBe(0);
+      await evidence.shot(`Chi tiết ${p.name} (error_user)`, {
+        highlight: [detail.name, detail.price],
+        note: `Mong đợi: có mô tả "${p.description.slice(0, 30)}…", không lỗi. Thực tế: mô tả ${(await detail.description.count()) ? 'có' : 'KHÔNG có'}; console: ${errors.length ? errors.join(' | ') : 'không lỗi'}; báo lỗi gửi đi: ${reports.length}`,
+      });
+      await detail.backToProducts();
     }
   });
 
@@ -418,7 +455,7 @@ test.describe('Màn hình 3: Giỏ hàng (/cart.html)', () => {
 
 // =====================================================================
 test.describe('Chung: nhiều màn hình (tài khoản, giỏ, menu, kiểm soát truy cập)', () => {
-  test('TC-013 visual_user: giá ở danh sách đúng và khớp trang chi tiết, giỏ', { tag: ['@AC-1', '@list', '@detail', '@cart', '@BUG-14'] }, async ({ loginAs, productDetailPage: detail, cartPage: cart, evidence }) => {
+  test('TC-013 visual_user: giá ở danh sách đúng và khớp trang chi tiết, giỏ', { tag: ['@AC-1', '@AC-5', '@list', '@detail', '@cart', '@BUG-14'] }, async ({ loginAs, productDetailPage: detail, cartPage: cart, evidence }) => {
     test.fail(true, 'BUG-14: visual_user thấy giá sai, đổi ngẫu nhiên ở danh sách');
     const inv = await loginAs(users.visual);
     await evidence.shot('Giá ở danh sách (visual_user)', { highlight: inv.itemPrices, note: 'Mong đợi: giá đúng TD-06 (Backpack $29.99, Bike Light $9.99…)' });
@@ -498,7 +535,8 @@ test.describe('Chung: nhiều màn hình (tài khoản, giỏ, menu, kiểm soá
     for (const p of allProducts) {
       for (const link of [inv.nameLink(p), inv.imageLink(p)]) {
         await link.click();
-        await expectDetailOf(page, detail, p);
+        // Description of error_user's detail page is missing: BUG-21, owned by TC-046 (not hidden: TC-046 fails on it)
+        await expectDetailOf(page, detail, p, p.name, false);
         await inv.goto();
       }
     }
@@ -645,9 +683,9 @@ test.describe('Chung: nhiều màn hình (tài khoản, giỏ, menu, kiểm soá
     await evidence.shot('Giỏ sau khi đăng nhập lại', { highlight: cart.cartList, note: 'Vẫn Backpack, Bike Light' });
   });
 
-  test('TC-040 tài khoản khác không thấy và không sửa được giỏ của người trước', { tag: ['@AC-7', '@list', '@cart', '@security', '@BUG-07'] }, async ({ page, loggedInPage: inv, loginAs, cartPage: cart, evidence }) => {
-    test.fail(true, 'BUG-07: người đăng nhập sau thấy và sửa được giỏ của người trước');
-    test.setTimeout(60_000);
+  test('TC-040 tài khoản khác không thấy, không sửa, không xóa được giỏ của người trước', { tag: ['@AC-7', '@list', '@cart', '@security', '@BUG-07'] }, async ({ page, loggedInPage: inv, loginAs, cartPage: cart, evidence }) => {
+    test.fail(true, 'BUG-07: người đăng nhập sau thấy, sửa, xóa được giỏ của người trước');
+    test.setTimeout(90_000);
     /** Back to a fresh state: logged out, empty cart (the cart lives in localStorage and survives logout). */
     const restart = async (app: InventoryPage | CartPage) => {
       await app.logout();
@@ -687,6 +725,20 @@ test.describe('Chung: nhiều màn hình (tài khoản, giỏ, menu, kiểm soá
     await standard3b.openCart();
     await expect.soft(cart.itemNames, 'Biến thể 3: giỏ của standard_user không bị người sau sửa').toHaveText([backpack.name, bikeLight.name], QUICK);
     await evidence.shot('Biến thể 3: giỏ của standard_user sau khi visual_user thêm Onesie', { highlight: [cart.cartList, cart.cartLink], note: 'Mong đợi: đúng 2 dòng Backpack, Bike Light, không có Onesie' });
+    await restart(cart);
+    // Biến thể 4 (xóa, review-defects A2): visual_user bỏ một món trong giỏ của standard_user
+    const standard4 = await loginAs(users.standard);
+    await standard4.addButton(backpack).click();
+    await standard4.addButton(bikeLight).click();
+    await standard4.logout();
+    const visual4 = await loginAs(users.visual);
+    if (await visual4.removeButton(backpack).isVisible()) await visual4.removeButton(backpack).click();
+    await visual4.logout();
+    const standard4b = await loginAs(users.standard);
+    await expect.soft(standard4b.cartBadge, 'Biến thể 4: số giỏ của standard_user').toHaveText('2', QUICK);
+    await standard4b.openCart();
+    await expect.soft(cart.itemNames, 'Biến thể 4: giỏ của standard_user không bị người sau xóa').toHaveText([backpack.name, bikeLight.name], QUICK);
+    await evidence.shot('Biến thể 4: giỏ của standard_user sau khi visual_user bỏ Backpack', { highlight: [cart.cartList, cart.cartLink], note: 'Mong đợi: vẫn đủ 2 dòng Backpack, Bike Light' });
   });
 
   test('TC-041 Reset App State cập nhật ngay ở danh sách, chi tiết, giỏ', { tag: ['@AC-3', '@AC-4', '@AC-7', '@list', '@detail', '@cart', '@BUG-05'] }, async ({ loggedInPage: inv, productDetailPage: detail, cartPage: cart, evidence }) => {

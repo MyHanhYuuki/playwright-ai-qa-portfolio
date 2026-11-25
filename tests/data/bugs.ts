@@ -23,4 +23,5 @@ export const BUG_TICKETS: Record<string, string> = {
   'BUG-18': '[id_bug_18]',
   'BUG-19': '[id_bug_19]',
   'BUG-20': '[id_bug_20]',
+  'BUG-21': '[id_bug_21]',
 };

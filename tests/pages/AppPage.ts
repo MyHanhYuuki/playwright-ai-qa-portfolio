@@ -48,18 +48,18 @@ export class AppPage {
     await item.click();
   }
 
-  /**
-   * Log out and wait until the login screen is RENDERED (not just the URL).
-   * Logout is client-side (pushState): the URL changes to "/" before the login form appears.
-   * Pressing Back in that gap kept the old page on screen (CI run 45449039805, TC-043);
-   * reproduced locally with CPU throttling: 5/10 without this wait, 0/10 with it.
-   */
   /** Close the side menu (it covers the left part of the page, e.g. in screenshots). */
   async closeMenu() {
     await this.page.getByRole('button', { name: 'Close Menu' }).click();
     await this.logoutLink.waitFor({ state: 'hidden' });
   }
 
+  /**
+   * Log out and wait until the login screen is RENDERED (not just the URL).
+   * Logout is client-side (pushState): the URL changes to "/" before the login form appears.
+   * Pressing Back in that gap kept the old page on screen (CI run 45449039805, TC-043);
+   * reproduced locally with CPU throttling: 5/10 without this wait, 0/10 with it.
+   */
   async logout() {
     await this.openMenuItem(this.logoutLink);
     await this.page.getByTestId('login-button').waitFor();

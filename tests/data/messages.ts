@@ -23,6 +23,8 @@ export const MSG_SHOP = {
   addFailed: 'Failed to add item to the cart.',
   /** MSG-06: same, when a Remove has no effect */
   removeFailed: 'Failed to remove item from cart.',
+  /** MSG-07: console error of error_user on every product detail page load (evidence for BUG-21) */
+  detailRenderFailed: 'Error: This component failed to render!',
   /** Title of the first checkout step (destination of the Checkout button) */
   checkoutTitle: 'Checkout: Your Information',
 } as const;
