@@ -30,7 +30,11 @@ Script tự ghi `qa-runs/<feature>/run-results/run-YYYYMMDD-HHMMSS.json` (và x�
   "total_duration_ms": 17900,
   "tests": [
     { "tc_id": "TC-028", "title": "...", "status": "failed", "expected_status": "failed", "outcome": "expected",
-      "duration_ms": 11304, "retry_count": 0, "error": "Error: Chiều 1: ...", "errors": ["Error: Chiều 1: ...", "Error: Chiều 2: ..."] }
+      "duration_ms": 11304, "retry_count": 0, "error": "Error: Chiều 1: ...", "errors": ["Error: Chiều 1: ...", "Error: Chiều 2: ..."],
+      "error_details": ["Error: Chiều 1: ...
+
+Expected: ...
+Received: ..."], "annotations": [{ "type": "...", "description": "..." }] }
   ]
 }
 ```
@@ -39,7 +43,9 @@ Script tự ghi `qa-runs/<feature>/run-results/run-YYYYMMDD-HHMMSS.json` (và x�
 | `status` | Chuyện thật sự xảy ra: `passed` / `failed` / `timedOut` / `skipped` |
 | `expected_status` | `failed` = bug đã biết, test có `test.fail()` |
 | `outcome` | Đánh giá của Playwright: `expected` / `unexpected` / `flaky` / `skipped` |
-| `errors` | Mọi lỗi, kể cả `expect.soft` (một test có thể fail ở nhiều chỗ) |
+| `errors` | Mọi lỗi, kể cả `expect.soft` (một test có thể fail ở nhiều chỗ). Chỉ dòng đầu = tên assertion |
+| `error_details` | Cùng các lỗi đó, **đủ nội dung** (Expected / Received, `strict mode violation`…). Triage trích giá trị thật từ đây |
+| `annotations` | Ghi chú do test ghi lại (vd thời gian sắp xếp BUG-17, nội dung hộp thoại BUG-12) |
 | `summary.passed` | Theo **Playwright** (gồm cả bug đã biết fail đúng dự kiến). Kết quả **theo test case**: Passed = `passed − expected_fail`, Failed = `failed + expected_fail` |
 
 RTM (`npm run rtm`) đọc `status` + `expected_status` để nhận ra "bug có vẻ đã sửa" và flaky, nên đừng bỏ trường nào.
@@ -58,6 +64,7 @@ Với **mỗi test FAILED**, gán 1 trong 3 nhãn:
 - `TimeoutError` khi chờ phần tử: thiếu điều kiện chờ
 - Lỗi cú pháp, lỗi import, test data sai
 - Assertion sai so với `expected_result` trong `test-cases.csv` (test viết sai logic)
+- **Test có `test.fail()`** (bug đã biết): đọc **`error_details`** (đủ nội dung), không chỉ `errors[]`: với `expect.soft(x, 'tên')` dòng đầu chỉ là tên, lỗi thật (vd `strict mode violation`) nằm ở dòng sau. Playwright báo "expected" với **mọi** lỗi, kể cả lỗi của code test. Đọc từng dòng trong `errors[]`: `Test timeout`, `Target page… closed`, `ReferenceError`, `strict mode violation` là `script-issue`, **không phải bug**. Chỉ tính là bug khi lỗi nằm đúng ở assertion của bug đó
 
 ### `real-bug`: web hoạt động sai so với AC
 - Tìm được phần tử nhưng hành vi, dữ liệu hay trạng thái sai so với `expected_result` / AC
@@ -110,4 +117,4 @@ Với **mỗi test FAILED**, gán 1 trong 3 nhãn:
 ```bash
 npm run test:evidence -- <feature>
 ```
-Chụp ảnh từng bước (khung đỏ + "Cần xem") và video cho mọi TC của feature, vào `qa-runs/<feature>/evidence/`. Chỉ chạy cho feature đang làm: evidence của feature khác giữ nguyên. Test có tag `@BUG-xx` được copy thêm vào `evidence/bugs/<ticket>_BUG-xx/` (ticket lấy từ `tests/data/bugs.ts`).
+Chụp ảnh từng bước (khung đỏ + "Cần xem") cho mọi TC của feature. **Video chỉ quay cho TC có bug hoặc kết quả bất thường** (quyết định 2026-11-25); video cũ của TC pass được giữ nguyên, không quay lại (`EVIDENCE_ALL_VIDEOS=1` để quay hết), vào `qa-runs/<feature>/evidence/`. Chỉ chạy cho feature đang làm: evidence của feature khác giữ nguyên. Test có tag `@BUG-xx` được copy thêm vào `evidence/bugs/<ticket>_BUG-xx/` (ticket lấy từ `tests/data/bugs.ts`).

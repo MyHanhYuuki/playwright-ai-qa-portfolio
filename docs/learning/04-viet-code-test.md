@@ -1,6 +1,6 @@
 # Bài 4: Viết code test (script-gen) theo Page Object Model
 
-> Bước **[3] script-gen**. Kết quả: [`tests/`](../../tests/) · Review: [`review-script-gen.md`](../../qa-runs/saucedemo-login-screen/review-script-gen.md)
+> Bước **[3] script-gen**. Kết quả: [`tests/`](../../tests/) · Review: [`review-script-gen.md`](../../qa-runs/saucedemo-login-screen/reviews/review-script-gen.md)
 
 ## 🎯 Tại sao học
 Đây là phần "automation" thật sự: biến 33 test case trên giấy thành code chạy tự động. Code viết tốt thì UI đổi chỉ cần sửa **một chỗ**. Viết ẩu thì mỗi lần UI đổi lại phải sửa hàng chục test.

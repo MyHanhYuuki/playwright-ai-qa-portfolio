@@ -63,3 +63,5 @@ Format `test-data.md`:
 - TC có BUG chỉ để **ghi nhận** (vd hiệu năng, test phải PASS): ghi rõ trong `notes` "KHÔNG dùng `test.fail()`".
 - Đích chuyển trang: ghi phần tử riêng của trang đích (tiêu đề), không chỉ URL.
 - Feature nhiều màn hình: điền cột `screen`.
+- **Điều kiện trước nêu cả trạng thái dữ liệu lưu trong trình duyệt** (vd "Phiên trình duyệt mới, giỏ trống"), không chỉ "đã đăng nhập". Dữ liệu `localStorage` còn lại sau đăng xuất, người chạy tay làm TC liên tiếp sẽ ra kết quả sai (review-test-impl-r2 B1).
+- Phát hiện biến thể / quan sát mới ở bước này: cập nhật O-xx, ma trận, `known-issues.md`, viewpoint **cùng lúc** với TC.

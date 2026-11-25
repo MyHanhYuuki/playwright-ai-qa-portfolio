@@ -14,6 +14,12 @@
 | 4 | 2026-11-24 | Khám phá web (Bài 2) | Khám phá SauceDemo bằng trình duyệt, khoảng 20 tình huống | Lần đầu **báo nhầm 3 user không đăng nhập được** (script-issue) | Chạy lại với phiên sạch, xác nhận không phải bug |
 | 5 | 2026-11-24 | Seed test | – | Test seed mặc định **rỗng nhưng vẫn pass**, làm CI xanh giả | Đổi thành smoke check, **chứng minh test fail được** khi đổi URL sai |
 | 6 | 2026-11-24 | Review sau bước test-design | Review lại toàn bộ theo vai QC Lead + ISTQB | AI **tự bỏ sót** ở bước trước: lỗ hổng cookie, 4 viewpoint, 2 file câu hỏi trùng, ghi sai kỹ thuật BVA | Người yêu cầu thêm bước review sau mỗi bước, tạo agent `qa-reviewer` |
+| 7 | 2026-11-24 | Chạy evidence trên Windows | Viết script chạy evidence | Lệnh có `-g "A\|B"` bị cmd cắt ở dấu `\|`, **0 test chạy** mà vẫn tạo mục lục | Đối chiếu số test đã chạy; script gọi Playwright không qua shell |
+| 8 | 2026-11-24 | Bug report SD-101 | Viết BUG-01, tạo RTM | Bug chỉ mô tả **một chiều**; RTM tính test **skip** là đạt | Reviewer thử chiều ngược lại; sửa TC-028 kiểm 2 chiều; thử làm sai dữ liệu để RTM báo |
+| 9 | 2026-11-25 | Code test SD-102 | Viết Page Object + 45 test | Test **chỉ chờ URL**: trên CI bấm Back khi trang chưa đổi (TC-043 fail), test đọc nhầm nút của trang cũ mà vẫn pass (TC-022) | Tái hiện bằng CPU giả lập chậm; Page Object tự chờ phần tử riêng của trang đích |
+| 10 | 2026-11-25 | Test bug đã biết (`test.fail()`) | – | `test.fail()` tính **mọi lỗi** là "fail như mong đợi": test hết giờ (TC-024), lỗi biến chưa khai báo (TC-025), ảnh evidence treo 120 giây (TC-018) đều bị che | Đọc từng dòng lỗi; thêm `typecheck`, cảnh báo tự động trong `test:run` và evidence (đã thử bằng lỗi cố tình) |
+| 11 | 2026-11-25 | Lưu thêm dữ liệu vào kết quả chạy | Thêm `annotations` vào run JSON | Playwright tự gắn **đường dẫn máy** (`location.file`) vào mỗi annotation, suýt bị commit | Quét thông tin cá nhân trước khi commit; script chỉ giữ trường cần, thay đường dẫn repo bằng `<repo>` |
+| 12 | 2026-11-25 | Kiểm lại phát hiện của reviewer | Thử tái hiện lỗi console của `error_user` | AI kết luận vội "không tái hiện được" vì chỉ nghe sự kiện `console`, trong khi lỗi là `pageerror` | Người dùng yêu cầu trao đổi lại với reviewer; reviewer kiểm 3 lần, AI kiểm lại: đúng là `pageerror` |
 
 ---
 
@@ -57,3 +63,29 @@
 - **Chuyện xảy ra**: AI viết BUG-01 là "thiếu Password thì ô Username cũng bị tô đỏ". qa-reviewer thử chiều ngược lại (thiếu Username) và thấy **ô Password cũng bị tô đỏ**. Nếu dev chỉ sửa một chiều, TC-028 sẽ pass dù bug vẫn còn. Reviewer cũng bắt được lỗi trong script RTM: TC bị **skip** vẫn được tính là AC "Đạt", tức là RTM có thể che việc dùng `test.skip` để giấu bug.
 - **Xử lý**: tái hiện lại cả 2 chiều, lưu ảnh vào `manual/`, viết lại BUG-01. Người duyệt chọn sửa TC-028 để kiểm tra **cả 2 chiều** thay vì thêm TC mới, evidence chụp lại cả 2 chiều. Sửa script RTM: skip / flaky / chưa chạy thì AC hiện "Cần xem lại", có cảnh báo khi số TC lệch. Kiểm chứng bằng cách cố tình làm sai dữ liệu chạy (skip 1 TC, xóa 1 TC) và xem RTM có báo không.
 - **Bài học**: tìm thấy bug thì **thử các biến thể** (chiều ngược lại, dữ liệu khác, trang khác) trước khi viết report. Báo cáo tổng hợp cũng phải "có thể fail": thử làm sai đầu vào xem nó có báo không.
+
+### #9: Test chỉ chờ URL, đọc nhầm trang cũ
+- **Chuyện xảy ra**: SD-102 TC-043 pass trên máy nhưng fail cả 3 lần trên CI. Ảnh lúc fail cho thấy trang giỏ vẫn còn, menu còn mở. qa-reviewer tìm thêm: TC-022 sau khi bấm "Back to products" đọc nút Add/Remove **của trang chi tiết** (trang cũ còn trên màn hình), nên test pass mà không kiểm được gì.
+- **Nguyên nhân gốc**: SauceDemo đổi trang phía trình duyệt: URL đổi trước, trang mới hiện sau một chút. Test chỉ chờ URL. Thêm nữa `data-test="inventory-item"` có ở **cả 3 trang**, nên dùng nó làm mốc thì trang nào cũng "đúng".
+- **Kiểm chứng**: giả lập CPU chậm 8 lần: không chờ trang đích thì 5/10 lần lỗi, có chờ thì 0/10.
+- **Xử lý**: mọi method đổi trang trong Page Object tự chờ phần tử **chỉ trang đích mới có** (`cart-list`, `inventory-list`, nút Login). Quy tắc ghi vào `script-gen.md`, `CLAUDE.md`, `qa-reviewer.md`. Cũng sửa SD-101 TC-006: ngưỡng chờ 10 giây áp cho cả bước chờ tiêu đề, không chỉ bước chờ URL.
+- **Bài học**: "pass trên máy mình" chưa đủ. Test có chuyển trang phải chạy lặp nhiều lần, và tự hỏi "nếu web sai thì test này có đỏ không?".
+
+### #10: `test.fail()` che lỗi của chính code test
+- **Chuyện xảy ra**: test bug đã biết được đánh dấu `test.fail()`. Playwright coi **mọi** lỗi là "fail như mong đợi", kể cả lỗi của code test. Ba lần bị che: TC-024 hết giờ nên 5/12 biến thể chưa từng chạy; sau khi sửa, một biến bị xóa sót gây `ReferenceError` ở TC-025; khi chụp evidence, TC-018 chờ khoanh đỏ một nút không tồn tại tới hết 120 giây, chỉ chụp được 1/12 ảnh.
+- **Phát hiện**: đọc **từng dòng lỗi** trong kết quả chạy, không chỉ con số "16 bug fail như dự kiến".
+- **Xử lý**: cài TypeScript, thêm `npm run typecheck` (cả trên CI); `test:run` và chế độ evidence tự cảnh báo khi test bug đã biết có lỗi giống lỗi code test (đã thử bằng cách cố tình gây lỗi); evidence chờ phần tử cần khoanh tối đa 1 giây. Sửa lại ghi chú ở #2: nay dự án đã cài TypeScript nên `npx tsc` dùng được.
+- **Bài học**: con số tổng có thể đúng mà lý do sai. Với test bug đã biết, phải đọc **lỗi nằm ở đâu**.
+
+### #11: Dữ liệu mới kéo theo đường dẫn máy
+- **Chuyện xảy ra**: để triage trích được giá trị thật (Expected / Received) và thời gian BUG-17, AI cho `run-tests.mjs` lưu thêm `annotations`. Playwright tự thêm `location.file` vào mỗi annotation: đường dẫn tuyệt đối trên máy đang chạy, có cả tên người dùng của máy.
+- **Phát hiện**: bước quét thông tin cá nhân trước khi commit (36 chỗ trong 1 file kết quả).
+- **Xử lý**: script chỉ giữ `type` và `description`, thay đường dẫn repo trong nội dung lỗi bằng `<repo>`; làm sạch file kết quả đã tạo.
+- **Bài học**: mỗi khi lưu **thêm trường** từ công cụ bên ngoài, giả định nó có thể chứa thông tin máy. Chỉ giữ trường cần, và luôn quét trước khi commit.
+
+### #12: Kết luận "không tái hiện được" vì nghe nhầm loại sự kiện
+- **Chuyện xảy ra**: review đề xuất ghi lại câu lỗi `Failed to add item to the cart.` của `error_user`. AI thử bằng `page.on('console')`, không thấy, nên ghi "không tái hiện được, không làm".
+- **Kiểm soát**: người dùng không chấp nhận ngay, yêu cầu trao đổi lại với qa-reviewer. Reviewer kiểm 24 tình huống × 3 lần: lỗi có thật, nhưng là **lỗi JavaScript không được bắt** (`pageerror`), không phải thông báo console. DevTools in cả hai loại ở tab Console nên khi xem bằng tay rất dễ nhầm.
+- **Xử lý**: thêm MSG-05, MSG-06; TC-019 ghi lại `pageerror` làm bằng chứng; sửa O-23, BUG-13 cho đúng loại lỗi.
+- **Bài học**: "không tái hiện được" là một kết luận cần bằng chứng như mọi kết luận khác: ghi rõ đã thử **cách nào**, và nghĩ xem cách thử đó có thể bỏ sót gì.
+

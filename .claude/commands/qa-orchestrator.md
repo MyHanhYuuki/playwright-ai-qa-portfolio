@@ -17,19 +17,19 @@ requirement
   ↓
 [1] test-design ──→ spec-review.md, viewpoint.csv, q-and-a.md, known-issues.md, improvements.md
   ↓
-🔍 qa-reviewer ──→ review-test-design.md
+🔍 qa-reviewer ──→ reviews/review-test-design.md
   ↓
 ⏸ HITL #1: người trả lời câu hỏi (cột Trả lời trong q-and-a.md) + xem review
   ↓
 [2] test-impl ────→ test-cases.csv, test-data.md
   ↓
-🔍 qa-reviewer ──→ review-test-impl.md
+🔍 qa-reviewer ──→ reviews/review-test-impl.md
   ↓
 ⏸ HITL #2: người duyệt viewpoint + test case
   ↓
 [3] script-gen ───→ tests/pages/*, tests/specs/<feature>.spec.ts
   ↓
-🔍 qa-reviewer ──→ review-script-gen.md
+🔍 qa-reviewer ──→ reviews/review-script-gen.md
   ↓
 [4] executor ─────→ run-results/<run_id>.json, triage.md
   ↓
@@ -63,8 +63,8 @@ Kiểm tra: `spec-review.md` có nội dung, `viewpoint.csv` có ≥1 dòng, `q-
 
 ## 🔍 Review sau mỗi bước
 Sau **mỗi** bước test-design, test-impl, script-gen, executor: gọi agent `qa-reviewer` với tên bước.
-- Kết luận 🔴 "Phải làm lại": gọi lại bước đó kèm `review-<bước>.md` (tối đa 1 lần), rồi review lại.
-- Kết luận ⚠️ hoặc ✅: đưa `review-<bước>.md` vào thông báo HITL kế tiếp để người duyệt quyết định sửa gì.
+- Kết luận 🔴 "Phải làm lại": gọi lại bước đó kèm `reviews/review-<bước>.md` (tối đa 1 lần), rồi review lại.
+- Kết luận ⚠️ hoặc ✅: đưa `reviews/review-<bước>.md` vào thông báo HITL kế tiếp để người duyệt quyết định sửa gì.
 
 Đặt `hitl_pending = "HITL #1"`.
 
@@ -72,7 +72,7 @@ Sau **mỗi** bước test-design, test-impl, script-gen, executor: gọi agent 
 **Dừng pipeline**, thông báo:
 ```
 ⏸ HITL #1: test-design đã xong.
-🔍 Review: [kết luận + số phát hiện trong review-test-design.md]
+🔍 Review: [kết luận + số phát hiện trong reviews/review-test-design.md]
 📋 Câu hỏi Open: [liệt kê từ q-and-a.md, kèm "Đề xuất"]
 Trả lời trong chat (mình ghi vào cột Trả lời) hoặc tự sửa file, rồi gõ: "HITL #1 done"
 ```
@@ -145,7 +145,7 @@ Ma trận: **AC → viewpoint → TC → kết quả lần chạy cuối → bug
 Cột: `AC | TVP | TC | Title | Technique | Auto? | Result | Bug`.
 Tổng hợp: % AC có TC, % AC đạt (mọi TC liên quan Passed; skip / flaky / chưa chạy thì **không** tính đạt), các AC chưa có TC (gap), số bug đang mở theo AC, số TC flaky / cần làm tay. Có cảnh báo khi lần chạy không full hoặc số TC lệch.
 Tạo bằng `npm run rtm -- <feature>` (không làm tay, chỉ feature đang làm): `rtm.md` xem trên GitHub, `rtm-report.html` tự chứa, mở bằng trình duyệt.
-Sau bước 6 + 7 gọi `qa-reviewer` với bước `defects` → `review-defects.md`.
+Sau bước 6 + 7 gọi `qa-reviewer` với bước `defects` → `reviews/review-defects.md`.
 
 Cuối cùng in tóm tắt: số TC, pass/fail, số bug, coverage. Gợi ý commit.
 

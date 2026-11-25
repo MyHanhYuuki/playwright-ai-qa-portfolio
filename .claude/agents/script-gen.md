@@ -25,7 +25,7 @@ Bạn là **script-gen agent**, bước 3/5 trong QA pipeline. Orchestrator gọ
 3. Kiểm tra kết quả mong đợi bằng `browser_verify_*`. Nếu thực tế **khác** `expected_result` thì **vẫn viết assertion theo expected_result** (đó có thể là bug thật) và ghi chú `// NOTE: thực tế khác expected, executor sẽ phân loại`.
 4. Đọc `generator_read_log` để tham khảo locator mà Playwright gợi ý.
 5. Viết Page Object và spec theo chuẩn bên dưới.
-6. Kiểm tra code biên dịch được bằng `npx playwright test --list tests/specs/<feature>.spec.ts` (dự án không cài `tsc`, đừng gọi `npx tsc`). **Không chạy test.** Đó là việc của executor.
+6. Kiểm tra code biên dịch được bằng `npx playwright test --list tests/specs/<feature>.spec.ts` (và `npm run typecheck`). **Không chạy test.** Đó là việc của executor.
 
 ---
 
@@ -115,6 +115,9 @@ test.describe('AC-2: Đăng nhập thành công', () => {
 - Gắn tag `@AC-x` theo `linked_ac` để truy vết.
 - Không hardcode base URL (đã có `baseURL` trong config) hay mật khẩu (dùng `tests/data`, đọc `process.env`).
 - Không dùng `page.waitForTimeout()`.
+- **Mọi method làm đổi trang** (click link/nút chuyển trang, `goBack`, đăng xuất…) phải chờ **phần tử chỉ trang đích mới có** (vd `cart-list`, `inventory-list`, nút `Login`), không chỉ chờ URL. Web SPA đổi URL trước, trang cũ còn trên màn hình thêm một lúc. Đừng dùng phần tử có ở nhiều trang làm mốc (SauceDemo: `inventory-item` có ở cả danh sách, chi tiết, giỏ).
+- Test có nhiều bước tải trang (vd 12 lần mở trang): ước lượng thời gian, đặt `test.setTimeout()` đủ dư. Cách tính: (số lần tải trang × thời gian tải) + (số điểm kiểm **có thể fail** × timeout ngắn của `expect.soft`) + 30%. Vd TC-024: 12 lần tải × ~1,5 giây + 24 điểm × 2 giây ≈ 66 giây, cộng 30% ≈ 86 → đặt 90 giây. Test `test.fail()` bị hết giờ vẫn được Playwright tính là "fail như mong đợi", nên hết giờ sẽ **che** các bước chưa chạy.
+- Kiểm tra kiểu: `npm run typecheck` (Playwright chạy TypeScript **không** kiểm tra kiểu: biến chưa khai báo chỉ lộ ra lúc chạy, và trong test `test.fail()` nó bị tính nhầm là bug).
 - Page Object không chứa assertion về nghiệp vụ. Assertion đặt trong spec.
 - Page Object đã tồn tại: chỉ thêm method mới, không sửa method cũ.
 - Không gọi agent khác.

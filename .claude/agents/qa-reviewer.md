@@ -173,7 +173,7 @@ Rủi ro = **khả năng xảy ra × mức ảnh hưởng**.
 - [ ] Không có thông tin cá nhân hay đường dẫn máy
 
 ## 7. Mẫu báo cáo
-`qa-runs/<feature>/review-<bước>.md`:
+`qa-runs/<feature>/reviews/review-<bước>.md` (mọi file review của tính năng nằm chung thư mục `reviews/`):
 ```markdown
 # Review: <bước>, <feature>
 - Ngày · Reviewer: qa-reviewer · Kết luận: ✅ Đạt | ⚠️ Cần sửa | 🔴 Phải làm lại
@@ -203,3 +203,5 @@ Phần 1–7 dùng chung cho mọi dự án. Phần này ghi riêng những lỗ
 | L7 | RTM tính test skip là pass; RTM dùng lần chạy cũ; RTM gắn bug từ mọi BUG id trong ghi chú | Đối chiếu RTM với lần chạy mới nhất; bug chỉ lấy từ câu đầu của `notes` |
 | L8 | Bảng "Xử lý sau review" ghi ✅ cho việc mới sửa một phần | Kiểm từng chỗ liên quan trước khi ghi ✅ |
 | L9 | File review chứa tên máy | Quét thông tin cá nhân trước khi nộp |
+| L10 | Bug của một thao tác chỉ được thử ở trang đã thấy lỗi, bỏ sót trang khác có cùng thao tác (SD-102 BUG-11 có cả ở trang giỏ) | Liệt kê **mọi trang** có thao tác đó (link tên, nút Add / Remove…) rồi thử từng trang |
+| L11 | Bug lộ dữ liệu chỉ được thử chiều **đọc** (SD-102 BUG-07) | Thử cả chiều **ghi**: người sau sửa / xóa được dữ liệu của người trước không; và chiều ngược lại |

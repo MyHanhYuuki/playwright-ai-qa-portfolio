@@ -53,7 +53,7 @@ Dự án playwright-ai-qa-portfolio
 ├── 🔍 qa-reviewer  (QC Lead, chuẩn ISTQB)
 │     ├── Chạy: sau mỗi bước test-design, test-impl, script-gen, executor, TRƯỚC HITL
 │     ├── Làm:  soát thiếu sót, sai kỹ thuật, không nhất quán giữa các file; kiểm chứng trên web
-│     └── Ra:   review-<bước>.md (chỉ báo cáo, không tự sửa)
+│     └── Ra:   reviews/review-<bước>.md (chỉ báo cáo, không tự sửa)
 │
 ├── 🔌 CÔNG CỤ
 │     ├── Playwright MCP (.mcp.json): cầu nối để agent điều khiển trình duyệt thật
@@ -98,7 +98,7 @@ flowchart TD
 | Bước | Vai | Đầu vào | Đầu ra | Công cụ đặc biệt |
 |---|---|---|---|---|
 | 1 | 🔍 test-design | requirement | spec-review, viewpoint, câu hỏi | Trình duyệt (khám phá web) |
-| 🔍 | qa-reviewer | kết quả bước vừa xong | `review-<bước>.md` | Trình duyệt (kiểm chứng) |
+| 🔍 | qa-reviewer | kết quả bước vừa xong | `reviews/review-<bước>.md` | Trình duyệt (kiểm chứng) |
 | ⏸ | 👤 HITL #1 | câu hỏi Open | cột Trả lời trong `q-and-a.md` | – |
 | 2 | 📝 test-impl | viewpoint + Q&A | test-cases.csv, test-data.md | – |
 | ⏸ | 👤 HITL #2 | test case | duyệt / góp ý | – |
@@ -118,7 +118,7 @@ qa-runs/<tên-chức-năng>/          ← mỗi chức năng một thư mục (v
   q-and-a.md                       ← [1] đặt câu hỏi, HITL #1 trả lời (một file duy nhất)
   known-issues.md                  ← [1] bug thấy sớm + lưu ý cho bước sau
   improvements.md                  ← [1] đề xuất cải tiến (không phải bug)
-  review-<bước>.md                 ← 🔍 qa-reviewer
+  reviews/review-<bước>.md         ← 🔍 qa-reviewer (mọi file review gom chung 1 thư mục)
   test-cases.csv, test-data.md     ← [2]
   run-results/run-*.json           ← [4]
   triage.md                        ← [4]

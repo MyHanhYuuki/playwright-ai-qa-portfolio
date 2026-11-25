@@ -2,6 +2,7 @@
 
 > Mật khẩu hợp lệ **không ghi trong test case**. Đọc từ biến môi trường `SAUCE_PASSWORD` (mặc định là mật khẩu demo công khai, xem `tests/data/users.ts`).
 > Dữ liệu chuẩn của sản phẩm nằm trong `tests/data/products.ts` (TD-06). Test so trang web với dữ liệu này, **không** so trang với chính nó.
+> **Giỏ lưu ở `localStorage` khóa `cart-contents`** và còn lại sau khi đăng xuất, kể cả khi đổi tài khoản (O-15, O-16). Mỗi TC bắt đầu từ **phiên trình duyệt mới (hoặc cửa sổ ẩn danh), giỏ trống**. **Không** dùng Reset App State để làm sạch giỏ (BUG-05: giao diện không cập nhật). Chạy tay nhiều TC liên tiếp trong cùng phiên sẽ ra kết quả sai.
 
 | ID | Tên | Dữ liệu | Dùng cho |
 |---|---|---|---|
@@ -12,7 +13,7 @@
 | TD-05 | `performance_glitch_user` | + mật khẩu hợp lệ | TC-034 |
 | TD-06 | Danh mục sản phẩm chuẩn (lấy từ `standard_user`, O-01) | 6 sản phẩm: id, tên, giá, mô tả, khóa ảnh (xem bảng dưới; mô tả đầy đủ trong `tests/data/products.ts`) | Mọi TC kiểm tên, giá, ảnh, thứ tự |
 | TD-07 | id ngoài khoảng 0–5 | `6`, `99`, `-1` | TC-025 |
-| TD-08 | id sai định dạng | `abc`, rỗng, `4abc`, `04`, `4.9`, `0x4` | TC-026 |
+| TD-08 | id sai định dạng | `abc`, rỗng, `4abc`, `04`, `4.9`, `0x4`, `%204` (khoảng trắng + 4), `%2B4` (+4), `-0`, `4e0` | TC-026 |
 | TD-09 | Dữ liệu giỏ sửa tay (`localStorage` khóa `cart-contents`) | `[4,4]` (trùng id), `[4,"x"]` (id lạ) | TC-025 |
 | TD-10 | Cookie phiên tự tạo (giống SD-101 TD-08) | `session-username=standard_user`, domain `www.saucedemo.com`, path `/` | TC-045 |
 
@@ -34,3 +35,6 @@ Thứ tự đúng của 4 kiểu sắp xếp tính từ bảng này (cùng giá 
 | MSG-01 | `Sorting is broken! This error has been reported to Backtrace.` (hộp thoại của `error_user`, dùng làm bằng chứng BUG-12) |
 | MSG-02 | `Epic sadface: You can only access '<path>' when you are logged in.` (giống SD-101 MSG-05; trong code dùng `MSG.notLoggedIn(path)` có sẵn, không tạo hằng mới). Đường dẫn **không có** `?id=` |
 | MSG-03 | `ITEM NOT FOUND` (tên hiển thị ở trang sản phẩm không tồn tại) |
+| MSG-04 | `Checkout: Your Information` (tiêu đề bước thanh toán đầu tiên, đích của nút Checkout; trong code: `MSG_SHOP.checkoutTitle`) |
+| MSG-05 | `Failed to add item to the cart.` (lỗi JavaScript không được bắt khi `error_user` bấm Add mà không có tác dụng; bắt bằng `page.on('pageerror')`, **không** phải console; DevTools vẫn in ở tab Console) |
+| MSG-06 | `Failed to remove item from cart.` (như MSG-05, khi bấm Remove không có tác dụng) |

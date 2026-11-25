@@ -1,6 +1,6 @@
 # Bài 7: Viết bug report và RTM
 
-> Bước **[6] bug report + RTM** (sau HITL #3). Kết quả: [`defects.md`](../../qa-runs/saucedemo-login-screen/defects.md) · [`rtm.md`](../../qa-runs/saucedemo-login-screen/rtm.md) (bản HTML: `rtm-report.html`) · Review: [`review-defects.md`](../../qa-runs/saucedemo-login-screen/review-defects.md)
+> Bước **[6] bug report + RTM** (sau HITL #3). Kết quả: [`defects.md`](../../qa-runs/saucedemo-login-screen/defects.md) · [`rtm.md`](../../qa-runs/saucedemo-login-screen/rtm.md) (bản HTML: `rtm-report.html`) · Review: [`review-defects.md`](../../qa-runs/saucedemo-login-screen/reviews/review-defects.md)
 
 ## 🎯 Tại sao học
 - Tìm ra bug mới được nửa việc. **Bug report viết kém thì bug không được sửa**: dev không tái hiện được, trả về "cannot reproduce", hoặc hiểu sai mức độ.

@@ -1,6 +1,6 @@
 # Bài 5: Chạy test và phân loại kết quả (executor)
 
-> Bước **[4] executor**. Kết quả: [`triage.md`](../../qa-runs/saucedemo-login-screen/triage.md) · [`run-results/`](../../qa-runs/saucedemo-login-screen/run-results/) · Review: [`review-executor.md`](../../qa-runs/saucedemo-login-screen/review-executor.md)
+> Bước **[4] executor**. Kết quả: [`triage.md`](../../qa-runs/saucedemo-login-screen/triage.md) · [`run-results/`](../../qa-runs/saucedemo-login-screen/run-results/) · Review: [`review-executor.md`](../../qa-runs/saucedemo-login-screen/reviews/review-executor.md)
 
 ## 🎯 Tại sao học
 Chạy test thì ai cũng bấm được. Giá trị của QC nằm ở việc **đọc đúng kết quả**: test fail là do web lỗi, do test viết sai, hay do môi trường chập chờn? Phân loại sai thì báo nhầm bug, hoặc tệ hơn là bỏ lọt bug.
