@@ -43,6 +43,10 @@ Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `revi
 - Không hardcode mật khẩu. Dùng `tests/data/`, đọc `process.env` (xem `.env.example`).
 - **Không bao giờ sửa expected hay dùng `test.skip`/`fixme` để che bug.**
 
+## Xử lý phát hiện của qa-reviewer
+- Sửa theo review rồi ghi bảng "Xử lý sau review" cuối file review. Chỉ ghi ✅ khi mọi chỗ liên quan đã sửa.
+- **Không tái hiện được / không làm được một phát hiện: không tự đóng.** Quay lại trao đổi với qa-reviewer, hai bên chốt giải pháp (ghi mục `## Trao đổi <mã>` trong file review), rồi báo người dùng 3 ý: (1) không tái hiện được ở điểm nào, khác reviewer ở đâu; (2) sau trao đổi chốt thế nào, sẽ làm gì; (3) phương án tối ưu đề xuất để người dùng quyết. Chi tiết: `.claude/commands/qa-orchestrator.md`, `.claude/agents/qa-reviewer.md` mục 6b.
+
 ## Quy ước tài liệu
 - Tài liệu tiếng Việt. README tiếng Anh.
 - Mỗi bài học trong `docs/learning/` theo khung: 🎯 Tại sao học · 🏭 Ngoài thực tế · 👨‍🏫 Làm mẫu → giải thích → tự làm · ⚠️ Lỗi hay gặp · ✅ Checklist · ❓ Câu hỏi liên quan. Thêm link vào README.

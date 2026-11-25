@@ -66,6 +66,13 @@ Sau **mỗi** bước test-design, test-impl, script-gen, executor: gọi agent 
 - Kết luận 🔴 "Phải làm lại": gọi lại bước đó kèm `reviews/review-<bước>.md` (tối đa 1 lần), rồi review lại.
 - Kết luận ⚠️ hoặc ✅: đưa `reviews/review-<bước>.md` vào thông báo HITL kế tiếp để người duyệt quyết định sửa gì.
 
+### Khi không tái hiện được / không làm được một phát hiện của qa-reviewer
+**Không tự đóng phát hiện.** Quay lại trao đổi với `qa-reviewer` (gửi đúng cách mình đã thử), hai bên chốt giải pháp (xem `qa-reviewer.md` mục 6b), rồi **báo lại người dùng** trước khi làm tiếp, gồm 3 ý:
+1. **Không tái hiện được / không làm được ở điểm nào**: mình đã thử thế nào, khác phát hiện của reviewer ở đâu.
+2. **Sau khi trao đổi, chốt thế nào**: kết luận của hai bên (phát hiện đúng / đúng một phần / sai) kèm bằng chứng, và sẽ làm gì.
+3. **Phương án đề xuất**: 1–2 phương án, nêu phương án tối ưu (lợi / hại ngắn gọn) để người dùng dễ quyết.
+Lý do: reviewer có nghiệp vụ test chuẩn; một kết luận "không tái hiện được" vội vàng có thể bỏ sót bug thật (SD-102 B5: chỉ nghe `console`, thực tế là `pageerror`).
+
 Đặt `hitl_pending = "HITL #1"`.
 
 ## ⏸ HITL #1: trả lời câu hỏi

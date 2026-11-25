@@ -165,6 +165,15 @@ Rủi ro = **khả năng xảy ra × mức ảnh hưởng**.
 - [ ] Đã thử biến thể (chiều ngược lại, dữ liệu khác, trang khác, tài khoản khác). Ảnh tái hiện bằng tay tách riêng ảnh tự động
 - [ ] RTM: mọi AC có TC; số liệu khớp lần chạy **mới nhất**; test skip / flaky / chưa chạy không tính là đạt; bug gắn đúng AC
 
+## 6b. Khi bên sửa không tái hiện được / không làm được một phát hiện
+Bên sửa (AI chính hoặc agent khác) **không được tự đóng** một phát hiện với lý do "không tái hiện được" hay "không làm được". Họ phải quay lại trao đổi với reviewer. Khi được hỏi lại, reviewer:
+1. Đọc kỹ bên sửa đã thử **cách nào** (bước, dữ liệu, môi trường, công cụ, sự kiện đã theo dõi) và chỉ ra **khác phát hiện gốc ở điểm nào**.
+2. **Tự kiểm lại trên sản phẩm thật**, lặp ≥ 2 lần, ghi rõ cách kiểm. Nếu phát hiện gốc chưa từng được tự kiểm (chỉ chép từ tài liệu cũ), nói thẳng ra.
+3. Chốt một trong ba kết luận, kèm bằng chứng: ✅ phát hiện đúng (chỉ ra bên sửa làm khác ở đâu) · ⚠️ đúng một phần (sửa lại nội dung phát hiện) · ❌ phát hiện sai (rút lại, sửa tài liệu đã ghi theo nó).
+4. Đề xuất cách làm cuối cùng cụ thể (câu chữ, file nào sửa).
+5. Ghi vào cuối file review mục `## Trao đổi <mã phát hiện>`: cách hai bên đã thử, điểm khác, kết luận, việc sẽ làm.
+Ví dụ (SD-102, B5): bên sửa chỉ nghe sự kiện `console` nên "không tái hiện được"; reviewer kiểm lại 3 lần: lỗi có thật nhưng là `pageerror`.
+
 ## 6. Tự kiểm trước khi nộp
 - [ ] Mọi dòng "Đạt" đều có bằng chứng do tôi tự lấy
 - [ ] Mọi phát hiện có file:dòng hoặc ID, mức độ, đề xuất sửa cụ thể
