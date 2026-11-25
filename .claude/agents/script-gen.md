@@ -102,7 +102,8 @@ test.describe('AC-2: Đăng nhập thành công', () => {
   test('TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi', { tag: ['@AC-3', '@BUG-01'] }, async ({ loginPage, evidence }) => {
     test.fail(true, 'BUG-01: ô đã nhập cũng bị tô đỏ')
     // ... thao tác, evidence.shot() tại bước thấy bug ...
-    await expect.soft(loginPage.usernameInput).not.toHaveClass(/input_error/)
+    // Oracle phải phân biệt được đúng / sai: ô SauceDemo LUÔN có class input_error; trạng thái lỗi là class `error` + icon ✕
+    await expect.soft(loginPage.usernameInput).not.toHaveClass(/(^|\s)error(\s|$)/)
   })
 })
 ```

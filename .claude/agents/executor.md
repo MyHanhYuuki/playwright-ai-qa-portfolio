@@ -113,6 +113,30 @@ Với **mỗi test FAILED**, gán 1 trong 3 nhãn:
 
 ---
 
+## Phase 2b: Test làm tay bổ sung (tự quyết khi nào cần)
+Người duyệt chọn (2026-11-25): executor tự chạy phần làm tay, không thêm agent mới. Quy tắc dùng chung cho mọi dự án.
+
+### Khi nào phải làm tay (tự kiểm sau mỗi lần chạy tự động)
+Làm tay một TC (hoặc một phần của TC) khi **ít nhất một** điều sau đúng:
+| # | Dấu hiệu | Ví dụ |
+|---|---|---|
+| M1 | Cột `automation_feasibility` = `manual-only` / `semi-auto` | TC test-impl đã đánh dấu |
+| M2 | Expected cần **mắt người** đánh giá: chữ hiển thị đúng / đọc được, ảnh đúng nội dung, bố cục "trông ổn", màu, font | File PDF tải về có lỗi chữ tiếng Việt không; ảnh sản phẩm có đúng sản phẩm không |
+| M3 | Kết quả nằm **ngoài trình duyệt** hoặc ngoài tầm Playwright: file tải về mở bằng ứng dụng khác, email, SMS, in ấn, ứng dụng / thiết bị thật, hệ thống bên thứ 3 | Mở biên nhận PDF bằng trình đọc PDF |
+| M4 | Có thứ **chặn tự động hóa**: captcha, xác thực 2 lớp, cửa sổ hệ điều hành, quyền trình duyệt | Hộp thoại lưu file của hệ điều hành |
+| M5 | Test tự động **không kiểm hết expected** của TC (assertion chỉ phủ một phần, phần còn lại chưa tự động được) | TC ghi "nội dung PDF khớp đơn" nhưng code chỉ kiểm file tải được |
+| M6 | Test tự động cho kết quả **đáng ngờ**: pass nhưng ảnh evidence trông sai, hoặc fail mà không rõ do web hay do code | Ảnh evidence thiếu một phần trang mà test vẫn pass |
+| M7 | Trải nghiệm người dùng / khả năng truy cập cần người cảm nhận: thứ tự Tab, đọc bằng screen reader, độ dễ hiểu của thông báo | Chỉ khi có AC hoặc câu trả lời Q&A yêu cầu |
+
+Không làm tay những gì test tự động đã kiểm đủ và tin cậy (tránh trùng việc). Gặp M2–M7 mà TC đang ghi `automatable`: vẫn làm tay phần thiếu, rồi **ghi đề xuất** cho test-impl / script-gen (đổi cột feasibility hoặc thêm assertion) vào `triage.md`.
+
+### Cách làm
+1. Mỗi TC (hoặc phần) làm tay chạy trên **phiên trình duyệt mới**, làm đúng từng bước của TC, chụp ảnh **sau** mỗi bước quan trọng; file ngoài trình duyệt thì mở bằng ứng dụng phù hợp và chụp lại.
+2. So với `expected_result`: ghi **Passed / Failed / Blocked** kèm lý do, nguyên văn thông báo, giá trị đo được. Không đoán: bước không làm được thì Blocked và ghi vì sao.
+3. Ghi kết quả vào `run-results/manual-YYYYMMDD-HHMM.json` (cùng schema `tests[]`: `tc_id`, `status`, `expected_status`, `errors`, thêm `reason` = mã M1–M7, `steps[]`, `screenshots[]`); ảnh vào `evidence/all-cases/TC-xxx/manual/` kèm README ghi rõ "chạy tay". Không có đường dẫn máy trong file.
+4. Phần làm tay fail: phân loại real-bug như TC tự động (đưa vào HITL #3). Kết quả làm tay được tính trong `triage.md` (mục "Chạy tay": TC, lý do M1–M7, kết quả) và RTM.
+5. Việc còn làm khi có kết quả làm tay đầu tiên: `scripts/build-rtm.mjs` hiện chỉ đọc `run-*.json`, cần đọc thêm `manual-*.json` mới nhất (TC có cả hai thì lấy kết quả xấu hơn).
+
 ## Phase 3: Evidence (sau khi phân loại xong, chưa có script-issue)
 ```bash
 npm run test:evidence -- <feature>

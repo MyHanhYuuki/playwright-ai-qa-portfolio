@@ -18,6 +18,7 @@ Web demo thường không có tài liệu đặc tả đầy đủ. Khi đó:
 4. **Quan sát ≠ yêu cầu.** Nếu hành vi đáng ngờ (có thể là bug) hoặc không rõ là cố ý, đưa vào `q-and-a.md`. Không tự coi đó là đúng. Mục Business Rules chỉ ghi điều rút ra từ requirement; hành vi hiện tại chưa được xác nhận thì ghi riêng "chờ Qn".
 5. **Script khám phá:** mỗi tình huống một phiên trình duyệt sạch. Sau mỗi lần chuyển trang phải chờ **phần tử riêng của trang đích**, không chỉ chờ URL. Quan sát lạ chạy lại ≥ 2 lần trước khi ghi.
 6. **Ma trận tài khoản × trang × thao tác:** với mọi tài khoản / vai trò, thử **mọi thao tác trên mọi trang** của feature (kể cả chỗ không nghi ngờ), ghi bảng ma trận trong `spec-review.md`. Không khám phá theo triệu chứng.
+7. **Không gian kết hợp nhỏ thì thử hết** (vd mọi kiểu giỏ từ 6 sản phẩm = 63, mọi tài khoản) bằng script, không chọn tay vài trường hợp. **Thao tác tạo / gửi dữ liệu** (Finish, Submit): thử 2 tab, Back rồi gửi lại, bấm 2 lần, gửi khi dữ liệu nguồn đã đổi (qa-reviewer L13, L14).
 
 ## Output (PHẢI tạo đủ, trong `qa-runs/<feature>/`)
 - `spec-review.md`: tóm tắt requirement sau review

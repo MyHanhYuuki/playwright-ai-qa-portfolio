@@ -21,6 +21,7 @@
 | 11 | 2026-11-25 | Lưu thêm dữ liệu vào kết quả chạy | Thêm `annotations` vào run JSON | Playwright tự gắn **đường dẫn máy** (`location.file`) vào mỗi annotation, suýt bị commit | Quét thông tin cá nhân trước khi commit; script chỉ giữ trường cần, thay đường dẫn repo bằng `<repo>` |
 | 12 | 2026-11-25 | Kiểm lại phát hiện của reviewer | Thử tái hiện lỗi console của `error_user` | AI kết luận vội "không tái hiện được" vì chỉ nghe sự kiện `console`, trong khi lỗi là `pageerror` | Người dùng yêu cầu trao đổi lại với reviewer; reviewer kiểm 3 lần, AI kiểm lại: đúng là `pageerror` |
 | 13 | 2026-11-25 | Bug report SD-102 (BUG-21) | Báo lỗi console của `error_user` ở trang chi tiết | AI ghi "giao diện vẫn đúng", chấm Low; thực tế **mất mô tả sản phẩm**. Cũng gọi ảnh do script chụp là "tái hiện bằng tay" | Review cuối so với `standard_user` phát hiện; người dùng nâng Medium; TC-046 kiểm thêm mô tả; đổi tên "tái hiện độc lập", lưu script trong repo |
+| 14 | 2026-11-25 | Test BUG-01 (SD-101 TC-028) | Viết assertion kiểm ô bị đánh dấu lỗi | Kiểm class `input_error`, class này **luôn có sẵn** trên ô nhập: bước kiểm ô lỗi luôn đúng, bước kiểm ô không lỗi luôn sai, test fail "đúng như dự kiến" vì lý do sai suốt từ Bài 4 | qa-reviewer phát hiện khi review test case SD-103; người dùng cho sửa; đổi sang class `error` + đếm icon, thêm bước đối chứng, bài học L15 |
 
 ---
 
@@ -96,4 +97,10 @@
 - **Xử lý**: người dùng nâng BUG-21 lên Medium; TC-046 kiểm mô tả, giá, lỗi console, request báo lỗi; hàm kiểm trang chi tiết kiểm mặc định cả mô tả, giá; thêm bài học L12 cho qa-reviewer.
 - **Cùng đợt**: ảnh "tái hiện bằng tay" thật ra do một script chưa lưu chụp. Đổi tên thành "tái hiện độc lập", lưu script vào `tests/repro/`, ai cũng chạy lại được (`npm run repro -- <feature>`).
 - **Bài học**: kết luận về giao diện phải dựa trên **so sánh với chuẩn**, từng trường mà AC liệt kê. Gọi đúng tên việc mình đã làm (script khác bằng tay).
+
+### #14: Oracle luôn đúng / luôn sai mà không ai thấy
+- **Chuyện xảy ra**: từ Bài 4, TC-028 (BUG-01) kiểm ô bị đánh dấu lỗi bằng class `input_error`. Thực tế ô nhập của SauceDemo **luôn** có class này, kể cả khi chưa lỗi; trạng thái lỗi thêm class `error` và icon ✕. Vì vậy bước "ô thiếu bị đánh dấu" luôn đúng (vô nghĩa), bước "ô đã nhập không bị đánh dấu" luôn sai: test fail đúng như dự kiến nhưng **vì lý do sai**, và sẽ fail mãi kể cả khi bug được sửa. Cả bug report, triage, ảnh tái hiện và ví dụ trong `script-gen.md` đều ghi theo.
+- **Phát hiện**: qa-reviewer khi review test case SD-103 (cùng kiểu form) so class **trước và sau** khi bấm.
+- **Xử lý**: TC-028 kiểm class `error` (nguyên từ) + số icon ✕, có bước đối chứng "trước khi bấm: không ô nào bị đánh dấu"; sửa tài liệu SD-101 và ví dụ trong agent; bài học L15. BUG-01 vẫn là bug thật.
+- **Bài học**: assertion fail chưa chắc đã đúng. Oracle phải được chứng minh là **phân biệt được** đúng / sai (có trường hợp đối chứng), nhất là với test `test.fail()`.
 

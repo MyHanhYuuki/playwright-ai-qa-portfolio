@@ -36,7 +36,7 @@ TC-002,TVP-005,"...","...","...","...",TD-02,high,negative,EP,automatable,AC-3,r
 - Nhiều giá trị trong một ô ngăn bằng `;` (`TVP-011;TVP-036`, `AC-1;AC-5`, `regression;smoke`). `status`: `draft` khi viết, đổi thành `approved` sau HITL #2.
 - `notes`: bug đã biết ghi BUG id ở **câu đầu** (RTM chỉ đọc câu đầu). `screen`: như `viewpoint.csv`.
 - `type`: `functional` | `negative` | `data` | `flow` | `non-functional`
-- `automation_feasibility`: `automatable` | `semi-auto` | `manual-only`
+- `automation_feasibility`: `automatable` | `semi-auto` | `manual-only`. Không phải `automatable` thì ghi lý do vào `notes` theo mã M1–M7 của `executor.md` (vd "M2: cần mắt người đọc PDF"); executor sẽ làm tay phần đó
 - `expected_result` phải **cụ thể**: ghi đúng text thông báo, URL đích, trạng thái. Không ghi kiểu "hiển thị lỗi phù hợp".
 
 ---
