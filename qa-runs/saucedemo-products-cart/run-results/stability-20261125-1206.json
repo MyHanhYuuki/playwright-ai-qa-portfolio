@@ -1,0 +1,194 @@
+{
+  "id": "stability-20261125-1206",
+  "command": "npx playwright test tests/specs/saucedemo-products-cart.spec.ts --repeat-each=2 --retries=0",
+  "stats": {
+    "expected": 90,
+    "unexpected": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "duration_ms": 125679
+  },
+  "not_expected": [],
+  "per_test": {
+    "TC-001": [
+      "expected",
+      "expected"
+    ],
+    "TC-002": [
+      "expected",
+      "expected"
+    ],
+    "TC-003": [
+      "expected",
+      "expected"
+    ],
+    "TC-004": [
+      "expected",
+      "expected"
+    ],
+    "TC-005": [
+      "expected",
+      "expected"
+    ],
+    "TC-006": [
+      "expected",
+      "expected"
+    ],
+    "TC-007": [
+      "expected",
+      "expected"
+    ],
+    "TC-008": [
+      "expected",
+      "expected"
+    ],
+    "TC-009": [
+      "expected",
+      "expected"
+    ],
+    "TC-010": [
+      "expected",
+      "expected"
+    ],
+    "TC-011": [
+      "expected",
+      "expected"
+    ],
+    "TC-012": [
+      "expected",
+      "expected"
+    ],
+    "TC-014": [
+      "expected",
+      "expected"
+    ],
+    "TC-015": [
+      "expected",
+      "expected"
+    ],
+    "TC-016": [
+      "expected",
+      "expected"
+    ],
+    "TC-017": [
+      "expected",
+      "expected"
+    ],
+    "TC-020": [
+      "expected",
+      "expected"
+    ],
+    "TC-021": [
+      "expected",
+      "expected"
+    ],
+    "TC-022": [
+      "expected",
+      "expected"
+    ],
+    "TC-023": [
+      "expected",
+      "expected"
+    ],
+    "TC-024": [
+      "expected",
+      "expected"
+    ],
+    "TC-025": [
+      "expected",
+      "expected"
+    ],
+    "TC-026": [
+      "expected",
+      "expected"
+    ],
+    "TC-027": [
+      "expected",
+      "expected"
+    ],
+    "TC-028": [
+      "expected",
+      "expected"
+    ],
+    "TC-029": [
+      "expected",
+      "expected"
+    ],
+    "TC-030": [
+      "expected",
+      "expected"
+    ],
+    "TC-036": [
+      "expected",
+      "expected"
+    ],
+    "TC-013": [
+      "expected",
+      "expected"
+    ],
+    "TC-035": [
+      "expected",
+      "expected"
+    ],
+    "TC-018": [
+      "expected",
+      "expected"
+    ],
+    "TC-019": [
+      "expected",
+      "expected"
+    ],
+    "TC-031": [
+      "expected",
+      "expected"
+    ],
+    "TC-032": [
+      "expected",
+      "expected"
+    ],
+    "TC-033": [
+      "expected",
+      "expected"
+    ],
+    "TC-034": [
+      "expected",
+      "expected"
+    ],
+    "TC-037": [
+      "expected",
+      "expected"
+    ],
+    "TC-038": [
+      "expected",
+      "expected"
+    ],
+    "TC-039": [
+      "expected",
+      "expected"
+    ],
+    "TC-040": [
+      "expected",
+      "expected"
+    ],
+    "TC-041": [
+      "expected",
+      "expected"
+    ],
+    "TC-042": [
+      "expected",
+      "expected"
+    ],
+    "TC-043": [
+      "expected",
+      "expected"
+    ],
+    "TC-044": [
+      "expected",
+      "expected"
+    ],
+    "TC-045": [
+      "expected",
+      "expected"
+    ]
+  }
+}
