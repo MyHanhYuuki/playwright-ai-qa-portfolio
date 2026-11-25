@@ -72,7 +72,8 @@ test.describe('AC-2: Successful login', () => {
       await loginPage.loginButton.click();
       const inventory = new InventoryPage(page);
       await expect(page).toHaveURL(/\/inventory\.html$/, { timeout });
-      await expect(inventory.title).toHaveText('Products');
+      // Same allowance for the render: the URL changes first (client-side), the list can appear seconds later (CI run 45449039805)
+      await expect(inventory.title).toHaveText('Products', { timeout });
       const seconds = ((Date.now() - start) / 1000).toFixed(1);
       await evidence.shot('Vào trang sản phẩm', { highlight: inventory.title, note: `Đăng nhập thành công sau ${seconds} giây` });
     });

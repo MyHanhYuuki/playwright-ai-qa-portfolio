@@ -32,6 +32,12 @@ export class CartPage extends AppPage {
     return this.items.filter({ has: this.page.getByTestId('inventory-item-name').getByText(p.name, { exact: true }) });
   }
 
+  /** "Continue Shopping", then wait until the list is rendered (see AppPage: destination waits). */
+  async continueShopping() {
+    await this.continueShoppingButton.click();
+    await this.page.getByTestId('inventory-list').waitFor();
+  }
+
   removeButton(p: Product) {
     return this.line(p).getByRole('button', { name: 'Remove' });
   }

@@ -16,7 +16,7 @@
 ## Real Bugs (→ HITL #3)
 
 ### TC-028: Chỉ ô bị thiếu mới bị đánh dấu lỗi (BUG-01)
-> Cập nhật sau [review-defects](review-defects.md) A1: bug xảy ra cả chiều ngược lại. TC-028 đã sửa để kiểm tra **cả 2 chiều**, evidence chụp lại cả 2 chiều. Phần dưới là kết quả của lần chạy gốc (chỉ chiều 1). Lần chạy lại [`run-20261124-184137`](run-results/run-20261124-184137.json): 31 Passed / 2 Failed, TC-028 fail ở cả 2 chiều.
+> Cập nhật sau [review-defects](reviews/review-defects.md) A1: bug xảy ra cả chiều ngược lại. TC-028 đã sửa để kiểm tra **cả 2 chiều**, evidence chụp lại cả 2 chiều. Phần dưới là kết quả của lần chạy gốc (chỉ chiều 1). Lần chạy lại [`run-20261124-184137`](run-results/run-20261124-184137.json): 31 Passed / 2 Failed, TC-028 fail ở cả 2 chiều.
 - **Error**: `expect(locator).not.toHaveClass(/input_error/)`. Locator `getByPlaceholder('Username')`, received `"input_error form_input error"`
 - **Expected** (AC-3, Q6): chỉ ô Password bị đánh dấu lỗi
 - **Actual**: ô Username (đã nhập `standard_user`) cũng bị tô đỏ và có icon lỗi
@@ -42,5 +42,5 @@ Evidence đầy đủ của 33 test case (ảnh có khoanh đỏ + ghi chú, vid
 ## Ghi nhận khác
 | # | Nội dung |
 |---|---|
-| N1 | TC-006 (`performance_glitch_user`) mất 10,4 giây **cả test**. Riêng bước đăng nhập ~5,2 giây, ngưỡng chờ 10 giây còn dư một nửa, **chưa có nguy cơ chập chờn**. (Bản đầu kết luận "sát ngưỡng" là sai, sửa theo review-final A1.) Ghi nhận kèm BUG-03 / IMP-03 |
+| N1 | TC-006 (`performance_glitch_user`) mất 10,4 giây **cả test**. Riêng bước đăng nhập ~5,2 giây, ngưỡng chờ 10 giây còn dư một nửa, **chưa có nguy cơ chập chờn**. (Bản đầu kết luận "sát ngưỡng" là sai, sửa theo review-final A1.) Ghi nhận kèm BUG-03 / IMP-03 **Cập nhật 2026-11-25**: trên CI (máy Linux chậm hơn) TC-006 chập chờn 1 lần: URL đã đổi nhưng danh sách hiện chậm hơn 5 giây, mà bước chờ tiêu đề "Products" chỉ dùng mặc định 5 giây (ngưỡng 10 giây mới áp cho bước chờ URL). Đã cho bước chờ tiêu đề dùng chung ngưỡng 10 giây |
 | N2 | BUG-04 (thông báo cũ không tự mất) không có TC theo Q8, không xuất hiện trong lần chạy này |

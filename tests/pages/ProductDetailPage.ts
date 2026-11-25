@@ -27,4 +27,10 @@ export class ProductDetailPage extends AppPage {
   async goto(id: number | string) {
     await this.page.goto(`/inventory-item.html?id=${id}`);
   }
+
+  /** "Back to products", then wait until the list is rendered (see AppPage: destination waits). */
+  async backToProducts() {
+    await this.backButton.click();
+    await this.page.getByTestId('inventory-list').waitFor();
+  }
 }
