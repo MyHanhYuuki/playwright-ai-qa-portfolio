@@ -1,8 +1,9 @@
 # TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi (cả 2 chiều)
 
 - **Kết quả**: ❌ Failed · Bug: BUG-01
+- **Nhóm**: AC-3: Empty fields (decision table)
 - **Tags**: @AC-3 @BUG-01
-- **Thời điểm**: 2026-11-24T11:14:39.537Z
+- **Thời điểm**: 2026-11-25T12:27:30.637Z
 - **Video**: [video.webm](video.webm)
 
 | Bước | Thao tác | Cần xem | Ảnh |

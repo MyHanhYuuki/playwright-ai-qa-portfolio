@@ -18,6 +18,7 @@
 ### TC-028: Chỉ ô bị thiếu mới bị đánh dấu lỗi (BUG-01)
 > Cập nhật sau [review-defects](reviews/review-defects.md) A1: bug xảy ra cả chiều ngược lại. TC-028 đã sửa để kiểm tra **cả 2 chiều**, evidence chụp lại cả 2 chiều. Phần dưới là kết quả của lần chạy gốc (chỉ chiều 1). Lần chạy lại [`run-20261124-184137`](run-results/run-20261124-184137.json): 31 Passed / 2 Failed, TC-028 fail ở cả 2 chiều.
 - **Error**: `expect(locator).not.toHaveClass(/input_error/)`. Locator `getByPlaceholder('Username')`, received `"input_error form_input error"`
+  > **Sửa 2026-11-25** (lần chạy sau khi sửa: [`run-20261125-192636`](run-results/run-20261125-192636.json), 31 Passed / 2 Failed như cũ; TC-028 nay fail đúng ở class `error` và số icon) (SD-103 review-test-impl E1): class `input_error` **luôn có sẵn** trên ô nhập, kể cả khi chưa lỗi, nên assertion trên luôn fail và sẽ fail mãi dù bug đã sửa. Lỗi thật được đánh dấu bằng class **`error`** + icon ✕. TC-028 đã sửa: kiểm class `error` (nguyên từ) và số icon ✕, có bước đối chứng trước khi bấm. BUG-01 vẫn đúng: cả 2 ô đều có `error`, 2 icon.
 - **Expected** (AC-3, Q6): chỉ ô Password bị đánh dấu lỗi
 - **Actual**: ô Username (đã nhập `standard_user`) cũng bị tô đỏ và có icon lỗi
 - **Fail đúng chỗ?** ✅ Bước kiểm tra ô Password đã pass; chỉ fail ở bước kiểm tra ô Username
@@ -34,7 +35,7 @@
 Mỗi bug được làm lại trong một phiên trình duyệt sạch, dùng locator khác với code test (`#user-name`, `#login-button`), có chụp ảnh:
 | Bug | Kết quả | Bằng chứng |
 |---|---|---|
-| BUG-01 | ✅ Tái hiện được: cả ô Username và Password đều có class `input_error`, 2 icon ✕ | [Ảnh tái hiện bằng tay](<evidence/bugs/[id_bug_1]_BUG-01/manual/README.md>) · [evidence tự động](<evidence/bugs/[id_bug_1]_BUG-01/TC-028/README.md>) |
+| BUG-01 | ✅ Tái hiện được: cả ô Username và Password đều có class `error` (ghi nhầm `input_error` ở bản đầu, sửa 2026-11-25), 2 icon ✕ | [Ảnh tái hiện bằng tay](<evidence/bugs/[id_bug_1]_BUG-01/manual/README.md>) · [evidence tự động](<evidence/bugs/[id_bug_1]_BUG-01/TC-028/README.md>) |
 | BUG-02 | ✅ Tái hiện được: chỉ với cookie giả đã vào được trang Products (6 sản phẩm). **Phát hiện thêm**: vào được cả `/checkout-step-one.html`, tức ảnh hưởng tới **toàn bộ** trang bên trong | [Ảnh tái hiện bằng tay](<evidence/bugs/[id_bug_2]_BUG-02/manual/README.md>) · [evidence tự động](<evidence/bugs/[id_bug_2]_BUG-02/TC-033/README.md>) |
 
 Evidence đầy đủ của 33 test case (ảnh có khoanh đỏ + ghi chú, video): [`evidence/README.md`](evidence/README.md)

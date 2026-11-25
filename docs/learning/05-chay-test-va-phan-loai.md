@@ -27,7 +27,7 @@ Trong 33 test có 2 test **bug đã biết** dùng `test.fail()`. "Pass" ở đ�
 
 | Test | Fail ở đâu | Đúng bug? |
 |---|---|---|
-| TC-028 | `not.toHaveClass(/input_error/)`: ô Username vẫn có class lỗi | ✅ BUG-01 |
+| TC-028 | `not.toHaveClass(/(^\|\s)error(\s\|$)/)`: ô Username vẫn có class lỗi `error` (bản đầu kiểm nhầm `input_error`, class này luôn có sẵn: xem ai-log #14) | ✅ BUG-01 |
 | TC-033 | `toHaveURL`: vẫn ở `/inventory.html` dù chỉ có cookie giả | ✅ BUG-02 |
 
 Cách báo cáo đúng: **31 pass + 2 bug đã biết**, không phải "33 pass".
@@ -98,7 +98,7 @@ evidence/
 ### Q1. Làm sao phân biệt test fail do bug hay do test viết sai?
 **Trả lời:**
 - **Test sai (script-issue)**: lỗi kiểu `locator not found`, `strict mode violation`, timeout khi chờ phần tử. Tức là test **không tìm thấy** thứ cần kiểm tra.
-- **Bug (real-bug)**: test tìm thấy phần tử, nhưng **giá trị hoặc hành vi sai** so với expected (vd: nhận "input_error" trong khi mong đợi không có).
+- **Bug (real-bug)**: test tìm thấy phần tử, nhưng **giá trị hoặc hành vi sai** so với expected (vd: ô đã nhập vẫn có class `error` trong khi mong đợi không có).
 - Luôn kiểm chứng: mở trace hoặc ảnh chụp, tự làm lại bằng tay trên web.
 
 ### Q2. Flaky test là gì? Xử lý thế nào?

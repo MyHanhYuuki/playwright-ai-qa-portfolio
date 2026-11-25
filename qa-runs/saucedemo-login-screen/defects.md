@@ -31,7 +31,7 @@ Lỗi xảy ra **cả 2 chiều**: với mọi lỗi "required", cả 2 ô đề
 |---|---|---|
 | **Các bước** | 1. Nhập Username: `standard_user`<br>2. Để trống Password<br>3. Bấm **Login** | 1. Mở lại trang `/`<br>2. Để trống Username, nhập Password hợp lệ (in sẵn trên trang đăng nhập)<br>3. Bấm **Login** |
 | **Mong đợi** (AC-3, Q6) | Thông báo `Epic sadface: Password is required`. **Chỉ ô Password** bị đánh dấu lỗi (viền đỏ, icon ✕) | Thông báo `Epic sadface: Username is required`. **Chỉ ô Username** bị đánh dấu lỗi |
-| **Thực tế** | Thông báo đúng, nhưng **ô Username đã nhập cũng bị viền đỏ + icon ✕** (class `input_error`) | Thông báo đúng, nhưng **ô Password đã nhập cũng bị viền đỏ + icon ✕** |
+| **Thực tế** | Thông báo đúng, nhưng **ô Username đã nhập cũng bị viền đỏ + icon ✕** (thêm class `error`; ô nào cũng luôn có sẵn class `input_error` nên không dùng class đó để kiểm) | Thông báo đúng, nhưng **ô Password đã nhập cũng bị viền đỏ + icon ✕** |
 | **Ảnh** | ![chiều 1](<evidence/bugs/[id_bug_1]_BUG-01/TC-028/02-chieu-1-ket-qua-bug.jpg>) | ![chiều 2](<evidence/bugs/[id_bug_1]_BUG-01/TC-028/04-chieu-2-ket-qua-bug.jpg>) |
 
 Người dùng dễ tưởng ô mình đã nhập đúng là bị sai.

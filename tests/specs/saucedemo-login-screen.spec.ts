@@ -142,18 +142,26 @@ test.describe('AC-3: Empty fields (decision table)', () => {
     // Both directions are checked with expect.soft, so the test keeps failing until BOTH are fixed.
     // Remove test.fail() when the bug is fixed.
     test.fail(true, 'BUG-01: ô đã nhập cũng bị tô đỏ (cả 2 chiều)');
+    // Oracle (fixed 2026-11-25, SD-103 review-test-impl E1): the inputs ALWAYS carry class `input_error`, even before any error.
+    // The error state adds the separate class `error` (whole word) and a red ✕ icon (.error_icon) in the field.
+    const MARKED = /(^|\s)error(\s|$)/;
 
     // Chiều 1: có Username, trống Password
+    // Baseline: before submitting, no field is marked (proves the oracle can tell marked from not marked)
+    await expect(loginPage.usernameInput).not.toHaveClass(MARKED);
+    await expect(loginPage.passwordInput).not.toHaveClass(MARKED);
+    await expect(loginPage.fieldErrorIcons).toHaveCount(0);
     await loginPage.fill(standard.username, '');
     await evidence.shot('Chiều 1: có Username, trống Password', { highlight: loginPage.usernameInput, note: 'Ô Username ĐÃ nhập standard_user, ô Password để trống' });
     await loginPage.loginButton.click();
     await expect(loginPage.errorMessage).toHaveText(MSG.passwordRequired);
-    await expect(loginPage.passwordInput).toHaveClass(/input_error/);
+    await expect(loginPage.passwordInput).toHaveClass(MARKED);
     await evidence.shot('Chiều 1 kết quả: BUG', {
       highlight: loginPage.usernameInput,
       note: 'BUG-01 chiều 1: ô Username đã nhập nhưng vẫn bị viền đỏ + icon X. Mong đợi: chỉ ô Password bị đánh dấu',
     });
-    await expect.soft(loginPage.usernameInput, 'Chiều 1: ô Username đã nhập không được bị đánh dấu lỗi').not.toHaveClass(/input_error/);
+    await expect.soft(loginPage.usernameInput, 'Chiều 1: ô Username đã nhập không được bị đánh dấu lỗi').not.toHaveClass(MARKED);
+    await expect.soft(loginPage.fieldErrorIcons, 'Chiều 1: chỉ 1 icon ✕ (ô Password)').toHaveCount(1);
 
     // Chiều 2: trống Username, có Password (trang sạch)
     await loginPage.goto();
@@ -161,12 +169,13 @@ test.describe('AC-3: Empty fields (decision table)', () => {
     await evidence.shot('Chiều 2: trống Username, có Password', { highlight: loginPage.passwordInput, note: 'Ô Password ĐÃ nhập, ô Username để trống' });
     await loginPage.loginButton.click();
     await expect(loginPage.errorMessage).toHaveText(MSG.usernameRequired);
-    await expect(loginPage.usernameInput).toHaveClass(/input_error/);
+    await expect(loginPage.usernameInput).toHaveClass(MARKED);
     await evidence.shot('Chiều 2 kết quả: BUG', {
       highlight: loginPage.passwordInput,
       note: 'BUG-01 chiều 2: ô Password đã nhập nhưng vẫn bị viền đỏ + icon X. Mong đợi: chỉ ô Username bị đánh dấu',
     });
-    await expect.soft(loginPage.passwordInput, 'Chiều 2: ô Password đã nhập không được bị đánh dấu lỗi').not.toHaveClass(/input_error/);
+    await expect.soft(loginPage.passwordInput, 'Chiều 2: ô Password đã nhập không được bị đánh dấu lỗi').not.toHaveClass(MARKED);
+    await expect.soft(loginPage.fieldErrorIcons, 'Chiều 2: chỉ 1 icon ✕ (ô Username)').toHaveCount(1);
   });
 });
 

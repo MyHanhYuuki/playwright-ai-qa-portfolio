@@ -1,18 +1,20 @@
 # Evidence: saucedemo-login-screen
 
-> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-24T13:42:12.369Z.
-> Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Mỗi test case có video.
-> Thư mục `manual/` trong từng bug: ảnh tái hiện bằng tay, không do test tự động sinh ra.
+> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-25T12:27:30.902Z.
+> Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Test case có bug (hoặc kết quả bất thường) có thêm video.
+> Thư mục `manual/` trong từng bug: ảnh **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi ảnh của test tự động.
 
 ## Bug (theo ticket)
 | Ticket_BUG | Nội dung | Thư mục |
 |---|---|---|
 | [id_bug_1]_BUG-01 | TC-028 | [bugs/[id_bug_1]_BUG-01/TC-028](<bugs/[id_bug_1]_BUG-01/TC-028/README.md>) |
-| [id_bug_1]_BUG-01 | Tái hiện bằng tay | [bugs/[id_bug_1]_BUG-01/manual](<bugs/[id_bug_1]_BUG-01/manual/README.md>) |
+| [id_bug_1]_BUG-01 | Tái hiện độc lập | [bugs/[id_bug_1]_BUG-01/manual](<bugs/[id_bug_1]_BUG-01/manual/README.md>) |
 | [id_bug_2]_BUG-02 | TC-033 | [bugs/[id_bug_2]_BUG-02/TC-033](<bugs/[id_bug_2]_BUG-02/TC-033/README.md>) |
-| [id_bug_2]_BUG-02 | Tái hiện bằng tay | [bugs/[id_bug_2]_BUG-02/manual](<bugs/[id_bug_2]_BUG-02/manual/README.md>) |
+| [id_bug_2]_BUG-02 | Tái hiện độc lập | [bugs/[id_bug_2]_BUG-02/manual](<bugs/[id_bug_2]_BUG-02/manual/README.md>) |
 
 ## Tất cả test case
+
+### (chưa có nhóm: chạy lại evidence)
 | Test case | Kết quả | Thư mục |
 |---|---|---|
 | TC-001 hiển thị đủ ô Username, Password và nút Login | ✅ Passed | [all-cases/TC-001](all-cases/TC-001/README.md) |
@@ -42,9 +44,13 @@
 | TC-025 mở thẳng /checkout-step-one.html khi chưa đăng nhập bị chặn | ✅ Passed | [all-cases/TC-025](all-cases/TC-025/README.md) |
 | TC-026 đăng xuất về trang đăng nhập và xóa phiên | ✅ Passed | [all-cases/TC-026](all-cases/TC-026/README.md) |
 | TC-027 đăng xuất rồi bấm Back không xem lại được trang sản phẩm | ✅ Passed | [all-cases/TC-027](all-cases/TC-027/README.md) |
-| TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi (cả 2 chiều) | ❌ Failed · Bug: BUG-01 | [all-cases/TC-028](all-cases/TC-028/README.md) |
 | TC-029 đăng xuất rồi đăng nhập lại thành công | ✅ Passed | [all-cases/TC-029](all-cases/TC-029/README.md) |
 | TC-030 thử lại sau lỗi: thông báo cập nhật, nhập đúng thì vào được | ✅ Passed | [all-cases/TC-030](all-cases/TC-030/README.md) |
 | TC-031 tải lại trang vẫn giữ phiên đăng nhập | ✅ Passed | [all-cases/TC-031](all-cases/TC-031/README.md) |
 | TC-032 mở thẳng /inventory-item.html khi chưa đăng nhập bị chặn | ✅ Passed | [all-cases/TC-032](all-cases/TC-032/README.md) |
 | TC-033 cookie phiên tự tạo không được vào trang bên trong | ❌ Failed · Bug: BUG-02 | [all-cases/TC-033](all-cases/TC-033/README.md) |
+
+### AC-3: Empty fields (decision table)
+| Test case | Kết quả | Thư mục |
+|---|---|---|
+| TC-028 chỉ ô bị thiếu mới bị đánh dấu lỗi (cả 2 chiều) | ❌ Failed · Bug: BUG-01 | [all-cases/TC-028](all-cases/TC-028/README.md) |
