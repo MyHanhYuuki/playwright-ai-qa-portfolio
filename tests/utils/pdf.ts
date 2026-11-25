@@ -47,6 +47,16 @@ export function inOrder(texts: readonly string[], expected: readonly string[]) {
 }
 
 /**
+ * Product lines of the receipt: every text between 'PRICE' (last column header) and 'Item total'.
+ * Compare with EQUALITY (review B2): inOrder() alone lets an extra or duplicated product line through.
+ */
+export function productLines(texts: readonly string[]) {
+  const start = texts.indexOf('PRICE');
+  const end = texts.indexOf('Item total', start + 1);
+  return start < 0 || end < 0 ? [] : texts.slice(start + 1, end);
+}
+
+/**
  * Read a downloaded receipt: file name, size, texts.
  * The file is attached to the report, and saved next to the screenshots when evidence is on (TC-035: the human opens it).
  */

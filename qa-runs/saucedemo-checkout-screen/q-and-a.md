@@ -7,7 +7,7 @@
 > **Không hỏi lại** điều đã có quy tắc chung trong `knowledge-base/q-and-a-archive.md`; các bug dựa trên quy tắc đó ghi trạng thái `knowledge-base` trong `known-issues.md`: tài khoản đặc biệt phải như `standard_user` (BUG-28 → BUG-33, biến thể BUG-11, BUG-16), giỏ gắn tài khoản (biến thể BUG-07), phiên giả mạo (biến thể BUG-02), Reset App State thấy ngay (biến thể BUG-05), danh sách rỗng vẫn bấm bước tiếp (BUG-24, biến thể BUG-19 qua URL), lỗi console (TVP-044), so bố cục bằng tọa độ, thông báo lỗi lấy nguyên văn trên web, độ dài input coi như không giới hạn, hiệu năng không đánh fail.
 > Q7, Q12, Q13 và phần bổ sung của Q3, Q6, Q8, Q9, Q11 thêm sau `reviews/review-test-design.md`.
 
-**Tổng hợp**: 13 câu (6 blocking, 7 non-blocking) · Answered 13 · Open 0 · HITL #2 (2026-11-25) bổ sung 1 quy tắc cho Q12
+**Tổng hợp**: 13 câu (6 blocking, 7 non-blocking) · Answered 13 · Open 0 · HITL #2 (2026-11-25) bổ sung 1 quy tắc cho Q12 và 1 quyết định mới (HITL #2-1: BUG-36)
 
 
 ## Chung: nhiều màn hình

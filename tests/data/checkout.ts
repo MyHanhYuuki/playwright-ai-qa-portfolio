@@ -170,3 +170,7 @@ export function receiptTexts(ids: readonly number[], who?: CheckoutInfo) {
     amount(t.total),
   ];
 }
+
+/** Product lines of the PDF receipt exactly as printed: name, "$", price per product, in cart order (compare with productLines()). */
+export const receiptLines = (ids: readonly number[]) =>
+  ids.flatMap((id) => [productById(id).name, '$', amount(cents(productById(id)))]);

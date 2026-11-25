@@ -54,6 +54,7 @@
 | ID | Feature gốc | Liên quan tới checkout thế nào | Xử lý ở SD-103 |
 |---|---|---|---|
 | BUG-19 | SD-102 (Giỏ) | Giỏ trống bấm `Checkout` vào được Thông tin. Là **điểm bắt đầu** của BUG-24 đường (1). Đường URL là biến thể ở trên | Không viết lại TC đường nút (SD-102 TC-030, TVP-040 `scope=out`). Đường URL: TVP-054 |
+| BUG-21 | SD-102 (Chi tiết) | Bấm tên sản phẩm ở Tổng quan mở trang chi tiết: `error_user` dính BUG-21 (mất mô tả, console `This component failed to render!`, 1 request `submit.backtrace.io` mỗi trang). Kiểm 2/2 và 11/11 lần chạy TC-048, ngày 2026-11-25 (review-script-gen A1). Cùng trang, cùng chỗ sửa: chính là BUG-21, không phải biến thể | Không cấp số, không viết TC mới. TC-048 không kiểm lỗi ở bước 5 (trang chi tiết), chỉ ghi annotation tham khảo |
 | BUG-01 | SD-101 (Đăng nhập) | Cùng kiểu lỗi với BUG-22 (tô đỏ cả ô đúng), khác form | Chỉ tham khảo |
 
 ## Đã chốt không phải bug (HITL #1, 2026-11-25)

@@ -18,6 +18,7 @@ import { CartPage } from '../pages/CartPage';
 import { users } from '../data/users';
 import { MSG, MSG_SHOP } from '../data/messages';
 import type { Evidence } from '../utils/evidence';
+import { TOLERANCE_PX, ready, box, expectNear, expectHeaderLike } from '../utils/layout';
 import { products, allProducts, sortOrders, sortLabels, priceText, type Product } from '../data/products';
 
 const { backpack, bikeLight, boltTShirt, onesie, redTShirt } = products;
@@ -50,24 +51,12 @@ async function expectDetailOf(page: Page, detail: ProductDetailPage, p: Product,
     await expect.soft(detail.price, `${label}: giá`).toHaveText(priceText(p), QUICK);
   }
 }
-/** Wait until every image on the page has finished loading, so element positions are final. */
-async function imagesLoaded(page: Page) {
-  await expect.poll(() => page.evaluate(() => [...document.images].every((i) => i.complete))).toBe(true);
-}
-async function box(l: Locator) {
-  await expect(l).toBeVisible();
-  const b = await l.boundingBox();
-  if (!b) throw new Error('no bounding box');
-  return b;
-}
-/** Layout like standard_user: cart icon at the same place (≤ 5 px), cart and menu icons not rotated. */
+/**
+ * Layout like standard_user: cart icon at the same place (≤ TOLERANCE_PX), cart and menu icons not rotated.
+ * Shared implementation: tests/utils/layout.ts (one tolerance constant for every feature, SD-103 HITL #2 decision 5).
+ */
 async function expectLayoutLike(app: InventoryPage | ProductDetailPage | CartPage, base: Page, where: string) {
-  const ref = new InventoryPage(base);
-  const [a, b] = [await box(app.cartIcon), await box(ref.cartIcon)];
-  expect.soft(Math.abs(a.x - b.x), `${where}: biểu tượng giỏ lệch ngang (px)`).toBeLessThanOrEqual(5);
-  expect.soft(Math.abs(a.y - b.y), `${where}: biểu tượng giỏ lệch dọc (px)`).toBeLessThanOrEqual(5);
-  expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');
-  expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');
+  await expectHeaderLike(app.page, base, where);
 }
 /** Cart page flow that must work for every account: line, Remove, Continue Shopping, Checkout. */
 async function expectCartFlow(page: Page, inv: InventoryPage, cart: CartPage) {
@@ -448,8 +437,8 @@ test.describe('Màn hình 3: Giỏ hàng (/cart.html)', () => {
     const [co, cs] = [await box(cart.checkoutButton), await box(cart.continueShoppingButton)];
     const [bco, bcs] = [await box(base.checkoutButton), await box(base.continueShoppingButton)];
     await evidence.shot('Trang giỏ (visual_user)', { highlight: [cart.checkoutButton, cart.continueShoppingButton], note: 'Mong đợi: nút Checkout cùng hàng với Continue Shopping' });
-    expect.soft(Math.abs(bco.y - bcs.y), 'standard_user: 2 nút cùng hàng (mốc so sánh)').toBeLessThanOrEqual(5);
-    expect.soft(Math.abs(co.y - cs.y), 'visual_user: Checkout cùng hàng với Continue Shopping (px)').toBeLessThanOrEqual(5);
+    expect.soft(Math.abs(bco.y - bcs.y), 'standard_user: 2 nút cùng hàng (mốc so sánh)').toBeLessThanOrEqual(TOLERANCE_PX);
+    expect.soft(Math.abs(co.y - cs.y), 'visual_user: Checkout cùng hàng với Continue Shopping (px)').toBeLessThanOrEqual(TOLERANCE_PX);
   });
 });
 
@@ -477,29 +466,28 @@ test.describe('Chung: nhiều màn hình (tài khoản, giỏ, menu, kiểm soá
     const inv = await loginAs(users.visual);
     const base = await otherSession(users.standard);
     const baseInv = new InventoryPage(base);
-    await imagesLoaded(page);
-    await imagesLoaded(base);
+    await ready(page);
+    await ready(base);
     await evidence.shot('Danh sách (visual_user)', { highlight: [inv.cartIcon, inv.menuIcon, inv.cartButton(redTShirt)], note: 'Mong đợi: biểu tượng giỏ, menu, nút Add như standard_user, không xoay, không lệch' });
     await expectLayoutLike(inv, base, 'Danh sách');
     const [a, b] = [await box(inv.cartButton(redTShirt)), await box(baseInv.cartButton(redTShirt))];
-    expect.soft(Math.abs(a.x - b.x), 'Danh sách: nút Add của Red T-Shirt lệch ngang (px)').toBeLessThanOrEqual(5);
-    expect.soft(Math.abs(a.y - b.y), 'Danh sách: nút Add của Red T-Shirt lệch dọc (px)').toBeLessThanOrEqual(5);
+    expectNear(a, b, 'Danh sách: nút Add của Red T-Shirt');
     await inv.cartButton(redTShirt).scrollIntoViewIfNeeded();
     await evidence.shot('Nút Add của Red T-Shirt (visual_user)', { highlight: inv.cartButton(redTShirt), note: `Mong đợi: cùng vị trí với standard_user (đang lệch ngang ${Math.round(Math.abs(a.x - b.x))} px)` });
     await detail.goto(backpack.id);
     await base.goto('/inventory-item.html?id=4');
     await expect(detail.backButton).toBeVisible();
     await expect(new ProductDetailPage(base).backButton).toBeVisible();
-    await imagesLoaded(page);
-    await imagesLoaded(base);
+    await ready(page);
+    await ready(base);
     await evidence.shot('Chi tiết (visual_user)', { highlight: [detail.cartIcon, detail.menuIcon], note: 'Mong đợi: biểu tượng giỏ, menu như standard_user' });
     await expectLayoutLike(detail, base, 'Chi tiết');
     await cart.goto();
     await base.goto('/cart.html');
     await expect(cart.cartList).toBeVisible();
     await expect(new CartPage(base).cartList).toBeVisible();
-    await imagesLoaded(page);
-    await imagesLoaded(base);
+    await ready(page);
+    await ready(base);
     await evidence.shot('Giỏ (visual_user)', { highlight: [cart.cartIcon, cart.menuIcon], note: 'Mong đợi: biểu tượng giỏ, menu như standard_user' });
     await expectLayoutLike(cart, base, 'Giỏ');
   });

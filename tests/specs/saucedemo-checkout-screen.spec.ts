@@ -28,10 +28,11 @@ import { MSG, MSG_CHECKOUT as M, protectedPages } from '../data/messages';
 import { products, allProducts, priceText, type Product } from '../data/products';
 import {
   info, missingCombos, whitespaceInfo, variedInfo, longValue, carts, representativeCarts, floatCarts, emptyCartTotals,
-  sweepCarts, expectedTotals, totalsText, textToCents, productById, receiptTexts, amount, cents,
+  sweepCarts, expectedTotals, totalsText, textToCents, productById, receiptTexts, receiptLines, amount, cents,
   type CheckoutInfo, type MissingField, type Totals,
 } from '../data/checkout';
-import { readReceipt, inOrder } from '../utils/pdf';
+import { readReceipt, inOrder, productLines } from '../utils/pdf';
+import { ready, expectSamePlace, expectHeaderLike } from '../utils/layout';
 import type { Evidence } from '../utils/evidence';
 
 const { backpack, bikeLight, fleeceJacket, onesie } = products;
@@ -41,8 +42,6 @@ const QUICK = { timeout: 2_000 };
 const NEG = 5_000;
 /** performance_glitch_user: steps back to the product list take ~5 s (BUG-03 variant, Q11). */
 const SLOW = 10_000;
-/** Layout tolerance (HITL #2 decision 5), same constant as SD-102 expectLayoutLike. */
-const TOLERANCE_PX = 5;
 const GUARD = 'Blocked: BUG-26 đã sửa (mở thẳng /checkout-step-two.html không còn hiện Tổng quan): executor xếp Blocked, không phải bug';
 const MSG_OF: Record<MissingField, string> = { first: M.firstNameRequired, last: M.lastNameRequired, zip: M.postalCodeRequired };
 /** class token `error` (NOT the substring: `input_error` is always there). */
@@ -55,6 +54,19 @@ const cartStorage = (page: Page) => page.evaluate(() => localStorage.getItem('ca
 const setCart = (page: Page, ids: readonly number[]) =>
   page.evaluate((v) => localStorage.setItem('cart-contents', v), JSON.stringify(ids));
 const note = (type: string, description: string) => test.info().annotations.push({ type, description });
+/**
+ * isEnabled() that never waits for a missing element (review D1): a valid fix of BUG-19 may HIDE the Checkout button,
+ * and a plain isEnabled() would then wait until the test timeout (hidden by test.fail(), lesson L4).
+ */
+const enabledNow = (l: Locator) => l.isEnabled({ timeout: QUICK.timeout }).catch(() => false);
+/**
+ * Finish as a PRECONDITION inside a test.fail() test (review D4): a named, short check instead of a hard wait,
+ * so a broken Finish shows as "Điều kiện trước: …" (script-issue / Blocked) and not as a bare timeout.
+ */
+async function finishAsPrecondition(page: Page, why: string) {
+  await new CheckoutOverviewPage(page).finishButton.click();
+  await expect(new CheckoutCompletePage(page).header, `Điều kiện trước: ${why}`).toBeVisible({ timeout: NEG });
+}
 
 /** New session on THIS page: cookies + localStorage cleared, then log in (product list rendered). */
 async function freshLogin(page: Page, user: User = users.standard) {
@@ -170,40 +182,18 @@ async function expectEmptyList(page: Page, label: string) {
 
 /** Collect uncaught JS errors and error reports sent to submit.backtrace.io (401 to events.backtrace.io is normal, O-38). */
 function watchErrors(page: Page) {
-  /** `step`: label of the current step, recorded with each error so the executor sees WHERE it happened. */
+  /**
+   * Each entry is "<step> [<page path at that moment>]: <message or URL>", so the executor sees WHERE it happened.
+   * The path is read when the event fires, so an error of the previous page is never filed under the next step.
+   */
   const w = { step: '', pageErrors: [] as string[], reports: [] as string[], reset() { w.pageErrors = []; w.reports = []; } };
-  page.on('pageerror', (e) => w.pageErrors.push(w.step ? `${w.step}: ${e.message}` : e.message));
-  page.on('request', (r) => { if (r.url().includes('submit.backtrace.io')) w.reports.push(w.step ? `${w.step}: ${r.url()}` : r.url()); });
+  const where = () => `${w.step || '-'} [${new URL(page.url()).pathname}]`;
+  page.on('pageerror', (e) => w.pageErrors.push(`${where()}: ${e.message}`));
+  page.on('request', (r) => { if (r.url().includes('submit.backtrace.io')) w.reports.push(`${where()}: ${r.url()}`); });
   return w;
 }
-
-/** Fonts + images loaded, so element positions are final (HITL #2 decision 5). */
-async function ready(page: Page) {
-  // Scroll to the top first: the app keeps the scroll position across client-side page changes
-  // (clicking Checkout under a 3-line cart scrolls), and boundingBox() is relative to the viewport.
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await page.evaluate(() => document.fonts.ready.then(() => undefined));
-  await expect.poll(() => page.evaluate(() => [...document.images].every((i) => i.complete))).toBe(true);
-}
-async function box(l: Locator) {
-  await expect(l).toBeVisible();
-  const b = await l.boundingBox();
-  if (!b) throw new Error('no bounding box');
-  return b;
-}
-/** Same position as the standard_user element (≤ 5 px). */
-async function expectSamePlace(a: Locator, b: Locator, what: string) {
-  const [x, y] = [await box(a), await box(b)];
-  expect.soft(Math.abs(x.x - y.x), `${what}: lệch ngang (px)`).toBeLessThanOrEqual(TOLERANCE_PX);
-  expect.soft(Math.abs(x.y - y.y), `${what}: lệch dọc (px)`).toBeLessThanOrEqual(TOLERANCE_PX);
-}
-/** Header like standard_user: cart icon at the same place, cart and menu icons not rotated. */
-async function expectHeaderLike(page: Page, base: Page, where: string) {
-  const [app, ref] = [new InventoryPage(page), new InventoryPage(base)];
-  await expectSamePlace(app.cartIcon, ref.cartIcon, `${where}: biểu tượng giỏ`);
-  expect.soft(await app.transformOf(app.cartIcon), `${where}: biểu tượng giỏ bị xoay`).toBe('none');
-  expect.soft(await app.transformOf(app.menuIcon), `${where}: biểu tượng menu bị xoay`).toBe('none');
-}
+/** Entries raised while the product DETAIL page was shown (SD-102 BUG-21 territory, not a checkout page). */
+const onDetailPage = (entry: string) => entry.includes('[/inventory-item.html]');
 
 /** Download the receipt of the Complete page and read it. */
 async function receipt(co: CheckoutCompletePage, dir?: string) {
@@ -382,7 +372,7 @@ test.describe('Màn hình 1: Thông tin (/checkout-step-one.html)', () => {
           await expect.soft(ip.firstName, `${name}: còn ô First Name`).toBeVisible(QUICK);
         }
         await expect.soft(cart.checkoutButton, `${name}: không về trang giỏ`).toBeHidden(QUICK);
-        await evidence.shot(name, { highlight: [ov.title], note: filled ? 'Mong đợi: sang Tổng quan như bấm Continue' : 'Mong đợi: ở lại Thông tin, "Error: First Name is required"' });
+        await evidence.shot(name, { highlight: filled ? [ov.title, cart.checkoutButton] : [ip.error, cart.checkoutButton], note: filled ? 'Mong đợi: sang Tổng quan như bấm Continue' : 'Mong đợi: ở lại Thông tin, "Error: First Name is required"' });
       }
     }
   });
@@ -514,6 +504,8 @@ test.describe('Màn hình 1: Thông tin (/checkout-step-one.html)', () => {
 
   test('TC-040 Mở thẳng Tổng quan khi chưa nhập thông tin bị đưa về Thông tin', { tag: ['@AC-2', '@AC-3', '@info', '@overview', '@security', '@BUG-26'] }, async ({ page, loggedInPage: inv, infoPage: ip, overviewPage: ov, completePage: co, evidence }) => {
     test.fail(true, 'BUG-26: mở thẳng /checkout-step-two.html bỏ qua bước nhập thông tin, Finish đặt được hàng');
+    // firstName 5 s + 5 checks × 2 s + appears(header) 5 s + badge 2 s + ~4 s loads = 26 s, +30 % ≈ 34 s > 30 s default (review D2)
+    test.setTimeout(45_000);
     await inv.addButton(backpack).click();
     await ov.goto();
     // Bước 1
@@ -623,7 +615,7 @@ test.describe('Màn hình 2: Tổng quan (/checkout-step-two.html)', () => {
     await setCart(page, carts.empty);
     await cart.goto();
     let reached = false;
-    if (await cart.checkoutButton.isEnabled()) {
+    if (await enabledNow(cart.checkoutButton)) {
       await cart.checkoutButton.click();
       if (await appears(ip.firstName)) {
         await ip.fill(info.a);
@@ -757,12 +749,14 @@ test.describe('Màn hình 2: Tổng quan (/checkout-step-two.html)', () => {
     // Biến thể PDF: giỏ [4,2]
     await setCart(page, carts.backpackOnesie);
     await ov.goto();
-    await ov.finish();
+    await expect(ov.finishButton).toBeVisible();
+    await finishAsPrecondition(page, 'problem_user Finish sang Hoàn tất (không phải BUG-29)');
     const pdf = await receipt(co);
     const t = expectedTotals(carts.backpackOnesie);
     const want = ['Item total', amount(t.item), 'Tax', amount(t.tax), 'Total', amount(t.total)];
     expect.soft(inOrder(pdf.texts, want), 'PDF: Item total 37.98, Tax 3.04, Total 41.02').toEqual(want);
     note('PDF problem_user', pdf.texts.join(' | '));
+    await evidence.shot('Biến thể PDF: đã tải biên nhận [4,2]', { highlight: co.generatePdfButton, note: 'Mong đợi PDF: Item total 37.98, Tax 3.04, Total 41.02 (chữ trong file ở annotation "PDF problem_user")' });
   });
 
   test('TC-028 Tổng quan không có sản phẩm thì không đặt được đơn (giỏ trống qua Checkout, mở thẳng URL)', { tag: ['@AC-5', '@overview', '@complete', '@BUG-24'] }, async ({ page, cartPage: cart, infoPage: ip, overviewPage: ov, completePage: co, evidence }) => {
@@ -773,7 +767,7 @@ test.describe('Màn hình 2: Tổng quan (/checkout-step-two.html)', () => {
     await cart.goto();
     await expect(cart.cartList).toBeVisible();
     let onInfo = false;
-    if (await cart.checkoutButton.isEnabled()) {
+    if (await enabledNow(cart.checkoutButton)) {
       await cart.checkoutButton.click();
       onInfo = await appears(ip.firstName);
     }
@@ -826,7 +820,8 @@ test.describe('Màn hình 2: Tổng quan (/checkout-step-two.html)', () => {
         await expect(ov.finishButton, GUARD).toBeVisible({ timeout: NEG });
         test.fail(true, 'BUG-30: problem_user Finish xong giỏ không được làm trống');
       }
-      await ov.finish();
+      await expect(ov.finishButton).toBeVisible();
+      await finishAsPrecondition(page, 'problem_user Finish sang Hoàn tất (không phải BUG-30)');
     };
     // Biến thể 1
     await startVariant(true);
@@ -878,7 +873,7 @@ test.describe('Màn hình 2: Tổng quan (/checkout-step-two.html)', () => {
     await tab.goto('/inventory.html');
     await toOverview(tab, carts.backpackOnesie);
     await toOverview(page, carts.backpackOnesie);
-    await new CheckoutOverviewPage(tab).finish();
+    await finishAsPrecondition(tab, 'tab 1 đặt đơn đầu tiên (không phải BUG-35)');
     await ov.finishButton.click();
     expect.soft(await appears(co.header), 'Biến thể 1: tab 2 không đặt được đơn lần 2').toBe(false);
     await evidence.shot('Biến thể 1: Finish ở tab 2 sau khi tab 1 đã đặt', { highlight: co.header, note: 'Mong đợi: tab 2 không hiện "Thank you for your order!"' });
@@ -1006,6 +1001,10 @@ test.describe('Màn hình 3: Hoàn tất (/checkout-complete.html)', () => {
     expect.soft(pdf.size, 'kích thước > 0').toBeGreaterThan(0);
     const want = [...receiptTexts(carts.addOrder, info.a), M.pdfThanks];
     expect.soft(inOrder(pdf.texts, want), 'chữ trong PDF theo đúng thứ tự').toEqual(want);
+    expect.soft(productLines(pdf.texts), 'dòng sản phẩm đúng bằng giỏ: 3 sản phẩm, không thừa, không trùng').toEqual(receiptLines(carts.addOrder));
+    // "Đúng 1 file": wait up to 5 s for a WRONG second download (known-issues note 6), none must arrive (review B1)
+    const second = await page.waitForEvent('download', { timeout: NEG }).then(() => true, () => false);
+    expect.soft(second, 'không có file thứ 2').toBe(false);
     expect.soft(downloads, 'đúng 1 file').toHaveLength(1);
     note('PDF', pdf.texts.join(' | '));
     await evidence.shot('Sau khi bấm Generate PDF order', { highlight: co.generatePdfButton, note: `Đã tải ${pdf.name} (nội dung kiểm trong code, file lưu cạnh ảnh)` });
@@ -1022,6 +1021,7 @@ test.describe('Màn hình 3: Hoàn tất (/checkout-complete.html)', () => {
     expect(pdf.size).toBeGreaterThan(0);
     const want = [...receiptTexts(carts.backpackOnesie, info.a), M.pdfThanks];
     expect.soft(inOrder(pdf.texts, want), 'chữ trong PDF (kiểm cơ bản)').toEqual(want);
+    expect.soft(productLines(pdf.texts), 'dòng sản phẩm đúng bằng giỏ: Backpack, Onesie').toEqual(receiptLines(carts.backpackOnesie));
     await evidence.shot('Đã tải biên nhận PDF', { highlight: co.generatePdfButton, note: `File ${pdf.name} lưu cạnh ảnh: mở bằng trình đọc PDF để kiểm bố cục (làm tay)` });
   });
 
@@ -1043,6 +1043,7 @@ test.describe('Màn hình 3: Hoàn tất (/checkout-complete.html)', () => {
     await co.closeMenu();
     await expect.soft(co.cartBadge, 'Biến thể 2: không có số giỏ').toBeHidden(QUICK);
     expect.soft(await cartStorage(page), 'Biến thể 2: không có khóa cart-contents').toBeNull();
+    await evidence.shot('Biến thể 2: Reset App State', { highlight: co.cartLink, note: 'Không có số giỏ, không có khóa cart-contents (kiểm trong code)' });
     // Biến thể 3: All Items
     await freshLogin(page);
     await placeOrder(page, carts.backpackOnesie);
@@ -1402,6 +1403,9 @@ test.describe('Chung: nhiều màn hình (luồng chính, kiểm soát truy cậ
         await ov.openProduct(p);
         await expect.soft(page, `Bước 5: ${p.name} ?id=${p.id}`).toHaveURL(new RegExp(`inventory-item\\.html\\?id=${p.id}$`), QUICK);
         await expect.soft(detail.name, `Bước 5: tên ${p.name}`).toHaveText(p.name, QUICK);
+        // Checkout label set only now, after the detail page has rendered and been checked; anything still fired
+        // while the detail URL is shown is filed as detail page anyway (watchErrors reads the path at event time).
+        errors.step = 'Bước 5 (mở lại Tổng quan)';
         await ov.goto();
         guarded = await appears(ov.finishButton);
         expect.soft(guarded, `Bước 5: ${GUARD}`).toBe(true);
@@ -1415,11 +1419,12 @@ test.describe('Chung: nhiều màn hình (luồng chính, kiểm soát truy cậ
         await expect.soft(new InventoryPage(page).cartBadge, 'Bước 6: số giỏ 3').toHaveText('3', QUICK);
       }
     }
-    // Bước 8
-    // NOTE: thực tế khác expected: mỗi lần mở trang chi tiết (bước 5) error_user gửi 1 báo lỗi tới submit.backtrace.io
-    // (console "This component failed to render!", cùng chỗ với BUG-21 của SD-102). Assertion giữ theo expected, executor sẽ phân loại.
-    expect.soft(errors.pageErrors, 'Bước 8: 0 pageerror').toEqual([]);
-    expect.soft(errors.reports, 'Bước 8: 0 request tới submit.backtrace.io').toEqual([]);
+    // Bước 8: only errors raised on the CHECKOUT pages count (review A1). The product detail page of error_user is SD-102 BUG-21
+    // (render error + 1 report per detail page, caught by SD-102 TC-046): recorded as an annotation, not asserted, no test.fail().
+    const detailErrors = [...errors.pageErrors, ...errors.reports].filter(onDetailPage);
+    if (detailErrors.length) note('BUG-21 (SD-102, tham khảo)', `${detailErrors.length} lỗi / báo lỗi khi ở trang chi tiết (bước 5): ${detailErrors.join(' | ')}`);
+    expect.soft(errors.pageErrors.filter((e) => !onDetailPage(e)), 'Bước 8: 0 pageerror ở trang thanh toán').toEqual([]);
+    expect.soft(errors.reports.filter((e) => !onDetailPage(e)), 'Bước 8: 0 request tới submit.backtrace.io ở trang thanh toán').toEqual([]);
   });
 
   test('TC-049 Không lỗi JavaScript, không gửi báo lỗi khi đi luồng thanh toán (mọi tài khoản)', { tag: ['@AC-1', '@AC-4', '@AC-5', '@info', '@overview', '@complete'] }, async ({ page, cartPage: cart, overviewPage: ov, completePage: co, evidence }) => {
@@ -1451,6 +1456,7 @@ test.describe('Chung: nhiều màn hình (luồng chính, kiểm soát truy cậ
     if (guarded) {
       await ov.finish();
       check('Biến thể 4 (problem_user)');
+      await evidence.shot('Biến thể 4 (problem_user)', { highlight: co.header, note: 'Finish xong, 0 lỗi JavaScript, 0 báo lỗi (kiểm trong code)' });
     }
     // Biến thể 5: error_user, mở thẳng 3 trang (không gõ Last Name, không bấm Finish)
     errors.reset();
@@ -1462,6 +1468,7 @@ test.describe('Chung: nhiều màn hình (luồng chính, kiểm soát truy cậ
       await expect(page.getByTestId('title')).toBeVisible();
     }
     check('Biến thể 5 (error_user)');
+    await evidence.shot('Biến thể 5 (error_user)', { highlight: page.getByTestId('title'), note: 'Đã mở thẳng 3 trang thanh toán, 0 lỗi JavaScript, 0 báo lỗi (kiểm trong code)' });
   });
 
   test('TC-050 Rời luồng thanh toán bằng All Items và biểu tượng giỏ, giỏ giữ nguyên', { tag: ['@AC-3', '@AC-5', '@info', '@overview'] }, async ({ page, cartPage: cart, infoPage: ip, overviewPage: ov, evidence }) => {
@@ -1635,6 +1642,7 @@ async function fullFlowLikeStandard(page: Page, inv: InventoryPage, evidence: Ev
   const want = receiptTexts(ids, info.a).filter((t) => !['Swag Labs', 'Order Receipt', 'ORDER DETAILS', 'Order Date', 'ITEMS', 'DESCRIPTION', 'PRICE'].includes(t));
   expect.soft(pdf.name, 'Bước 9: tên file').toMatch(M.pdfFileName);
   expect.soft(inOrder(pdf.texts, want), 'Bước 9: PDF có An Le, 70000, 3 sản phẩm theo thứ tự giỏ, 47.97 / 3.84 / 51.81').toEqual(want);
+  expect.soft(productLines(pdf.texts), 'Bước 9: dòng sản phẩm đúng bằng giỏ (3 sản phẩm, không thừa, không trùng)').toEqual(receiptLines(ids));
   // Bước 10
   t0 = Date.now();
   await co.backHome(slow);
