@@ -28,7 +28,7 @@ import { MSG, MSG_CHECKOUT as M, protectedPages } from '../data/messages';
 import { products, allProducts, priceText, type Product } from '../data/products';
 import {
   info, missingCombos, whitespaceInfo, variedInfo, longValue, carts, representativeCarts, floatCarts, emptyCartTotals,
-  sweepCarts, expectedTotals, totalsText, textToCents, productById, receiptTexts, receiptLines, amount, cents,
+  sweepCarts, expectedTotals, totalsText, textToCents, productById, receiptTexts, receiptLines, receiptDate, amount, cents,
   type CheckoutInfo, type MissingField, type Totals,
 } from '../data/checkout';
 import { readReceipt, inOrder, productLines } from '../utils/pdf';
@@ -42,6 +42,8 @@ const QUICK = { timeout: 2_000 };
 const NEG = 5_000;
 /** performance_glitch_user: steps back to the product list take ~5 s (BUG-03 variant, Q11). */
 const SLOW = 10_000;
+/** TC-034: a fixed NON-UTC browser time zone for the receipt date check (review-executor B1). */
+const RECEIPT_TZ = 'Asia/Ho_Chi_Minh';
 const GUARD = 'Blocked: BUG-26 đã sửa (mở thẳng /checkout-step-two.html không còn hiện Tổng quan): executor xếp Blocked, không phải bug';
 const MSG_OF: Record<MissingField, string> = { first: M.firstNameRequired, last: M.lastNameRequired, zip: M.postalCodeRequired };
 /** class token `error` (NOT the substring: `input_error` is always there). */
@@ -986,28 +988,41 @@ test.describe('Màn hình 3: Hoàn tất (/checkout-complete.html)', () => {
     await evidence.shot('Sau khi bấm Back Home', { highlight: [inv.inventoryList, inv.cartLink], note: '6 nút Add to cart, không có số giỏ' });
   });
 
-  test('TC-034 Generate PDF order: tải file, nội dung khớp đơn vừa đặt', { tag: ['@AC-5', '@complete'] }, async ({ page, loggedInPage: inv, cartPage: cart, infoPage: ip, overviewPage: ov, completePage: co, evidence }) => {
-    const downloads: string[] = [];
-    page.on('download', (d) => downloads.push(d.suggestedFilename()));
-    for (const p of [onesie, fleeceJacket, bikeLight]) await inv.addButton(p).click();
-    await inv.removeButton(onesie).click();
-    await inv.addButton(onesie).click();
-    await inv.openCart();
-    await cart.checkout();
-    await ip.submit(info.a);
-    await ov.finish();
-    const pdf = await receipt(co, evidence.dir);
-    expect.soft(pdf.name, 'tên file swag-labs-order-YYYY-MM-DD_HH-mm-ss.pdf').toMatch(M.pdfFileName);
-    expect.soft(pdf.size, 'kích thước > 0').toBeGreaterThan(0);
-    const want = [...receiptTexts(carts.addOrder, info.a), M.pdfThanks];
-    expect.soft(inOrder(pdf.texts, want), 'chữ trong PDF theo đúng thứ tự').toEqual(want);
-    expect.soft(productLines(pdf.texts), 'dòng sản phẩm đúng bằng giỏ: 3 sản phẩm, không thừa, không trùng').toEqual(receiptLines(carts.addOrder));
-    // "Đúng 1 file": wait up to 5 s for a WRONG second download (known-issues note 6), none must arrive (review B1)
-    const second = await page.waitForEvent('download', { timeout: NEG }).then(() => true, () => false);
-    expect.soft(second, 'không có file thứ 2').toBe(false);
-    expect.soft(downloads, 'đúng 1 file').toHaveLength(1);
-    note('PDF', pdf.texts.join(' | '));
-    await evidence.shot('Sau khi bấm Generate PDF order', { highlight: co.generatePdfButton, note: `Đã tải ${pdf.name} (nội dung kiểm trong code, file lưu cạnh ảnh)` });
+  // Anonymous describe only to set the browser time zone (no title: the evidence group stays "Màn hình 3").
+  // A non-UTC zone makes "receipt printed in UTC instead of local time" visible even when CI runs in UTC (review-executor B1).
+  test.describe(() => {
+    test.use({ timezoneId: RECEIPT_TZ });
+
+    test('TC-034 Generate PDF order: tải file, nội dung khớp đơn vừa đặt', { tag: ['@AC-5', '@complete'] }, async ({ page, loggedInPage: inv, cartPage: cart, infoPage: ip, overviewPage: ov, completePage: co, evidence }) => {
+      const downloads: string[] = [];
+      page.on('download', (d) => downloads.push(d.suggestedFilename()));
+      for (const p of [onesie, fleeceJacket, bikeLight]) await inv.addButton(p).click();
+      await inv.removeButton(onesie).click();
+      await inv.addButton(onesie).click();
+      await inv.openCart();
+      await cart.checkout();
+      await ip.submit(info.a);
+      const finishedAt = Date.now();
+      await ov.finish();
+      const pdf = await receipt(co, evidence.dir);
+      // Order Date = local date / time of the browser (RECEIPT_TZ) when Finish was clicked, ±1 minute
+      const orderDate = pdf.texts[pdf.texts.indexOf('Order Date') + 1] ?? '(không có)';
+      const accepted = [-60_000, 0, 60_000].map((d) => receiptDate(finishedAt + d, RECEIPT_TZ));
+      expect.soft(accepted, `Order Date "${orderDate}" = giờ ${RECEIPT_TZ} lúc bấm Finish (±1 phút)`).toContain(orderDate);
+      // File name time: observation only, NOT asserted (local time or UTC is pending a PO decision, Q14)
+      note('Tên file', `giờ ${pdf.name.match(/_(\d{2}-\d{2}-\d{2})\.pdf$/)?.[1] ?? '?'} (UTC); Order Date trong file: ${orderDate} (${RECEIPT_TZ})`);
+      expect.soft(pdf.name, 'tên file swag-labs-order-YYYY-MM-DD_HH-mm-ss.pdf').toMatch(M.pdfFileName);
+      expect.soft(pdf.size, 'kích thước > 0').toBeGreaterThan(0);
+      const want = [...receiptTexts(carts.addOrder, info.a), M.pdfThanks];
+      expect.soft(inOrder(pdf.texts, want), 'chữ trong PDF theo đúng thứ tự').toEqual(want);
+      expect.soft(productLines(pdf.texts), 'dòng sản phẩm đúng bằng giỏ: 3 sản phẩm, không thừa, không trùng').toEqual(receiptLines(carts.addOrder));
+      // "Đúng 1 file": wait up to 5 s for a WRONG second download (known-issues note 6), none must arrive (review B1)
+      const second = await page.waitForEvent('download', { timeout: NEG }).then(() => true, () => false);
+      expect.soft(second, 'không có file thứ 2').toBe(false);
+      expect.soft(downloads, 'đúng 1 file').toHaveLength(1);
+      note('PDF', pdf.texts.join(' | '));
+      await evidence.shot('Sau khi bấm Generate PDF order', { highlight: co.generatePdfButton, note: `Đã tải ${pdf.name} (nội dung kiểm trong code, file lưu cạnh ảnh)` });
+    });
   });
 
   test('TC-035 Biên nhận PDF mở bằng trình đọc PDF: bố cục, chữ đọc được', { tag: ['@AC-5', '@complete'] }, async ({ page, loggedInPage: _inv, completePage: co, evidence }) => {

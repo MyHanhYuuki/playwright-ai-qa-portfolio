@@ -174,3 +174,16 @@ export function receiptTexts(ids: readonly number[], who?: CheckoutInfo) {
 /** Product lines of the PDF receipt exactly as printed: name, "$", price per product, in cart order (compare with productLines()). */
 export const receiptLines = (ids: readonly number[]) =>
   ids.flatMap((id) => [productById(id).name, '$', amount(cents(productById(id)))]);
+
+/**
+ * Order Date as printed on the receipt for an instant in a time zone (MSG-08):
+ * "<Month> <day>, <year> at <h>:<mm> <AM/PM>", e.g. "November 26, 2026 at 2:12 PM".
+ */
+export function receiptDate(ms: number, timeZone: string) {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('en-US', { timeZone, month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true })
+      .formatToParts(new Date(ms))
+      .map((x) => [x.type, x.value]),
+  );
+  return `${parts.month} ${parts.day}, ${parts.year} at ${parts.hour}:${parts.minute} ${parts.dayPeriod}`;
+}

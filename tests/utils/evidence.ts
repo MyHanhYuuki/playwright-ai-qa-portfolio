@@ -141,12 +141,19 @@ export class Evidence {
       .filter((m) => SCRIPT_ERROR.test(m))
       .map((m) => `${m.split('\n')[0]} → ${m.match(SCRIPT_ERROR)![0]}`)[0];
     if (scriptError) console.warn(`⚠️  ${this.tcId}: lỗi giống lỗi code test (${scriptError}). Evidence chưa đủ tin cậy, kiểm tra lại.`);
+    // Every annotation of the test (timings, BUG references, PDF text, sweep counts…) so a reviewer reading only the
+    // evidence sees them too (review-executor B2). 'fail' is already shown as the result / bug remark.
+    const cell = (v: string) => v.replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
+    const notes = this.info.annotations
+      .filter((a) => a.type !== 'fail')
+      .map((a) => `| ${cell(a.type)} | ${cell(a.description ?? '')} |`);
     const readme = [
       `# ${this.info.title}`,
       '',
       `- **Kết quả**: ${result}${remark}`,
       ...(scriptError ? [`- ⚠️ **Lỗi code test**: \`${scriptError}\` (không phải bug, cần sửa test rồi chạy lại)`] : []),
-      `- **Nhóm**: ${this.info.titlePath.slice(1, -1).join(' › ') || '(không có)'}`,
+      // filter(Boolean): an anonymous test.describe (used only for test.use, e.g. TC-034 time zone) has an empty title
+      `- **Nhóm**: ${this.info.titlePath.slice(1, -1).filter(Boolean).join(' › ') || '(không có)'}`,
       `- **Tags**: ${this.info.tags.join(' ')}`,
       `- **Thời điểm**: ${new Date().toISOString()}`,
       `- **Video**: ${
@@ -159,6 +166,7 @@ export class Evidence {
       '|---|---|---|---|',
       ...this.rows,
       '',
+      ...(notes.length ? ['## Ghi nhận (annotation)', '', '| Loại | Nội dung |', '|---|---|', ...notes, ''] : []),
     ].join('\n');
     for (const d of [this.dir, ...this.bugDirs]) fs.writeFileSync(path.join(d, 'README.md'), readme);
   }
