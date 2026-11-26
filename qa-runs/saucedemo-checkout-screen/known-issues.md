@@ -40,7 +40,7 @@
 | ID | Màn hình | Mô tả | Bằng chứng | Mức (dự kiến) | Viewpoint / TC phải bắt | Trạng thái |
 |---|---|---|---|---|---|---|
 | BUG-25 | Tổng quan | `Item total` **không làm tròn / không định dạng 2 chữ số lẻ**, ngay cả với **`standard_user` ở giỏ thông thường**: thêm Bike Light rồi Fleece Jacket → `Item total: $59.980000000000004` (Tax `$4.80`, Total `$64.78` vẫn đúng); `[2,5]` `$57.980000000000004`; `[0,1,2,4]` `$63.959999999999994`; `[4,3,2,1,0]` `$79.94999999999999`; giỏ rỗng `$0`. Phụ thuộc tổ hợp và thứ tự thêm (20/63 tổ hợp, review A1). Giống ở `visual_user`, `performance_glitch_user`, `error_user`; `problem_user` cùng nguyên nhân trên số gấp đôi (`$95.93999999999998`, `$159.9`). PDF in số đã làm tròn → **Tổng quan và biên nhận lệch nhau** | O-41, O-19, O-30, O-43 | **Medium** (tài khoản chuẩn, giỏ 2 sản phẩm, trường số tiền AC-4 liệt kê; bài học L12) | TVP-021 · **TC-020**: giỏ `[0,5]` (qua giao diện), `[2,5]`, `[0,1,2,4]`, `[0,1,2,5]`, `[4,3,2,1,0]`, giỏ rỗng, 3 tài khoản khác với `[0,5]`, `problem_user` `[4,0,2]` chỉ kiểm định dạng (biến thể 11), quét 120 giỏ khác nhau (63 tổ hợp, giỏ ≥ 2 sản phẩm thêm 2 thứ tự), dự kiến **FAIL**. Giá trị gấp đôi của `problem_user` là BUG-29 (TC-026) | Q7 đã chốt: là bug, **Medium**, mọi số tiền `$x.xx` |
-| BUG-29 | Tổng quan | `problem_user`: **Item total gấp đôi** tổng giá thật (vd Backpack $59.98 thay vì $29.99; cả 6 sản phẩm $259.88 thay vì $129.94; 63/63 tổ hợp), Tax và Total tính theo số sai; giá từng dòng vẫn đúng; PDF in số sai | O-30 | Critical nếu là hệ thống thật (thu sai tiền; tiền lệ SD-102 BUG-14). Hiện chỉ tới được bằng URL do BUG-28 | TVP-025 · **TC-026**: 6 giỏ, so **giá trị số**, + PDF, dự kiến **FAIL** | HITL #1 xác nhận (knowledge-base: tài khoản đặc biệt) |
+| BUG-29 | Tổng quan | `problem_user`: **Item total gấp đôi** tổng giá thật (vd Backpack $59.98 thay vì $29.99; cả 6 sản phẩm $259.88 thay vì $129.94; 63/63 tổ hợp), Tax và Total tính theo số sai; giá từng dòng vẫn đúng; PDF in số sai | O-30 | **High** (HITL #3, 2026-11-26: người duyệt chốt High cho web demo; với hệ thống thật là Critical vì thu sai tiền, tiền lệ SD-102 BUG-14). Hiện chỉ tới được bằng URL do BUG-28 | TVP-025 · **TC-026**: 6 giỏ, so **giá trị số**, + PDF, dự kiến **FAIL** | HITL #1 xác nhận (knowledge-base: tài khoản đặc biệt) |
 | BUG-33 | Tổng quan | `error_user`: bấm **Finish không có tác dụng**: ở lại Tổng quan, lỗi JavaScript `wa.cesetRart is not a function`, 1 request tới `submit.backtrace.io` mỗi lần bấm, giỏ không trống | O-35 | High (không đặt được hàng; cùng mức BUG-28 và tiền lệ SD-102 BUG-10, BUG-13) | TVP-032, TVP-044 · **TC-033**, dự kiến **FAIL** | HITL #1 xác nhận (knowledge-base: tài khoản đặc biệt) |
 | BUG-11 (biến thể) | Tổng quan | Bug của SD-102: `problem_user` bấm **tên sản phẩm ở Tổng quan** mở **sai** chi tiết, lệch +1 với **cả 6 sản phẩm** (Backpack → Fleece Jacket, Bike Light → Bolt, Onesie → Red T-Shirt, Bolt → Onesie, Red T-Shirt → Backpack, **Fleece Jacket → `id=6` không tồn tại**). Bài học L10: trang thứ 3 có cùng thao tác | O-32 | High (như BUG-11) | TVP-024 · **TC-025**: **cả 6 sản phẩm** (đặt giỏ bằng `cart-contents`), dự kiến **FAIL**, tag `@BUG-11` | HITL #1 xác nhận (knowledge-base) |
 
@@ -69,6 +69,14 @@
 
 ## Vấn đề không phải bug (đề xuất cải tiến)
 IMP-01 → IMP-10 trong [`improvements.md`](improvements.md). (IMP-11 "chặn bấm lặp" đã chuyển thành BUG-36.)
+
+## Quyết định HITL #3 (người duyệt, 2026-11-26)
+| # | Quyết định | Kết luận |
+|---|---|---|
+| 1 | Duyệt bug | ✅ **Duyệt cả 21 bug** (15 bug mới BUG-22 → BUG-36 + 6 biến thể BUG-02, 05, 07, 11, 16, 19) theo mức đề xuất trong `triage.md`; **BUG-29: High** |
+| 2 | Q14 (giờ tên file PDF là UTC) | **A: cải tiến** IMP-12, không cấp số bug. BUG-37 vẫn là số trống tiếp theo |
+| 3 | TC đã duyệt được sửa sau review | Người duyệt đã biết và đồng ý: TC-048 bước 8 chỉ tính lỗi trên trang thanh toán (lỗi trang chi tiết là BUG-21 của SD-102, review-script-gen A1); TC-034 kiểm thêm `Order Date` đúng giờ địa phương (review-executor B1) |
+| 4 | Thời gian CI (triage R1) | **B**: giữ 1 worker, `timeout-minutes` 30 |
 
 ## Quyết định HITL #2 (người duyệt, 2026-11-25)
 Nguồn: `reviews/review-test-impl.md` mục "Kiểm lại 9 điểm HITL #2 (lần 2)" (đề xuất **cuối** của qa-reviewer), người duyệt đồng ý cả 9 điểm. Đã áp dụng vào `test-cases.csv` (mọi TC `approved`), `test-data.md`, `spec-review.md`, `q-and-a.md`, `improvements.md`.

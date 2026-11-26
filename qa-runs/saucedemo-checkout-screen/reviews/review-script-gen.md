@@ -1,4 +1,4 @@
-# ✅ | `executor.md`, `build-rtm.mjs` tách commit riêng |✅ | `CLAUDE.md` mục 7: `A → B` vào màn hình A, `A + B` / `Cả n` vào "Chung"; SD-102 giữ nguyên |✅ | L16 vào `qa-reviewer.md` mục 8 và quy tắc `notes` của `test-impl.md` |✅ | `finishAsPrecondition()`: `click()` + `expect(co.header, "Điều kiện trước: …")`, dùng ở TC-026 phần PDF, TC-032, TC-051 |⏳ Executor | Giao executor kiểm 1 lần (hạ tạm timeout TC-020) |✅ | `test.setTimeout(45_000)` TC-040 |✅ | `enabledNow()` = `isEnabled({ timeout: 2 s })`, lỗi → false; dùng ở TC-020, TC-028. Kiểm: đổi tạm tên nút sai, TC-028 xong trong 7 s, đường 2 vẫn chạy; đã trả lại `CartPage.ts` |✅ | `test-data.md` thêm câu "Bản tự động" ở phần đầu |✅ | `CLAUDE.md`: thanh toán BUG-22 → BUG-36, feature sau từ BUG-37 |✅ | `tests/utils/layout.ts` (`TOLERANCE_PX`, `ready`, `box`, `expectNear`, `expectSamePlace`, `transformOf`, `expectHeaderLike`); 2 spec cùng import, SD-102 không còn số 5 cứng. SD-102 chạy lại 46/46 đúng dự kiến, TC-035/036 fail cùng giá trị như trước |✅ | Thêm "1 quyết định mới (HITL #2-1: BUG-36)" |✅ | CSV TC-048 bước 8 + expected + câu sau của `notes` (không phải câu đầu); `spec-review.md` O-32, O-39; `known-issues.md` thêm dòng BUG-21. Báo người dùng ở HITL #3 |✅ | TC-009 biến thể 4–6 khoanh `ip.error` / `cart.checkoutButton`; thêm ảnh TC-036 biến thể 2, TC-049 biến thể 4, 5, TC-026 phần PDF |✅ | `productLines()` (`pdf.ts`) + `receiptLines()` (`checkout.ts`), so bằng nhau ở TC-034, 035 và luồng chung TC-045, 046 |✅ | TC-034 chờ `download` thứ 2 tối đa NEG (5 s), `expect.soft` "không có file thứ 2" |⏳ Executor | Giao executor: `--repeat-each=10` + trace cho TC-045, TC-047 |✅ | `watchErrors` gắn bước + đường dẫn trang lúc sự kiện phát sinh; lỗi ở `/inventory-item.html` vào annotation `BUG-21 (SD-102, tham khảo)`, chỉ assert lỗi ở trang thanh toán; bỏ NOTE. Chạy: TC-048 pass, annotation 3 báo lỗi đều ở bước 5 |✅ | `executor.md`, `build-rtm.mjs` tách commit riêng |✅ | `CLAUDE.md` mục 7: `A → B` vào màn hình A, `A + B` / `Cả n` vào "Chung"; SD-102 giữ nguyên |✅ | L16 vào `qa-reviewer.md` mục 8 và quy tắc `notes` của `test-impl.md` |✅ | `finishAsPrecondition()`: `click()` + `expect(co.header, "Điều kiện trước: …")`, dùng ở TC-026 phần PDF, TC-032, TC-051 |⏳ Executor | Giao executor kiểm 1 lần (hạ tạm timeout TC-020) |✅ | `test.setTimeout(45_000)` TC-040 |✅ | `enabledNow()` = `isEnabled({ timeout: 2 s })`, lỗi → false; dùng ở TC-020, TC-028. Kiểm: đổi tạm tên nút sai, TC-028 xong trong 7 s, đường 2 vẫn chạy; đã trả lại `CartPage.ts` |✅ | `test-data.md` thêm câu "Bản tự động" ở phần đầu |✅ | `CLAUDE.md`: thanh toán BUG-22 → BUG-36, feature sau từ BUG-37 |✅ | `tests/utils/layout.ts` (`TOLERANCE_PX`, `ready`, `box`, `expectNear`, `expectSamePlace`, `transformOf`, `expectHeaderLike`); 2 spec cùng import, SD-102 không còn số 5 cứng. SD-102 chạy lại 46/46 đúng dự kiến, TC-035/036 fail cùng giá trị như trước |✅ | Thêm "1 quyết định mới (HITL #2-1: BUG-36)" |✅ | CSV TC-048 bước 8 + expected + câu sau của `notes` (không phải câu đầu); `spec-review.md` O-32, O-39; `known-issues.md` thêm dòng BUG-21. Báo người dùng ở HITL #3 |✅ | TC-009 biến thể 4–6 khoanh `ip.error` / `cart.checkoutButton`; thêm ảnh TC-036 biến thể 2, TC-049 biến thể 4, 5, TC-026 phần PDF |✅ | `productLines()` (`pdf.ts`) + `receiptLines()` (`checkout.ts`), so bằng nhau ở TC-034, 035 và luồng chung TC-045, 046 |✅ | TC-034 chờ `download` thứ 2 tối đa NEG (5 s), `expect.soft` "không có file thứ 2" |⏳ Executor | Giao executor: `--repeat-each=10` + trace cho TC-045, TC-047 |✅ | `watchErrors` gắn bước + đường dẫn trang lúc sự kiện phát sinh; lỗi ở `/inventory-item.html` vào annotation `BUG-21 (SD-102, tham khảo)`, chỉ assert lỗi ở trang thanh toán; bỏ NOTE. Chạy: TC-048 pass, annotation 3 báo lỗi đều ở bước 5 |Review: bước script-gen, SD-103 Thanh toán (Checkout)
+# Review: bước script-gen, SD-103 Thanh toán (Checkout)
 
 - **Ngày**: 2026-11-25 · **Reviewer**: qa-reviewer (vai QC Lead, ISTQB) · **Kết luận**: ⚠️ **Cần sửa** (0 lỗi 🔴, 4 lỗi 🟠, 12 lỗi 🟡; 2 điểm ❓ cần kiểm thêm)
 - **Phạm vi**: commit `900e6dd` trên nhánh `feat/checkout-sd103`: `tests/specs/saucedemo-checkout-screen.spec.ts` (53 test), `tests/pages/CheckoutInfoPage.ts`, `CheckoutOverviewPage.ts`, `CheckoutCompletePage.ts`, `tests/data/checkout.ts`, `tests/utils/pdf.ts`, phần thêm vào `tests/data/bugs.ts`, `messages.ts`, `tests/fixtures/index.ts`, `tests/pages/CartPage.ts` (`git diff 4293c80 -- tests/`). Kèm kiểm lại phần test case chưa được review: áp dụng quyết định HITL #2 và BUG-36 / TC-052 / TVP-058.
@@ -140,23 +140,23 @@
 ## Xử lý sau review
 | # | Mức | Việc | Trạng thái | Ghi chú của bên sửa |
 |---|---|---|---|---|
-| A1 | 🟠 | TC-048 oracle theo phạm vi bước, giữ BUG-21 | | |
-| A2 | 🟡 | Chạy lặp TC-045, TC-047 có trace | | |
-| B1 | 🟡 | TC-034 chờ file thứ 2 tối đa 5 giây | | |
-| B2 | 🟡 | So đúng danh sách dòng sản phẩm trong PDF | | |
-| B3 | 🟡 | Evidence thiếu / khoanh sai | | |
-| C1 | 🟠 | CSV TC-048, `spec-review.md` O-32 / O-39, `known-issues.md` BUG-21 | | |
-| C2 | 🟡 | `q-and-a.md` dòng Tổng hợp | | |
-| C3 | 🟡 | Hằng số sai số + hàm đo bố cục dùng chung | | |
-| C4 | 🟡 | `CLAUDE.md` số BUG tiếp theo | | |
-| C5 | 🟡 | Ghi điểm lệch 1 vào `test-data.md` | | |
-| D1 | 🟠 | `isEnabled()` có giới hạn chờ | | |
-| D2 | 🟡 | TC-040 `test.setTimeout` | | |
-| D3 | 🟡 | Kiểm annotation quét khi hết giờ | | |
-| D4 | 🟡 | Đặt tên assertion điều kiện trước trong test `test.fail()` | | |
-| E1 | 🟠 | Bài học L16 | | |
-| E2 | 🟡 | Quy tắc describe cho `A → B` | | |
-| E3 | 🟡 | Tách thay đổi không liên quan khi commit | | |
+| A1 | 🟠 | TC-048 oracle theo phạm vi bước, giữ BUG-21 | ✅ | `watchErrors` gắn bước + đường dẫn trang lúc sự kiện phát sinh; lỗi ở `/inventory-item.html` vào annotation `BUG-21 (SD-102, tham khảo)`, chỉ assert lỗi ở trang thanh toán; bỏ NOTE. Chạy: TC-048 pass, annotation 3 báo lỗi đều ở bước 5 |
+| A2 | 🟡 | Chạy lặp TC-045, TC-047 có trace | ✅ Executor | Không tái hiện (0 / 36 lần mỗi test), đóng ở trạng thái theo dõi: xem `review-executor.md` "Trao đổi A2" |
+| B1 | 🟡 | TC-034 chờ file thứ 2 tối đa 5 giây | ✅ | TC-034 chờ `download` thứ 2 tối đa NEG (5 s), `expect.soft` "không có file thứ 2" |
+| B2 | 🟡 | So đúng danh sách dòng sản phẩm trong PDF | ✅ | `productLines()` (`pdf.ts`) + `receiptLines()` (`checkout.ts`), so bằng nhau ở TC-034, 035 và luồng chung TC-045, 046 |
+| B3 | 🟡 | Evidence thiếu / khoanh sai | ✅ | TC-009 biến thể 4–6 khoanh `ip.error` / `cart.checkoutButton`; thêm ảnh TC-036 biến thể 2, TC-049 biến thể 4, 5, TC-026 phần PDF |
+| C1 | 🟠 | CSV TC-048, `spec-review.md` O-32 / O-39, `known-issues.md` BUG-21 | ✅ | CSV TC-048 bước 8 + expected + câu sau của `notes` (không phải câu đầu); `spec-review.md` O-32, O-39; `known-issues.md` thêm dòng BUG-21. Báo người dùng ở HITL #3 |
+| C2 | 🟡 | `q-and-a.md` dòng Tổng hợp | ✅ | Thêm "1 quyết định mới (HITL #2-1: BUG-36)" |
+| C3 | 🟡 | Hằng số sai số + hàm đo bố cục dùng chung | ✅ | `tests/utils/layout.ts` (`TOLERANCE_PX`, `ready`, `box`, `expectNear`, `expectSamePlace`, `transformOf`, `expectHeaderLike`); 2 spec cùng import, SD-102 không còn số 5 cứng. SD-102 chạy lại 46/46 đúng dự kiến, TC-035/036 fail cùng giá trị như trước |
+| C4 | 🟡 | `CLAUDE.md` số BUG tiếp theo | ✅ | `CLAUDE.md`: thanh toán BUG-22 → BUG-36, feature sau từ BUG-37 |
+| C5 | 🟡 | Ghi điểm lệch 1 vào `test-data.md` | ✅ | `test-data.md` thêm câu "Bản tự động" ở phần đầu |
+| D1 | 🟠 | `isEnabled()` có giới hạn chờ | ✅ | `enabledNow()` = `isEnabled({ timeout: 2 s })`, lỗi → false; dùng ở TC-020, TC-028. Kiểm: đổi tạm tên nút sai, TC-028 xong trong 7 s, đường 2 vẫn chạy; đã trả lại `CartPage.ts` |
+| D2 | 🟡 | TC-040 `test.setTimeout` | ✅ | `test.setTimeout(45_000)` TC-040 |
+| D3 | 🟡 | Kiểm annotation quét khi hết giờ | ✅ Executor | Hạ tạm timeout TC-020 xuống 40 s: annotation "đã quét 31/120 giỏ" vẫn ghi; reviewer kiểm độc lập cũng đúng (`review-executor.md` D3) |
+| D4 | 🟡 | Đặt tên assertion điều kiện trước trong test `test.fail()` | ✅ | `finishAsPrecondition()`: `click()` + `expect(co.header, "Điều kiện trước: …")`, dùng ở TC-026 phần PDF, TC-032, TC-051 |
+| E1 | 🟠 | Bài học L16 | ✅ | L16 vào `qa-reviewer.md` mục 8 và quy tắc `notes` của `test-impl.md` |
+| E2 | 🟡 | Quy tắc describe cho `A → B` | ✅ | `CLAUDE.md` mục 7: `A → B` vào màn hình A, `A + B` / `Cả n` vào "Chung"; SD-102 giữ nguyên |
+| E3 | 🟡 | Tách thay đổi không liên quan khi commit | ✅ | `executor.md`, `build-rtm.mjs` tách commit riêng |
 
 ## Kiểm lại lượt 2 (2026-11-25)
 - **Phạm vi**: thay đổi chưa commit (`git diff` + file mới `tests/utils/layout.ts`), đối chiếu 17 mục của bảng "Xử lý sau review" (A1 → E3).
@@ -215,5 +215,5 @@
 |---|---|---|---|---|
 | N1 | 🟡 | RTM: TC có cả 2 kết quả Passed hiện ⚠️ | ✅ | Biểu tượng lấy từ `r.result`, ghi chú "(tự động: … · tay: …)" nối sau. Thử bằng file làm tay giả: `✅ Passed (tự động: Passed · tay: Passed)`, `❌ Failed (tự động: Passed · tay: Failed)`; RTM 2 feature cũ tạo lại không đổi byte nào |
 | N2 | 🟡 | SD-102 import `ready as imagesLoaded` gây hiểu nhầm | ✅ | Dùng thẳng tên `ready`. Chạy lại SD-102 TC-035, TC-036: đúng dự kiến |
-| N3 | 🟡 | Bảng "Xử lý sau review" để trống | ✅ | Đã điền (lần điền đầu bị ghi đè khi reviewer ghi file lượt 2 từ bản đọc trước đó; điền lại) |
+| N3 | 🟡 | Bảng "Xử lý sau review" để trống | ✅ | Điền lại 2026-11-26. **Nguyên nhân thật** (đính chính): script điền bảng của bên sửa viết regex trong template literal, dấu gạch chéo ngược trước `|` bị mất (phép "hoặc" rỗng), nên chữ bị chèn vào **dòng tiêu đề** thay vì vào bảng; không phải reviewer ghi đè. Sửa: script mới điền theo từng ô trong đúng mục, dừng nếu không tìm thấy dòng; luôn đọc lại file sau khi sửa |
 | – | 🟡 | Regex `manual-` thiếu `\` trước dấu chấm; `executor.md` chưa nói "Passed (bug có vẻ đã sửa)" xếp ngang Blocked | ✅ | Sửa `/^manual-.*\.json$/`; `executor.md` ghi thứ tự đầy đủ |

@@ -1,0 +1,28 @@
+{
+  "run_id": "manual-20261126-1416",
+  "triggered_by": "executor-phase-2b",
+  "scope": "manual:TC-035",
+  "browser": "pdf.js 3.11.174 (Chromium)",
+  "tests": [
+    {
+      "tc_id": "TC-035",
+      "title": "Biên nhận PDF mở bằng trình đọc PDF: bố cục, chữ đọc được",
+      "status": "passed",
+      "expected_status": "passed",
+      "reason": "M2;M3",
+      "errors": [],
+      "steps": [
+        "Bước 1–2 (tự động, run-20261126-135457 + evidence): đặt đơn giỏ [4,2], An / Le / 70000, tải biên nhận swag-labs-order-2026-11-26_07-12-24.pdf",
+        "Bước 3a (tay): mở file bằng pdf.js: mở được, 1 trang A4 595×842 pt, không lỗi, 48 đoạn chữ, 2 font",
+        "Bước 3b (tay): chụp trang, executor (AI) đọc ảnh trang: chữ rõ, không chồng, không cắt; Swag Labs / Order Receipt; SHIP TO An Le / 70000; Backpack $29.99, Onesie $7.99; Item total $37.98, Tax $3.04, Total $41.02 thẳng cột; dòng cảm ơn"
+      ],
+      "screenshots": [
+        "evidence/all-cases/TC-035/manual/01-bien-nhan-pdf-trang-1.png"
+      ],
+      "observations": [
+        "Tên file dùng giờ UTC (07-12-24), Order Date trong biên nhận dùng giờ máy (2:12 PM, UTC+7); kiểm 3 múi giờ: tên file luôn UTC"
+      ],
+      "judged_by": "executor (AI) đọc ảnh trang do pdf.js vẽ; qa-reviewer xem lại cùng ảnh, đồng ý; người dùng xem lại ở HITL #3"
+    }
+  ]
+}

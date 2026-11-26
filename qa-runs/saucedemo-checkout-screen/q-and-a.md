@@ -7,7 +7,7 @@
 > **Không hỏi lại** điều đã có quy tắc chung trong `knowledge-base/q-and-a-archive.md`; các bug dựa trên quy tắc đó ghi trạng thái `knowledge-base` trong `known-issues.md`: tài khoản đặc biệt phải như `standard_user` (BUG-28 → BUG-33, biến thể BUG-11, BUG-16), giỏ gắn tài khoản (biến thể BUG-07), phiên giả mạo (biến thể BUG-02), Reset App State thấy ngay (biến thể BUG-05), danh sách rỗng vẫn bấm bước tiếp (BUG-24, biến thể BUG-19 qua URL), lỗi console (TVP-044), so bố cục bằng tọa độ, thông báo lỗi lấy nguyên văn trên web, độ dài input coi như không giới hạn, hiệu năng không đánh fail.
 > Q7, Q12, Q13 và phần bổ sung của Q3, Q6, Q8, Q9, Q11 thêm sau `reviews/review-test-design.md`.
 
-**Tổng hợp**: 13 câu (6 blocking, 7 non-blocking) · Answered 13 · Open 0 · HITL #2 (2026-11-25) bổ sung 1 quy tắc cho Q12 và 1 quyết định mới (HITL #2-1: BUG-36)
+**Tổng hợp**: 14 câu (6 blocking, 8 non-blocking) · Answered 14 · Open 0 (Q14 trả lời ở HITL #3) · HITL #2 (2026-11-25) bổ sung 1 quy tắc cho Q12 và 1 quyết định mới (HITL #2-1: BUG-36)
 
 
 ## Chung: nhiều màn hình
@@ -38,6 +38,7 @@
 | # | Loại | Câu hỏi | Context | Đề xuất | Trả lời | Trạng thái | Ảnh hưởng tới test |
 |---|---|---|---|---|---|---|---|
 | Q6 | Non-blocking | Nút **`Generate PDF order`** (không có trong ticket) có trong phạm vi không, mong đợi gì? | Bấm thì tải file `swag-labs-order-<thời gian>.pdf` gồm `SHIP TO` (tên + zip), sản phẩm, giá, Item total, Tax, Total (O-27). Thêm: (1) **tải lại trang Hoàn tất là mất nút** (O-17, 4 tài khoản); (2) cột `DESCRIPTION` in **tên** sản phẩm, không có mô tả (O-27); (3) PDF in Item total **đã làm tròn** còn Tổng quan thì không (O-41); (4) tên có dấu tiếng Việt bị sai ký tự (O-28); (5) bỏ qua Thông tin thì không có `SHIP TO`; mở thẳng URL Hoàn tất thì không có nút (O-21) | (knowledge-base: tiện ích nằm trên trang của feature thì trong phạm vi) **Trong phạm vi mức cơ bản**: tải được, nội dung khớp đơn vừa đặt (số tiền đã làm tròn). Mất nút sau tải lại, cột `DESCRIPTION`, Unicode: ghi cải tiến (IMP-05, IMP-10), chưa tính là bug | Theo đề xuất | Answered | TVP-033 `in` (Không: chuyển `out`); TVP-034 `scope=out`. Nếu PO coi mất nút sau tải lại là bug: thêm bug Low |
+| Q14 | Non-blocking | Giờ trong **tên file** biên nhận PDF là UTC, còn `Order Date` trong biên nhận là giờ máy người dùng: là bug hay cải tiến? | O-47 (executor + reviewer, 4 múi giờ): ở UTC+7 file tên `…_07-12-24.pdf` nhưng biên nhận ghi `2:12 PM`. Dữ liệu đơn đúng. Q6, O-27, MSG-08 chỉ chốt **định dạng** tên file, chưa chốt múi giờ | **Cải tiến** (IMP-12), như các chi tiết PDF khác ở Q6: tên file theo UTC là cách làm phổ biến, chỉ thiếu ghi chú múi giờ. Nếu PO coi là bug: BUG-37, Low | **A: cải tiến** (HITL #3, 2026-11-26) | Answered | Cải tiến IMP-12, không cấp số bug, không thêm TC kiểm giờ tên file. TC-034 vẫn kiểm `Order Date` đúng giờ địa phương (review-executor B1) |
 
 ## Quyết định bổ sung ở HITL #2 (2026-11-25)
 | # | Màn hình | Vấn đề | Quyết định của người duyệt | Ảnh hưởng tới test |
