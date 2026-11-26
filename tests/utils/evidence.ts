@@ -13,6 +13,8 @@ type ShotOptions = {
   highlight?: Locator | Locator[];
   /** What the reviewer must check on this screenshot (printed on the image). */
   note?: string;
+  /** Screenshot ANOTHER page of the test (e.g. a 2nd tab) instead of the test's own page. */
+  page?: Page;
 };
 
 /**
@@ -53,8 +55,9 @@ export class Evidence {
   async shot(name: string, opts: ShotOptions = {}) {
     if (!EVIDENCE_ENABLED) return;
     this.step++;
+    const pg = opts.page ?? this.page;
     // Let images finish loading so boxes are measured on the final layout (TC-005 box was a sliver).
-    await this.page
+    await pg
       .waitForFunction(() => Array.from(document.images).every((i) => i.complete), null, { timeout: 3_000 })
       .catch(() => {});
     // A locator may match several elements (e.g. all 6 prices): box EACH one.
@@ -69,7 +72,7 @@ export class Evidence {
       if (b) boxes.push(b);
     }
     const header = `${this.tcId} · Bước ${this.step}: ${name}`;
-    await this.page.evaluate(
+    await pg.evaluate(
       ({ boxes, header, note }) => {
         const root = document.createElement('div');
         root.id = '__evidence__';
@@ -97,8 +100,8 @@ export class Evidence {
     );
     const file = `${String(this.step).padStart(2, '0')}-${slug(name)}.jpg`;
     const full = path.join(this.dir, file);
-    await this.page.screenshot({ path: full, type: 'jpeg', quality: 70 });
-    await this.page.evaluate(() => document.getElementById('__evidence__')?.remove());
+    await pg.screenshot({ path: full, type: 'jpeg', quality: 70 });
+    await pg.evaluate(() => document.getElementById('__evidence__')?.remove());
     for (const d of this.bugDirs) fs.copyFileSync(full, path.join(d, file));
     await this.info.attach(header, { path: full, contentType: 'image/jpeg' });
     this.rows.push(`| ${this.step} | ${name} | ${opts.note ?? ''} | ![${file}](${file}) |`);
