@@ -104,3 +104,8 @@
 - **Xử lý**: TC-028 kiểm class `error` (nguyên từ) + số icon ✕, có bước đối chứng "trước khi bấm: không ô nào bị đánh dấu"; sửa tài liệu SD-101 và ví dụ trong agent; bài học L15. BUG-01 vẫn là bug thật.
 - **Bài học**: assertion fail chưa chắc đã đúng. Oracle phải được chứng minh là **phân biệt được** đúng / sai (có trường hợp đối chứng), nhất là với test `test.fail()`.
 
+### #15: Đổ lỗi nhầm cho reviewer vì script sửa file chạy sai mà không đọc lại
+- **Chuyện xảy ra**: AI điền bảng "Xử lý sau review" bằng một script Node. Regex viết trong template literal (dấu `` ` ``) nên dấu gạch chéo ngược trước `|` bị mất, `|` thành phép "hoặc" với chuỗi rỗng: chữ bị chèn vào **dòng tiêu đề** của file, bảng vẫn trống. Script vẫn in "ok". Hai lần qa-reviewer báo "bảng trống", AI kết luận sai là "reviewer ghi đè file" và ghi lý do sai đó vào file review. File review lỗi đã lên nhánh `feat/checkout-sd103` (commit `0195e69`).
+- **Phát hiện**: lần thứ 3 điền bảng, AI đọc lại file ngay sau khi chạy script và thấy bảng vẫn trống, dòng tiêu đề dài bất thường.
+- **Xử lý**: sửa dòng tiêu đề của 2 file review, điền lại bảng bằng script mới (điền theo từng ô trong đúng mục, dừng nếu không thấy dòng hoặc ô đã có chữ), đính chính nguyên nhân trong 2 file review.
+- **Bài học**: script "in ok" chưa chắc đã làm đúng: **đọc lại kết quả** sau mỗi lần sửa file bằng script. Trước khi đổ lỗi cho bên khác, kiểm lại phần việc của mình trước.

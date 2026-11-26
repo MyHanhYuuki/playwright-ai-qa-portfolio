@@ -3,6 +3,8 @@
 // Sources (all inside qa-runs/<feature>/):
 //   requirement/requirement.md  "- **AC-n**: ..."      viewpoint.csv   test-cases.csv
 //   run-results/run-*.json      newest run (tests[].tc_id, status)    defects.md (bug titles + status, optional)
+//   run-results/manual-*.json   newest manual run by the executor (optional, same tests[] schema + status "blocked").
+//                               A TC with both results shows the WORSE one (Failed > Blocked/Skipped/Flaky > Passed).
 // Output: rtm.md (readable on GitHub) + rtm-report.html (open in a browser).
 import fs from 'node:fs';
 import path from 'node:path';
@@ -27,7 +29,14 @@ function build(dir, feature) {
   const runFile = fs.readdirSync(runDir).filter((f) => /^run-.*\.json$/.test(f)).sort().pop();
   if (!runFile) throw new Error(`${feature}: no run-results/run-*.json`);
   const run = JSON.parse(fs.readFileSync(path.join(runDir, runFile), 'utf8'));
-  const resultOf = Object.fromEntries(run.tests.map((t) => [t.tc_id, qcResult(t)]));
+  const autoOf = Object.fromEntries(run.tests.map((t) => [t.tc_id, qcResult(t)]));
+  const manualFile = fs.readdirSync(runDir).filter((f) => /^manual-.*\.json$/.test(f)).sort().pop();
+  const manualRun = manualFile ? JSON.parse(fs.readFileSync(path.join(runDir, manualFile), 'utf8')) : { tests: [] };
+  const manualOf = Object.fromEntries(manualRun.tests.map((t) => [t.tc_id, qcResult(t)]));
+  const resultOf = { ...autoOf };
+  for (const [id, r] of Object.entries(manualOf)) resultOf[id] = !autoOf[id] || rank(r) > rank(autoOf[id]) ? r : autoOf[id];
+  // Shown in the "Kết quả" column: which run gave what, when the TC was also run by hand.
+  const shown = (id, r) => (manualOf[id] ? `${r} (tự động: ${autoOf[id] ?? 'Not run'} · tay: ${manualOf[id]})` : r);
   const defects = has('defects.md') ? read('defects.md') : '';
   const bugTitle = Object.fromEntries([...defects.matchAll(/^### (BUG-\d+): (.+)$/gm)].map((m) => [m[1], m[2]]));
   // Summary table row: | [BUG-01](...) | ... | <status> |
@@ -45,7 +54,7 @@ function build(dir, feature) {
   const warnings = [];
   if (run.scope && run.scope !== 'full') warnings.push(`Lần chạy ${runFile} có scope "${run.scope}", không phải full: TC không chạy sẽ hiện "Not run"`);
   if (run.summary?.total !== undefined && run.summary.total !== tcs.length) warnings.push(`Số test trong lần chạy (${run.summary.total}) khác số TC trong test-cases.csv (${tcs.length})`);
-  const extra = run.tests.filter((t) => !tcs.some((tc) => tc.tc_id === t.tc_id)).map((t) => t.tc_id);
+  const extra = [...new Set([...run.tests, ...manualRun.tests].filter((t) => !tcs.some((tc) => tc.tc_id === t.tc_id)).map((t) => t.tc_id))];
   if (extra.length) warnings.push(`Có trong lần chạy nhưng không có trong test-cases.csv: ${extra.join(', ')}`);
   const notRunIds = tcs.filter((tc) => !resultOf[tc.tc_id]).map((tc) => tc.tc_id);
   if (notRunIds.length) warnings.push(`TC chưa có kết quả: ${notRunIds.join(', ')}`);
@@ -95,7 +104,7 @@ function build(dir, feature) {
     tc: tcs.length,
     passed: count((r) => r === 'Passed'),
     failed: count((r) => r.startsWith('Failed')),
-    skipped: count((r) => r === 'Skipped'),
+    skipped: count((r) => r === 'Skipped' || r === 'Blocked'),
     flaky: count((r) => r === 'Flaky'),
     check: count((r) => r.startsWith('Passed (')),
     notRun: count((r) => r === 'Not run'),
@@ -106,7 +115,7 @@ function build(dir, feature) {
   const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
   const label = { pass: '✅ Đạt', fail: '❌ Chưa đạt (có bug)', partial: '⚠️ Cần xem lại (skip / flaky / chưa chạy)', gap: '⛔ Chưa có test case' };
   const extras = [
-    sum.skipped && `⏭ Skipped ${sum.skipped}`,
+    sum.skipped && `⏭ Skipped / Blocked ${sum.skipped}`,
     sum.flaky && `🔁 Flaky ${sum.flaky}`,
     sum.check && `⚠️ Bug có vẻ đã sửa ${sum.check}`,
     sum.notRun && `Not run ${sum.notRun}`,
@@ -119,7 +128,7 @@ function build(dir, feature) {
     `# RTM: ${feature}`,
     '',
     `> Ma trận truy vết **AC → viewpoint → test case → kết quả → bug**. Tạo tự động bởi \`npm run rtm\`, đừng sửa tay.`,
-    `> Nguồn: [requirement](requirement/requirement.md) · [viewpoint.csv](viewpoint.csv) · [test-cases.csv](test-cases.csv) · kết quả [${runFile}](run-results/${runFile}) · [defects.md](defects.md)`,
+    `> Nguồn: [requirement](requirement/requirement.md) · [viewpoint.csv](viewpoint.csv) · [test-cases.csv](test-cases.csv) · kết quả [${runFile}](run-results/${runFile})${manualFile ? ` + chạy tay [${manualFile}](run-results/${manualFile})` : ''} · [defects.md](defects.md)`,
     '',
     ...(warnings.length ? ['## ⚠️ Cảnh báo', ...warnings.map((w) => `- ${w}`), ''] : []),
     '## Tóm tắt',
@@ -128,7 +137,7 @@ function build(dir, feature) {
     `| AC có test case | **${sum.acCovered}/${sum.acTotal}** (${pct(sum.acCovered, sum.acTotal)}%) |`,
     `| AC đạt (mọi TC liên quan đều Passed) | **${sum.acPass}/${sum.acTotal}** (${pct(sum.acPass, sum.acTotal)}%) |`,
     `| Test case | ${sum.tc}: ✅ Passed ${sum.passed} · ❌ Failed ${sum.failed}${extras.length ? ` · ${extras.join(' · ')}` : ''} |`,
-    `| Flaky · cần làm tay | ${sum.flaky} · ${sum.manual} |`,
+    manualFile ? `| Flaky · cần làm tay · đã chạy tay | ${sum.flaky} · ${sum.manual} · ${Object.keys(manualOf).length} |` : `| Flaky · cần làm tay | ${sum.flaky} · ${sum.manual} |`,
     `| Viewpoint | ${sum.vpIn} trong phạm vi${inScopeNoTc.length ? ` (⛔ ${inScopeNoTc.length} chưa có TC: ${inScopeNoTc.map((v) => v.viewpoint_id).join(', ')})` : ', đều có TC'} · ${sum.vpOut} ngoài phạm vi |`,
     `| Bug đang mở | ${openBugs.length ? openBugs.map(mdBug).join(', ') : '0'} |`,
     '',
@@ -157,7 +166,7 @@ function build(dir, feature) {
       a.rows.map((r) => {
         const ev = evidence(r.tc_id);
         const tc = `${ev ? `[${r.tc_id}](${ev})` : r.tc_id} ${c(r.title)}`;
-        return `| ${a.id} | ${r.viewpoint_id} | ${tc} |${hasScreen ? ` ${c(r.screen || '–')} |` : ''} ${c(r.technique || '–')} | ${c(r.automation_feasibility)} | ${icon(r.result)} | ${r.bugs.map(mdBug).join(', ') || '–'} |`;
+        return `| ${a.id} | ${r.viewpoint_id} | ${tc} |${hasScreen ? ` ${c(r.screen || '–')} |` : ''} ${c(r.technique || '–')} | ${c(r.automation_feasibility)} | ${icon(r.result)}${shown(r.tc_id, r.result).slice(r.result.length)} | ${r.bugs.map(mdBug).join(', ') || '–'} |`;
       })
     ),
     '',
@@ -188,7 +197,7 @@ th{background:color-mix(in srgb,var(--line) 40%,transparent)}
 td:first-child,.nw{white-space:nowrap}
 a{color:inherit}</style></head><body>
 <h1>RTM: ${esc(feature)}</h1>
-<p class="mute">Ma trận truy vết AC → viewpoint → test case → kết quả → bug · kết quả từ ${esc(runFile)} · tạo bởi <code>npm run rtm</code></p>
+<p class="mute">Ma trận truy vết AC → viewpoint → test case → kết quả → bug · kết quả từ ${esc(runFile)}${manualFile ? ` + chạy tay ${esc(manualFile)}` : ''} · tạo bởi <code>npm run rtm</code></p>
 ${warnings.length ? `<div class="warn"><b>⚠️ Cảnh báo</b><ul>${warnings.map((w) => `<li>${esc(w)}</li>`).join('')}</ul></div>` : ''}
 <div class="cards">
 <div class="card">AC có test case<b>${sum.acCovered}/${sum.acTotal}</b></div>
@@ -205,7 +214,7 @@ ${hasScreen ? `<h2>Theo màn hình</h2><div class="wrap"><table><tr><th>Màn hì
 ${perScreen.map((g) => `<tr><td>${esc(g.screen)}</td><td>${g.total}</td><td>${g.passed}</td><td>${g.failed}</td><td>${g.other}</td><td class="nw">${g.bugs.map(htmlBug).join(', ') || '–'}</td></tr>`).join('\n')}
 </table></div>` : ''}
 <h2>Chi tiết</h2><div class="wrap"><table><tr><th>AC</th><th>Viewpoint</th><th>Test case</th>${hasScreen ? '<th>Màn hình</th>' : ''}<th>Kỹ thuật</th><th>Tự động</th><th>Kết quả</th><th>Bug</th></tr>
-${perAc.flatMap((a) => a.rows.map((r) => { const ev = evidence(r.tc_id); return `<tr><td>${a.id}</td><td>${r.viewpoint_id}</td><td>${ev ? `<a href="${ev}">${r.tc_id}</a>` : r.tc_id} ${esc(r.title)}</td>${hasScreen ? `<td>${esc(r.screen || '–')}</td>` : ''}<td>${esc(r.technique || '–')}</td><td>${esc(r.automation_feasibility)}</td><td class="${cls(r.result)}">${esc(r.result)}</td><td class="nw">${r.bugs.map(htmlBug).join(', ') || '–'}</td></tr>`; })).join('\n')}
+${perAc.flatMap((a) => a.rows.map((r) => { const ev = evidence(r.tc_id); return `<tr><td>${a.id}</td><td>${r.viewpoint_id}</td><td>${ev ? `<a href="${ev}">${r.tc_id}</a>` : r.tc_id} ${esc(r.title)}</td>${hasScreen ? `<td>${esc(r.screen || '–')}</td>` : ''}<td>${esc(r.technique || '–')}</td><td>${esc(r.automation_feasibility)}</td><td class="${cls(r.result)}">${esc(shown(r.tc_id, r.result))}</td><td class="nw">${r.bugs.map(htmlBug).join(', ') || '–'}</td></tr>`; })).join('\n')}
 </table></div>
 <h2>Viewpoint ngoài phạm vi</h2><div class="wrap"><table><tr><th>Viewpoint</th><th>AC</th><th>Nội dung</th><th>Nguồn quyết định</th></tr>
 ${outScope.map((v) => `<tr><td>${v.viewpoint_id}</td><td>${esc(v.linked_ac)}</td><td>${esc(v.description)}</td><td>${esc(v.source)}</td></tr>`).join('\n')}
@@ -226,7 +235,13 @@ function qcResult(t) {
   if (t.outcome === 'flaky' || t.status === 'flaky') return 'Flaky';
   if (t.status === 'passed') return t.expected_status === 'failed' ? 'Passed (bug có vẻ đã sửa, kiểm tra lại)' : 'Passed';
   if (t.status === 'skipped') return 'Skipped';
+  if (t.status === 'blocked') return 'Blocked';
   return t.status === 'timedOut' ? 'Failed (timeout)' : 'Failed';
+}
+
+/** Worse result wins when a TC has both an automated and a manual result. */
+function rank(r) {
+  return r.startsWith('Failed') ? 3 : r === 'Passed' ? 1 : 2;
 }
 
 function icon(r) {

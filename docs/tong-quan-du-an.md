@@ -67,7 +67,7 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | 6 | Sửa test hỏng (healer) | healing-log.md | ⏭ Lần này không có script-issue |
 | 7 | Bug report + RTM | defects.md, rtm.md / rtm-report.html (`npm run rtm`) | ✅ |
 | 8 | Sản phẩm + Chi tiết + Giỏ hàng (cả pipeline) | `qa-runs/saucedemo-products-cart-screen/`: 46 TC, 17 bug, RTM, evidence chia theo màn hình | ✅ Xong (review cuối đã xử lý) |
-| 9 | Giỏ hàng → Thanh toán → Hoàn tất (cả pipeline, E2E mua hàng) | `qa-runs/saucedemo-checkout-screen/` | ⏳ |
+| 9 | Giỏ hàng → Thanh toán → Hoàn tất (cả pipeline, E2E mua hàng) | `qa-runs/saucedemo-checkout-screen/`: 53 TC (1 bán tự động: PDF làm tay), 21 bug, RTM, evidence + tái hiện độc lập | ✅ Xong (review cuối đã xử lý; thời gian CI thật ghi sau lần chạy đầu trên `main`) |
 | 10 | Test API: Restful Booker | `tests/api` | ⏳ |
 | 11 | Hoàn thiện CI, README, tổng kết | Báo cáo tổng kết | ⏳ |
 
@@ -116,3 +116,9 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | Sản phẩm + giỏ: kết quả chạy | 29 Passed + 17 Failed (bug đã biết, fail đúng chỗ), 0 chập chờn (chạy lặp 92/92). Lần chạy `run-20261125-150817`: 84 giây |
 | Sản phẩm + giỏ: bug report | 17 bug: 1 Critical (sai giá), 7 High (gồm 2 bảo mật), 5 Medium, 4 Low; BUG-17 chỉ ghi nhận (hiệu năng). Tái hiện độc lập 2/2 lần cho mọi bug |
 | Sản phẩm + giỏ: RTM | 7/7 AC có test case, 0/7 AC đạt (AC nào cũng có bug), 17 bug đang mở |
+| Thanh toán: phân tích yêu cầu | 7 AC, 47 quan sát, ma trận 5 tài khoản × 3 trang, 58 viewpoint (47 trong phạm vi), 14 câu hỏi, 11 đề xuất cải tiến, 15 bug mới (BUG-22 → BUG-36) + 6 biến thể bug cũ (BUG-02, 05, 07, 11, 16, 19) + biến thể BUG-03 chỉ ghi nhận (hiệu năng, chưa có AC) |
+| Thanh toán: test case | 53 TC, phủ 47/47 viewpoint trong phạm vi, 7/7 AC; 1 TC bán tự động (biên nhận PDF: bước đọc bằng mắt làm tay) |
+| Thanh toán: code test | 53 test, 3 Page Object mới, quét 120 giỏ (63 tổ hợp: 6 giỏ 1 sản phẩm + 57 giỏ nhiều sản phẩm × 2 thứ tự) cho số tiền; đọc chữ trong PDF; chạy theo múi giờ khác UTC; hàm đo bố cục dùng chung với SD-102 (`tests/utils/layout.ts`) |
+| Thanh toán: kết quả chạy | 31 Passed + 22 Failed (bug đã biết, fail đúng chỗ), 0 chập chờn (chạy lặp 106/106). Lần chạy `run-20261126-143604`: 126 giây (9 worker); cộng dồn 12,2 phút (CI 1 worker) → giới hạn job CI nâng lên 30 phút |
+| Thanh toán: bug report | 21 bug: 8 High (gồm BUG-29 tính gấp đôi tiền, Critical nếu là hệ thống thật; 2 bảo mật / dữ liệu: cookie tự tạo, giỏ của người trước), 7 Medium, 6 Low. Tái hiện độc lập 2/2 lần cho mọi bug |
+| Thanh toán: RTM | 7/7 AC có test case, 0/7 AC đạt, 21 bug đang mở |

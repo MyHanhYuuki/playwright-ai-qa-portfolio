@@ -141,17 +141,24 @@ export class Evidence {
       .filter((m) => SCRIPT_ERROR.test(m))
       .map((m) => `${m.split('\n')[0]} → ${m.match(SCRIPT_ERROR)![0]}`)[0];
     if (scriptError) console.warn(`⚠️  ${this.tcId}: lỗi giống lỗi code test (${scriptError}). Evidence chưa đủ tin cậy, kiểm tra lại.`);
+    // Every annotation of the test (timings, BUG references, PDF text, sweep counts…) so a reviewer reading only the
+    // evidence sees them too (review-executor B2). 'fail' is already shown as the result / bug remark.
+    const cell = (v: string) => v.replace(/\|/g, '\\|').replace(/\r?\n/g, ' ');
+    const notes = this.info.annotations
+      .filter((a) => a.type !== 'fail')
+      .map((a) => `| ${cell(a.type)} | ${cell(a.description ?? '')} |`);
     const readme = [
       `# ${this.info.title}`,
       '',
       `- **Kết quả**: ${result}${remark}`,
       ...(scriptError ? [`- ⚠️ **Lỗi code test**: \`${scriptError}\` (không phải bug, cần sửa test rồi chạy lại)`] : []),
-      `- **Nhóm**: ${this.info.titlePath.slice(1, -1).join(' › ') || '(không có)'}`,
+      // filter(Boolean): an anonymous test.describe (used only for test.use, e.g. TC-034 time zone) has an empty title
+      `- **Nhóm**: ${this.info.titlePath.slice(1, -1).filter(Boolean).join(' › ') || '(không có)'}`,
       `- **Tags**: ${this.info.tags.join(' ')}`,
       `- **Thời điểm**: ${new Date().toISOString()}`,
       `- **Video**: ${
         savedVideo ? '[video.webm](video.webm)'
-        : fs.existsSync(path.join(this.dir, 'video.webm')) ? `[video.webm](video.webm) (quay ở lần chạy ngày ${fs.statSync(path.join(this.dir, 'video.webm')).mtime.toISOString().slice(0, 10)}, không quay lại vì test pass)`
+        : fs.existsSync(path.join(this.dir, 'video.webm')) ? `[video.webm](video.webm) (quay ở lần chạy ngày ${fs.statSync(path.join(this.dir, 'video.webm')).mtime.toISOString().slice(0, 10)}, ${process.env.EVIDENCE_KEEP_VIDEOS ? 'lần này không quay lại: EVIDENCE_KEEP_VIDEOS' : keepVideo ? 'lần này không lưu được video mới' : 'không quay lại vì test pass'})`
         : '(chỉ quay video cho test có bug hoặc kết quả bất thường)'
       }`,
       '',
@@ -159,6 +166,7 @@ export class Evidence {
       '|---|---|---|---|',
       ...this.rows,
       '',
+      ...(notes.length ? ['## Ghi nhận (annotation)', '', '| Loại | Nội dung |', '|---|---|', ...notes, ''] : []),
     ].join('\n');
     for (const d of [this.dir, ...this.bugDirs]) fs.writeFileSync(path.join(d, 'README.md'), readme);
   }

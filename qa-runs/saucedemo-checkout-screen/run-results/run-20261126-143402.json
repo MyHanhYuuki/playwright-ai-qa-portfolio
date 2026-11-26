@@ -1,0 +1,57 @@
+{
+  "run_id": "run-20261126-143402",
+  "triggered_by": "orchestrator",
+  "scope": "subset:TC-034|TC-048",
+  "browser": "chromium",
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "expected_fail": 0
+  },
+  "total_duration_ms": 10702,
+  "tests": [
+    {
+      "tc_id": "TC-034",
+      "title": "TC-034 Generate PDF order: tải file, nội dung khớp đơn vừa đặt",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 8417,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "Tên file",
+          "description": "giờ 07-34-07 (UTC); Order Date trong file: November 26, 2026 at 2:34 PM (Asia/Ho_Chi_Minh)"
+        },
+        {
+          "type": "PDF",
+          "description": "Swag Labs | Order Receipt | ORDER DETAILS | Order Date | November 26, 2026 at 2:34 PM | SHIP TO | An Le | 70000 | ITEMS | DESCRIPTION | PRICE | Sauce Labs Fleece Jacket | $ | 49.99 | Sauce Labs Bike Light | $ | 9.99 | Sauce Labs Onesie | $ | 7.99 | Item total | $ | 67.97 | Tax | $ | 5.44 | Total | $ | 73.41 | Thank you for your order! It has been dispatched, and will arrive just as fast as the pony can get there."
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-048",
+      "title": "TC-048 error_user: các thao tác không lỗi vẫn đúng như standard_user",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5305,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "BUG-21 (SD-102, tham khảo)",
+          "description": "3 lỗi / báo lỗi khi ở trang chi tiết (bước 5): Bước 5 (chi tiết Sauce Labs Backpack) [/inventory-item.html]: https://submit.backtrace.io/UNIVERSE/TOKEN/json | Bước 5 (chi tiết Sauce Labs Bike Light) [/inventory-item.html]: https://submit.backtrace.io/UNIVERSE/TOKEN/json | Bước 5 (chi tiết Sauce Labs Onesie) [/inventory-item.html]: https://submit.backtrace.io/UNIVERSE/TOKEN/json"
+        }
+      ]
+    }
+  ]
+}

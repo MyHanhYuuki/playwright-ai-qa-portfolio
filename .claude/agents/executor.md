@@ -135,7 +135,7 @@ Không làm tay những gì test tự động đã kiểm đủ và tin cậy (t
 2. So với `expected_result`: ghi **Passed / Failed / Blocked** kèm lý do, nguyên văn thông báo, giá trị đo được. Không đoán: bước không làm được thì Blocked và ghi vì sao.
 3. Ghi kết quả vào `run-results/manual-YYYYMMDD-HHMM.json` (cùng schema `tests[]`: `tc_id`, `status`, `expected_status`, `errors`, thêm `reason` = mã M1–M7, `steps[]`, `screenshots[]`); ảnh vào `evidence/all-cases/TC-xxx/manual/` kèm README ghi rõ "chạy tay". Không có đường dẫn máy trong file.
 4. Phần làm tay fail: phân loại real-bug như TC tự động (đưa vào HITL #3). Kết quả làm tay được tính trong `triage.md` (mục "Chạy tay": TC, lý do M1–M7, kết quả) và RTM.
-5. Việc còn làm khi có kết quả làm tay đầu tiên: `scripts/build-rtm.mjs` hiện chỉ đọc `run-*.json`, cần đọc thêm `manual-*.json` mới nhất (TC có cả hai thì lấy kết quả xấu hơn).
+5. `npm run rtm` đọc cả `run-*.json` và `manual-*.json` mới nhất: TC có cả hai kết quả thì RTM lấy kết quả **xấu hơn** (Failed > Blocked / Skipped / Flaky / "Passed (bug có vẻ đã sửa)" > Passed) và ghi rõ "(tự động: … · tay: …)". `status` của file làm tay: `passed` / `failed` / `blocked`.
 
 ## Phase 3: Evidence (sau khi phân loại xong, chưa có script-issue)
 ```bash

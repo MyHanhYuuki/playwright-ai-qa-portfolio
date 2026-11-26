@@ -41,4 +41,10 @@ export class CartPage extends AppPage {
   removeButton(p: Product) {
     return this.line(p).getByRole('button', { name: 'Remove' });
   }
+
+  /** "Checkout", then wait until the Information page is rendered (its First Name field, SD-103). */
+  async checkout() {
+    await this.checkoutButton.click();
+    await this.page.getByTestId('firstName').waitFor();
+  }
 }

@@ -35,6 +35,7 @@ TC-002,TVP-005,"...","...","...","...",TD-02,high,negative,EP,automatable,AC-3,r
 ```
 - Nhiều giá trị trong một ô ngăn bằng `;` (`TVP-011;TVP-036`, `AC-1;AC-5`, `regression;smoke`). `status`: `draft` khi viết, đổi thành `approved` sau HITL #2.
 - `notes`: bug đã biết ghi BUG id ở **câu đầu** (RTM chỉ đọc câu đầu). `screen`: như `viewpoint.csv`.
+- TC đi **qua trang của feature khác** (vd từ Tổng quan bấm sang trang chi tiết): tra bug đã biết của trang đó **theo từng tài khoản** (`known-issues.md` / `defects.md` của feature gốc). Oracle "0 lỗi console / 0 request báo lỗi" chỉ tính trên trang của feature đang test; bug của trang kia ghi ở **câu sau** của `notes` để tham khảo (bài học L16 của qa-reviewer).
 - `type`: `functional` | `negative` | `data` | `flow` | `non-functional`
 - `automation_feasibility`: `automatable` | `semi-auto` | `manual-only`. Không phải `automatable` thì ghi lý do vào `notes` theo mã M1–M7 của `executor.md` (vd "M2: cần mắt người đọc PDF"); executor sẽ làm tay phần đó
 - `expected_result` phải **cụ thể**: ghi đúng text thông báo, URL đích, trạng thái. Không ghi kiểu "hiển thị lỗi phù hợp".

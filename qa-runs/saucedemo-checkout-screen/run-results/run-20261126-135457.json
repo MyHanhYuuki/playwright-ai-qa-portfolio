@@ -1,0 +1,1313 @@
+{
+  "run_id": "run-20261126-135457",
+  "triggered_by": "orchestrator",
+  "scope": "full",
+  "browser": "chromium",
+  "summary": {
+    "total": 53,
+    "passed": 53,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "expected_fail": 22
+  },
+  "total_duration_ms": 124000,
+  "tests": [
+    {
+      "tc_id": "TC-001",
+      "title": "TC-001 Giỏ → Checkout mở trang Thông tin (giỏ 1 và 3 sản phẩm)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 7247,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-002",
+      "title": "TC-002 Thiếu ô bắt buộc: báo lỗi ô đầu tiên còn thiếu (7 tổ hợp)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 9023,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-003",
+      "title": "TC-003 Thiếu ô: chỉ ô còn thiếu bị tô đỏ, ô đã nhập không bị tô đỏ",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 46079,
+      "retry_count": 0,
+      "error": "Error: chỉ có First: ô đã nhập first không có class error",
+      "errors": [
+        "Error: chỉ có First: ô đã nhập first không có class error",
+        "Error: chỉ có First: ô đã nhập first không có icon",
+        "Error: chỉ có Last: ô đã nhập last không có class error",
+        "Error: chỉ có Last: ô đã nhập last không có icon",
+        "Error: chỉ có Zip: ô đã nhập zip không có class error",
+        "Error: chỉ có Zip: ô đã nhập zip không có icon",
+        "Error: First + Last: ô đã nhập first không có class error",
+        "Error: First + Last: ô đã nhập first không có icon",
+        "Error: First + Last: ô đã nhập last không có class error",
+        "Error: First + Last: ô đã nhập last không có icon",
+        "Error: First + Zip: ô đã nhập first không có class error",
+        "Error: First + Zip: ô đã nhập first không có icon",
+        "Error: First + Zip: ô đã nhập zip không có class error",
+        "Error: First + Zip: ô đã nhập zip không có icon",
+        "Error: Last + Zip: ô đã nhập last không có class error",
+        "Error: Last + Zip: ô đã nhập last không có icon",
+        "Error: Last + Zip: ô đã nhập zip không có class error",
+        "Error: Last + Zip: ô đã nhập zip không có icon"
+      ],
+      "error_details": [
+        "Error: chỉ có First: ô đã nhập first không có class error\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected pattern: not /(^|\\s)error(\\s|$)/\nReceived string: \"input_error form_input error\"\nTimeout: 2000ms",
+        "Error: chỉ có First: ô đã nhập first không có icon\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.form_group').filter({ has: getByLabel('First Name', { exact: true }) }).locator('.error_icon')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: chỉ có Last: ô đã nhập last không có class error\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: getByLabel('Last Name', { exact: true })\nExpected pattern: not /(^|\\s)error(\\s|$)/\nReceived string: \"input_error form_input error\"\nTimeout: 2000ms",
+        "Error: chỉ có Last: ô đã nhập last không có icon\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.form_group').filter({ has: getByLabel('Last Name', { exact: true }) }).locator('.error_icon')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: chỉ có Zip: ô đã nhập zip không có class error\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: getByLabel('Zip/Postal Code', { exact: true })\nExpected pattern: not /(^|\\s)error(\\s|$)/\nReceived string: \"input_error form_input error\"\nTimeout: 2000ms",
+        "Error: chỉ có Zip: ô đã nhập zip không có icon\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.form_group').filter({ has: getByLabel('Zip/Postal Code', { exact: true }) }).locator('.error_icon')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: First + Last: ô đã nhập first không có class error\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected pattern: not /(^|\\s)error(\\s|$)/\nReceived string: \"input_error form_input error\"\nTimeout: 2000ms",
+        "Error: First + Last: ô đã nhập first không có icon\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.form_group').filter({ has: getByLabel('First Name', { exact: true }) }).locator('.error_icon')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: First + Last: ô đã nhập last không có class error\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: getByLabel('Last Name', { exact: true })\nExpected pattern: not /(^|\\s)error(\\s|$)/\nReceived string: \"input_error form_input error\"\nTimeout: 2000ms",
+        "Error: First + Last: ô đã nhập last không có icon\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.form_group').filter({ has: getByLabel('Last Name', { exact: true }) }).locator('.error_icon')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: First + Zip: ô đã nhập first không có class error\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected pattern: not /(^|\\s)error(\\s|$)/\nReceived string: \"input_error form_input error\"\nTimeout: 2000ms",
+        "Error: First + Zip: ô đã nhập first không có icon\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.form_group').filter({ has: getByLabel('First Name', { exact: true }) }).locator('.error_icon')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: First + Zip: ô đã nhập zip không có class error\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: getByLabel('Zip/Postal Code', { exact: true })\nExpected pattern: not /(^|\\s)error(\\s|$)/\nReceived string: \"input_error form_input error\"\nTimeout: 2000ms",
+        "Error: First + Zip: ô đã nhập zip không có icon\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.form_group').filter({ has: getByLabel('Zip/Postal Code', { exact: true }) }).locator('.error_icon')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Last + Zip: ô đã nhập last không có class error\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: getByLabel('Last Name', { exact: true })\nExpected pattern: not /(^|\\s)error(\\s|$)/\nReceived string: \"input_error form_input error\"\nTimeout: 2000ms",
+        "Error: Last + Zip: ô đã nhập last không có icon\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.form_group').filter({ has: getByLabel('Last Name', { exact: true }) }).locator('.error_icon')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Last + Zip: ô đã nhập zip không có class error\n\nexpect(locator).not.toHaveClass(expected) failed\n\nLocator: getByLabel('Zip/Postal Code', { exact: true })\nExpected pattern: not /(^|\\s)error(\\s|$)/\nReceived string: \"input_error form_input error\"\nTimeout: 2000ms",
+        "Error: Last + Zip: ô đã nhập zip không có icon\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  locator('.form_group').filter({ has: getByLabel('Zip/Postal Code', { exact: true }) }).locator('.error_icon')\nExpected: 0\nReceived: 1\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-22: thiếu 1 ô thì cả 3 ô đều bị tô đỏ (class error + icon)"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-004",
+      "title": "TC-004 Nút ✕ đóng thông báo lỗi, giá trị giữ nguyên, Continue lần sau báo ô tiếp theo",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 6711,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-005",
+      "title": "TC-005 Ô chỉ có khoảng trắng / ký tự tab bị coi như trống",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 48360,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1 (cả 3 ô 1 khoảng trắng): thông báo",
+      "errors": [
+        "Error: Biến thể 1 (cả 3 ô 1 khoảng trắng): thông báo",
+        "Error: Biến thể 1 (cả 3 ô 1 khoảng trắng): vẫn ở /checkout-step-one.html",
+        "Error: Biến thể 1 (cả 3 ô 1 khoảng trắng): còn ô First Name",
+        "Error: Biến thể 1 (cả 3 ô 1 khoảng trắng): không có nút Finish",
+        "Error: Biến thể 2 (First 3 khoảng trắng): thông báo",
+        "Error: Biến thể 2 (First 3 khoảng trắng): vẫn ở /checkout-step-one.html",
+        "Error: Biến thể 2 (First 3 khoảng trắng): còn ô First Name",
+        "Error: Biến thể 2 (First 3 khoảng trắng): không có nút Finish",
+        "Error: Biến thể 3 (Last 3 khoảng trắng): thông báo",
+        "Error: Biến thể 3 (Last 3 khoảng trắng): vẫn ở /checkout-step-one.html",
+        "Error: Biến thể 3 (Last 3 khoảng trắng): còn ô First Name",
+        "Error: Biến thể 3 (Last 3 khoảng trắng): không có nút Finish",
+        "Error: Biến thể 4 (Zip 3 khoảng trắng): thông báo",
+        "Error: Biến thể 4 (Zip 3 khoảng trắng): vẫn ở /checkout-step-one.html",
+        "Error: Biến thể 4 (Zip 3 khoảng trắng): còn ô First Name",
+        "Error: Biến thể 4 (Zip 3 khoảng trắng): không có nút Finish",
+        "Error: Biến thể 5 (Zip 1 ký tự tab): thông báo",
+        "Error: Biến thể 5 (Zip 1 ký tự tab): vẫn ở /checkout-step-one.html",
+        "Error: Biến thể 5 (Zip 1 ký tự tab): còn ô First Name",
+        "Error: Biến thể 5 (Zip 1 ký tự tab): không có nút Finish"
+      ],
+      "error_details": [
+        "Error: Biến thể 1 (cả 3 ô 1 khoảng trắng): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Error: First Name is required\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 1 (cả 3 ô 1 khoảng trắng): vẫn ở /checkout-step-one.html\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-step-one\\.html$/\nReceived string:  \"https://www.saucedemo.com/checkout-step-two.html\"\nTimeout: 2000ms",
+        "Error: Biến thể 1 (cả 3 ô 1 khoảng trắng): còn ô First Name\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 1 (cả 3 ô 1 khoảng trắng): không có nút Finish\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('finish')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 2 (First 3 khoảng trắng): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Error: First Name is required\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 2 (First 3 khoảng trắng): vẫn ở /checkout-step-one.html\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-step-one\\.html$/\nReceived string:  \"https://www.saucedemo.com/checkout-step-two.html\"\nTimeout: 2000ms",
+        "Error: Biến thể 2 (First 3 khoảng trắng): còn ô First Name\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 2 (First 3 khoảng trắng): không có nút Finish\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('finish')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 3 (Last 3 khoảng trắng): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Error: Last Name is required\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 3 (Last 3 khoảng trắng): vẫn ở /checkout-step-one.html\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-step-one\\.html$/\nReceived string:  \"https://www.saucedemo.com/checkout-step-two.html\"\nTimeout: 2000ms",
+        "Error: Biến thể 3 (Last 3 khoảng trắng): còn ô First Name\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 3 (Last 3 khoảng trắng): không có nút Finish\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('finish')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 4 (Zip 3 khoảng trắng): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Error: Postal Code is required\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 4 (Zip 3 khoảng trắng): vẫn ở /checkout-step-one.html\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-step-one\\.html$/\nReceived string:  \"https://www.saucedemo.com/checkout-step-two.html\"\nTimeout: 2000ms",
+        "Error: Biến thể 4 (Zip 3 khoảng trắng): còn ô First Name\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 4 (Zip 3 khoảng trắng): không có nút Finish\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('finish')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 5 (Zip 1 ký tự tab): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Error: Postal Code is required\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 5 (Zip 1 ký tự tab): vẫn ở /checkout-step-one.html\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-step-one\\.html$/\nReceived string:  \"https://www.saucedemo.com/checkout-step-two.html\"\nTimeout: 2000ms",
+        "Error: Biến thể 5 (Zip 1 ký tự tab): còn ô First Name\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 5 (Zip 1 ký tự tab): không có nút Finish\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('finish')\nExpected: 0\nReceived: 1\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-34: ô chỉ có khoảng trắng / tab được coi là đã nhập, sang Tổng quan"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-006",
+      "title": "TC-006 Giá trị hợp lệ đa dạng được nhận, sang Tổng quan, script không chạy",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 8167,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-007",
+      "title": "TC-007 Chuỗi 5000 ký tự ở cả 3 ô được nhận",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 6742,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-008",
+      "title": "TC-008 Luồng chính: Giỏ → Thông tin → Tổng quan → Hoàn tất → danh sách",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1920,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-009",
+      "title": "TC-009 Nhấn Enter trong ô nhập xử lý như Continue",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 50580,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1 (đủ 3 ô, Enter ở ô first): sang Tổng quan",
+      "errors": [
+        "Error: Biến thể 1 (đủ 3 ô, Enter ở ô first): sang Tổng quan",
+        "Error: Biến thể 1 (đủ 3 ô, Enter ở ô first): URL",
+        "Error: Biến thể 1 (đủ 3 ô, Enter ở ô first): tiêu đề",
+        "Error: Biến thể 1 (đủ 3 ô, Enter ở ô first): không về trang giỏ",
+        "Error: Biến thể 2 (đủ 3 ô, Enter ở ô last): sang Tổng quan",
+        "Error: Biến thể 2 (đủ 3 ô, Enter ở ô last): URL",
+        "Error: Biến thể 2 (đủ 3 ô, Enter ở ô last): tiêu đề",
+        "Error: Biến thể 2 (đủ 3 ô, Enter ở ô last): không về trang giỏ",
+        "Error: Biến thể 3 (đủ 3 ô, Enter ở ô zip): sang Tổng quan",
+        "Error: Biến thể 3 (đủ 3 ô, Enter ở ô zip): URL",
+        "Error: Biến thể 3 (đủ 3 ô, Enter ở ô zip): tiêu đề",
+        "Error: Biến thể 3 (đủ 3 ô, Enter ở ô zip): không về trang giỏ",
+        "Error: Biến thể 4 (trống, Enter ở ô first): thông báo",
+        "Error: Biến thể 4 (trống, Enter ở ô first): còn ô First Name",
+        "Error: Biến thể 4 (trống, Enter ở ô first): không về trang giỏ",
+        "Error: Biến thể 5 (trống, Enter ở ô last): thông báo",
+        "Error: Biến thể 5 (trống, Enter ở ô last): còn ô First Name",
+        "Error: Biến thể 5 (trống, Enter ở ô last): không về trang giỏ",
+        "Error: Biến thể 6 (trống, Enter ở ô zip): thông báo",
+        "Error: Biến thể 6 (trống, Enter ở ô zip): còn ô First Name",
+        "Error: Biến thể 6 (trống, Enter ở ô zip): không về trang giỏ"
+      ],
+      "error_details": [
+        "Error: Biến thể 1 (đủ 3 ô, Enter ở ô first): sang Tổng quan\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Finish', exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 1 (đủ 3 ô, Enter ở ô first): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-step-two\\.html$/\nReceived string:  \"https://www.saucedemo.com/cart.html\"\nTimeout: 2000ms",
+        "Error: Biến thể 1 (đủ 3 ô, Enter ở ô first): tiêu đề\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('title')\nExpected: \"Checkout: Overview\"\nReceived: \"Your Cart\"\nTimeout:  2000ms",
+        "Error: Biến thể 1 (đủ 3 ô, Enter ở ô first): không về trang giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByRole('button', { name: 'Checkout' })\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 2 (đủ 3 ô, Enter ở ô last): sang Tổng quan\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Finish', exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 2 (đủ 3 ô, Enter ở ô last): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-step-two\\.html$/\nReceived string:  \"https://www.saucedemo.com/cart.html\"\nTimeout: 2000ms",
+        "Error: Biến thể 2 (đủ 3 ô, Enter ở ô last): tiêu đề\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('title')\nExpected: \"Checkout: Overview\"\nReceived: \"Your Cart\"\nTimeout:  2000ms",
+        "Error: Biến thể 2 (đủ 3 ô, Enter ở ô last): không về trang giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByRole('button', { name: 'Checkout' })\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 3 (đủ 3 ô, Enter ở ô zip): sang Tổng quan\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Finish', exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 3 (đủ 3 ô, Enter ở ô zip): URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-step-two\\.html$/\nReceived string:  \"https://www.saucedemo.com/cart.html\"\nTimeout: 2000ms",
+        "Error: Biến thể 3 (đủ 3 ô, Enter ở ô zip): tiêu đề\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('title')\nExpected: \"Checkout: Overview\"\nReceived: \"Your Cart\"\nTimeout:  2000ms",
+        "Error: Biến thể 3 (đủ 3 ô, Enter ở ô zip): không về trang giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByRole('button', { name: 'Checkout' })\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 4 (trống, Enter ở ô first): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Error: First Name is required\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 4 (trống, Enter ở ô first): còn ô First Name\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 4 (trống, Enter ở ô first): không về trang giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByRole('button', { name: 'Checkout' })\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 5 (trống, Enter ở ô last): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Error: First Name is required\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 5 (trống, Enter ở ô last): còn ô First Name\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 5 (trống, Enter ở ô last): không về trang giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByRole('button', { name: 'Checkout' })\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 6 (trống, Enter ở ô zip): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Error: First Name is required\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 6 (trống, Enter ở ô zip): còn ô First Name\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 6 (trống, Enter ở ô zip): không về trang giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByRole('button', { name: 'Checkout' })\nExpected: hidden\nReceived: visible\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-23: Enter ở ô nào cũng về trang giỏ (Cancel là nút submit đứng trước Continue)"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-010",
+      "title": "TC-010 Cancel ở Thông tin về trang giỏ, giỏ giữ nguyên",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 6515,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-011",
+      "title": "TC-011 Back, Forward, tải lại ở Thông tin",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2205,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-012",
+      "title": "TC-012 3 ô trống lại sau Cancel, Back / Forward, tải lại",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2509,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-013",
+      "title": "TC-013 problem_user: gõ được cả 3 ô, mỗi ô nhận đúng giá trị",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 17972,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1: First Name",
+      "errors": [
+        "Error: Biến thể 1: First Name",
+        "Error: Biến thể 1: Last Name",
+        "Error: Biến thể 2: First Name",
+        "Error: Biến thể 2: Last Name",
+        "Error: Biến thể 2: sang Tổng quan",
+        "Error: Biến thể 2: URL",
+        "Error: Biến thể 2: tiêu đề",
+        "Error: Biến thể 2: không có \"Last Name is required\""
+      ],
+      "error_details": [
+        "Error: Biến thể 1: First Name\n\nexpect(locator).toHaveValue(expected) failed\n\nLocator:  getByLabel('First Name', { exact: true })\nExpected: \"An\"\nReceived: \"e\"\nTimeout:  2000ms",
+        "Error: Biến thể 1: Last Name\n\nexpect(locator).toHaveValue(expected) failed\n\nLocator:  getByLabel('Last Name', { exact: true })\nExpected: \"Lee\"\nReceived: \"\"\nTimeout:  2000ms",
+        "Error: Biến thể 2: First Name\n\nexpect(locator).toHaveValue(expected) failed\n\nLocator:  getByLabel('First Name', { exact: true })\nExpected: \"An\"\nReceived: \"Lee\"\nTimeout:  2000ms",
+        "Error: Biến thể 2: Last Name\n\nexpect(locator).toHaveValue(expected) failed\n\nLocator:  getByLabel('Last Name', { exact: true })\nExpected: \"Lee\"\nReceived: \"\"\nTimeout:  2000ms",
+        "Error: Biến thể 2: sang Tổng quan\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Finish', exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 2: URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-step-two\\.html$/\nReceived string:  \"https://www.saucedemo.com/checkout-step-one.html\"\nTimeout: 2000ms",
+        "Error: Biến thể 2: tiêu đề\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('title')\nExpected: \"Checkout: Overview\"\nReceived: \"Checkout: Your Information\"\nTimeout:  2000ms",
+        "Error: Biến thể 2: không có \"Last Name is required\"\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByText('Error: Last Name is required')\nExpected: 0\nReceived: 1\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-28: problem_user gõ ở Last Name thì ký tự đi vào First Name"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-014",
+      "title": "TC-014 error_user: gõ được Last Name, không lỗi JavaScript, không gửi báo lỗi",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 3590,
+      "retry_count": 0,
+      "error": "Error: Last Name",
+      "errors": [
+        "Error: Last Name",
+        "Error: 0 pageerror",
+        "Error: 0 request tới submit.backtrace.io"
+      ],
+      "error_details": [
+        "Error: Last Name\n\nexpect(locator).toHaveValue(expected) failed\n\nLocator:  getByLabel('Last Name', { exact: true })\nExpected: \"Lee\"\nReceived: \"\"\nTimeout:  2000ms",
+        "Error: 0 pageerror\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 5\n\n- Array []\n+ Array [\n+   \"- [/checkout-step-one.html]: Cannot read properties of undefined (reading 'value')\",\n+   \"- [/checkout-step-one.html]: Cannot read properties of undefined (reading 'value')\",\n+   \"- [/checkout-step-one.html]: Cannot read properties of undefined (reading 'value')\",\n+ ]\n\n  483 |     await expect.soft(ip.postalCode, 'Zip').toHaveValue(info.a.zip, QUICK);\n  484 |     if (errors.pageErrors.length) note('pageerror (MSG-09?)', errors.pageErrors.join(' | '));\n> 485 |     expect.soft(errors.pageErrors, '0 pageerror').toEqual([]);\n      |                                                   ^\n  486 |     expect.soft(errors.reports, '0 request tới submit.backtrace.io').toEqual([]);\n  487 |   });\n  488 |\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:485:51",
+        "Error: 0 request tới submit.backtrace.io\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 5\n\n- Array []\n+ Array [\n+   \"- [/checkout-step-one.html]: https://submit.backtrace.io/UNIVERSE/TOKEN/json\",\n+   \"- [/checkout-step-one.html]: https://submit.backtrace.io/UNIVERSE/TOKEN/json\",\n+   \"- [/checkout-step-one.html]: https://submit.backtrace.io/UNIVERSE/TOKEN/json\",\n+ ]\n\n  484 |     if (errors.pageErrors.length) note('pageerror (MSG-09?)', errors.pageErrors.join(' | '));\n  485 |     expect.soft(errors.pageErrors, '0 pageerror').toEqual([]);\n> 486 |     expect.soft(errors.reports, '0 request tới submit.backtrace.io').toEqual([]);\n      |                                                                      ^\n  487 |   });\n  488 |\n  489 |   test('TC-015 error_user: thiếu Last Name thì báo lỗi, không sang Tổng quan', { tag: ['@AC-2', '@info', '@overview', '@BUG-32'] }, async ({ page, loginAs, infoPage: ip, evidence }) => {\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:486:70"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-31: error_user không gõ được Last Name, mỗi phím 1 pageerror + 1 báo lỗi backtrace"
+        },
+        {
+          "type": "pageerror (MSG-09?)",
+          "description": "- [/checkout-step-one.html]: Cannot read properties of undefined (reading 'value') | - [/checkout-step-one.html]: Cannot read properties of undefined (reading 'value') | - [/checkout-step-one.html]: Cannot read properties of undefined (reading 'value')"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-015",
+      "title": "TC-015 error_user: thiếu Last Name thì báo lỗi, không sang Tổng quan",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 11789,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1 (Ann / trống / trống): thông báo",
+      "errors": [
+        "Error: Biến thể 1 (Ann / trống / trống): thông báo",
+        "Error: Biến thể 2 (Ann / trống / 70000): thông báo",
+        "Error: Biến thể 2 (Ann / trống / 70000): vẫn ở /checkout-step-one.html",
+        "Error: Biến thể 2 (Ann / trống / 70000): còn ô First Name",
+        "Error: Biến thể 2 (Ann / trống / 70000): không có nút Finish"
+      ],
+      "error_details": [
+        "Error: Biến thể 1 (Ann / trống / trống): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('error')\nExpected: \"Error: Last Name is required\"\nReceived: \"Error: Postal Code is required\"\nTimeout:  2000ms",
+        "Error: Biến thể 2 (Ann / trống / 70000): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Error: Last Name is required\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 2 (Ann / trống / 70000): vẫn ở /checkout-step-one.html\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-step-one\\.html$/\nReceived string:  \"https://www.saucedemo.com/checkout-step-two.html\"\nTimeout: 2000ms",
+        "Error: Biến thể 2 (Ann / trống / 70000): còn ô First Name\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 2 (Ann / trống / 70000): không có nút Finish\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('finish')\nExpected: 0\nReceived: 1\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-32: error_user bỏ qua kiểm tra Last Name"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-016",
+      "title": "TC-016 Tổng quan liệt kê đủ và đúng sản phẩm (4 giỏ)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2504,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-017",
+      "title": "TC-017 Tổng quan giữ thứ tự của giỏ = thứ tự thêm vào",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1459,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-018",
+      "title": "TC-018 Item total, Tax 8 %, Total đúng giá trị (13 giỏ đại diện)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 6074,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-019",
+      "title": "TC-019 Item total, Tax, Total đúng giá trị: quét cả 63 tổ hợp × 2 thứ tự",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 57432,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "sweep",
+          "description": "đã quét 120/120 giỏ"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-020",
+      "title": "TC-020 Số tiền luôn dạng $x.xx (giỏ gây lỗi số thực, giỏ rỗng, mọi tài khoản)",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 86261,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1 [0,5] qua giao diện: Item total",
+      "errors": [
+        "Error: Biến thể 1 [0,5] qua giao diện: Item total",
+        "Error: Biến thể 2 [2,5]: Item total",
+        "Error: Biến thể 3 [0,1,2,4]: Item total",
+        "Error: Biến thể 4 [0,1,2,5]: Item total",
+        "Error: Biến thể 5 [4,3,2,1,0]: Item total",
+        "Error: Biến thể 6 giỏ rỗng: Item total",
+        "Error: Biến thể 7 visual_user [0,5]: Item total",
+        "Error: Biến thể 8 performance_glitch_user [0,5]: Item total",
+        "Error: Biến thể 9 error_user [0,5]: Item total",
+        "Error: Biến thể 10: giỏ sai định dạng (26):",
+        "Error: Biến thể 11 problem_user: Item total dạng $x.xx"
+      ],
+      "error_details": [
+        "Error: Biến thể 1 [0,5] qua giao diện: Item total\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('subtotal-label')\nExpected: \"Item total: $59.98\"\nReceived: \"Item total: $59.980000000000004\"\nTimeout:  2000ms",
+        "Error: Biến thể 2 [2,5]: Item total\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('subtotal-label')\nExpected: \"Item total: $57.98\"\nReceived: \"Item total: $57.980000000000004\"\nTimeout:  2000ms",
+        "Error: Biến thể 3 [0,1,2,4]: Item total\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('subtotal-label')\nExpected: \"Item total: $63.96\"\nReceived: \"Item total: $63.959999999999994\"\nTimeout:  2000ms",
+        "Error: Biến thể 4 [0,1,2,5]: Item total\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('subtotal-label')\nExpected: \"Item total: $83.96\"\nReceived: \"Item total: $83.96000000000001\"\nTimeout:  2000ms",
+        "Error: Biến thể 5 [4,3,2,1,0]: Item total\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('subtotal-label')\nExpected: \"Item total: $79.95\"\nReceived: \"Item total: $79.94999999999999\"\nTimeout:  2000ms",
+        "Error: Biến thể 6 giỏ rỗng: Item total\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('subtotal-label')\nExpected: \"Item total: $0.00\"\nReceived: \"Item total: $0\"\nTimeout:  2000ms",
+        "Error: Biến thể 7 visual_user [0,5]: Item total\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('subtotal-label')\nExpected: \"Item total: $59.98\"\nReceived: \"Item total: $59.980000000000004\"\nTimeout:  2000ms",
+        "Error: Biến thể 8 performance_glitch_user [0,5]: Item total\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('subtotal-label')\nExpected: \"Item total: $59.98\"\nReceived: \"Item total: $59.980000000000004\"\nTimeout:  2000ms",
+        "Error: Biến thể 9 error_user [0,5]: Item total\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('subtotal-label')\nExpected: \"Item total: $59.98\"\nReceived: \"Item total: $59.980000000000004\"\nTimeout:  2000ms",
+        "Error: Biến thể 10: giỏ sai định dạng (26):\n[0,1,2,4] Item total: $63.959999999999994\n[0,2,3,4] Item total: $63.959999999999994\n[4,3,2,1,0] Item total: $79.94999999999999\n[0,5] Item total: $59.980000000000004\n[5,0] Item total: $59.980000000000004\n[2,5] Item total: $57.980000000000004\n[5,2] Item total: $57.980000000000004\n[0,1,2,5] Item total: $83.96000000000001\n[0,1,3,5] Item total: $91.96000000000001\n[0,2,3,5] Item total: $83.96000000000001\n[1,2,3,5] Item total: $89.96000000000001\n[5,3,2,1,0] Item total: $99.94999999999999\n[0,1,4,5] Item total: $105.96000000000001\n[0,2,4,5] Item total: $97.96000000000001\n[1,2,4,5] Item total: $103.96000000000001\n[0,1,2,4,5] Item total: $113.94999999999999\n[5,4,2,1,0] Item total: $113.94999999999999\n[0,3,4,5] Item total: $105.96000000000001\n[1,3,4,5] Item total: $111.96000000000001\n[0,1,3,4,5] Item total: $121.94999999999999\n[5,4,3,1,0] Item total: $121.94999999999999\n[2,3,4,5] Item total: $103.96000000000001\n[0,2,3,4,5] Item total: $113.94999999999999\n[5,4,3,2,0] Item total: $113.94999999999999\n[1,2,3,4,5] Item total: $119.94999999999999\n[5,4,3,2,1] Item total: $119.94999999999999\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 28\n\n- Array []\n+ Array [\n+   \"[0,1,2,4] Item total: $63.959999999999994\",\n+   \"[0,2,3,4] Item total: $63.959999999999994\",\n+   \"[4,3,2,1,0] Item total: $79.94999999999999\",\n+   \"[0,5] Item total: $59.980000000000004\",\n+   \"[5,0] Item total: $59.980000000000004\",\n+   \"[2,5] Item tot",
+        "Error: Biến thể 11 problem_user: Item total dạng $x.xx\n\nexpect(received).toMatch(expected)\n\nExpected pattern: /^\\$\\d+\\.\\d{2}$/\nReceived string:  \"$95.93999999999998\"\n\n  662 |     } else {\n  663 |       for (const [what, l] of [['Item total', ov.subtotal], ['Tax', ov.tax], ['Total', ov.total]] as const) {\n> 664 |         expect.soft(amountPart(await l.innerText()), `Biến thể 11 problem_user: ${what} dạng $x.xx`).toMatch(FORMAT);\n      |                                                                                                      ^\n  665 |       }\n  666 |       await evidence.shot('Biến thể 11 problem_user [4,0,2]', { highlight: [ov.subtotal, ov.tax, ov.total], note: 'Mong đợi: cả 3 số dạng $x.xx (không kiểm giá trị)' });\n  667 |     }\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:664:102"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-25: Item total in số thực chưa làm tròn ($59.980000000000004), giỏ rỗng \"$0\""
+        },
+        {
+          "type": "sweep",
+          "description": "đã quét 120/120 giỏ"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-021",
+      "title": "TC-021 Payment / Shipping Information là 2 dòng cố định nguyên văn",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2072,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-022",
+      "title": "TC-022 Cancel ở Tổng quan về danh sách, giỏ giữ nguyên",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2073,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-023",
+      "title": "TC-023 Back, Forward, tải lại ở Tổng quan",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2161,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-024",
+      "title": "TC-024 Bấm tên sản phẩm ở Tổng quan mở đúng trang chi tiết (cả 6, standard_user)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5409,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-025",
+      "title": "TC-025 problem_user: bấm tên sản phẩm ở Tổng quan mở đúng trang chi tiết (cả 6)",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 27991,
+      "retry_count": 0,
+      "error": "Error: Sauce Labs Backpack: URL ?id=4",
+      "errors": [
+        "Error: Sauce Labs Backpack: URL ?id=4",
+        "Error: Sauce Labs Backpack: tên",
+        "Error: Sauce Labs Bike Light: URL ?id=0",
+        "Error: Sauce Labs Bike Light: tên",
+        "Error: Sauce Labs Bolt T-Shirt: URL ?id=1",
+        "Error: Sauce Labs Bolt T-Shirt: tên",
+        "Error: Sauce Labs Fleece Jacket: URL ?id=5",
+        "Error: Sauce Labs Fleece Jacket: tên",
+        "Error: Sauce Labs Onesie: URL ?id=2",
+        "Error: Sauce Labs Onesie: tên",
+        "Error: Test.allTheThings() T-Shirt (Red): URL ?id=3",
+        "Error: Test.allTheThings() T-Shirt (Red): tên"
+      ],
+      "error_details": [
+        "Error: Sauce Labs Backpack: URL ?id=4\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=4$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=5\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Backpack: tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Backpack\"\nReceived: \"Sauce Labs Fleece Jacket\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Bike Light: URL ?id=0\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=0$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=1\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Bike Light: tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Bike Light\"\nReceived: \"Sauce Labs Bolt T-Shirt\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Bolt T-Shirt: URL ?id=1\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=1$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=2\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Bolt T-Shirt: tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Bolt T-Shirt\"\nReceived: \"Sauce Labs Onesie\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Fleece Jacket: URL ?id=5\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=5$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=6\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Fleece Jacket: tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Fleece Jacket\"\nReceived: \"ITEM NOT FOUND\"\nTimeout:  2000ms",
+        "Error: Sauce Labs Onesie: URL ?id=2\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=2$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=3\"\nTimeout: 2000ms",
+        "Error: Sauce Labs Onesie: tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Sauce Labs Onesie\"\nReceived: \"Test.allTheThings() T-Shirt (Red)\"\nTimeout:  2000ms",
+        "Error: Test.allTheThings() T-Shirt (Red): URL ?id=3\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /inventory-item\\.html\\?id=3$/\nReceived string:  \"https://www.saucedemo.com/inventory-item.html?id=4\"\nTimeout: 2000ms",
+        "Error: Test.allTheThings() T-Shirt (Red): tên\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('inventory-item-name')\nExpected: \"Test.allTheThings() T-Shirt (Red)\"\nReceived: \"Sauce Labs Backpack\"\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-11 (biến thể ở Tổng quan): problem_user bấm tên mở sai chi tiết, lệch +1"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-026",
+      "title": "TC-026 problem_user: Item total, Tax, Total đúng như standard_user",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 6643,
+      "retry_count": 0,
+      "error": "Error: Giỏ [4]: Item total / Tax / Total (cent)",
+      "errors": [
+        "Error: Giỏ [4]: Item total / Tax / Total (cent)",
+        "Error: Giỏ [0]: Item total / Tax / Total (cent)",
+        "Error: Giỏ [2]: Item total / Tax / Total (cent)",
+        "Error: Giỏ [4,2]: Item total / Tax / Total (cent)",
+        "Error: Giỏ [4,0,2]: Item total / Tax / Total (cent)",
+        "Error: Giỏ [4,0,1,5,2,3]: Item total / Tax / Total (cent)",
+        "Error: PDF: Item total 37.98, Tax 3.04, Total 41.02"
+      ],
+      "error_details": [
+        "Error: Giỏ [4]: Item total / Tax / Total (cent)\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 3\n+ Received  + 3\n\n  Object {\n-   \"item\": 2999,\n-   \"tax\": 240,\n-   \"total\": 3239,\n+   \"item\": 5998,\n+   \"tax\": 480,\n+   \"total\": 6478,\n  }\n\n  744 |         await expect.soft(ov.line(p).getByTestId('inventory-item-price'), `${name}: giá ${p.name}`).toHaveText(priceText(p), QUICK);\n  745 |       }\n> 746 |       expect.soft(await readCents(ov), `${name}: Item total / Tax / Total (cent)`).toEqual(expectedTotals(ids));\n      |                                                                                    ^\n  747 |       await evidence.shot(name, { highlight: [ov.subtotal, ov.tax, ov.total], note: `Mong đợi như standard_user: ${Object.values(totalsText(expectedTotals(ids))).join(', ')}` });\n  748 |     }\n  749 |     // Biến thể PDF: giỏ [4,2]\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:746:84",
+        "Error: Giỏ [0]: Item total / Tax / Total (cent)\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 3\n+ Received  + 3\n\n  Object {\n-   \"item\": 999,\n-   \"tax\": 80,\n-   \"total\": 1079,\n+   \"item\": 1998,\n+   \"tax\": 160,\n+   \"total\": 2158,\n  }\n\n  744 |         await expect.soft(ov.line(p).getByTestId('inventory-item-price'), `${name}: giá ${p.name}`).toHaveText(priceText(p), QUICK);\n  745 |       }\n> 746 |       expect.soft(await readCents(ov), `${name}: Item total / Tax / Total (cent)`).toEqual(expectedTotals(ids));\n      |                                                                                    ^\n  747 |       await evidence.shot(name, { highlight: [ov.subtotal, ov.tax, ov.total], note: `Mong đợi như standard_user: ${Object.values(totalsText(expectedTotals(ids))).join(', ')}` });\n  748 |     }\n  749 |     // Biến thể PDF: giỏ [4,2]\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:746:84",
+        "Error: Giỏ [2]: Item total / Tax / Total (cent)\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 3\n+ Received  + 3\n\n  Object {\n-   \"item\": 799,\n-   \"tax\": 64,\n-   \"total\": 863,\n+   \"item\": 1598,\n+   \"tax\": 128,\n+   \"total\": 1726,\n  }\n\n  744 |         await expect.soft(ov.line(p).getByTestId('inventory-item-price'), `${name}: giá ${p.name}`).toHaveText(priceText(p), QUICK);\n  745 |       }\n> 746 |       expect.soft(await readCents(ov), `${name}: Item total / Tax / Total (cent)`).toEqual(expectedTotals(ids));\n      |                                                                                    ^\n  747 |       await evidence.shot(name, { highlight: [ov.subtotal, ov.tax, ov.total], note: `Mong đợi như standard_user: ${Object.values(totalsText(expectedTotals(ids))).join(', ')}` });\n  748 |     }\n  749 |     // Biến thể PDF: giỏ [4,2]\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:746:84",
+        "Error: Giỏ [4,2]: Item total / Tax / Total (cent)\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 3\n+ Received  + 3\n\n  Object {\n-   \"item\": 3798,\n-   \"tax\": 304,\n-   \"total\": 4102,\n+   \"item\": 7596,\n+   \"tax\": 608,\n+   \"total\": 8204,\n  }\n\n  744 |         await expect.soft(ov.line(p).getByTestId('inventory-item-price'), `${name}: giá ${p.name}`).toHaveText(priceText(p), QUICK);\n  745 |       }\n> 746 |       expect.soft(await readCents(ov), `${name}: Item total / Tax / Total (cent)`).toEqual(expectedTotals(ids));\n      |                                                                                    ^\n  747 |       await evidence.shot(name, { highlight: [ov.subtotal, ov.tax, ov.total], note: `Mong đợi như standard_user: ${Object.values(totalsText(expectedTotals(ids))).join(', ')}` });\n  748 |     }\n  749 |     // Biến thể PDF: giỏ [4,2]\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:746:84",
+        "Error: Giỏ [4,0,2]: Item total / Tax / Total (cent)\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 3\n+ Received  + 3\n\n  Object {\n-   \"item\": 4797,\n-   \"tax\": 384,\n-   \"total\": 5181,\n+   \"item\": 9594,\n+   \"tax\": 768,\n+   \"total\": 10362,\n  }\n\n  744 |         await expect.soft(ov.line(p).getByTestId('inventory-item-price'), `${name}: giá ${p.name}`).toHaveText(priceText(p), QUICK);\n  745 |       }\n> 746 |       expect.soft(await readCents(ov), `${name}: Item total / Tax / Total (cent)`).toEqual(expectedTotals(ids));\n      |                                                                                    ^\n  747 |       await evidence.shot(name, { highlight: [ov.subtotal, ov.tax, ov.total], note: `Mong đợi như standard_user: ${Object.values(totalsText(expectedTotals(ids))).join(', ')}` });\n  748 |     }\n  749 |     // Biến thể PDF: giỏ [4,2]\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:746:84",
+        "Error: Giỏ [4,0,1,5,2,3]: Item total / Tax / Total (cent)\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 3\n+ Received  + 3\n\n  Object {\n-   \"item\": 12994,\n-   \"tax\": 1040,\n-   \"total\": 14034,\n+   \"item\": 25988,\n+   \"tax\": 2079,\n+   \"total\": 28067,\n  }\n\n  744 |         await expect.soft(ov.line(p).getByTestId('inventory-item-price'), `${name}: giá ${p.name}`).toHaveText(priceText(p), QUICK);\n  745 |       }\n> 746 |       expect.soft(await readCents(ov), `${name}: Item total / Tax / Total (cent)`).toEqual(expectedTotals(ids));\n      |                                                                                    ^\n  747 |       await evidence.shot(name, { highlight: [ov.subtotal, ov.tax, ov.total], note: `Mong đợi như standard_user: ${Object.values(totalsText(expectedTotals(ids))).join(', ')}` });\n  748 |     }\n  749 |     // Biến thể PDF: giỏ [4,2]\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:746:84",
+        "Error: PDF: Item total 37.98, Tax 3.04, Total 41.02\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 5\n+ Received  + 0\n\n  Array [\n    \"Item total\",\n-   \"37.98\",\n-   \"Tax\",\n-   \"3.04\",\n-   \"Total\",\n-   \"41.02\",\n  ]\n\n  755 |     const t = expectedTotals(carts.backpackOnesie);\n  756 |     const want = ['Item total', amount(t.item), 'Tax', amount(t.tax), 'Total', amount(t.total)];\n> 757 |     expect.soft(inOrder(pdf.texts, want), 'PDF: Item total 37.98, Tax 3.04, Total 41.02').toEqual(want);\n      |                                                                                           ^\n  758 |     note('PDF problem_user', pdf.texts.join(' | '));\n  759 |     await evidence.shot('Biến thể PDF: đã tải biên nhận [4,2]', { highlight: co.generatePdfButton, note: 'Mong đợi PDF: Item total 37.98, Tax 3.04, Total 41.02 (chữ trong file ở annotation \"PDF problem_user\")' });\n  760 |   });\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:757:91"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-29: problem_user có Item total gấp đôi, Tax / Total tính theo số sai"
+        },
+        {
+          "type": "PDF problem_user",
+          "description": "Swag Labs | Order Receipt | ORDER DETAILS | Order Date | November 26, 2026 at 1:55 PM | ITEMS | DESCRIPTION | PRICE | Sauce Labs Backpack | $ | 29.99 | Sauce Labs Onesie | $ | 7.99 | Item total | $ | 75.96 | Tax | $ | 6.08 | Total | $ | 82.04 | Thank you for your order! It has been dispatched, and will arrive just as fast as the pony can get there."
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-027",
+      "title": "TC-027 Reset App State ở Thông tin và Tổng quan cập nhật ngay",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 11427,
+      "retry_count": 0,
+      "error": "Error: Tổng quan (BUG-05): không còn dòng sản phẩm",
+      "errors": [
+        "Error: Tổng quan (BUG-05): không còn dòng sản phẩm"
+      ],
+      "error_details": [
+        "Error: Tổng quan (BUG-05): không còn dòng sản phẩm\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('inventory-item')\nExpected: 0\nReceived: 2\nTimeout:  5000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-05 (biến thể ở Tổng quan): Reset App State không cập nhật trang Tổng quan"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-028",
+      "title": "TC-028 Tổng quan không có sản phẩm thì không đặt được đơn (giỏ trống qua Checkout, mở thẳng URL)",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 3104,
+      "retry_count": 0,
+      "error": "Error: Đường 1: không được hiện \"Thank you for your order!\"",
+      "errors": [
+        "Error: Đường 1: không được hiện \"Thank you for your order!\"",
+        "Error: Đường 2: không được hiện \"Thank you for your order!\""
+      ],
+      "error_details": [
+        "Error: Đường 1: không được hiện \"Thank you for your order!\"\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  777 |       if (await appears(ov.finishButton)) {\n  778 |         await ov.finishButton.click();\n> 779 |         expect.soft(await appears(co.header), 'Đường 1: không được hiện \"Thank you for your order!\"').toBe(false);\n      |                                                                                                       ^\n  780 |         await evidence.shot('Đường 1: Finish khi giỏ trống', { highlight: co.header, note: 'Mong đợi: không tạo được đơn rỗng' });\n  781 |       } else note('Đường 1', 'không tới được Tổng quan: đúng');\n  782 |     } else note('Đường 1', 'không vào được trang Thông tin: đúng');\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:779:103",
+        "Error: Đường 2: không được hiện \"Thank you for your order!\"\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  786 |     if (await appears(ov.finishButton)) {\n  787 |       await ov.finishButton.click();\n> 788 |       expect.soft(await appears(co.header), 'Đường 2: không được hiện \"Thank you for your order!\"').toBe(false);\n      |                                                                                                     ^\n  789 |       await evidence.shot('Đường 2: Finish ở Tổng quan mở thẳng, giỏ trống', { highlight: co.header, note: 'Mong đợi: không tạo được đơn rỗng' });\n  790 |     } else note('Đường 2', 'không thấy nút Finish: đúng');\n  791 |   });\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:788:101"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-24: Tổng quan rỗng vẫn Finish được, hiện \"Thank you for your order!\""
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-029",
+      "title": "TC-029 Đặt xong bấm Back rồi Finish lại: không đặt được đơn lần 2",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 2042,
+      "retry_count": 0,
+      "error": "Error: Bước 3: không đặt được đơn lần 2",
+      "errors": [
+        "Error: Bước 3: không đặt được đơn lần 2"
+      ],
+      "error_details": [
+        "Error: Bước 3: không đặt được đơn lần 2\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  970 |       await evidence.shot('Bước 2: Back về Tổng quan', { highlight: [ov.items, ov.subtotal, ov.finishButton], note: 'Tổng quan rỗng nhưng còn nút Finish' });\n  971 |       await ov.finishButton.click();\n> 972 |       expect.soft(await appears(co.header), 'Bước 3: không đặt được đơn lần 2').toBe(false);\n      |                                                                                 ^\n  973 |       await evidence.shot('Bước 3: Finish lần 2', { highlight: co.header, note: 'Mong đợi: không hiện \"Thank you for your order!\" lần nữa' });\n  974 |     } else note('Bước 3', 'không còn nút Finish để bấm: đúng');\n  975 |   });\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:972:81"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-24 (đường 3): Back sau khi đặt về Tổng quan rỗng, Finish lại được"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-030",
+      "title": "TC-030 Finish sang trang Hoàn tất, giỏ được làm trống",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2204,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-031",
+      "title": "TC-031 Back Home về danh sách với giỏ trống",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2478,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-032",
+      "title": "TC-032 problem_user: Finish làm trống giỏ, Back Home toàn 'Add to cart', không đặt lại được",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 12291,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1: không còn số giỏ",
+      "errors": [
+        "Error: Biến thể 1: không còn số giỏ",
+        "Error: Biến thể 1: không còn khóa cart-contents",
+        "Error: Biến thể 2: 6 nút Add to cart",
+        "Error: Biến thể 2: 0 nút Remove",
+        "Error: Biến thể 2: không có số giỏ",
+        "Error: Biến thể 3: Tổng quan không còn dòng sản phẩm",
+        "Error: Biến thể 3: không đặt được đơn lần 2"
+      ],
+      "error_details": [
+        "Error: Biến thể 1: không còn số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 1: không còn khóa cart-contents\n\nexpect(received).toBeNull()\n\nReceived: \"[4,0,2]\"\n\n  827 |     await startVariant(true);\n  828 |     await expect.soft(co.cartBadge, 'Biến thể 1: không còn số giỏ').toBeHidden(QUICK);\n> 829 |     expect.soft(await cartStorage(page), 'Biến thể 1: không còn khóa cart-contents').toBeNull();\n      |                                                                                      ^\n  830 |     await evidence.shot('Biến thể 1: sau Finish', { highlight: co.cartLink, note: 'Mong đợi: không còn số giỏ' });\n  831 |     // Biến thể 2\n  832 |     await startVariant();\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:829:86",
+        "Error: Biến thể 2: 6 nút Add to cart\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByRole('button', { name: 'Add to cart', exact: true })\nExpected: 6\nReceived: 3\nTimeout:  2000ms",
+        "Error: Biến thể 2: 0 nút Remove\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByRole('button', { name: 'Remove', exact: true })\nExpected: 0\nReceived: 3\nTimeout:  2000ms",
+        "Error: Biến thể 2: không có số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 3: Tổng quan không còn dòng sản phẩm\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('inventory-item')\nExpected: 0\nReceived: 3\nTimeout:  2000ms",
+        "Error: Biến thể 3: không đặt được đơn lần 2\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  841 |       await evidence.shot('Biến thể 3: Back về Tổng quan', { highlight: ov.items, note: 'Mong đợi: không còn sản phẩm' });\n  842 |       await ov.finishButton.click();\n> 843 |       expect.soft(await appears(co.header), 'Biến thể 3: không đặt được đơn lần 2').toBe(false);\n      |                                                                                     ^\n  844 |       await evidence.shot('Biến thể 3: Finish lần 2', { highlight: co.header, note: 'Mong đợi: không hiện \"Thank you for your order!\" lần nữa' });\n  845 |     } else note('Biến thể 3', 'Back không về Tổng quan có nút Finish: đúng');\n  846 |   });\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:843:85"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-30: problem_user Finish xong giỏ không được làm trống"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-033",
+      "title": "TC-033 error_user: Finish sang Hoàn tất, giỏ trống, không lỗi JavaScript",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 10491,
+      "retry_count": 0,
+      "error": "Error: sang Hoàn tất, \"Thank you for your order!\"",
+      "errors": [
+        "Error: sang Hoàn tất, \"Thank you for your order!\"",
+        "Error: URL",
+        "Error: không còn số giỏ",
+        "Error: không còn khóa cart-contents",
+        "Error: 0 pageerror",
+        "Error: 0 request tới submit.backtrace.io"
+      ],
+      "error_details": [
+        "Error: sang Hoàn tất, \"Thank you for your order!\"\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('complete-header')\nExpected: \"Thank you for your order!\"\nTimeout: 5000ms\nError: element(s) not found",
+        "Error: URL\n\nexpect(page).toHaveURL(expected) failed\n\nExpected pattern: /\\/checkout-complete\\.html$/\nReceived string:  \"https://www.saucedemo.com/checkout-step-two.html\"\nTimeout: 2000ms",
+        "Error: không còn số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: không còn khóa cart-contents\n\nexpect(received).toBeNull()\n\nReceived: \"[4,0,2]\"\n\n  858 |     await evidence.shot('Sau khi bấm Finish', { highlight: [ov.finishButton, co.header, co.cartLink], note: 'Mong đợi: trang Hoàn tất, không còn số giỏ' });\n  859 |     await expect.soft(co.cartBadge, 'không còn số giỏ').toBeHidden(QUICK);\n> 860 |     expect.soft(await cartStorage(page), 'không còn khóa cart-contents').toBeNull();\n      |                                                                          ^\n  861 |     if (errors.pageErrors.length) note('pageerror (MSG-10?)', errors.pageErrors.join(' | '));\n  862 |     expect.soft(errors.pageErrors, '0 pageerror').toEqual([]);\n  863 |     expect.soft(errors.reports, '0 request tới submit.backtrace.io').toEqual([]);\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:860:74",
+        "Error: 0 pageerror\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"- [/checkout-step-two.html]: wa.cesetRart is not a function\",\n+ ]\n\n  860 |     expect.soft(await cartStorage(page), 'không còn khóa cart-contents').toBeNull();\n  861 |     if (errors.pageErrors.length) note('pageerror (MSG-10?)', errors.pageErrors.join(' | '));\n> 862 |     expect.soft(errors.pageErrors, '0 pageerror').toEqual([]);\n      |                                                   ^\n  863 |     expect.soft(errors.reports, '0 request tới submit.backtrace.io').toEqual([]);\n  864 |   });\n  865 |\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:862:51",
+        "Error: 0 request tới submit.backtrace.io\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 3\n\n- Array []\n+ Array [\n+   \"- [/checkout-step-two.html]: https://submit.backtrace.io/UNIVERSE/TOKEN/json\",\n+ ]\n\n  861 |     if (errors.pageErrors.length) note('pageerror (MSG-10?)', errors.pageErrors.join(' | '));\n  862 |     expect.soft(errors.pageErrors, '0 pageerror').toEqual([]);\n> 863 |     expect.soft(errors.reports, '0 request tới submit.backtrace.io').toEqual([]);\n      |                                                                      ^\n  864 |   });\n  865 |\n  866 |   test('TC-051 Finish chỉ tạo đơn theo giỏ / phiên hiện tại (2 tab, sau Reset, giỏ đổi ở tab khác, đăng xuất ở tab khác)', { tag: ['@AC-5', '@overview', '@complete', '@BUG-35'] }, async ({ page, overviewPage: ov, completePage: co, evidence }) => {\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:863:70"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-33: error_user bấm Finish không có tác dụng, lỗi JavaScript"
+        },
+        {
+          "type": "pageerror (MSG-10?)",
+          "description": "- [/checkout-step-two.html]: wa.cesetRart is not a function"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-034",
+      "title": "TC-034 Generate PDF order: tải file, nội dung khớp đơn vừa đặt",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 8431,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "PDF",
+          "description": "Swag Labs | Order Receipt | ORDER DETAILS | Order Date | November 26, 2026 at 1:55 PM | SHIP TO | An Le | 70000 | ITEMS | DESCRIPTION | PRICE | Sauce Labs Fleece Jacket | $ | 49.99 | Sauce Labs Bike Light | $ | 9.99 | Sauce Labs Onesie | $ | 7.99 | Item total | $ | 67.97 | Tax | $ | 5.44 | Total | $ | 73.41 | Thank you for your order! It has been dispatched, and will arrive just as fast as the pony can get there."
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-035",
+      "title": "TC-035 Biên nhận PDF mở bằng trình đọc PDF: bố cục, chữ đọc được",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2878,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "manual",
+          "description": "Bước 3 làm tay: mở file PDF (evidence/all-cases/TC-035/ hoặc file đính kèm báo cáo) bằng trình đọc PDF, chụp ảnh trang; kiểm bố cục, chữ không chồng / không cắt, Item total / Tax / Total thẳng cột giá"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-036",
+      "title": "TC-036 Hoàn tất: tải lại, Reset App State, All Items, Back / Forward sau Back Home",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 7474,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-037",
+      "title": "TC-037 Chưa đăng nhập mở thẳng 3 trang thanh toán bị chặn",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 3101,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-038",
+      "title": "TC-038 Phiên giả mạo (cookie tự tạo) không vào được trang thanh toán, không đặt được hàng",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 67909,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1 (standard_user, /checkout-step-one.html): về trang đăng nhập",
+      "errors": [
+        "Error: Biến thể 1 (standard_user, /checkout-step-one.html): về trang đăng nhập",
+        "Error: Biến thể 1 (standard_user, /checkout-step-one.html): URL /",
+        "Error: Biến thể 1 (standard_user, /checkout-step-one.html): thông báo",
+        "Error: Biến thể 1 (standard_user, /checkout-step-one.html): không thấy nội dung trang thanh toán",
+        "Error: Biến thể 2 (standard_user, /checkout-step-two.html): về trang đăng nhập",
+        "Error: Biến thể 2 (standard_user, /checkout-step-two.html): URL /",
+        "Error: Biến thể 2 (standard_user, /checkout-step-two.html): thông báo",
+        "Error: Biến thể 2 (standard_user, /checkout-step-two.html): không thấy nội dung trang thanh toán",
+        "Error: Biến thể 3 (standard_user, /checkout-complete.html): về trang đăng nhập",
+        "Error: Biến thể 3 (standard_user, /checkout-complete.html): URL /",
+        "Error: Biến thể 3 (standard_user, /checkout-complete.html): thông báo",
+        "Error: Biến thể 3 (standard_user, /checkout-complete.html): không thấy nội dung trang thanh toán",
+        "Error: Biến thể 4: không đặt được hàng bằng cookie giả",
+        "Error: Biến thể 4 (standard_user, Finish): về trang đăng nhập",
+        "Error: Biến thể 4 (standard_user, Finish): URL /",
+        "Error: Biến thể 4 (standard_user, Finish): thông báo",
+        "Error: Biến thể 4 (standard_user, Finish): không thấy nội dung trang thanh toán",
+        "Error: Biến thể 5 (problem_user, /checkout-step-one.html): về trang đăng nhập",
+        "Error: Biến thể 5 (problem_user, /checkout-step-one.html): URL /",
+        "Error: Biến thể 5 (problem_user, /checkout-step-one.html): thông báo",
+        "Error: Biến thể 5 (problem_user, /checkout-step-one.html): không thấy nội dung trang thanh toán",
+        "Error: Biến thể 6 (error_user, /checkout-step-one.html): về trang đăng nhập",
+        "Error: Biến thể 6 (error_user, /checkout-step-one.html): URL /",
+        "Error: Biến thể 6 (error_user, /checkout-step-one.html): thông báo",
+        "Error: Biến thể 6 (error_user, /checkout-step-one.html): không thấy nội dung trang thanh toán",
+        "Error: Biến thể 7 (visual_user, /checkout-step-one.html): về trang đăng nhập",
+        "Error: Biến thể 7 (visual_user, /checkout-step-one.html): URL /",
+        "Error: Biến thể 7 (visual_user, /checkout-step-one.html): thông báo",
+        "Error: Biến thể 7 (visual_user, /checkout-step-one.html): không thấy nội dung trang thanh toán",
+        "Error: Biến thể 8 (performance_glitch_user, /checkout-step-one.html): về trang đăng nhập",
+        "Error: Biến thể 8 (performance_glitch_user, /checkout-step-one.html): URL /",
+        "Error: Biến thể 8 (performance_glitch_user, /checkout-step-one.html): thông báo",
+        "Error: Biến thể 8 (performance_glitch_user, /checkout-step-one.html): không thấy nội dung trang thanh toán"
+      ],
+      "error_details": [
+        "Error: Biến thể 1 (standard_user, /checkout-step-one.html): về trang đăng nhập\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Login' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 1 (standard_user, /checkout-step-one.html): URL /\n\nexpect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/checkout-step-one.html\"\nTimeout:  2000ms\n\n\n  1197 |     const expectBlocked = async (name: string, path: string) => {\n  1198 |       await expect.soft(loginPage.loginButton, `${name}: về trang đăng nhập`).toBeVisible(QUICK);\n> 1199 |       await expect.soft(page, `${name}: URL /`).toHaveURL(isLoginScreen, QUICK);\n       |                                                 ^\n  1200 |       await expect.soft(loginPage.errorMessage, `${name}: thông báo`).toHaveText(MSG.notLoggedIn(path), QUICK);\n  1201 |       await expect.soft(page.getByTestId('title'), `${name}: không thấy nội dung trang thanh toán`).toHaveCount(0, QUICK);\n  1202 |       await evidence.shot(name, { highlight: [loginPage.errorMessage, page.getByTestId('title')], note: `Mong đợi: bị đưa về trang đăng nhập, \"...'${path}'...\"` });\n    at expectBlocked (<repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1199:49)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1208:7",
+        "Error: Biến thể 1 (standard_user, /checkout-step-one.html): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Epic sadface: You can only access '/checkout-step-one.html' when you are logged in.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 1 (standard_user, /checkout-step-one.html): không thấy nội dung trang thanh toán\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('title')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 2 (standard_user, /checkout-step-two.html): về trang đăng nhập\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Login' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 2 (standard_user, /checkout-step-two.html): URL /\n\nexpect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/checkout-step-two.html\"\nTimeout:  2000ms\n\n\n  1197 |     const expectBlocked = async (name: string, path: string) => {\n  1198 |       await expect.soft(loginPage.loginButton, `${name}: về trang đăng nhập`).toBeVisible(QUICK);\n> 1199 |       await expect.soft(page, `${name}: URL /`).toHaveURL(isLoginScreen, QUICK);\n       |                                                 ^\n  1200 |       await expect.soft(loginPage.errorMessage, `${name}: thông báo`).toHaveText(MSG.notLoggedIn(path), QUICK);\n  1201 |       await expect.soft(page.getByTestId('title'), `${name}: không thấy nội dung trang thanh toán`).toHaveCount(0, QUICK);\n  1202 |       await evidence.shot(name, { highlight: [loginPage.errorMessage, page.getByTestId('title')], note: `Mong đợi: bị đưa về trang đăng nhập, \"...'${path}'...\"` });\n    at expectBlocked (<repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1199:49)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1208:7",
+        "Error: Biến thể 2 (standard_user, /checkout-step-two.html): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Epic sadface: You can only access '/checkout-step-two.html' when you are logged in.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 2 (standard_user, /checkout-step-two.html): không thấy nội dung trang thanh toán\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('title')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 3 (standard_user, /checkout-complete.html): về trang đăng nhập\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Login' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 3 (standard_user, /checkout-complete.html): URL /\n\nexpect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/checkout-complete.html\"\nTimeout:  2000ms\n\n\n  1197 |     const expectBlocked = async (name: string, path: string) => {\n  1198 |       await expect.soft(loginPage.loginButton, `${name}: về trang đăng nhập`).toBeVisible(QUICK);\n> 1199 |       await expect.soft(page, `${name}: URL /`).toHaveURL(isLoginScreen, QUICK);\n       |                                                 ^\n  1200 |       await expect.soft(loginPage.errorMessage, `${name}: thông báo`).toHaveText(MSG.notLoggedIn(path), QUICK);\n  1201 |       await expect.soft(page.getByTestId('title'), `${name}: không thấy nội dung trang thanh toán`).toHaveCount(0, QUICK);\n  1202 |       await evidence.shot(name, { highlight: [loginPage.errorMessage, page.getByTestId('title')], note: `Mong đợi: bị đưa về trang đăng nhập, \"...'${path}'...\"` });\n    at expectBlocked (<repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1199:49)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1208:7",
+        "Error: Biến thể 3 (standard_user, /checkout-complete.html): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Epic sadface: You can only access '/checkout-complete.html' when you are logged in.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 3 (standard_user, /checkout-complete.html): không thấy nội dung trang thanh toán\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('title')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 4: không đặt được hàng bằng cookie giả\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  1214 |     if (await appears(finish)) {\n  1215 |       await finish.click();\n> 1216 |       expect.soft(await appears(co.header), 'Biến thể 4: không đặt được hàng bằng cookie giả').toBe(false);\n       |                                                                                                ^\n  1217 |     }\n  1218 |     await expectBlocked('Biến thể 4 (standard_user, Finish)', protectedPages.checkoutOverview);\n  1219 |     // Biến thể 5–8: các tên khác, Thông tin\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1216:96",
+        "Error: Biến thể 4 (standard_user, Finish): về trang đăng nhập\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Login' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 4 (standard_user, Finish): URL /\n\nexpect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/checkout-complete.html\"\nTimeout:  2000ms\n\n\n  1197 |     const expectBlocked = async (name: string, path: string) => {\n  1198 |       await expect.soft(loginPage.loginButton, `${name}: về trang đăng nhập`).toBeVisible(QUICK);\n> 1199 |       await expect.soft(page, `${name}: URL /`).toHaveURL(isLoginScreen, QUICK);\n       |                                                 ^\n  1200 |       await expect.soft(loginPage.errorMessage, `${name}: thông báo`).toHaveText(MSG.notLoggedIn(path), QUICK);\n  1201 |       await expect.soft(page.getByTestId('title'), `${name}: không thấy nội dung trang thanh toán`).toHaveCount(0, QUICK);\n  1202 |       await evidence.shot(name, { highlight: [loginPage.errorMessage, page.getByTestId('title')], note: `Mong đợi: bị đưa về trang đăng nhập, \"...'${path}'...\"` });\n    at expectBlocked (<repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1199:49)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1218:5",
+        "Error: Biến thể 4 (standard_user, Finish): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Epic sadface: You can only access '/checkout-step-two.html' when you are logged in.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 4 (standard_user, Finish): không thấy nội dung trang thanh toán\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('title')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 5 (problem_user, /checkout-step-one.html): về trang đăng nhập\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Login' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 5 (problem_user, /checkout-step-one.html): URL /\n\nexpect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/checkout-step-one.html\"\nTimeout:  2000ms\n\n\n  1197 |     const expectBlocked = async (name: string, path: string) => {\n  1198 |       await expect.soft(loginPage.loginButton, `${name}: về trang đăng nhập`).toBeVisible(QUICK);\n> 1199 |       await expect.soft(page, `${name}: URL /`).toHaveURL(isLoginScreen, QUICK);\n       |                                                 ^\n  1200 |       await expect.soft(loginPage.errorMessage, `${name}: thông báo`).toHaveText(MSG.notLoggedIn(path), QUICK);\n  1201 |       await expect.soft(page.getByTestId('title'), `${name}: không thấy nội dung trang thanh toán`).toHaveCount(0, QUICK);\n  1202 |       await evidence.shot(name, { highlight: [loginPage.errorMessage, page.getByTestId('title')], note: `Mong đợi: bị đưa về trang đăng nhập, \"...'${path}'...\"` });\n    at expectBlocked (<repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1199:49)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1223:7",
+        "Error: Biến thể 5 (problem_user, /checkout-step-one.html): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Epic sadface: You can only access '/checkout-step-one.html' when you are logged in.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 5 (problem_user, /checkout-step-one.html): không thấy nội dung trang thanh toán\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('title')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 6 (error_user, /checkout-step-one.html): về trang đăng nhập\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Login' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 6 (error_user, /checkout-step-one.html): URL /\n\nexpect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/checkout-step-one.html\"\nTimeout:  2000ms\n\n\n  1197 |     const expectBlocked = async (name: string, path: string) => {\n  1198 |       await expect.soft(loginPage.loginButton, `${name}: về trang đăng nhập`).toBeVisible(QUICK);\n> 1199 |       await expect.soft(page, `${name}: URL /`).toHaveURL(isLoginScreen, QUICK);\n       |                                                 ^\n  1200 |       await expect.soft(loginPage.errorMessage, `${name}: thông báo`).toHaveText(MSG.notLoggedIn(path), QUICK);\n  1201 |       await expect.soft(page.getByTestId('title'), `${name}: không thấy nội dung trang thanh toán`).toHaveCount(0, QUICK);\n  1202 |       await evidence.shot(name, { highlight: [loginPage.errorMessage, page.getByTestId('title')], note: `Mong đợi: bị đưa về trang đăng nhập, \"...'${path}'...\"` });\n    at expectBlocked (<repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1199:49)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1223:7",
+        "Error: Biến thể 6 (error_user, /checkout-step-one.html): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Epic sadface: You can only access '/checkout-step-one.html' when you are logged in.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 6 (error_user, /checkout-step-one.html): không thấy nội dung trang thanh toán\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('title')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 7 (visual_user, /checkout-step-one.html): về trang đăng nhập\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Login' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 7 (visual_user, /checkout-step-one.html): URL /\n\nexpect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/checkout-step-one.html\"\nTimeout:  2000ms\n\n\n  1197 |     const expectBlocked = async (name: string, path: string) => {\n  1198 |       await expect.soft(loginPage.loginButton, `${name}: về trang đăng nhập`).toBeVisible(QUICK);\n> 1199 |       await expect.soft(page, `${name}: URL /`).toHaveURL(isLoginScreen, QUICK);\n       |                                                 ^\n  1200 |       await expect.soft(loginPage.errorMessage, `${name}: thông báo`).toHaveText(MSG.notLoggedIn(path), QUICK);\n  1201 |       await expect.soft(page.getByTestId('title'), `${name}: không thấy nội dung trang thanh toán`).toHaveCount(0, QUICK);\n  1202 |       await evidence.shot(name, { highlight: [loginPage.errorMessage, page.getByTestId('title')], note: `Mong đợi: bị đưa về trang đăng nhập, \"...'${path}'...\"` });\n    at expectBlocked (<repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1199:49)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1223:7",
+        "Error: Biến thể 7 (visual_user, /checkout-step-one.html): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Epic sadface: You can only access '/checkout-step-one.html' when you are logged in.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 7 (visual_user, /checkout-step-one.html): không thấy nội dung trang thanh toán\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('title')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 8 (performance_glitch_user, /checkout-step-one.html): về trang đăng nhập\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: 'Login' })\nExpected: visible\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 8 (performance_glitch_user, /checkout-step-one.html): URL /\n\nexpect(page).toHaveURL(expected) failed\n\nExpected: predicate to succeed\nReceived: \"https://www.saucedemo.com/checkout-step-one.html\"\nTimeout:  2000ms\n\n\n  1197 |     const expectBlocked = async (name: string, path: string) => {\n  1198 |       await expect.soft(loginPage.loginButton, `${name}: về trang đăng nhập`).toBeVisible(QUICK);\n> 1199 |       await expect.soft(page, `${name}: URL /`).toHaveURL(isLoginScreen, QUICK);\n       |                                                 ^\n  1200 |       await expect.soft(loginPage.errorMessage, `${name}: thông báo`).toHaveText(MSG.notLoggedIn(path), QUICK);\n  1201 |       await expect.soft(page.getByTestId('title'), `${name}: không thấy nội dung trang thanh toán`).toHaveCount(0, QUICK);\n  1202 |       await evidence.shot(name, { highlight: [loginPage.errorMessage, page.getByTestId('title')], note: `Mong đợi: bị đưa về trang đăng nhập, \"...'${path}'...\"` });\n    at expectBlocked (<repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1199:49)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1223:7",
+        "Error: Biến thể 8 (performance_glitch_user, /checkout-step-one.html): thông báo\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('error')\nExpected: \"Epic sadface: You can only access '/checkout-step-one.html' when you are logged in.\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 8 (performance_glitch_user, /checkout-step-one.html): không thấy nội dung trang thanh toán\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('title')\nExpected: 0\nReceived: 1\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-02 (biến thể ở 3 trang thanh toán): cookie tự tạo vào được trang thanh toán và đặt được hàng"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-039",
+      "title": "TC-039 Đăng xuất ở Thông tin, Tổng quan, Hoàn tất rồi Back không xem lại được",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 6263,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-040",
+      "title": "TC-040 Mở thẳng Tổng quan khi chưa nhập thông tin bị đưa về Thông tin",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 18526,
+      "retry_count": 0,
+      "error": "Error: Bước 1: được đưa về trang Thông tin",
+      "errors": [
+        "Error: Bước 1: được đưa về trang Thông tin",
+        "Error: Bước 1: tiêu đề",
+        "Error: Bước 1: ô first trống",
+        "Error: Bước 1: ô last trống",
+        "Error: Bước 1: ô zip trống",
+        "Error: Bước 1: không có nút Finish",
+        "Error: Bước 2: không được hiện \"Thank you for your order!\"",
+        "Error: Bước 2: số giỏ vẫn 1"
+      ],
+      "error_details": [
+        "Error: Bước 1: được đưa về trang Thông tin\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found",
+        "Error: Bước 1: tiêu đề\n\nexpect(locator).toHaveText(expected) failed\n\nLocator:  getByTestId('title')\nExpected: \"Checkout: Your Information\"\nReceived: \"Checkout: Overview\"\nTimeout:  2000ms",
+        "Error: Bước 1: ô first trống\n\nexpect(locator).toHaveValue(expected) failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: \"\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Bước 1: ô last trống\n\nexpect(locator).toHaveValue(expected) failed\n\nLocator: getByLabel('Last Name', { exact: true })\nExpected: \"\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Bước 1: ô zip trống\n\nexpect(locator).toHaveValue(expected) failed\n\nLocator: getByLabel('Zip/Postal Code', { exact: true })\nExpected: \"\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Bước 1: không có nút Finish\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByRole('button', { name: 'Finish', exact: true })\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Bước 2: không được hiện \"Thank you for your order!\"\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  518 |     if (await ov.finishButton.isVisible()) {\n  519 |       await ov.finishButton.click();\n> 520 |       expect.soft(await appears(co.header), 'Bước 2: không được hiện \"Thank you for your order!\"').toBe(false);\n      |                                                                                                    ^\n  521 |       await evidence.shot('Bước 2: bấm Finish', { highlight: co.header, note: 'Mong đợi: không đặt được hàng khi chưa nhập thông tin' });\n  522 |     }\n  523 |     await expect.soft(inv.cartBadge, 'Bước 2: số giỏ vẫn 1').toHaveText('1', QUICK);\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:520:100",
+        "Error: Bước 2: số giỏ vẫn 1\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-26: mở thẳng /checkout-step-two.html bỏ qua bước nhập thông tin, Finish đặt được hàng"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-041",
+      "title": "TC-041 Mở thẳng Hoàn tất khi chưa Finish không báo đặt hàng thành công",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 3470,
+      "retry_count": 0,
+      "error": "Error: không hiện \"Thank you for your order!\"",
+      "errors": [
+        "Error: không hiện \"Thank you for your order!\"",
+        "Error: không có đoạn dispatched"
+      ],
+      "error_details": [
+        "Error: không hiện \"Thank you for your order!\"\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  1069 |     await inv.addButton(onesie).click();\n  1070 |     await co.goto();\n> 1071 |     expect.soft(await appears(co.header), 'không hiện \"Thank you for your order!\"').toBe(false);\n       |                                                                                     ^\n  1072 |     await expect.soft(page.getByText(M.completeText), 'không có đoạn dispatched').toHaveCount(0, QUICK);\n  1073 |     await evidence.shot('Mở thẳng /checkout-complete.html', { highlight: [co.header, co.text, co.cartLink], note: 'Mong đợi: không báo đặt hàng thành công, giỏ vẫn 2' });\n  1074 |     await expect.soft(co.cartBadge, 'số giỏ vẫn 2').toHaveText('2', QUICK);\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1071:85",
+        "Error: không có đoạn dispatched\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByText('Your order has been dispatched, and will arrive just as fast as the pony can get there!')\nExpected: 0\nReceived: 1\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-27: mở thẳng /checkout-complete.html khi chưa đặt vẫn hiện \"Thank you for your order!\""
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-042",
+      "title": "TC-042 Giỏ trống mở thẳng trang Thông tin bị chặn",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 3279,
+      "retry_count": 0,
+      "error": "Error: không có ô First Name (chờ 5 giây)",
+      "errors": [
+        "Error: không có ô First Name (chờ 5 giây)",
+        "Error: không có tiêu đề \"Checkout: Your Information\""
+      ],
+      "error_details": [
+        "Error: không có ô First Name (chờ 5 giây)\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  528 |     await ip.goto();\n  529 |     await expect(page.getByTestId('primary-header')).toBeVisible();\n> 530 |     expect.soft(await appears(ip.firstName), 'không có ô First Name (chờ 5 giây)').toBe(false);\n      |                                                                                    ^\n  531 |     await expect.soft(page.getByText(M.titleInfo, { exact: true }), 'không có tiêu đề \"Checkout: Your Information\"').toHaveCount(0, QUICK);\n  532 |     await evidence.shot('Mở thẳng /checkout-step-one.html khi giỏ trống', { highlight: ip.title, note: 'Mong đợi: không vào được trang Thông tin' });\n  533 |   });\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:530:84",
+        "Error: không có tiêu đề \"Checkout: Your Information\"\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByText('Checkout: Your Information', { exact: true })\nExpected: 0\nReceived: 1\nTimeout:  2000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-19 (biến thể URL): giỏ trống mở thẳng /checkout-step-one.html vẫn vào trang Thông tin"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-043",
+      "title": "TC-043 Tài khoản đăng nhập sau không đặt hàng bằng giỏ của tài khoản trước (2 chiều)",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 24781,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1: visual_user không có số giỏ",
+      "errors": [
+        "Error: Biến thể 1: visual_user không có số giỏ",
+        "Error: Biến thể 1: giỏ của visual_user 0 dòng",
+        "Error: Biến thể 1: standard_user đăng nhập lại số giỏ 1",
+        "Error: Biến thể 1: giỏ của standard_user còn Sauce Labs Backpack",
+        "Error: Biến thể 2: standard_user không có số giỏ",
+        "Error: Biến thể 2: giỏ của standard_user 0 dòng",
+        "Error: Biến thể 2: visual_user đăng nhập lại số giỏ 1",
+        "Error: Biến thể 2: giỏ của visual_user còn Sauce Labs Onesie"
+      ],
+      "error_details": [
+        "Error: Biến thể 1: visual_user không có số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 1: giỏ của visual_user 0 dòng\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('inventory-item')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 1: standard_user đăng nhập lại số giỏ 1\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 1: giỏ của standard_user còn Sauce Labs Backpack\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 3\n+ Received  + 1\n\n- Array [\n-   \"Sauce Labs Backpack\",\n- ]\n+ Array []",
+        "Error: Biến thể 2: standard_user không có số giỏ\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('shopping-cart-badge')\nExpected: hidden\nReceived: visible\nTimeout:  2000ms",
+        "Error: Biến thể 2: giỏ của standard_user 0 dòng\n\nexpect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('inventory-item')\nExpected: 0\nReceived: 1\nTimeout:  2000ms",
+        "Error: Biến thể 2: visual_user đăng nhập lại số giỏ 1\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"1\"\nTimeout: 2000ms\nError: element(s) not found",
+        "Error: Biến thể 2: giỏ của visual_user còn Sauce Labs Onesie\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('inventory-item-name')\nTimeout: 2000ms\n- Expected  - 3\n+ Received  + 1\n\n- Array [\n-   \"Sauce Labs Onesie\",\n- ]\n+ Array []"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-07 (biến thể ở thanh toán): người sau đặt hàng bằng giỏ của người trước và làm trống giỏ đó"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-044",
+      "title": "TC-044 visual_user: bố cục 3 trang thanh toán giống standard_user",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 5413,
+      "retry_count": 0,
+      "error": "Error: Thông tin: biểu tượng giỏ lệch ngang (px)",
+      "errors": [
+        "Error: Thông tin: biểu tượng giỏ lệch ngang (px)",
+        "Error: Thông tin: biểu tượng giỏ lệch dọc (px)",
+        "Error: Thông tin: biểu tượng giỏ bị xoay",
+        "Error: Thông tin: biểu tượng menu bị xoay",
+        "Error: Tổng quan: biểu tượng giỏ lệch ngang (px)",
+        "Error: Tổng quan: biểu tượng giỏ lệch dọc (px)",
+        "Error: Tổng quan: biểu tượng giỏ bị xoay",
+        "Error: Tổng quan: biểu tượng menu bị xoay",
+        "Error: Hoàn tất: biểu tượng giỏ lệch ngang (px)",
+        "Error: Hoàn tất: biểu tượng giỏ lệch dọc (px)",
+        "Error: Hoàn tất: biểu tượng giỏ bị xoay",
+        "Error: Hoàn tất: biểu tượng menu bị xoay"
+      ],
+      "error_details": [
+        "Error: Thông tin: biểu tượng giỏ lệch ngang (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    186.019287109375\n\n   at utils\\layout.ts:31\n\n  29 | /** Soft: two boxes at the same place (≤ TOLERANCE_PX on each axis). */\n  30 | export function expectNear(a: { x: number; y: number }, b: { x: number; y: number }, what: string) {\n> 31 |   expect.soft(Math.abs(a.x - b.x), `${what} lệch ngang (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n     |                                                               ^\n  32 |   expect.soft(Math.abs(a.y - b.y), `${what} lệch dọc (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n  33 | }\n  34 |\n    at expectNear (<repo>\\tests\\utils\\layout.ts:31:63)\n    at expectSamePlace (<repo>\\tests\\utils\\layout.ts:37:3)\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:50:3)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Thông tin: biểu tượng giỏ lệch dọc (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    28.980690002441406\n\n   at utils\\layout.ts:32\n\n  30 | export function expectNear(a: { x: number; y: number }, b: { x: number; y: number }, what: string) {\n  31 |   expect.soft(Math.abs(a.x - b.x), `${what} lệch ngang (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n> 32 |   expect.soft(Math.abs(a.y - b.y), `${what} lệch dọc (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n     |                                                             ^\n  33 | }\n  34 |\n  35 | /** Soft: element `a` at the same place as baseline element `b`. */\n    at expectNear (<repo>\\tests\\utils\\layout.ts:32:61)\n    at expectSamePlace (<repo>\\tests\\utils\\layout.ts:37:3)\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:50:3)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Thông tin: biểu tượng giỏ bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n   at utils\\layout.ts:51\n\n  49 |   const menu = page.locator('.bm-icon');\n  50 |   await expectSamePlace(icon(page), icon(base), `${where}: biểu tượng giỏ`);\n> 51 |   expect.soft(await transformOf(icon(page)), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n     |                                                                                  ^\n  52 |   expect.soft(await transformOf(menu), `${where}: biểu tượng menu bị xoay`).toBe('none');\n  53 | }\n  54 |\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:51:82)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Thông tin: biểu tượng menu bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n   at utils\\layout.ts:52\n\n  50 |   await expectSamePlace(icon(page), icon(base), `${where}: biểu tượng giỏ`);\n  51 |   expect.soft(await transformOf(icon(page)), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n> 52 |   expect.soft(await transformOf(menu), `${where}: biểu tượng menu bị xoay`).toBe('none');\n     |                                                                             ^\n  53 | }\n  54 |\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:52:77)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Tổng quan: biểu tượng giỏ lệch ngang (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    186.019287109375\n\n   at utils\\layout.ts:31\n\n  29 | /** Soft: two boxes at the same place (≤ TOLERANCE_PX on each axis). */\n  30 | export function expectNear(a: { x: number; y: number }, b: { x: number; y: number }, what: string) {\n> 31 |   expect.soft(Math.abs(a.x - b.x), `${what} lệch ngang (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n     |                                                               ^\n  32 |   expect.soft(Math.abs(a.y - b.y), `${what} lệch dọc (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n  33 | }\n  34 |\n    at expectNear (<repo>\\tests\\utils\\layout.ts:31:63)\n    at expectSamePlace (<repo>\\tests\\utils\\layout.ts:37:3)\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:50:3)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Tổng quan: biểu tượng giỏ lệch dọc (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    28.980690002441406\n\n   at utils\\layout.ts:32\n\n  30 | export function expectNear(a: { x: number; y: number }, b: { x: number; y: number }, what: string) {\n  31 |   expect.soft(Math.abs(a.x - b.x), `${what} lệch ngang (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n> 32 |   expect.soft(Math.abs(a.y - b.y), `${what} lệch dọc (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n     |                                                             ^\n  33 | }\n  34 |\n  35 | /** Soft: element `a` at the same place as baseline element `b`. */\n    at expectNear (<repo>\\tests\\utils\\layout.ts:32:61)\n    at expectSamePlace (<repo>\\tests\\utils\\layout.ts:37:3)\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:50:3)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Tổng quan: biểu tượng giỏ bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n   at utils\\layout.ts:51\n\n  49 |   const menu = page.locator('.bm-icon');\n  50 |   await expectSamePlace(icon(page), icon(base), `${where}: biểu tượng giỏ`);\n> 51 |   expect.soft(await transformOf(icon(page)), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n     |                                                                                  ^\n  52 |   expect.soft(await transformOf(menu), `${where}: biểu tượng menu bị xoay`).toBe('none');\n  53 | }\n  54 |\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:51:82)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Tổng quan: biểu tượng menu bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n   at utils\\layout.ts:52\n\n  50 |   await expectSamePlace(icon(page), icon(base), `${where}: biểu tượng giỏ`);\n  51 |   expect.soft(await transformOf(icon(page)), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n> 52 |   expect.soft(await transformOf(menu), `${where}: biểu tượng menu bị xoay`).toBe('none');\n     |                                                                             ^\n  53 | }\n  54 |\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:52:77)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Hoàn tất: biểu tượng giỏ lệch ngang (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    186.019287109375\n\n   at utils\\layout.ts:31\n\n  29 | /** Soft: two boxes at the same place (≤ TOLERANCE_PX on each axis). */\n  30 | export function expectNear(a: { x: number; y: number }, b: { x: number; y: number }, what: string) {\n> 31 |   expect.soft(Math.abs(a.x - b.x), `${what} lệch ngang (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n     |                                                               ^\n  32 |   expect.soft(Math.abs(a.y - b.y), `${what} lệch dọc (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n  33 | }\n  34 |\n    at expectNear (<repo>\\tests\\utils\\layout.ts:31:63)\n    at expectSamePlace (<repo>\\tests\\utils\\layout.ts:37:3)\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:50:3)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Hoàn tất: biểu tượng giỏ lệch dọc (px)\n\nexpect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 5\nReceived:    28.980690002441406\n\n   at utils\\layout.ts:32\n\n  30 | export function expectNear(a: { x: number; y: number }, b: { x: number; y: number }, what: string) {\n  31 |   expect.soft(Math.abs(a.x - b.x), `${what} lệch ngang (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n> 32 |   expect.soft(Math.abs(a.y - b.y), `${what} lệch dọc (px)`).toBeLessThanOrEqual(TOLERANCE_PX);\n     |                                                             ^\n  33 | }\n  34 |\n  35 | /** Soft: element `a` at the same place as baseline element `b`. */\n    at expectNear (<repo>\\tests\\utils\\layout.ts:32:61)\n    at expectSamePlace (<repo>\\tests\\utils\\layout.ts:37:3)\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:50:3)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Hoàn tất: biểu tượng giỏ bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n   at utils\\layout.ts:51\n\n  49 |   const menu = page.locator('.bm-icon');\n  50 |   await expectSamePlace(icon(page), icon(base), `${where}: biểu tượng giỏ`);\n> 51 |   expect.soft(await transformOf(icon(page)), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n     |                                                                                  ^\n  52 |   expect.soft(await transformOf(menu), `${where}: biểu tượng menu bị xoay`).toBe('none');\n  53 | }\n  54 |\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:51:82)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7",
+        "Error: Hoàn tất: biểu tượng menu bị xoay\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"none\"\nReceived: \"matrix(0.99863, 0.052336, -0.052336, 0.99863, 0, 0)\"\n\n   at utils\\layout.ts:52\n\n  50 |   await expectSamePlace(icon(page), icon(base), `${where}: biểu tượng giỏ`);\n  51 |   expect.soft(await transformOf(icon(page)), `${where}: biểu tượng giỏ bị xoay`).toBe('none');\n> 52 |   expect.soft(await transformOf(menu), `${where}: biểu tượng menu bị xoay`).toBe('none');\n     |                                                                             ^\n  53 | }\n  54 |\n    at expectHeaderLike (<repo>\\tests\\utils\\layout.ts:52:77)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1300:7"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-16 (biến thể ở 3 trang thanh toán): visual_user lệch / xoay biểu tượng giỏ, menu"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-045",
+      "title": "TC-045 visual_user: cả luồng thanh toán đúng như standard_user (mọi trường AC)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 4521,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-046",
+      "title": "TC-046 performance_glitch_user: cả luồng thanh toán thành công, ghi lại thời gian về danh sách",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 21699,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "thời gian Cancel ở Tổng quan → danh sách (BUG-03 biến thể, chỉ ghi nhận)",
+          "description": "5088 ms"
+        },
+        {
+          "type": "thời gian Back Home → danh sách (BUG-03 biến thể, chỉ ghi nhận)",
+          "description": "5100 ms"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-047",
+      "title": "TC-047 problem_user: các thao tác không lỗi vẫn đúng như standard_user",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 4721,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-048",
+      "title": "TC-048 error_user: các thao tác không lỗi vẫn đúng như standard_user",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 4822,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "BUG-21 (SD-102, tham khảo)",
+          "description": "3 lỗi / báo lỗi khi ở trang chi tiết (bước 5): Bước 5 (chi tiết Sauce Labs Backpack) [/inventory-item.html]: https://submit.backtrace.io/UNIVERSE/TOKEN/json | Bước 5 (chi tiết Sauce Labs Bike Light) [/inventory-item.html]: https://submit.backtrace.io/UNIVERSE/TOKEN/json | Bước 5 (chi tiết Sauce Labs Onesie) [/inventory-item.html]: https://submit.backtrace.io/UNIVERSE/TOKEN/json"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-049",
+      "title": "TC-049 Không lỗi JavaScript, không gửi báo lỗi khi đi luồng thanh toán (mọi tài khoản)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 15531,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-050",
+      "title": "TC-050 Rời luồng thanh toán bằng All Items và biểu tượng giỏ, giỏ giữ nguyên",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 5153,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    },
+    {
+      "tc_id": "TC-051",
+      "title": "TC-051 Finish chỉ tạo đơn theo giỏ / phiên hiện tại (2 tab, sau Reset, giỏ đổi ở tab khác, đăng xuất ở tab khác)",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 14873,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1: tab 2 không đặt được đơn lần 2",
+      "errors": [
+        "Error: Biến thể 1: tab 2 không đặt được đơn lần 2",
+        "Error: Biến thể 2: giỏ đã trống thì không tạo đơn",
+        "Error: Biến thể 3: PDF khớp giỏ hiện tại (Backpack, Onesie, Total 41.02)",
+        "Error: Biến thể 4: PDF chỉ có Backpack, Total 32.39",
+        "Error: Biến thể 4: PDF không có Onesie đã bỏ",
+        "Error: Biến thể 5: giỏ sau Finish giống hệt ngay trước Finish",
+        "Error: Biến thể 5: đăng nhập lại thấy số giỏ 2"
+      ],
+      "error_details": [
+        "Error: Biến thể 1: tab 2 không đặt được đơn lần 2\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  876 |     await finishAsPrecondition(tab, 'tab 1 đặt đơn đầu tiên (không phải BUG-35)');\n  877 |     await ov.finishButton.click();\n> 878 |     expect.soft(await appears(co.header), 'Biến thể 1: tab 2 không đặt được đơn lần 2').toBe(false);\n      |                                                                                         ^\n  879 |     await evidence.shot('Biến thể 1: Finish ở tab 2 sau khi tab 1 đã đặt', { highlight: co.header, note: 'Mong đợi: tab 2 không hiện \"Thank you for your order!\"' });\n  880 |     await tab.close();\n  881 |     // Biến thể 2 (sau Reset App State)\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:878:89",
+        "Error: Biến thể 2: giỏ đã trống thì không tạo đơn\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  885 |     await ov.closeMenu();\n  886 |     await ov.finishButton.click();\n> 887 |     expect.soft(await appears(co.header), 'Biến thể 2: giỏ đã trống thì không tạo đơn').toBe(false);\n      |                                                                                         ^\n  888 |     await evidence.shot('Biến thể 2: Finish sau Reset App State', { highlight: co.header, note: 'Mong đợi: không hiện \"Thank you for your order!\"' });\n  889 |     // Biến thể 3 (giỏ thêm Onesie ở tab khác)\n  890 |     await freshLogin(page);\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:887:89",
+        "Error: Biến thể 3: PDF khớp giỏ hiện tại (Backpack, Onesie, Total 41.02)\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 4\n+ Received  + 0\n\n  Array [\n    \"Sauce Labs Backpack\",\n    \"29.99\",\n-   \"Sauce Labs Onesie\",\n-   \"7.99\",\n-   \"Total\",\n-   \"41.02\",\n  ]\n\n  899 |       const pdf = await receipt(co);\n  900 |       const want = [backpack.name, amount(cents(backpack)), onesie.name, amount(cents(onesie)), 'Total', '41.02'];\n> 901 |       expect.soft(inOrder(pdf.texts, want), 'Biến thể 3: PDF khớp giỏ hiện tại (Backpack, Onesie, Total 41.02)').toEqual(want);\n      |                                                                                                                  ^\n  902 |       note('Biến thể 3 PDF', pdf.texts.join(' | '));\n  903 |     } else {\n  904 |       expect.soft(await cartStorage(page), 'Biến thể 3: không đặt thì giỏ vẫn [4,2]').toBe('[4,2]');\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:901:114",
+        "Error: Biến thể 4: PDF chỉ có Backpack, Total 32.39\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 0\n\n  Array [\n    \"Sauce Labs Backpack\",\n    \"29.99\",\n    \"Total\",\n-   \"32.39\",\n  ]\n\n  918 |       const pdf = await receipt(co);\n  919 |       const want = [backpack.name, amount(cents(backpack)), 'Total', '32.39'];\n> 920 |       expect.soft(inOrder(pdf.texts, want), 'Biến thể 4: PDF chỉ có Backpack, Total 32.39').toEqual(want);\n      |                                                                                             ^\n  921 |       expect.soft(pdf.texts, 'Biến thể 4: PDF không có Onesie đã bỏ').not.toContain(onesie.name);\n  922 |       note('Biến thể 4 PDF', pdf.texts.join(' | '));\n  923 |     } else {\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:920:93",
+        "Error: Biến thể 4: PDF không có Onesie đã bỏ\n\nexpect(received).not.toContain(expected) // indexOf\n\nExpected value: not \"Sauce Labs Onesie\"\nReceived array:     [\"Swag Labs\", \"Order Receipt\", \"ORDER DETAILS\", \"Order Date\", \"November 26, 2026 at 1:55 PM\", \"SHIP TO\", \"An Le\", \"70000\", \"ITEMS\", \"DESCRIPTION\", \"PRICE\", \"Sauce Labs Backpack\", \"$\", \"29.99\", \"Sauce Labs Onesie\", \"$\", \"7.99\", \"Item total\", \"$\", \"37.98\", \"Tax\", \"$\", \"3.04\", \"Total\", \"$\", \"41.02\", \"Thank you for your order! It has been dispatched, and will arrive just as fast as the pony can get there.\"]\n\n  919 |       const want = [backpack.name, amount(cents(backpack)), 'Total', '32.39'];\n  920 |       expect.soft(inOrder(pdf.texts, want), 'Biến thể 4: PDF chỉ có Backpack, Total 32.39').toEqual(want);\n> 921 |       expect.soft(pdf.texts, 'Biến thể 4: PDF không có Onesie đã bỏ').not.toContain(onesie.name);\n      |                                                                           ^\n  922 |       note('Biến thể 4 PDF', pdf.texts.join(' | '));\n  923 |     } else {\n  924 |       expect.soft(await cartStorage(page), 'Biến thể 4: không đặt thì giỏ vẫn [4]').toBe('[4]');\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:921:75",
+        "Error: Biến thể 5: giỏ sau Finish giống hệt ngay trước Finish\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"[4,2]\"\nReceived: null\n\n  939 |     await expect.soft(page, 'Biến thể 5: URL /').toHaveURL(isLoginScreen, QUICK);\n  940 |     await expect.soft(loginPage.errorMessage, 'Biến thể 5: thông báo').toHaveText(MSG.notLoggedIn(protectedPages.checkoutComplete), QUICK);\n> 941 |     expect.soft(await cartStorage(page), 'Biến thể 5: giỏ sau Finish giống hệt ngay trước Finish').toBe(before);\n      |                                                                                                    ^\n  942 |     await evidence.shot('Biến thể 5: Finish sau khi tab khác đăng xuất', { highlight: loginPage.errorMessage, note: 'Mong đợi: bị chặn về trang đăng nhập và giỏ giữ nguyên' });\n  943 |     await tab.close();\n  944 |     const again = await login(page, users.standard);\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:941:100",
+        "Error: Biến thể 5: đăng nhập lại thấy số giỏ 2\n\nexpect(locator).toHaveText(expected) failed\n\nLocator: getByTestId('shopping-cart-badge')\nExpected: \"2\"\nTimeout: 2000ms\nError: element(s) not found"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-35: Finish đặt đơn theo Tổng quan đã cũ, không kiểm giỏ / phiên hiện tại"
+        },
+        {
+          "type": "Biến thể 3 PDF",
+          "description": "Swag Labs | Order Receipt | ORDER DETAILS | Order Date | November 26, 2026 at 1:55 PM | SHIP TO | An Le | 70000 | ITEMS | DESCRIPTION | PRICE | Sauce Labs Backpack | $ | 29.99 | Item total | $ | 29.99 | Tax | $ | 2.40 | Total | $ | 32.39 | Thank you for your order! It has been dispatched, and will arrive just as fast as the pony can get there."
+        },
+        {
+          "type": "Biến thể 4 PDF",
+          "description": "Swag Labs | Order Receipt | ORDER DETAILS | Order Date | November 26, 2026 at 1:55 PM | SHIP TO | An Le | 70000 | ITEMS | DESCRIPTION | PRICE | Sauce Labs Backpack | $ | 29.99 | Sauce Labs Onesie | $ | 7.99 | Item total | $ | 37.98 | Tax | $ | 3.04 | Total | $ | 41.02 | Thank you for your order! It has been dispatched, and will arrive just as fast as the pony can get there."
+        },
+        {
+          "type": "Biến thể 5: cart-contents ngay trước Finish",
+          "description": "[4,2]"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-052",
+      "title": "TC-052 Bấm đúp Continue / Finish chỉ chuyển trang một lần, Back một lần về trang trước",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 13231,
+      "retry_count": 0,
+      "error": "Error: Biến thể 1 (BUG-36): history.length tăng đúng 1",
+      "errors": [
+        "Error: Biến thể 1 (BUG-36): history.length tăng đúng 1",
+        "Error: Biến thể 1 (BUG-36): 1 lần Back về trang Thông tin",
+        "Error: Biến thể 2 (BUG-36): history.length tăng đúng 1",
+        "Error: Biến thể 2 (BUG-36): 1 lần Back đã rời trang Hoàn tất"
+      ],
+      "error_details": [
+        "Error: Biến thể 1 (BUG-36): history.length tăng đúng 1\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 2\n\n  1518 |     await ip.continueButton.dblclick();\n  1519 |     await expect(ov.finishButton).toBeVisible();\n> 1520 |     expect.soft(await historyLength() - before, 'Biến thể 1 (BUG-36): history.length tăng đúng 1').toBe(1);\n       |                                                                                                    ^\n  1521 |     await expect.soft(ov.title, 'Biến thể 1 dương tính (dự kiến đúng): tiêu đề').toHaveText(M.titleOverview, QUICK);\n  1522 |     await expect.soft(ov.itemNames, 'Biến thể 1 dương tính (dự kiến đúng): 2 dòng không trùng').toHaveText([backpack.name, onesie.name], QUICK);\n  1523 |     await expect.soft(ov.total, 'Biến thể 1 dương tính (dự kiến đúng): Total').toHaveText('Total: $41.02', QUICK);\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1520:100",
+        "Error: Biến thể 1 (BUG-36): 1 lần Back về trang Thông tin\n\nexpect(locator).toBeVisible() failed\n\nLocator: getByLabel('First Name', { exact: true })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found",
+        "Error: Biến thể 2 (BUG-36): history.length tăng đúng 1\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 2\n\n  1531 |     await ov.finishButton.dblclick();\n  1532 |     await expect(co.header).toBeVisible();\n> 1533 |     expect.soft(await historyLength() - before, 'Biến thể 2 (BUG-36): history.length tăng đúng 1').toBe(1);\n       |                                                                                                    ^\n  1534 |     await expect.soft(co.title, 'Biến thể 2 dương tính (dự kiến đúng): tiêu đề').toHaveText(M.titleComplete, QUICK);\n  1535 |     await expect.soft(co.header, 'Biến thể 2 dương tính (dự kiến đúng): Thank you').toHaveText(M.completeHeader, QUICK);\n  1536 |     await expect.soft(co.cartBadge, 'Biến thể 2 dương tính (dự kiến đúng): không còn số giỏ').toBeHidden(QUICK);\n    at <repo>\\tests\\specs\\saucedemo-checkout-screen.spec.ts:1533:100",
+        "Error: Biến thể 2 (BUG-36): 1 lần Back đã rời trang Hoàn tất\n\nexpect(locator).toBeHidden() failed\n\nLocator:  getByTestId('complete-header')\nExpected: hidden\nReceived: visible\nTimeout:  5000ms"
+      ],
+      "annotations": [
+        {
+          "type": "fail",
+          "description": "BUG-36: bấm đúp Continue / Finish chạy 2 lần, history.length tăng 2, Back lần 1 vẫn ở cùng trang"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-053",
+      "title": "TC-053 Đơn thứ 2 sau đơn thứ nhất trong cùng phiên",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1931,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": []
+    }
+  ]
+}

@@ -3,6 +3,9 @@ import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { ProductDetailPage } from '../pages/ProductDetailPage';
 import { CartPage } from '../pages/CartPage';
+import { CheckoutInfoPage } from '../pages/CheckoutInfoPage';
+import { CheckoutOverviewPage } from '../pages/CheckoutOverviewPage';
+import { CheckoutCompletePage } from '../pages/CheckoutCompletePage';
 import { users } from '../data/users';
 import { Evidence } from '../utils/evidence';
 
@@ -21,6 +24,10 @@ type Fixtures = {
   otherSession: (user: User) => Promise<Page>;
   productDetailPage: ProductDetailPage;
   cartPage: CartPage;
+  /** SD-103 checkout pages (not opened: the test navigates). */
+  infoPage: CheckoutInfoPage;
+  overviewPage: CheckoutOverviewPage;
+  completePage: CheckoutCompletePage;
 };
 
 /** Log in on `page` and wait until the product list is rendered. */
@@ -81,6 +88,18 @@ export const test = base.extend<Fixtures>({
 
   cartPage: async ({ page }, use) => {
     await use(new CartPage(page));
+  },
+
+  infoPage: async ({ page }, use) => {
+    await use(new CheckoutInfoPage(page));
+  },
+
+  overviewPage: async ({ page }, use) => {
+    await use(new CheckoutOverviewPage(page));
+  },
+
+  completePage: async ({ page }, use) => {
+    await use(new CheckoutCompletePage(page));
   },
 });
 

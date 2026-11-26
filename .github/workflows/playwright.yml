@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   test:
-    timeout-minutes: 20
+    timeout-minutes: 30     # SD-103 thêm ~12 phút (1 worker); người dùng chọn phương án B 2026-11-26
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v7

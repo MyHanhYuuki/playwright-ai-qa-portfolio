@@ -30,11 +30,11 @@ Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `revi
 3. Chạy `/qa-orchestrator <feature>`, đi qua từng bước và 3 điểm HITL.
 4. Đánh số:
    - `TC-xxx`, `TVP-xxx`, `Qn`, `O-xx`, `IMP-xx`: **riêng từng feature**, bắt đầu từ 001 / 1.
-   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, sản phẩm + giỏ BUG-05 → BUG-21, feature sau bắt đầu từ **BUG-22**).
+   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, sản phẩm + giỏ BUG-05 → BUG-21, thanh toán BUG-22 → BUG-36, feature sau bắt đầu từ **BUG-37**).
    - Bug mới hay **biến thể** của bug cũ: cùng thành phần / cùng chỗ sửa → ghi là biến thể của bug cũ (giữ số cũ); khác form / khác điểm kiểm → cấp số mới. Ghi rõ lý do trong `known-issues.md`.
 5. Bug đã biết: ghi `BUG-xx` vào **câu đầu** cột `notes` của TC, vd `Bug đã biết BUG-08 (O-18): dự kiến FAIL. …` (RTM chỉ đọc câu đầu; nhắc BUG id ở câu sau chỉ là tham khảo), thêm vào `tests/data/bugs.ts`, test dùng `test.fail()` + tag `@BUG-xx`.
 6. Dữ liệu dùng chung: thêm vào `tests/data/users.ts`, `messages.ts` (nhóm mới cho feature), không tạo file trùng.
-7. Feature gồm **nhiều màn hình**: mọi tài liệu phải **ghi rõ màn hình** để không nhầm. `q-and-a.md`, `known-issues.md` chia mục theo màn hình (mục "Chung" cho thứ ảnh hưởng nhiều màn hình); bảng quan sát, `improvements.md` có cột "Màn hình"; `viewpoint.csv`, `test-cases.csv` có cột `screen` (nhiều màn hình ghi `A + B`, `A → B` hoặc `Cả n`; RTM tự tách để đếm theo màn hình). Code: `test.describe('Màn hình n: …')` cho từng màn hình và `test.describe('Chung: …')` cho test đi qua nhiều màn hình (mục lục evidence nhóm theo tên describe), tag màn hình kiểu `@list` / `@detail` / `@cart`.
+7. Feature gồm **nhiều màn hình**: mọi tài liệu phải **ghi rõ màn hình** để không nhầm. `q-and-a.md`, `known-issues.md` chia mục theo màn hình (mục "Chung" cho thứ ảnh hưởng nhiều màn hình); bảng quan sát, `improvements.md` có cột "Màn hình"; `viewpoint.csv`, `test-cases.csv` có cột `screen` (nhiều màn hình ghi `A + B`, `A → B` hoặc `Cả n`; RTM tự tách để đếm theo màn hình). Code: `test.describe('Màn hình n: …')` cho từng màn hình và `test.describe('Chung: …')` cho test đi qua nhiều màn hình (mục lục evidence nhóm theo tên describe), tag màn hình kiểu `@list` / `@detail` / `@cart`. Xếp describe theo cột `screen`: một màn hình hoặc `A → B` vào **màn hình A** (nơi có thao tác); `A + B`, `Cả n` vào "Chung" (từ SD-103; SD-102 đã xếp `A → B` theo màn hình đích, giữ nguyên).
 
 ## Quy ước viết test
 - Locator: `getByRole` → `getByLabel`/`getByPlaceholder` → `getByTestId` (thuộc tính `data-test`) → CSS. Không dùng XPath, không dùng `.nth()` cố định.
@@ -48,6 +48,17 @@ Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `revi
 ## Xử lý phát hiện của qa-reviewer
 - Sửa theo review rồi ghi bảng "Xử lý sau review" cuối file review. Chỉ ghi ✅ khi mọi chỗ liên quan đã sửa.
 - **Không tái hiện được / không làm được một phát hiện: không tự đóng.** Quay lại trao đổi với qa-reviewer, hai bên chốt giải pháp (ghi mục `## Trao đổi <mã>` trong file review), rồi báo người dùng 3 ý: (1) không tái hiện được ở điểm nào, khác reviewer ở đâu; (2) sau trao đổi chốt thế nào, sẽ làm gì; (3) phương án tối ưu đề xuất để người dùng quyết. Chi tiết: `.claude/commands/qa-orchestrator.md`, `.claude/agents/qa-reviewer.md` mục 6b.
+
+## Báo cáo tiến độ cho người dùng
+Chủ động báo, không đợi hỏi: sau mỗi mốc (agent xong, review xong, trước HITL, sau commit / push) và khi người dùng hỏi "tiến độ". Ngắn gọn, đủ 4 phần:
+- ✅ **Đã xong**: kèm kết quả kiểm chứng (số test, lần chạy, file). Chưa kiểm chứng thì không ghi "xong".
+- 🔄 **Đang làm**: agent nào, đang chờ gì.
+- ⏭ **Sắp làm**: các bước tiếp theo, theo thứ tự.
+- ⚠️ **Cần người dùng quyết** (nếu có): kèm phương án đề xuất.
+
+Phần nào không có nội dung thì bỏ hẳn, không ghi "không có" (giữ câu trả lời ngắn).
+
+Được hỏi % hay thời gian thì ước lượng và nói rõ là ước lượng (người dùng chốt 2026-11-26).
 
 ## Quy ước tài liệu
 - Tài liệu tiếng Việt. README tiếng Anh.
