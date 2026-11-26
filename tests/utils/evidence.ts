@@ -158,7 +158,7 @@ export class Evidence {
       `- **Thời điểm**: ${new Date().toISOString()}`,
       `- **Video**: ${
         savedVideo ? '[video.webm](video.webm)'
-        : fs.existsSync(path.join(this.dir, 'video.webm')) ? `[video.webm](video.webm) (quay ở lần chạy ngày ${fs.statSync(path.join(this.dir, 'video.webm')).mtime.toISOString().slice(0, 10)}, không quay lại vì test pass)`
+        : fs.existsSync(path.join(this.dir, 'video.webm')) ? `[video.webm](video.webm) (quay ở lần chạy ngày ${fs.statSync(path.join(this.dir, 'video.webm')).mtime.toISOString().slice(0, 10)}, ${process.env.EVIDENCE_KEEP_VIDEOS ? 'lần này không quay lại: EVIDENCE_KEEP_VIDEOS' : keepVideo ? 'lần này không lưu được video mới' : 'không quay lại vì test pass'})`
         : '(chỉ quay video cho test có bug hoặc kết quả bất thường)'
       }`,
       '',

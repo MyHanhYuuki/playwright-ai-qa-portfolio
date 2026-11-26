@@ -36,8 +36,11 @@ export default defineConfig({
     /* Keep evidence for failed tests (used by executor triage & bug reports) */
     screenshot: 'only-on-failure',
 
-    /* Evidence mode (npm run test:evidence): record a video of every test case */
-    video: process.env.EVIDENCE ? { mode: 'on', size: { width: 1280, height: 720 } } : 'off',
+    /* Evidence mode (npm run test:evidence): record a video of every test case.
+       EVIDENCE_KEEP_VIDEOS=1: refresh screenshots + README only, keep the videos already saved
+       (re-recording adds ~60 MB of new video blobs to git history for no new information). */
+    video:
+      process.env.EVIDENCE && !process.env.EVIDENCE_KEEP_VIDEOS ? { mode: 'on', size: { width: 1280, height: 720 } } : 'off',
   },
 
   /* Configure projects for major browsers */
