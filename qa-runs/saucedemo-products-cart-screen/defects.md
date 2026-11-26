@@ -78,12 +78,12 @@ Mỗi biến thể từ một phiên trình duyệt mới.
 
 **Mong đợi** (AC-1, AC-5, dữ liệu chuẩn TD-06): Backpack $29.99, Bike Light $9.99, Bolt T-Shirt $15.99, Fleece Jacket $49.99, Onesie $7.99, Red T-Shirt $15.99; giá ở danh sách bằng giá ở chi tiết và giỏ.
 
-**Thực tế**: giá ở danh sách sai **và khác nhau mỗi lần tải** (xem [tái hiện độc lập](<evidence/bugs/[id_bug_14]_BUG-14/manual/README.md>): 2 lần tải cho 2 bộ giá khác nhau). Trang chi tiết và giỏ hiện **đúng** `$29.99`. Thứ tự khi sắp theo giá vẫn đúng theo giá thật, chỉ phần hiển thị sai.
+**Thực tế**: giá ở danh sách sai **và khác nhau mỗi lần tải** (xem [tái hiện độc lập](<evidence/bugs/[id_bug_14]_BUG-14/manual/README.md>): 2 lần tải cho 2 bộ giá khác nhau). Trang chi tiết và giỏ hiện **đúng** `$29.99`. Một lần chạy thử (2026-11-26, không lưu bằng chứng) còn thấy giá ngẫu nhiên **thiếu số 0 cuối** (`$74.2` thay vì `$74.20`): cùng bộ sinh giá ngẫu nhiên của BUG-14; annotation 2 lần tải của TC-013 sẽ ghi lại nếu gặp lại. Thứ tự khi sắp theo giá vẫn đúng theo giá thật, chỉ phần hiển thị sai.
 
 ![BUG-14](<evidence/bugs/[id_bug_14]_BUG-14/manual/01-gia-lan-1.png>)
 
 **Evidence**: [tự động: danh sách, chi tiết, giỏ](<evidence/bugs/[id_bug_14]_BUG-14/TC-013/README.md>) · [tái hiện độc lập: 2 lần tải, chi tiết, giỏ](<evidence/bugs/[id_bug_14]_BUG-14/manual/README.md>)
-**Test tự động**: TC-013, `test.fail()`.
+**Test tự động**: TC-013, `test.fail()`. Từ 2026-11-26 TC-013 tải lại danh sách và ghi giá của 2 lần tải vào annotation (vd lần 1 Backpack `$12.33`, lần 2 `$60.35`): bằng chứng tự động cho "đổi mỗi lần tải".
 
 ---
 

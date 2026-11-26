@@ -1,0 +1,25 @@
+{
+  "id": "stability-20261126-1636",
+  "command": "npm run test:stability -- saucedemo-products-cart-screen 3 --cpu 4 -g TC-022|TC-043",
+  "cpu_throttle": 4,
+  "stats": {
+    "expected": 6,
+    "unexpected": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "duration_ms": 7771
+  },
+  "not_expected": [],
+  "per_test": {
+    "TC-022": [
+      "expected",
+      "expected",
+      "expected"
+    ],
+    "TC-043": [
+      "expected",
+      "expected",
+      "expected"
+    ]
+  }
+}

@@ -16,6 +16,9 @@ npm run test:smoke     # chỉ test @smoke
 npm run test:ui        # UI mode
 npm run test:run -- <feature>       # chạy test 1 feature, lưu kết quả vào qa-runs/<feature>/run-results/
 npm run test:evidence -- <feature>  # chạy kèm evidence: ảnh khoanh đỏ + ghi chú + video → qa-runs/<feature>/evidence/
+                                    # EVIDENCE_KEEP_VIDEOS=1: chỉ làm mới ảnh + README, giữ video cũ (tránh thêm video trùng vào git).
+                                    # CHỈ dùng khi code của test không đổi; test đã sửa thì quay lại video của test đó
+npm run test:stability -- <feature> [N] [--cpu 4]  # chạy lặp N lần; --cpu 4: giả lập máy chậm 4 lần để tìm lỗi chờ thiếu
 npm run rtm -- <feature>            # tạo RTM (rtm.md + rtm-report.html) của feature
 npm run report         # mở báo cáo HTML
 npm run typecheck      # kiểm tra kiểu TypeScript (Playwright không tự kiểm)

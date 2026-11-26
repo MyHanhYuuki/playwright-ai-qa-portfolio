@@ -67,6 +67,8 @@
 | **`expect.soft`** | Kiểm tra "mềm": sai thì ghi lỗi nhưng test **chạy tiếp**, để một biến thể sai không che các biến thể sau | TC-040 kiểm 4 biến thể của BUG-07 trong một test |
 | **`test.fail()`** | Đánh dấu test của **bug đã biết**: test fail thì CI vẫn xanh, bug được sửa thì test báo để bỏ đánh dấu. Cẩn thận: mọi lỗi (kể cả lỗi code test) đều bị coi là "fail như dự kiến" | 17 test bug của SD-102 |
 | **`pageerror`** | Lỗi JavaScript **không được bắt** trên trang. Playwright nghe bằng `page.on('pageerror')`, khác với thông báo console (`page.on('console')`). DevTools hiện cả hai ở tab Console | BUG-13: `Failed to add item to the cart.` |
+| **`timezoneId`** (múi giờ giả lập) | Cho trình duyệt của test chạy ở một múi giờ chọn trước, bất kể máy đang ở đâu. Cần khi test ngày giờ: CI chạy UTC nên giờ địa phương và UTC trùng nhau, không phân biệt được | `test.use({ timezoneId: 'Asia/Ho_Chi_Minh' })` (SD-103 TC-034) |
+| **CPU throttling** (giả lập máy chậm) | Làm trình duyệt chạy chậm đi n lần để tái hiện lỗi chỉ lộ trên máy CI yếu (chờ thiếu, đọc trang cũ) | `npm run test:stability -- <feature> 10 --cpu 4` |
 
 ## AI agent
 | Thuật ngữ | Nghĩa | Ví dụ |
@@ -91,3 +93,7 @@
 | **Cache** (trong CI) | Lưu lại thứ đã tải để lần sau không tải lại | Cache Chromium: CI từ 11 phút xuống 36 giây |
 | **Badge** | Huy hiệu trên README hiển thị trạng thái CI | ![badge](https://img.shields.io/badge/tests-passing-brightgreen) |
 | **Environment variable** (biến môi trường) | Giá trị cấu hình đặt bên ngoài code | `BASE_URL`, `SAUCE_PASSWORD` (`.env.example`) |
+| **Branch** (nhánh) | Một dòng phát triển riêng, làm xong mới gộp vào `main` | `feat/checkout-sd103` |
+| **Pull Request** (PR) | Đề nghị gộp một nhánh vào `main`: có mô tả, CI chạy thử, người duyệt xem trước khi gộp | PR #1 (Bài 9) |
+| **Merge commit** | Kiểu gộp giữ nguyên mọi commit của nhánh và thêm 1 commit "gộp". Khác **squash** (dồn hết thành 1 commit) | Bài 9 giữ 11 commit |
+| **Sharding** (chia job) | Chia bộ test cho nhiều máy CI chạy song song, mỗi máy một phần, để rút ngắn thời gian | `npx playwright test --shard=1/2` |

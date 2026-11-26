@@ -489,7 +489,7 @@ test('BUG-29', async ({ browser }) => {
     const cases: [string, string, string, string][] = [
       ['problem_user', '[4]', '01', 'Backpack ($29.99): mong đợi `Item total: $29.99`, `Tax: $2.40`, `Total: $32.39`'],
       ['problem_user', '[4,0,1,5,2,3]', '02', 'cả 6 sản phẩm: mong đợi `$129.94`, `$10.40`, `$140.34`'],
-      ['standard_user', '[4]', '', 'đối chứng'],
+      ['standard_user', '[4]', '', 'mong đợi `Item total: $29.99`, `Tax: $2.40`, `Total: $32.39`'],
       ['problem_user', '[4,2]', '03', 'Backpack + Onesie: mong đợi `$37.98`, `$3.04`, `$41.02`'],
     ];
     for (const [user, raw, n, want] of cases) {

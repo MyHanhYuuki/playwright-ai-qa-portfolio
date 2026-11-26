@@ -42,6 +42,20 @@ export async function login(page: Page, user: User) {
 }
 
 export const test = base.extend<Fixtures>({
+  /**
+   * CPU_THROTTLE=<n> (e.g. 4): slow the test's own page down n times (Chromium CDP), to reproduce races that only
+   * show on a slow CI machine (SD-102 TC-043, review-script-gen E3). Opt-in only: normal runs and CI are unchanged.
+   * Pages opened later in the test (2nd tab, otherSession) are not throttled.
+   */
+  page: async ({ page, browserName }, use) => {
+    const rate = Number(process.env.CPU_THROTTLE ?? 0);
+    if (rate > 1 && browserName === 'chromium') {
+      const cdp = await page.context().newCDPSession(page);
+      await cdp.send('Emulation.setCPUThrottlingRate', { rate });
+    }
+    await use(page);
+  },
+
   evidence: [
     async ({ page }, use, testInfo) => {
       const evidence = new Evidence(page, testInfo);
