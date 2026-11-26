@@ -67,7 +67,7 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | 6 | Sửa test hỏng (healer) | healing-log.md | ⏭ Lần này không có script-issue |
 | 7 | Bug report + RTM | defects.md, rtm.md / rtm-report.html (`npm run rtm`) | ✅ |
 | 8 | Sản phẩm + Chi tiết + Giỏ hàng (cả pipeline) | `qa-runs/saucedemo-products-cart-screen/`: 46 TC, 17 bug, RTM, evidence chia theo màn hình | ✅ Xong (review cuối đã xử lý) |
-| 9 | Giỏ hàng → Thanh toán → Hoàn tất (cả pipeline, E2E mua hàng) | `qa-runs/saucedemo-checkout-screen/`: 53 TC (1 bán tự động: PDF làm tay), 21 bug, RTM, evidence + tái hiện độc lập | ✅ Xong (review cuối đã xử lý; thời gian CI thật ghi sau lần chạy đầu trên `main`) |
+| 9 | Giỏ hàng → Thanh toán → Hoàn tất (cả pipeline, E2E mua hàng) | `qa-runs/saucedemo-checkout-screen/`: 53 TC (1 bán tự động: PDF làm tay), 21 bug, RTM, evidence + tái hiện độc lập | ✅ Xong (review cuối đã xử lý; gộp vào `main` qua PR #1, CI xanh) |
 | 10 | Test API: Restful Booker | `tests/api` | ⏳ |
 | 11 | Hoàn thiện CI, README, tổng kết | Báo cáo tổng kết | ⏳ |
 
@@ -122,3 +122,4 @@ Chi tiết: [Sơ đồ AI agent](ai-agent-workflow.md) · [Bản tương tác](a
 | Thanh toán: kết quả chạy | 31 Passed + 22 Failed (bug đã biết, fail đúng chỗ), 0 chập chờn (chạy lặp 106/106). Lần chạy `run-20261126-143604`: 126 giây (9 worker); cộng dồn 12,2 phút (CI 1 worker) → giới hạn job CI nâng lên 30 phút |
 | Thanh toán: bug report | 21 bug: 8 High (gồm BUG-29 tính gấp đôi tiền, Critical nếu là hệ thống thật; 2 bảo mật / dữ liệu: cookie tự tạo, giỏ của người trước), 7 Medium, 6 Low. Tái hiện độc lập 2/2 lần cho mọi bug |
 | Thanh toán: RTM | 7/7 AC có test case, 0/7 AC đạt, 21 bug đang mở |
+| Thời gian CI sau Bài 9 | PR #1 (2026-11-26): 133 test đúng dự kiến, 0 chập chờn; chạy test 15,3 phút, cả job 16 phút 9 giây (1 worker, giới hạn 30 phút; ước lượng trước là ~21 phút). Rút ngắn: Bài 11 |
