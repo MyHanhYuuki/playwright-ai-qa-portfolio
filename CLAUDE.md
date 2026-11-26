@@ -49,6 +49,17 @@ Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `revi
 - Sửa theo review rồi ghi bảng "Xử lý sau review" cuối file review. Chỉ ghi ✅ khi mọi chỗ liên quan đã sửa.
 - **Không tái hiện được / không làm được một phát hiện: không tự đóng.** Quay lại trao đổi với qa-reviewer, hai bên chốt giải pháp (ghi mục `## Trao đổi <mã>` trong file review), rồi báo người dùng 3 ý: (1) không tái hiện được ở điểm nào, khác reviewer ở đâu; (2) sau trao đổi chốt thế nào, sẽ làm gì; (3) phương án tối ưu đề xuất để người dùng quyết. Chi tiết: `.claude/commands/qa-orchestrator.md`, `.claude/agents/qa-reviewer.md` mục 6b.
 
+## Báo cáo tiến độ cho người dùng
+Chủ động báo, không đợi hỏi: sau mỗi mốc (agent xong, review xong, trước HITL, sau commit / push) và khi người dùng hỏi "tiến độ". Ngắn gọn, đủ 4 phần:
+- ✅ **Đã xong**: kèm kết quả kiểm chứng (số test, lần chạy, file). Chưa kiểm chứng thì không ghi "xong".
+- 🔄 **Đang làm**: agent nào, đang chờ gì.
+- ⏭ **Sắp làm**: các bước tiếp theo, theo thứ tự.
+- ⚠️ **Cần người dùng quyết** (nếu có): kèm phương án đề xuất.
+
+Phần nào không có nội dung thì bỏ hẳn, không ghi "không có" (giữ câu trả lời ngắn).
+
+Được hỏi % hay thời gian thì ước lượng và nói rõ là ước lượng (người dùng chốt 2026-11-26).
+
 ## Quy ước tài liệu
 - Tài liệu tiếng Việt. README tiếng Anh.
 - Mỗi bài học trong `docs/learning/` theo khung: 🎯 Tại sao học · 🏭 Ngoài thực tế · 👨‍🏫 Làm mẫu → giải thích → tự làm · ⚠️ Lỗi hay gặp · ✅ Checklist · ❓ Câu hỏi liên quan. Thêm link vào README.

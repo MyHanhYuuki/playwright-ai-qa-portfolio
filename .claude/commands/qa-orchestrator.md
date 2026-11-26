@@ -65,6 +65,13 @@ Kiểm tra: `spec-review.md` có nội dung, `viewpoint.csv` có ≥1 dòng, `q-
 Sau **mỗi** bước test-design, test-impl, script-gen, executor: gọi agent `qa-reviewer` với tên bước.
 - Kết luận 🔴 "Phải làm lại": gọi lại bước đó kèm `reviews/review-<bước>.md` (tối đa 1 lần), rồi review lại.
 - Kết luận ⚠️ hoặc ✅: đưa `reviews/review-<bước>.md` vào thông báo HITL kế tiếp để người duyệt quyết định sửa gì.
+- **Vòng bắt buộc trước khi push** (người dùng chốt 2026-11-25): qa-reviewer soát → sửa theo review, điền bảng "Xử lý sau review" → qa-reviewer **kiểm lại lượt 2** (thêm mục `## Kiểm lại lượt 2`) tới khi ✅ → trình người dùng danh sách commit → người dùng duyệt mới push. Áp dụng cho mọi thay đổi, kể cả việc nhỏ ngoài bước (script, tài liệu agent).
+- **Soát đủ mà không tốn thừa** (người dùng chốt 2026-11-26):
+  - Đưa sẵn cho qa-reviewer **kết quả chạy** (`run-results/*.json`, số liệu, lỗi đã đọc): reviewer chỉ chạy lại test nào nghi ngờ (`-g`), không chạy lại cả spec.
+  - **Soát sâu theo rủi ro:** kỹ ở test có `test.fail()`, oracle, điểm đổi trang, phân loại bug; lướt ở test giao diện đơn giản đã pass ổn định.
+  - **Lượt 2 chỉ soát phần thay đổi** (`git diff`) so với từng phát hiện, không soát lại từ đầu.
+  - Sửa theo review: **gọi lại đúng agent đã viết** (đã có ngữ cảnh) thay vì tạo agent mới.
+  - Feature rất lớn và cần gấp mới chia nhiều qa-reviewer song song theo màn hình (nhanh 2–3 lần, tốn token 1,5–2 lần).
 
 ### Khi không tái hiện được / không làm được một phát hiện của qa-reviewer
 **Không tự đóng phát hiện.** Quay lại trao đổi với `qa-reviewer` (gửi đúng cách mình đã thử), hai bên chốt giải pháp (xem `qa-reviewer.md` mục 6b), rồi **báo lại người dùng** trước khi làm tiếp, gồm 3 ý:
