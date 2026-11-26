@@ -1,6 +1,6 @@
 # Evidence: saucedemo-products-cart-screen
 
-> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-25T08:53:48.123Z.
+> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-26T09:41:13.587Z.
 > Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Test case có bug (hoặc kết quả bất thường) có thêm video.
 > Thư mục `manual/` trong từng bug: ảnh **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi ảnh của test tự động.
 

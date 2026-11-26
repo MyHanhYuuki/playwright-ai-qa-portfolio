@@ -32,9 +32,9 @@ async function expectImages(inv: InventoryPage) {
     await expect.soft(inv.image(p), `ảnh của ${p.name}`).toHaveAttribute('src', new RegExp(p.imgKey), QUICK);
   }
 }
-async function expectPrices(inv: InventoryPage) {
+async function expectPrices(inv: InventoryPage, label = '') {
   for (const p of allProducts) {
-    await expect.soft(inv.item(p).getByTestId('inventory-item-price'), `giá của ${p.name}`).toHaveText(priceText(p), QUICK);
+    await expect.soft(inv.item(p).getByTestId('inventory-item-price'), `${label}giá của ${p.name}`).toHaveText(priceText(p), QUICK);
   }
 }
 /**
@@ -449,6 +449,18 @@ test.describe('Chung: nhiều màn hình (tài khoản, giỏ, menu, kiểm soá
     const inv = await loginAs(users.visual);
     await evidence.shot('Giá ở danh sách (visual_user)', { highlight: inv.itemPrices, note: 'Mong đợi: giá đúng TD-06 (Backpack $29.99, Bike Light $9.99…)' });
     await expectPrices(inv);
+    // Bước bổ sung (review-executor D5): tải lại danh sách, giá phải giữ nguyên và vẫn đúng TD-06.
+    // BUG-14: giá đổi ngẫu nhiên mỗi lần tải → ghi cả 2 lần vào annotation làm bằng chứng.
+    const pricesNow = () => inv.itemPrices.allTextContents();
+    const firstLoad = await pricesNow();
+    await inv.page.reload();
+    await expect(inv.inventoryList).toBeVisible();
+    await expect(inv.itemPrices.first()).toBeVisible();
+    const secondLoad = await pricesNow();
+    test.info().annotations.push({ type: 'giá ở danh sách (2 lần tải)', description: `lần 1: ${firstLoad.join(', ')} · lần 2: ${secondLoad.join(', ')}` });
+    await evidence.shot('Giá ở danh sách sau khi tải lại', { highlight: inv.itemPrices, note: `Mong đợi: giá giữ nguyên và đúng TD-06. Lần 1: ${firstLoad.join(', ')}` });
+    expect.soft(secondLoad, 'giá ở danh sách giữ nguyên sau khi tải lại').toEqual(firstLoad);
+    await expectPrices(inv, 'Sau khi tải lại: ');
     const listPrice = await inv.item(backpack).getByTestId('inventory-item-price').textContent();
     await inv.nameLink(backpack).click();
     await expect(detail.backButton).toBeVisible();
@@ -810,10 +822,12 @@ test.describe('Chung: nhiều màn hình (tài khoản, giỏ, menu, kiểm soá
     await invB.openCart();
     await expect(cartB.cartBadge).toHaveText('1');
     await expect(cartB.itemNames).toHaveText([backpack.name]);
+    await evidence.shot('Tab B: giỏ sau khi tab A thêm Backpack', { page: tabB, highlight: [cartB.cartBadge, cartB.itemNames], note: 'Tab B (mở trước) thấy số giỏ 1 và dòng Sauce Labs Backpack' });
     await tabB.reload();
     await expect(cartB.cartList).toBeVisible();
     await expect(cartB.cartBadge).toHaveText('1');
     await expect(cartB.itemNames).toHaveText([backpack.name]);
+    await evidence.shot('Tab B: giỏ sau khi tải lại', { page: tabB, highlight: [cartB.cartBadge, cartB.itemNames], note: 'Tải lại tab B: vẫn số giỏ 1, dòng Sauce Labs Backpack' });
     // Bước 5-6: tab B (cũ) ghi vào giỏ, tab A tải lại: không mất Backpack (không bị ghi đè)
     await cartB.continueShopping();
     await invB.addButton(onesie).click();

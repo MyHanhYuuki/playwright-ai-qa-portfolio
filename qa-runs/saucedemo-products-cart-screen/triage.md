@@ -1,12 +1,12 @@
-# Triage Report: run-20261125-150817
+# Triage Report: run-20261126-163230
 
-- **Phạm vi**: toàn bộ `tests/specs/saucedemo-products-cart-screen.spec.ts` (46 test, 3 màn hình) · 84 giây
+- **Phạm vi**: toàn bộ `tests/specs/saucedemo-products-cart-screen.spec.ts` (46 test, 3 màn hình) · 84 giây (lần chạy lại 2026-11-26 sau khi dọn backlog: TC-013 thêm bước tải lại, TC-044 thêm ảnh tab B; kết quả như cũ 29 Passed + 17 Failed đúng bug)
 - **Môi trường**: Playwright 1.65.1 · Chromium (Desktop Chrome, 1280×720) · Node 26 · Windows 11 · https://www.saucedemo.com · 9 workers (mặc định của Playwright: một nửa số nhân, máy có 18 nhân logic; trên CI là 1), `--retries=0` khi chạy lặp
-- **Kết quả chi tiết**: [`run-results/run-20261125-150817.json`](run-results/run-20261125-150817.json). Mỗi test có `errors` (tên assertion), `error_details` (đủ Expected / Received) và `annotations`. Mọi giá trị "Actual" dưới đây trích từ `error_details`.
+- **Kết quả chi tiết**: [`run-results/run-20261126-163230.json`](run-results/run-20261126-163230.json). Mỗi test có `errors` (tên assertion), `error_details` (đủ Expected / Received) và `annotations`. Mọi giá trị "Actual" dưới đây trích từ `error_details`.
 - **Kiểm tra độ ổn định**: [`run-results/stability-20261125-1512.json`](run-results/stability-20261125-1512.json): cả bộ × 2 lần, 92/92 đúng như mong đợi, không test chập chờn. File này chỉ ghi "đúng như mong đợi / không", không chứa nội dung lỗi, nên chỉ chứng minh test ổn định.
 - **Kiểm tra lỗi bị che**: `test:run` không cảnh báo lỗi code test (dò **toàn bộ** nội dung lỗi). Đọc `error_details` của 17 test bug đã biết: mọi lỗi đều là assertion của bug.
 - **Evidence** là một lần chạy riêng (`npm run test:evidence`) ngay sau lần chạy chính thức, cùng code. Với BUG-14 giá đổi ngẫu nhiên mỗi lần tải, nên giá trên ảnh khác giá trong run JSON.
-- Các lần chạy trước giữ lại làm lịch sử, không dùng cho RTM: `run-20261125-002432` (bản nháp code), `run-20261125-105852` (trước khi sửa theo review-executor, review-test-impl-r2), `run-20261125-123044` (45 test, trước review-defects), `run-20261125-140215` (trước review cuối: TC-046 chưa kiểm mô tả).
+- Các lần chạy trước giữ lại làm lịch sử, không dùng cho RTM: `run-20261125-002432` (bản nháp code), `run-20261125-105852` (trước khi sửa theo review-executor, review-test-impl-r2), `run-20261125-123044` (45 test, trước review-defects), `run-20261125-140215` (trước review cuối: TC-046 chưa kiểm mô tả), `run-20261125-150817` (trước khi dọn backlog 2026-11-26: TC-013 chưa tải lại).
 
 ## Summary
 | Status | Count | Ghi chú |
@@ -29,7 +29,7 @@
 | BUG-10 | TC-018 | Danh sách + Chi tiết | 24 | `problem_user`: Remove không ăn (Backpack, Bike Light, Onesie), Add không ăn (Bolt T-Shirt, Fleece Jacket, Red T-Shirt), ở **cả** danh sách và chi tiết: 12 biến thể × (nút + số giỏ) | High |
 | BUG-11 | TC-024 | Danh sách + Giỏ → Chi tiết | 36 | `problem_user`: bấm tên, ảnh ở danh sách **và** tên ở giỏ đều mở sản phẩm **id + 1**: Bike Light (0) → id 1, Bolt (1) → 2, Onesie (2) → 3, Red (3) → 4, Backpack (4) → 5, Fleece (5) → 6 `ITEM NOT FOUND`. 18 điểm × (URL + tên) | High |
 | BUG-13 | TC-019 | Danh sách + Chi tiết | 24 | `error_user`: giống BUG-10, cùng 3 + 3 sản phẩm, cả 2 trang. Mỗi lần thao tác không ăn, trang ném lỗi JavaScript (`pageerror`, ghi trong `annotations`): MSG-05 `Failed to add item to the cart.`, MSG-06 `Failed to remove item from cart.` | High |
-| BUG-14 | TC-013 | Cả 3 | 7 | `visual_user`: giá 6 sản phẩm ở danh sách sai (lần chạy này Backpack $72.82…); giá chi tiết, giỏ đúng $29.99 nên danh sách khác chi tiết, giỏ | Critical với hệ thống thật (sai giá) |
+| BUG-14 | TC-013 | Cả 3 | 14 | `visual_user`: giá 6 sản phẩm ở danh sách sai (lần chạy này Backpack $12.33…) và **đổi sau khi tải lại** (lần 1 `$12.33, $1.94, $88.17, $30.88, $65.78, $87.27` · lần 2 `$60.35, $89.02, $28.57, $36.58, $99.95, $74.07`, ghi trong annotation); giá chi tiết, giỏ đúng $29.99 nên danh sách khác chi tiết, giỏ | Critical với hệ thống thật (sai giá) |
 | BUG-16 | TC-035 | Cả 3 | 13 | `visual_user`, ở cả 3 trang: biểu tượng giỏ lệch 186 px ngang, 29 px dọc và xoay 3° (`matrix(0.99863, 0.052336, …)`), biểu tượng menu xoay 3°; nút Add của Red T-Shirt lệch 54 px ngang | Low |
 | BUG-02 (biến thể) | TC-045 | Chi tiết + Giỏ | 6 | Cookie tự tạo vào được `/cart.html` và `/inventory-item.html?id=4`: không về trang đăng nhập, không có thông báo, thấy nội dung | High (như BUG-02) |
 
