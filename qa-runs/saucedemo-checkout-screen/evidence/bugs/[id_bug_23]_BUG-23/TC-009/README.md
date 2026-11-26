@@ -3,8 +3,8 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-23
 - **Nhóm**: Màn hình 1: Thông tin (/checkout-step-one.html)
 - **Tags**: @AC-2 @AC-3 @info @BUG-23
-- **Thời điểm**: 2026-11-26T07:12:22.248Z
-- **Video**: [video.webm](video.webm)
+- **Thời điểm**: 2026-11-26T08:37:10.685Z
+- **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-26, lần này không quay lại: EVIDENCE_KEEP_VIDEOS)
 
 | Bước | Thao tác | Cần xem | Ảnh |
 |---|---|---|---|

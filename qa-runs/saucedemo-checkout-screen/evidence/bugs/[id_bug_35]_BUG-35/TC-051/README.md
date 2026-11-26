@@ -3,8 +3,8 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-35
 - **Nhóm**: Màn hình 2: Tổng quan (/checkout-step-two.html)
 - **Tags**: @AC-5 @overview @complete @BUG-35
-- **Thời điểm**: 2026-11-26T07:12:24.660Z
-- **Video**: [video.webm](video.webm)
+- **Thời điểm**: 2026-11-26T08:36:57.391Z
+- **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-26, lần này không quay lại: EVIDENCE_KEEP_VIDEOS)
 
 | Bước | Thao tác | Cần xem | Ảnh |
 |---|---|---|---|
@@ -14,3 +14,11 @@
 | 4 | Biến thể 4: Finish sau khi tab khác bỏ Onesie | Mong đợi: đơn (PDF) chỉ Backpack, Total 32.39; hoặc không đặt và giỏ giữ [4] | ![04-bien-the-4-finish-sau-khi-tab-khac-bo-on.jpg](04-bien-the-4-finish-sau-khi-tab-khac-bo-on.jpg) |
 | 5 | Biến thể 5: Finish sau khi tab khác đăng xuất | Mong đợi: bị chặn về trang đăng nhập và giỏ giữ nguyên | ![05-bien-the-5-finish-sau-khi-tab-khac-dang-.jpg](05-bien-the-5-finish-sau-khi-tab-khac-dang-.jpg) |
 | 6 | Biến thể 5: đăng nhập lại | Mong đợi: số giỏ = 2 (giá trị ngay trước Finish) | ![06-bien-the-5-dang-nhap-lai.jpg](06-bien-the-5-dang-nhap-lai.jpg) |
+
+## Ghi nhận (annotation)
+
+| Loại | Nội dung |
+|---|---|
+| Biến thể 3 PDF | Swag Labs \| Order Receipt \| ORDER DETAILS \| Order Date \| November 26, 2026 at 3:36 PM \| SHIP TO \| An Le \| 70000 \| ITEMS \| DESCRIPTION \| PRICE \| Sauce Labs Backpack \| $ \| 29.99 \| Item total \| $ \| 29.99 \| Tax \| $ \| 2.40 \| Total \| $ \| 32.39 \| Thank you for your order! It has been dispatched, and will arrive just as fast as the pony can get there. |
+| Biến thể 4 PDF | Swag Labs \| Order Receipt \| ORDER DETAILS \| Order Date \| November 26, 2026 at 3:36 PM \| SHIP TO \| An Le \| 70000 \| ITEMS \| DESCRIPTION \| PRICE \| Sauce Labs Backpack \| $ \| 29.99 \| Sauce Labs Onesie \| $ \| 7.99 \| Item total \| $ \| 37.98 \| Tax \| $ \| 3.04 \| Total \| $ \| 41.02 \| Thank you for your order! It has been dispatched, and will arrive just as fast as the pony can get there. |
+| Biến thể 5: cart-contents ngay trước Finish | [4,2] |

@@ -3,8 +3,8 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-30
 - **Nhóm**: Màn hình 2: Tổng quan (/checkout-step-two.html)
 - **Tags**: @AC-5 @AC-6 @overview @complete @BUG-30
-- **Thời điểm**: 2026-11-26T07:12:19.525Z
-- **Video**: [video.webm](video.webm)
+- **Thời điểm**: 2026-11-26T08:36:47.787Z
+- **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-26, lần này không quay lại: EVIDENCE_KEEP_VIDEOS)
 
 | Bước | Thao tác | Cần xem | Ảnh |
 |---|---|---|---|

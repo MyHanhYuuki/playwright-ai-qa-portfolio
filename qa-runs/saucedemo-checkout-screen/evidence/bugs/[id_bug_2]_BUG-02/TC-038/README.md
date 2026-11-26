@@ -3,8 +3,8 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-02
 - **Nhóm**: Chung: nhiều màn hình (luồng chính, kiểm soát truy cập, tài khoản, nhiều tab)
 - **Tags**: @AC-7 @info @overview @complete @security @BUG-02
-- **Thời điểm**: 2026-11-26T07:13:42.367Z
-- **Video**: [video.webm](video.webm)
+- **Thời điểm**: 2026-11-26T08:37:56.835Z
+- **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-26, lần này không quay lại: EVIDENCE_KEEP_VIDEOS)
 
 | Bước | Thao tác | Cần xem | Ảnh |
 |---|---|---|---|

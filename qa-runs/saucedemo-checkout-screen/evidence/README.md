@@ -1,6 +1,6 @@
 # Evidence: saucedemo-checkout-screen
 
-> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-26T07:35:02.480Z.
+> Tạo tự động bởi `npm run test:evidence` lúc 2026-11-26T08:37:59.543Z.
 > Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Test case có bug (hoặc kết quả bất thường) có thêm video.
 > Thư mục `manual/` trong từng bug: ảnh **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi ảnh của test tự động.
 
@@ -8,27 +8,48 @@
 | Ticket_BUG | Màn hình của TC | Nội dung | Thư mục |
 |---|---|---|---|
 | [id_bug_2]_BUG-02 | Cả 3 | TC-038 | [bugs/[id_bug_2]_BUG-02/TC-038](<bugs/[id_bug_2]_BUG-02/TC-038/README.md>) |
+| [id_bug_2]_BUG-02 |  | Tái hiện độc lập | [bugs/[id_bug_2]_BUG-02/manual](<bugs/[id_bug_2]_BUG-02/manual/README.md>) |
 | [id_bug_5]_BUG-05 | Thông tin + Tổng quan | TC-027 | [bugs/[id_bug_5]_BUG-05/TC-027](<bugs/[id_bug_5]_BUG-05/TC-027/README.md>) |
+| [id_bug_5]_BUG-05 |  | Tái hiện độc lập | [bugs/[id_bug_5]_BUG-05/manual](<bugs/[id_bug_5]_BUG-05/manual/README.md>) |
 | [id_bug_7]_BUG-07 | Cả 3 | TC-043 | [bugs/[id_bug_7]_BUG-07/TC-043](<bugs/[id_bug_7]_BUG-07/TC-043/README.md>) |
+| [id_bug_7]_BUG-07 |  | Tái hiện độc lập | [bugs/[id_bug_7]_BUG-07/manual](<bugs/[id_bug_7]_BUG-07/manual/README.md>) |
 | [id_bug_11]_BUG-11 | Tổng quan | TC-025 | [bugs/[id_bug_11]_BUG-11/TC-025](<bugs/[id_bug_11]_BUG-11/TC-025/README.md>) |
+| [id_bug_11]_BUG-11 |  | Tái hiện độc lập | [bugs/[id_bug_11]_BUG-11/manual](<bugs/[id_bug_11]_BUG-11/manual/README.md>) |
 | [id_bug_16]_BUG-16 | Cả 3 | TC-044 | [bugs/[id_bug_16]_BUG-16/TC-044](<bugs/[id_bug_16]_BUG-16/TC-044/README.md>) |
+| [id_bug_16]_BUG-16 |  | Tái hiện độc lập | [bugs/[id_bug_16]_BUG-16/manual](<bugs/[id_bug_16]_BUG-16/manual/README.md>) |
 | [id_bug_19]_BUG-19 | Thông tin | TC-042 | [bugs/[id_bug_19]_BUG-19/TC-042](<bugs/[id_bug_19]_BUG-19/TC-042/README.md>) |
+| [id_bug_19]_BUG-19 |  | Tái hiện độc lập | [bugs/[id_bug_19]_BUG-19/manual](<bugs/[id_bug_19]_BUG-19/manual/README.md>) |
 | [id_bug_22]_BUG-22 | Thông tin | TC-003 | [bugs/[id_bug_22]_BUG-22/TC-003](<bugs/[id_bug_22]_BUG-22/TC-003/README.md>) |
+| [id_bug_22]_BUG-22 |  | Tái hiện độc lập | [bugs/[id_bug_22]_BUG-22/manual](<bugs/[id_bug_22]_BUG-22/manual/README.md>) |
 | [id_bug_23]_BUG-23 | Thông tin | TC-009 | [bugs/[id_bug_23]_BUG-23/TC-009](<bugs/[id_bug_23]_BUG-23/TC-009/README.md>) |
+| [id_bug_23]_BUG-23 |  | Tái hiện độc lập | [bugs/[id_bug_23]_BUG-23/manual](<bugs/[id_bug_23]_BUG-23/manual/README.md>) |
 | [id_bug_24]_BUG-24 | Tổng quan → Hoàn tất | TC-028 | [bugs/[id_bug_24]_BUG-24/TC-028](<bugs/[id_bug_24]_BUG-24/TC-028/README.md>) |
 | [id_bug_24]_BUG-24 | Hoàn tất → Tổng quan | TC-029 | [bugs/[id_bug_24]_BUG-24/TC-029](<bugs/[id_bug_24]_BUG-24/TC-029/README.md>) |
+| [id_bug_24]_BUG-24 |  | Tái hiện độc lập | [bugs/[id_bug_24]_BUG-24/manual](<bugs/[id_bug_24]_BUG-24/manual/README.md>) |
 | [id_bug_25]_BUG-25 | Tổng quan | TC-020 | [bugs/[id_bug_25]_BUG-25/TC-020](<bugs/[id_bug_25]_BUG-25/TC-020/README.md>) |
+| [id_bug_25]_BUG-25 |  | Tái hiện độc lập | [bugs/[id_bug_25]_BUG-25/manual](<bugs/[id_bug_25]_BUG-25/manual/README.md>) |
 | [id_bug_26]_BUG-26 | Thông tin → Tổng quan | TC-040 | [bugs/[id_bug_26]_BUG-26/TC-040](<bugs/[id_bug_26]_BUG-26/TC-040/README.md>) |
+| [id_bug_26]_BUG-26 |  | Tái hiện độc lập | [bugs/[id_bug_26]_BUG-26/manual](<bugs/[id_bug_26]_BUG-26/manual/README.md>) |
 | [id_bug_27]_BUG-27 | Hoàn tất | TC-041 | [bugs/[id_bug_27]_BUG-27/TC-041](<bugs/[id_bug_27]_BUG-27/TC-041/README.md>) |
+| [id_bug_27]_BUG-27 |  | Tái hiện độc lập | [bugs/[id_bug_27]_BUG-27/manual](<bugs/[id_bug_27]_BUG-27/manual/README.md>) |
 | [id_bug_28]_BUG-28 | Thông tin → Tổng quan | TC-013 | [bugs/[id_bug_28]_BUG-28/TC-013](<bugs/[id_bug_28]_BUG-28/TC-013/README.md>) |
+| [id_bug_28]_BUG-28 |  | Tái hiện độc lập | [bugs/[id_bug_28]_BUG-28/manual](<bugs/[id_bug_28]_BUG-28/manual/README.md>) |
 | [id_bug_29]_BUG-29 | Tổng quan → Hoàn tất | TC-026 | [bugs/[id_bug_29]_BUG-29/TC-026](<bugs/[id_bug_29]_BUG-29/TC-026/README.md>) |
+| [id_bug_29]_BUG-29 |  | Tái hiện độc lập | [bugs/[id_bug_29]_BUG-29/manual](<bugs/[id_bug_29]_BUG-29/manual/README.md>) |
 | [id_bug_30]_BUG-30 | Tổng quan → Hoàn tất | TC-032 | [bugs/[id_bug_30]_BUG-30/TC-032](<bugs/[id_bug_30]_BUG-30/TC-032/README.md>) |
+| [id_bug_30]_BUG-30 |  | Tái hiện độc lập | [bugs/[id_bug_30]_BUG-30/manual](<bugs/[id_bug_30]_BUG-30/manual/README.md>) |
 | [id_bug_31]_BUG-31 | Thông tin | TC-014 | [bugs/[id_bug_31]_BUG-31/TC-014](<bugs/[id_bug_31]_BUG-31/TC-014/README.md>) |
+| [id_bug_31]_BUG-31 |  | Tái hiện độc lập | [bugs/[id_bug_31]_BUG-31/manual](<bugs/[id_bug_31]_BUG-31/manual/README.md>) |
 | [id_bug_32]_BUG-32 | Thông tin → Tổng quan | TC-015 | [bugs/[id_bug_32]_BUG-32/TC-015](<bugs/[id_bug_32]_BUG-32/TC-015/README.md>) |
+| [id_bug_32]_BUG-32 |  | Tái hiện độc lập | [bugs/[id_bug_32]_BUG-32/manual](<bugs/[id_bug_32]_BUG-32/manual/README.md>) |
 | [id_bug_33]_BUG-33 | Tổng quan → Hoàn tất | TC-033 | [bugs/[id_bug_33]_BUG-33/TC-033](<bugs/[id_bug_33]_BUG-33/TC-033/README.md>) |
+| [id_bug_33]_BUG-33 |  | Tái hiện độc lập | [bugs/[id_bug_33]_BUG-33/manual](<bugs/[id_bug_33]_BUG-33/manual/README.md>) |
 | [id_bug_34]_BUG-34 | Thông tin | TC-005 | [bugs/[id_bug_34]_BUG-34/TC-005](<bugs/[id_bug_34]_BUG-34/TC-005/README.md>) |
+| [id_bug_34]_BUG-34 |  | Tái hiện độc lập | [bugs/[id_bug_34]_BUG-34/manual](<bugs/[id_bug_34]_BUG-34/manual/README.md>) |
 | [id_bug_35]_BUG-35 | Tổng quan → Hoàn tất | TC-051 | [bugs/[id_bug_35]_BUG-35/TC-051](<bugs/[id_bug_35]_BUG-35/TC-051/README.md>) |
+| [id_bug_35]_BUG-35 |  | Tái hiện độc lập | [bugs/[id_bug_35]_BUG-35/manual](<bugs/[id_bug_35]_BUG-35/manual/README.md>) |
 | [id_bug_36]_BUG-36 | Cả 3 | TC-052 | [bugs/[id_bug_36]_BUG-36/TC-052](<bugs/[id_bug_36]_BUG-36/TC-052/README.md>) |
+| [id_bug_36]_BUG-36 |  | Tái hiện độc lập | [bugs/[id_bug_36]_BUG-36/manual](<bugs/[id_bug_36]_BUG-36/manual/README.md>) |
 
 ## Tất cả test case
 

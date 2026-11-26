@@ -12,8 +12,8 @@
 ## Summary
 | Status | Count | Ghi chú |
 |--------|-------|---------|
-| **Passed** | 31 | Gồm TC-048 (`error_user` dương tính): 3 báo lỗi ở trang chi tiết là BUG-21 của SD-102, chỉ ghi annotation (review-script-gen A1). TC-046 ghi thời gian BUG-03 biến thể: Cancel 5088 ms, Back Home 5100 ms |
-| **Failed** | 22 | 22 bug đã biết, fail **đúng assertion** của bug. Playwright báo "passed" vì có `test.fail()`, nhưng kết quả test case là **Failed** |
+| **Passed** | 31 | Gồm TC-048 (`error_user` dương tính): 3 báo lỗi ở trang chi tiết là BUG-21 của SD-102, chỉ ghi annotation (review-script-gen A1). TC-046 ghi thời gian BUG-03 biến thể: Cancel 5083 ms, Back Home 5104 ms |
+| **Failed** | 22 | 22 test của 21 bug đã biết (BUG-24 có 2 TC), fail **đúng assertion** của bug. Playwright báo "passed" vì có `test.fail()`, nhưng kết quả test case là **Failed** |
 | flaky | 0 | |
 | script-issue | 0 | |
 | real-bug | **22 TC / 21 bug**: 15 bug mới (BUG-22 → BUG-36) + 6 biến thể bug cũ (BUG-02, 05, 07, 11, 16, 19); BUG-24 có 2 TC. BUG-03 (biến thể) chỉ ghi nhận, không có TC fail. **1 phát hiện mới** chờ PO (N1 → Q14) | → HITL #3 |
@@ -40,7 +40,7 @@ Người duyệt: duyệt cả 21 bug theo mức đề xuất, **BUG-29: High**;
 ### Màn hình 1: Thông tin (`/checkout-step-one.html`)
 | Bug | TC | Màn hình | Lỗi bắt được | Actual (tóm tắt) | Severity (dự kiến) |
 |---|---|---|---|---|---|
-| BUG-22 | TC-003 | Thông tin | 18 | Thiếu **một** ô bắt buộc mà **cả 3 ô** đều viền đỏ và có icon lỗi, kể cả ô đã nhập đúng (7/7 tổ hợp, 5/5 tài khoản). | Low |
+| BUG-22 | TC-003 | Thông tin | 18 | Thiếu **một** ô bắt buộc mà **cả 3 ô** đều viền đỏ và có icon lỗi, kể cả ô đã nhập đúng (6/6 tổ hợp có ít nhất 1 ô đã nhập; tổ hợp trống cả 3 thì cả 3 ô đỏ là đúng; 5/5 tài khoản). | Low |
 | BUG-23 | TC-009 | Thông tin | 21 | Nhấn **Enter** trong bất kỳ ô nào **về trang giỏ** (như bấm Cancel), không kiểm tra và không sang Tổng quan; mất thông tin đã nhập. | Medium |
 | BUG-34 | TC-005 | Thông tin → Tổng quan | 20 | Ô **chỉ có khoảng trắng** (hoặc ký tự tab) được coi là đã nhập: cả 3 ô `" "` vẫn sang Tổng quan và đặt hàng được, PDF có `SHIP TO` trống. | Medium |
 | BUG-19 (biến thể) | TC-042 | Thông tin | 2 | Bug của SD-102: **giỏ trống** vẫn vào được bước thanh toán, nay bằng cách **mở thẳng** `/checkout-step-one.html` (SD-102 TC-030 chỉ kiểm nút Checkout). | Low |
@@ -52,7 +52,7 @@ Người duyệt: duyệt cả 21 bug theo mức đề xuất, **BUG-29: High**;
 | Bug | TC | Màn hình | Lỗi bắt được | Actual (tóm tắt) | Severity (dự kiến) |
 |---|---|---|---|---|---|
 | BUG-25 | TC-020 | Tổng quan | 11 | `Item total` **không làm tròn / không định dạng 2 chữ số lẻ**, ngay cả với **`standard_user` ở giỏ thông thường**: thêm Bike Light rồi Fleece Jacket → `Item total: $59.980000000000004` (Tax `$4.80`, Total `$64.78` vẫn đúng); `[2,5]` `$57.980000000000004`; `[0,1,2,4]` `$63.959999999999994`; `[4,3,2,1,0]` `$79.94999999999999`; giỏ rỗng `$0`. | **Medium** |
-| BUG-29 | TC-026 | Tổng quan | 7 | `problem_user`: **Item total gấp đôi** tổng giá thật (vd Backpack $59.98 thay vì $29.99; cả 6 sản phẩm $259.88 thay vì $129.94; 63/63 tổ hợp), Tax và Total tính theo số sai; giá từng dòng vẫn đúng; PDF in số sai | Critical nếu là hệ thống thật |
+| BUG-29 | TC-026 | Tổng quan | 7 | `problem_user`: **Item total gấp đôi** tổng giá thật (vd Backpack $59.98 thay vì $29.99; cả 6 sản phẩm $259.88 thay vì $129.94; 63/63 tổ hợp), Tax và Total tính theo số sai; giá từng dòng vẫn đúng; PDF in số sai | High (HITL #3; Critical nếu là hệ thống thật) |
 | BUG-33 | TC-033 | Tổng quan | 6 | `error_user`: bấm **Finish không có tác dụng**: ở lại Tổng quan, lỗi JavaScript `wa.cesetRart is not a function`, 1 request tới `submit.backtrace.io` mỗi lần bấm, giỏ không trống | High |
 | BUG-11 (biến thể) | TC-025 | Tổng quan | 12 | Bug của SD-102: `problem_user` bấm **tên sản phẩm ở Tổng quan** mở **sai** chi tiết, lệch +1 với **cả 6 sản phẩm** (Backpack → Fleece Jacket, Bike Light → Bolt, Onesie → Red T-Shirt, Bolt → Onesie, Red T-Shirt → Backpack, **Fleece Jacket → `id=6` không tồn tại**). | High |
 
@@ -67,7 +67,7 @@ Người duyệt: duyệt cả 21 bug theo mức đề xuất, **BUG-29: High**;
 ## Phát hiện mới trong bước chạy (→ HITL #3, câu hỏi Q14)
 | # | Màn hình | Phát hiện | Bằng chứng | Đề xuất |
 |---|---|---|---|---|
-| N1 | Hoàn tất (PDF) | **Giờ trong tên file biên nhận là UTC**, còn `Order Date` trong biên nhận là **giờ máy người dùng**: file `swag-labs-order-2026-11-26_07-12-24.pdf` nhưng biên nhận ghi `November 26, 2026 at 2:12 PM` (UTC+7). Người dùng ở UTC−5 đặt lúc 21:00 sẽ có file mang **ngày hôm sau** | Thử 3 múi giờ (`timezoneId` Asia/Ho_Chi_Minh, UTC, America/New_York): tên file luôn theo UTC (`07-16-10`, `07-16-13`, `07-16-15`), giờ trình duyệt 14:16 / 07:16 / 02:16. Ảnh biên nhận: [TC-035 manual](evidence/all-cases/TC-035/manual/README.md) | Sau trao đổi với qa-reviewer (review-executor A1): **chưa có oracle** (Q6, O-27, MSG-08 chỉ chốt định dạng tên file) nên ghi **O-47 + IMP-12**, hỏi PO ở **Q14**, đề xuất **cải tiến**. PO coi là bug thì cấp **BUG-37**, Low (số mới, không phải biến thể). Reviewer thử thêm 1 múi giờ: `Order Date` luôn đúng giờ máy. Dù chọn gì, TC-034 đã kiểm `Order Date` đúng giờ địa phương ở múi giờ khác UTC (B1) |
+| N1 | Hoàn tất (PDF) | **Giờ trong tên file biên nhận là UTC**, còn `Order Date` trong biên nhận là **giờ máy người dùng**: file `swag-labs-order-2026-11-26_07-12-24.pdf` nhưng biên nhận ghi `November 26, 2026 at 2:12 PM` (UTC+7). Người dùng ở UTC−5 đặt lúc 21:00 sẽ có file mang **ngày hôm sau** | Thử 3 múi giờ (`timezoneId` Asia/Ho_Chi_Minh, UTC, America/New_York): tên file luôn theo UTC (`07-16-10`, `07-16-13`, `07-16-15`), giờ trình duyệt 14:16 / 07:16 / 02:16. Ảnh biên nhận: [TC-035 manual](evidence/all-cases/TC-035/manual/README.md) | Sau trao đổi với qa-reviewer (review-executor A1): **chưa có oracle** (Q6, O-27, MSG-08 chỉ chốt định dạng tên file) nên ghi **O-47 + IMP-12**, hỏi PO ở **Q14**, đề xuất **cải tiến**. PO coi là bug thì cấp **BUG-37**, Low (số mới, không phải biến thể). Reviewer thử thêm 1 múi giờ: `Order Date` luôn đúng giờ máy. Dù chọn gì, TC-034 đã kiểm `Order Date` đúng giờ địa phương ở múi giờ khác UTC (B1). **Kết quả Q14 (HITL #3, 2026-11-26): cải tiến IMP-12, không cấp số bug** |
 
 ## Chạy tay (Phase 2b)
 | TC | Lý do | Kết quả | Ghi chú |

@@ -3,8 +3,8 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-25
 - **Nhóm**: Màn hình 2: Tổng quan (/checkout-step-two.html)
 - **Tags**: @AC-4 @overview @BUG-25
-- **Thời điểm**: 2026-11-26T07:13:30.157Z
-- **Video**: [video.webm](video.webm)
+- **Thời điểm**: 2026-11-26T08:37:42.416Z
+- **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-26, lần này không quay lại: EVIDENCE_KEEP_VIDEOS)
 
 | Bước | Thao tác | Cần xem | Ảnh |
 |---|---|---|---|
@@ -19,3 +19,9 @@
 | 9 | Biến thể 9 error_user [0,5] | Mong đợi: "Item total: $59.98", "Tax: $4.80", "Total: $64.78" | ![09-bien-the-9-error-user-0-5.jpg](09-bien-the-9-error-user-0-5.jpg) |
 | 10 | Biến thể 10: kết thúc quét 120 giỏ | Đã quét 120/120 giỏ, 26 giỏ sai định dạng $x.xx | ![10-bien-the-10-ket-thuc-quet-120-gio.jpg](10-bien-the-10-ket-thuc-quet-120-gio.jpg) |
 | 11 | Biến thể 11 problem_user [4,0,2] | Mong đợi: cả 3 số dạng $x.xx (không kiểm giá trị) | ![11-bien-the-11-problem-user-4-0-2.jpg](11-bien-the-11-problem-user-4-0-2.jpg) |
+
+## Ghi nhận (annotation)
+
+| Loại | Nội dung |
+|---|---|
+| sweep | đã quét 120/120 giỏ |

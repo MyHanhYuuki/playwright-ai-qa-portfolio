@@ -3,8 +3,8 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-24
 - **Nhóm**: Màn hình 3: Hoàn tất (/checkout-complete.html)
 - **Tags**: @AC-5 @overview @complete @BUG-24
-- **Thời điểm**: 2026-11-26T07:12:22.309Z
-- **Video**: [video.webm](video.webm)
+- **Thời điểm**: 2026-11-26T08:36:46.059Z
+- **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-26, lần này không quay lại: EVIDENCE_KEEP_VIDEOS)
 
 | Bước | Thao tác | Cần xem | Ảnh |
 |---|---|---|---|

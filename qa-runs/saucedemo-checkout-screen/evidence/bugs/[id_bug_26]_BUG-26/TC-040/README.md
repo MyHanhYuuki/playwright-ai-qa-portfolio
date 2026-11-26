@@ -3,8 +3,8 @@
 - **Kết quả**: ❌ Failed · Bug: BUG-26
 - **Nhóm**: Màn hình 1: Thông tin (/checkout-step-one.html)
 - **Tags**: @AC-2 @AC-3 @info @overview @security @BUG-26
-- **Thời điểm**: 2026-11-26T07:11:59.682Z
-- **Video**: [video.webm](video.webm)
+- **Thời điểm**: 2026-11-26T08:36:43.761Z
+- **Video**: [video.webm](video.webm) (quay ở lần chạy ngày 2026-11-26, lần này không quay lại: EVIDENCE_KEEP_VIDEOS)
 
 | Bước | Thao tác | Cần xem | Ảnh |
 |---|---|---|---|
