@@ -66,11 +66,15 @@ Sau **mỗi** bước test-design, test-impl, script-gen, executor: gọi agent 
 - Kết luận 🔴 "Phải làm lại": gọi lại bước đó kèm `reviews/review-<bước>.md` (tối đa 1 lần), rồi review lại.
 - Kết luận ⚠️ hoặc ✅: đưa `reviews/review-<bước>.md` vào thông báo HITL kế tiếp để người duyệt quyết định sửa gì.
 - **Vòng bắt buộc trước khi push** (người dùng chốt 2026-11-25): qa-reviewer soát → sửa theo review, điền bảng "Xử lý sau review" → qa-reviewer **kiểm lại lượt 2** (thêm mục `## Kiểm lại lượt 2`) tới khi ✅ → trình người dùng danh sách commit → người dùng duyệt mới push. Áp dụng cho mọi thay đổi, kể cả việc nhỏ ngoài bước (script, tài liệu agent).
+- **Mặc định chạy tuần tự từng feature** để đỡ tốn hạn mức (người dùng chốt 2026-11-27, sau khi Bài 10 chạm hạn mức chi tiêu giữa chừng). Chỉ chạy song song khi người dùng yêu cầu.
+- **Agent chạy song song** (vd 2 feature cùng lúc): mỗi agent dùng **thư mục nháp riêng** (`<scratchpad>/<feature>-<bước>/`), số bug tạm riêng (`BUG-A*`, `BUG-B*`), chỉ sửa file của feature mình; orchestrator chốt các quyết định chung cho cả hai (Bài 10: agent RB-102 ghi đè script nháp của RB-101).
+- **Phiếu HITL do orchestrator tóm tắt** (gộp câu hỏi, rút gọn, thêm đề xuất) **cũng phải qua qa-reviewer** đối chiếu với `q-and-a.md` trước khi đưa người dùng: không sót câu / ý con, đề xuất khớp bản gốc, chỗ orchestrator tự thêm ý phải được nêu rõ (người dùng chốt 2026-11-26).
 - **Soát đủ mà không tốn thừa** (người dùng chốt 2026-11-26):
   - Đưa sẵn cho qa-reviewer **kết quả chạy** (`run-results/*.json`, số liệu, lỗi đã đọc): reviewer chỉ chạy lại test nào nghi ngờ (`-g`), không chạy lại cả spec.
   - **Soát sâu theo rủi ro:** kỹ ở test có `test.fail()`, oracle, điểm đổi trang, phân loại bug; lướt ở test giao diện đơn giản đã pass ổn định.
   - **Lượt 2 chỉ soát phần thay đổi** (`git diff`) so với từng phát hiện, không soát lại từ đầu.
-  - Sửa theo review: **gọi lại đúng agent đã viết** (đã có ngữ cảnh) thay vì tạo agent mới.
+  - **Lượt 2 chỉ chạy khi lượt 1 còn phát hiện 🔴 (nghiêm trọng) hoặc 🟠 (lớn)** (người dùng chốt 2026-11-27). Chỉ có 🟡 (góp ý nhỏ) / ❓ thì orchestrator **tự kiểm** từng dòng bảng "Xử lý sau review" với code (đọc lại, chạy typecheck / test liên quan) rồi ghi `## Orchestrator tự kiểm` vào file review; vẫn trình người dùng trước khi push.
+  - Sửa theo review: nếu agent đã viết còn ngữ cảnh gọn thì gọi lại nó; nếu ngữ cảnh đã phình (nhiều lượt, file lớn) thì **tạo agent mới, chỉ đưa đúng file + danh sách phát hiện** (rẻ hơn). Sửa máy móc theo danh sách rõ ràng dùng model Sonnet.
   - Feature rất lớn và cần gấp mới chia nhiều qa-reviewer song song theo màn hình (nhanh 2–3 lần, tốn token 1,5–2 lần).
 
 ### Khi không tái hiện được / không làm được một phát hiện của qa-reviewer

@@ -70,6 +70,7 @@ Format `test-data.md`:
 - **Expected về giao diện** phải ghi: phần tử (`data-test` hoặc class) + thuộc tính đo (tọa độ, `transform`…) + sai số. Không viết chung chung "không bị lệch / không bị xoay".
 - Expected phải **cụ thể từng biến thể** (giá trị chính xác), không viết dạng quan hệ ("A = B") khi cả 2 vế có thể cùng sai.
 - TC có BUG chỉ để **ghi nhận** (vd hiệu năng, test phải PASS): ghi rõ trong `notes` "KHÔNG dùng `test.fail()`".
+- **TC bug có phần đang đúng** (bài học L18 của qa-reviewer: `test.fail()` đánh dấu **cả test**, che mọi lỗi `expect.soft` trước đó): tách phần đang đúng thành **TC dương tính riêng**, hoặc ghi rõ thứ tự 5 bước trong `steps` / `notes`: gửi mọi biến thể → `expect.soft` phần đang đúng → cổng cứng `expect(test.info().errors).toHaveLength(0)` → `test.fail()` → `expect.soft` phần bug. Không gọi `test.fail()` trong vòng lặp biến thể.
 - Đích chuyển trang: ghi phần tử riêng của trang đích (tiêu đề), không chỉ URL.
 - Feature nhiều màn hình: điền cột `screen`.
 - **Test dương tính của tài khoản / vai trò đặc biệt** kiểm **mọi trường** mà AC liệt kê ở mỗi trang (vd trang chi tiết: ảnh, tên, mô tả, giá), không chỉ URL + tên. Một trường biến mất phải làm test đỏ (review-final SD-102 A1, BUG-21).

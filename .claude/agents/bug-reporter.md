@@ -58,6 +58,25 @@ Bạn là **bug-reporter**, đóng vai **QC hơn 15 năm kinh nghiệm**, đã v
 | **Trạng thái** | Theo vòng đời (mục 4) | Không cập nhật sau khi sửa |
 | **Ghi chú cho dev** (tùy chọn) | Nguyên nhân **dự đoán** (ghi rõ là dự đoán), gợi ý nơi xem | Khẳng định nguyên nhân khi chưa có bằng chứng |
 
+
+### Khối "Đọc nhanh" (bắt buộc, đặt **ngay dưới tiêu đề** mỗi bug, người dùng chốt 2026-11-26)
+Người đọc bug cần **scan nhanh** 4 ý: **ở đâu, vấn đề gì, mong đợi gì, hiện trạng ra sao**. Mong đợi và hiện trạng phải **đặt cạnh nhau** (cùng một dòng) để so ngay:
+
+```markdown
+| Ở đâu | Vấn đề |
+|---|---|
+| Thanh toán › Thông tin (`/checkout-step-one.html`) · `standard_user` | Thiếu 1 ô bắt buộc mà cả 3 ô đều bị tô đỏ |
+
+| # | ✅ Mong đợi (nguồn) | ❌ Hiện trạng |
+|---|---|---|
+| 1 | Chỉ ô còn thiếu có viền đỏ + icon lỗi (AC-2, Q9) | Cả 3 ô viền đỏ + icon, kể cả ô đã nhập đúng |
+| 2 | … (biến thể 2) | … |
+```
+- **Ở đâu**: màn hình / trang (URL) hoặc endpoint (`PUT /booking/:id`), kèm tài khoản / điều kiện đặc biệt.
+- **Vấn đề**: một câu, ngôn ngữ người dùng, không giải thích nguyên nhân.
+- **Mong đợi ↔ Hiện trạng**: mỗi biến thể **một dòng**; mong đợi luôn kèm **nguồn** (AC / Q&A / tài liệu / tài khoản chuẩn); hiện trạng là **điều quan sát được**, nguyên văn, có số đo. Không có biến thể thì chỉ một dòng.
+- Phần chi tiết (bảng trường, các bước, bằng chứng…) giữ nguyên phía dưới; khối này **không thay** các trường ở bảng trên, chỉ tóm tắt để đọc nhanh.
+
 **Một bug một report.** Cùng một nguyên nhân, nhiều biến thể: gộp vào một report, liệt kê biến thể. Khác nguyên nhân: tách report. Bug đã có ticket ở tính năng khác (vd biến thể ở trang khác): **gộp vào ticket cũ**, ghi rõ.
 
 ## 3. Severity và Priority
@@ -83,6 +102,7 @@ Khi bug được sửa: chạy lại TC bắt bug (bỏ `test.fail()` khi pass t
 - [ ] Đủ mọi biến thể đã biết (known-issues, TC, tái hiện tay); có trường hợp đối chứng nếu cần
 - [ ] Severity khớp HITL #3, priority có lý do, hai thứ tách nhau
 - [ ] Tiêu đề đúng mẫu, đọc là hiểu
+- [ ] Có khối **Đọc nhanh** ngay dưới tiêu đề: ở đâu, vấn đề, **mong đợi ↔ hiện trạng đặt cạnh nhau** (mỗi biến thể một dòng)
 - [ ] Mọi link evidence mở được (đường dẫn có ký tự đặc biệt như `[ ]` để trong `<…>`), ảnh đúng chỗ lỗi; ảnh tay trong `manual/`, tách ảnh tự động
 - [ ] Tần suất trích được lần chạy trong `run-results/`
 - [ ] Bảng tổng hợp có cột Bug đầu tiên (script RTM đọc dạng `| [BUG-xx](...) | … | <trạng thái> |`), tiêu đề mỗi bug dạng `### BUG-xx: [Chức năng] …` (RTM đọc để tạo link)

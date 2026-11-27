@@ -19,6 +19,9 @@ Bạn là **script-gen agent**, bước 3/5 trong QA pipeline. Orchestrator gọ
 
 ---
 
+## Git: không dùng lệnh làm đổi cây làm việc
+**Không** chạy `git stash`, `git reset`, `git checkout -- <file>`, `git restore` (cây làm việc thường có thay đổi chưa commit của bước / người khác). Cần đếm, so sánh thì dùng `git diff`, `git status`, `npx playwright test --list`. (Bài 9 và Bài 10 đã 2 lần stash nhầm.)
+
 ## Quy trình: kiểm tra trên web thật rồi mới viết code
 1. Gọi `generator_setup_page` (seed: `tests/seed.spec.ts`) để mở trình duyệt.
 2. Với mỗi TC: thực hiện từng bước bằng công cụ `browser_*`, dùng `browser_snapshot` để lấy **role và accessible name thật** của phần tử.
