@@ -13,3 +13,14 @@ export const users = {
   error: { username: 'error_user', password },
   visual: { username: 'visual_user', password },
 } as const;
+
+/**
+ * Restful Booker admin account (RB-101 TD-01, RB-102 TD-05; shared by both API features).
+ * PUBLIC demo credentials of the API documentation (qa-runs/restful-booker-auth-api/requirement/apidoc.txt).
+ * Override with RB_ADMIN_USERNAME / RB_ADMIN_PASSWORD (.env.example, CI: GitHub Secrets).
+ * The password value must not appear anywhere else (test cases, docs, annotations, evidence: masked).
+ */
+export const rbAdmin = {
+  username: process.env.RB_ADMIN_USERNAME || 'admin',
+  password: process.env.RB_ADMIN_PASSWORD || 'password123',
+} as const;

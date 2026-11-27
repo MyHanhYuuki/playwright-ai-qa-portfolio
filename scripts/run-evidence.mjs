@@ -1,6 +1,9 @@
 // Run ONE feature's tests in evidence mode, then rebuild that feature's evidence index.
 // Usage: npm run test:evidence -- <feature> [-g "TC-028|TC-033"] [other playwright args]
 //        npm run test:evidence -- <feature> --index-only     (only rebuild evidence/README.md, no test run)
+// API features (*-api): `api` project, README per TC with request / response summaries (masked), no screenshot.
+//   The @bad-login group is EXCLUDED by default (--grep-invert @bad-login, RB-101 TD-27: it runs once per session
+//   with test:run); add --include-bad-login to run it here anyway (counts in the session budget).
 // Works on Windows, macOS, Linux.
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -16,7 +19,15 @@ if (!feature || feature.startsWith('-') || !fs.existsSync(spec)) {
 }
 
 let status = 0;
+const isApi = feature.endsWith('-api');
 const indexOnly = args.includes('--index-only');
+const includeBadLogin = args.includes('--include-bad-login');
+for (const flag of ['--index-only', '--include-bad-login']) if (args.includes(flag)) args.splice(args.indexOf(flag), 1);
+if (!args.some((a) => a === '--project' || a.startsWith('--project='))) args.unshift(`--project=${isApi ? 'api' : 'chromium'}`);
+if (isApi && !includeBadLogin && !indexOnly) {
+  args.push('--grep-invert', '@bad-login');
+  console.log('ℹ️  API: bỏ nhóm @bad-login (TD-27, chạy 1 lần mỗi buổi bằng test:run). Thêm --include-bad-login nếu cần.');
+}
 if (!indexOnly) {
   // Run the Playwright CLI with Node directly, WITHOUT a shell.
   // (With a shell, Windows cmd treats | & < > as commands: -g "TC-028|TC-033" was cut at "|" and no test ran.)
@@ -65,16 +76,25 @@ if (fs.existsSync(evDir)) {
       })
     );
   const caseRow = (tc) => `| ${firstLine(caseReadme(tc))} |${hasScreens ? ` ${screenOf[tc] ?? ''} |` : ''} ${resultLine(caseReadme(tc))} | [all-cases/${tc}](all-cases/${tc}/README.md) |`;
-  const caseHead = hasScreens ? ['| Test case | Màn hình của TC | Kết quả | Thư mục |', '|---|---|---|---|'] : ['| Test case | Kết quả | Thư mục |', '|---|---|---|'];
+  const screenLabel = isApi ? 'Endpoint của TC' : 'Màn hình của TC';
+  const caseHead = hasScreens ? [`| Test case | ${screenLabel} | Kết quả | Thư mục |`, '|---|---|---|---|'] : ['| Test case | Kết quả | Thư mục |', '|---|---|---|'];
   const lines = [
     `# Evidence: ${feature}`,
     '',
     `> Tạo tự động bởi \`npm run test:evidence\` lúc ${new Date().toISOString()}.`,
-    '> Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Test case có bug (hoặc kết quả bất thường) có thêm video.',
-    '> Thư mục `manual/` trong từng bug: ảnh **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi ảnh của test tự động.',
+    ...(isApi
+      ? [
+          '> Feature API: mỗi test case có README liệt kê từng bước, request / response (method, đường dẫn, mã, header chính, trích body) và dòng **"Cần xem"**. Không có ảnh / video.',
+          '> Token, cookie, Authorization, mật khẩu đã được che (`***`). Nhóm `@bad-login` lấy evidence từ lần chạy có nhóm này (mặc định không chạy lại ở đây, TD-27).',
+        ]
+      : [
+          '> Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Test case có bug (hoặc kết quả bất thường) có thêm video.',
+          '> Thư mục `manual/` trong từng bug: ảnh **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi ảnh của test tự động.',
+        ]),
+    ...(isApi ? ['> Thư mục `manual/` trong từng bug: **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi evidence của test tự động.'] : []),
     '',
     '## Bug (theo ticket)',
-    hasScreens ? '| Ticket_BUG | Màn hình của TC | Nội dung | Thư mục |' : '| Ticket_BUG | Nội dung | Thư mục |',
+    hasScreens ? `| Ticket_BUG | ${screenLabel} | Nội dung | Thư mục |` : '| Ticket_BUG | Nội dung | Thư mục |',
     hasScreens ? '|---|---|---|---|' : '|---|---|---|',
     ...bugRows,
     '',

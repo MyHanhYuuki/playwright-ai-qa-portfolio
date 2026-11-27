@@ -6,15 +6,18 @@ Dự án portfolio học test automation bằng **Playwright + TypeScript** vớ
 ## Cấu trúc
 - `.claude/agents/`: 6 agent (test-design, test-impl, script-gen, executor, healer, bug-reporter) + `qa-reviewer` (soát sau mỗi bước). `.claude/commands/qa-orchestrator.md`: điều phối.
 - `qa-runs/<feature>/`: tài liệu QA từng chức năng (requirement → spec-review → viewpoint → test case → triage → defects → RTM). Mọi file review của qa-reviewer nằm chung trong `qa-runs/<feature>/reviews/`.
-- `tests/`: `pages/` (Page Object), `specs/`, `data/`, `fixtures/`, `seed.spec.ts` (seed cho Playwright MCP + smoke check).
+- `tests/`: `pages/` (Page Object), `specs/`, `data/`, `fixtures/` (`index.ts` web, `api.ts` API: không mở trình duyệt), `api/` (client Restful Booker: đếm request, che token / mật khẩu, sổ lần chạy, kiểm reset 3 dấu hiệu, dọn dẹp, evidence API, teardown), `seed.spec.ts` (seed cho Playwright MCP + smoke check).
 - `docs/learning/NN-*.md`: ghi chú từng bài học. `docs/ai-log.md`: nhật ký dùng AI. `docs/thuat-ngu.md`: thuật ngữ.
 
 ## Lệnh
 ```bash
-npm test               # chạy toàn bộ test
-npm run test:smoke     # chỉ test @smoke
-npm run test:ui        # UI mode
-npm run test:run -- <feature>       # chạy test 1 feature, lưu kết quả vào qa-runs/<feature>/run-results/
+npm test               # chạy toàn bộ test WEB (project chromium; không chạy API)
+npm run test:smoke     # chỉ test @smoke của web
+npm run test:api       # chạy toàn bộ test API (project api, máy chủ công khai: chỉ chạy khi cần, kèm nhóm @bad-login)
+npm run test:api:smoke # chỉ test @smoke của API
+npm run test:ui        # UI mode, chỉ project chromium (web). Lệnh trần `npx playwright test` chạy CẢ 2 project (chromium + api), tức gửi cả nhóm @bad-login lên máy chủ công khai: luôn thêm `--project=`
+npm run test:run -- <feature>       # chạy test 1 feature, lưu kết quả vào qa-runs/<feature>/run-results/ (tên file theo giờ UTC, cùng đồng hồ với tên lần chạy QA-RBxxx-… trong dữ liệu).
+                                    # Feature -api: tự ghi luôn evidence API (EVIDENCE=1) và dựng lại mục lục evidence
 npm run test:evidence -- <feature>  # chạy kèm evidence: ảnh khoanh đỏ + ghi chú + video → qa-runs/<feature>/evidence/
                                     # EVIDENCE_KEEP_VIDEOS=1: chỉ làm mới ảnh + README, giữ video cũ (tránh thêm video trùng vào git).
                                     # CHỈ dùng khi code của test không đổi; test đã sửa thì quay lại video của test đó
@@ -25,15 +28,16 @@ npm run typecheck      # kiểm tra kiểu TypeScript (Playwright không tự ki
 npm run repro          # tái hiện độc lập các bug (tests/repro/*.repro.ts) → evidence/bugs/*/manual/
 ```
 Thêm `-g "TC-001|TC-004"` để chạy một nhóm test. Mọi lệnh có `<feature>` chỉ đụng tới feature đó.
+**Web và API tách theo tên file**: `*-api.spec.ts` chạy ở project `api` (không mở trình duyệt, `retries: 0`, 1 worker, sau đó project `api-teardown` quét sổ lần chạy), mọi spec khác ở project `chromium`. Các lệnh `<feature>` tự chọn project theo tên feature. Feature API: `test:evidence` / `test:stability` mặc định **bỏ** nhóm `@bad-login` (TD-27, chỉ chạy 1 lần mỗi buổi bằng `test:run`: lần đó cũng làm mới evidence BUG-37 → BUG-40); thêm `--include-bad-login` nếu thật sự cần. Ngân sách 30 lần đăng nhập sai được đếm theo **ngày UTC** trong file tạm của hệ điều hành (`rb-bad-login-<yyyymmdd>.json`, ngoài `test-results/`): quá 30 thì test từ chối gửi; chỉ khi người dùng đồng ý mở lại thì đặt `RB_BAD_LOGIN_RESET=1`. Biến môi trường API: `RB_BASE_URL`, `RB_ADMIN_USERNAME`, `RB_ADMIN_PASSWORD` (để trống = giá trị công khai của tài liệu). CI: job web chỉ chạy `chromium`; job `api-full` chạy tay + hằng tuần; PR chỉ chạy API `@smoke`, không chặn.
 
 ## Bắt đầu chức năng mới (màn hình mới)
 Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `reviews/review-final.md`).
-1. Đặt tên `<feature>` theo màn hình, **kết thúc bằng `-screen`**, vd `saucedemo-login-screen`, `saucedemo-products-cart-screen`, `saucedemo-checkout-screen` (Bài 9). **Tên này dùng chung** cho thư mục `qa-runs/<feature>/` và file `tests/specs/<feature>.spec.ts` (evidence lấy thư mục theo tên spec).
+1. Đặt tên `<feature>` theo màn hình, **kết thúc bằng `-screen`**, vd `saucedemo-login-screen`, `saucedemo-products-cart-screen`, `saucedemo-checkout-screen` (Bài 9). Feature **API** (không có màn hình) kết thúc bằng **`-api`**, mỗi nhóm endpoint một feature, vd `restful-booker-auth-api` (RB-101), `restful-booker-booking-api` (RB-102) (Bài 10, người dùng chốt 2026-11-26). **Tên này dùng chung** cho thư mục `qa-runs/<feature>/` và file `tests/specs/<feature>.spec.ts` (evidence lấy thư mục theo tên spec).
 2. Tạo `qa-runs/<feature>/requirement/requirement.md` theo mẫu SD-101. AC **phải** viết dạng `- **AC-n**: …` (RTM đọc theo dạng này).
 3. Chạy `/qa-orchestrator <feature>`, đi qua từng bước và 3 điểm HITL.
 4. Đánh số:
    - `TC-xxx`, `TVP-xxx`, `Qn`, `O-xx`, `IMP-xx`: **riêng từng feature**, bắt đầu từ 001 / 1.
-   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, sản phẩm + giỏ BUG-05 → BUG-21, thanh toán BUG-22 → BUG-36, feature sau bắt đầu từ **BUG-37**).
+   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, sản phẩm + giỏ BUG-05 → BUG-21, thanh toán BUG-22 → BUG-36, Restful Booker auth BUG-37 → BUG-40, booking BUG-41 → BUG-59, feature sau bắt đầu từ **BUG-60**).
    - Bug mới hay **biến thể** của bug cũ: cùng thành phần / cùng chỗ sửa → ghi là biến thể của bug cũ (giữ số cũ); khác form / khác điểm kiểm → cấp số mới. Ghi rõ lý do trong `known-issues.md`.
 5. Bug đã biết: ghi `BUG-xx` vào **câu đầu** cột `notes` của TC, vd `Bug đã biết BUG-08 (O-18): dự kiến FAIL. …` (RTM chỉ đọc câu đầu; nhắc BUG id ở câu sau chỉ là tham khảo), thêm vào `tests/data/bugs.ts`, test dùng `test.fail()` + tag `@BUG-xx`.
 6. Dữ liệu dùng chung: thêm vào `tests/data/users.ts`, `messages.ts` (nhóm mới cho feature), không tạo file trùng.

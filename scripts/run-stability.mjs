@@ -2,6 +2,8 @@
 // Usage: npm run test:stability -- <feature> [N=2] [--cpu 4] [-g "TC-022|TC-043"]
 //   --cpu 4: slow the test page's CPU down 4x (Chromium) to reproduce races of a slow CI machine (fixture `page`, CPU_THROTTLE).
 // Output: qa-runs/<feature>/run-results/stability-YYYYMMDD-HHMM.json (only counts per TC: no machine paths).
+// API features (*-api): `api` project; the @bad-login group is EXCLUDED (--grep-invert @bad-login, RB-101 TD-27 /
+//   HITL #1 Q12: never repeated) unless --include-bad-login is given. --cpu does not apply (no browser).
 // It proves the tests are STABLE (same outcome every time). It does not store error text: the bug evidence is the official run (test:run).
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -16,8 +18,17 @@ if (!feature || !fs.existsSync(spec)) {
   process.exit(2);
 }
 const n = /^\d+$/.test(rest[0] ?? '') ? Number(rest.shift()) : 2;
+const isApi = feature.endsWith('-api');
+const includeBadLogin = rest.includes('--include-bad-login');
+if (includeBadLogin) rest.splice(rest.indexOf('--include-bad-login'), 1);
+if (!rest.some((a) => a === '--project' || a.startsWith('--project='))) rest.unshift(`--project=${isApi ? 'api' : 'chromium'}`);
+if (isApi && !includeBadLogin) rest.push('--grep-invert', '@bad-login');
 const cpuAt = rest.indexOf('--cpu');
 const cpu = cpuAt >= 0 ? Number(rest.splice(cpuAt, 2)[1]) : 0;
+if (cpuAt >= 0 && isApi) {
+  console.error('--cpu chỉ dùng cho test web (giả lập máy chậm trên trình duyệt); feature API không có trình duyệt');
+  process.exit(2);
+}
 if (cpuAt >= 0 && !(cpu > 1)) {
   console.error('--cpu cần một số > 1, vd --cpu 4');
   process.exit(2);
@@ -39,7 +50,7 @@ try {
 const perTest = {};
 const walk = (s) => {
   (s.suites ?? []).forEach(walk);
-  for (const sp of s.specs ?? []) for (const t of sp.tests) (perTest[sp.title.match(/TC-\d+/)?.[0] ?? sp.title] ??= []).push(t.status);
+  for (const sp of s.specs ?? []) for (const t of sp.tests) if (t.projectName !== 'api-teardown') (perTest[sp.title.match(/TC-\d+/)?.[0] ?? sp.title] ??= []).push(t.status);
 };
 j.suites.forEach(walk);
 const now = new Date();

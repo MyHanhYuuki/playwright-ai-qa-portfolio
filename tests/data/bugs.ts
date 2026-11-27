@@ -40,4 +40,9 @@ export const BUG_TICKETS: Record<string, string> = {
   'BUG-34': '[id_bug_34]',
   'BUG-35': '[id_bug_35]',
   'BUG-36': '[id_bug_36]',
+  // RB-101 Restful Booker auth + ping (qa-runs/restful-booker-auth-api/known-issues.md)
+  'BUG-37': '[id_bug_37]',
+  'BUG-38': '[id_bug_38]',
+  'BUG-39': '[id_bug_39]',
+  'BUG-40': '[id_bug_40]',
 };

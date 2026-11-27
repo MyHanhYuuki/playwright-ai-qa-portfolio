@@ -54,7 +54,15 @@ npm run repro -- saucedemo-products-cart-screen         # independent bug reprod
 npm run typecheck            # TypeScript type check (Playwright does not type-check)
 npm run report               # open HTML report
 ```
-Optional environment variables: see [.env.example](.env.example).
+Optional environment variables (all have working defaults):
+
+| Variable | Used by | Default |
+|---|---|---|
+| `BASE_URL`, `SAUCE_PASSWORD` | SauceDemo web tests | see [.env.example](.env.example) |
+| `RB_BASE_URL` | Restful Booker API tests | `https://restful-booker.herokuapp.com` |
+| `RB_ADMIN_USERNAME`, `RB_ADMIN_PASSWORD` | Restful Booker API tests | the public demo account from the API docs (empty / unset = default; in CI set them as GitHub Secrets) |
+
+Never commit real password values: put them in your local shell / `.env` or in GitHub Secrets.
 
 ## Project structure
 ```

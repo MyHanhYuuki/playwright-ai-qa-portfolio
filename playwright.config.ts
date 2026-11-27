@@ -1,5 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
 
+/*
+ * Restful Booker API run id (RB-101 TD-17, RB-102 TD-02): set ONCE here, in the main process, before workers start.
+ * Workers inherit the env, so every test (and a worker restarted after a failure) shares the same run id.
+ */
+process.env.RB_RUN_AT ??= new Date().toISOString();
+process.env.RB_RUN_NONCE ??= Math.random().toString(36).slice(2, 6).padEnd(4, '0');
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -43,11 +50,43 @@ export default defineConfig({
       process.env.EVIDENCE && !process.env.EVIDENCE_KEEP_VIDEOS ? { mode: 'on', size: { width: 1280, height: 720 } } : 'off',
   },
 
-  /* Configure projects for major browsers */
+  /*
+   * Projects. Web and API are separated by FILE NAME:
+   *   chromium      = web (SauceDemo) specs, everything except *-api.spec.ts
+   *   api           = Restful Booker API specs (*-api.spec.ts): no browser, public shared server
+   *   api-teardown  = final sweep of the API run ledgers (runs after `api`)
+   * `npm test` / `npm run test:smoke` / the CI web job pass --project=chromium; API runs only when asked:
+   * `npm run test:api`, `npm run test:run -- <feature>-api`, or the CI api job (.github/workflows/playwright.yml).
+   */
   projects: [
     {
       name: 'chromium',
+      testIgnore: ['**/*-api.spec.ts', '**/api/**'],
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'api',
+      testMatch: '**/*-api.spec.ts',
+      /* HITL #2 item 9: no retries for the API (reset strategy TD-26 redoes the setup inside the test instead) */
+      retries: 0,
+      /* Sequential on the shared public server (TD-26, TD-27 bad-login budget): one worker, file order */
+      workers: 1,
+      fullyParallel: false,
+      timeout: 60_000,
+      teardown: 'api-teardown',
+      use: {
+        baseURL: (process.env.RB_BASE_URL || 'https://restful-booker.herokuapp.com').replace(/\/+$/, ''),
+        trace: 'off',
+        video: 'off',
+        screenshot: 'off',
+      },
+    },
+    {
+      name: 'api-teardown',
+      testMatch: '**/api/*.teardown.ts',
+      retries: 0,
+      workers: 1,
+      use: { trace: 'off', video: 'off', screenshot: 'off' },
     },
 
     // {

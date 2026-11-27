@@ -85,3 +85,16 @@ export const protectedPages = {
   checkoutComplete: '/checkout-complete.html',
   itemDetail: '/inventory-item.html',
 } as const;
+
+/**
+ * RB-101 Restful Booker auth + ping (qa-runs/restful-booker-auth-api/test-data.md, MSG-01 → MSG-04), VERBATIM.
+ * MSG-03 (403 Forbidden) is shared with RB-102: use RB_REJECT in tests/data/restful-booker.ts.
+ */
+export const MSG_RB_AUTH = {
+  /** MSG-01: POST /auth that does not issue a token (compared as JSON: exactly 1 field `reason`) */
+  badCredentials: { reason: 'Bad credentials' },
+  /** MSG-02: body of GET /ping (201) and DELETE /booking/:id (201), text/plain */
+  created: 'Created',
+  /** MSG-04: body of 404 on GET /booking/:id after delete, text/plain */
+  notFound: 'Not Found',
+} as const;
