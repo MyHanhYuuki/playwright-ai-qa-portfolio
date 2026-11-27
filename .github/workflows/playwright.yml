@@ -4,15 +4,23 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:        # allow manual runs from the Actions tab
+  workflow_dispatch:        # allow manual runs from the Actions tab (web job + full API job)
+  schedule:
+    # Weekly full API run (HITL #2 item 11). Monday 03:20 UTC: odd minute, off the busy hours. It only STARTS
+    # outside the x0:50 → x1:30 UTC reset window; after npm ci a long run may cross a reset (minute x1),
+    # which withResetGuard handles (TD-26).
+    - cron: '20 3 * * 1'
 
 # Cancel an older run of the same branch when a newer commit is pushed
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  # event_name in the group: a push to main must not cancel a running api-full (schedule / manual), review D1
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
+  # ---------------- Web (SauceDemo): project chromium only ----------------
   test:
+    if: github.event_name != 'schedule'
     timeout-minutes: 30     # SD-103 thêm ~12 phút (1 worker); người dùng chọn phương án B 2026-11-26
     runs-on: ubuntu-latest
     steps:
@@ -49,8 +57,9 @@ jobs:
     - name: Type check
       run: npm run typecheck
 
+    # Web project only: API specs (*-api.spec.ts) run in the api jobs below, never on every push / PR
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test --project=chromium
 
     - uses: actions/upload-artifact@v7
       if: ${{ !cancelled() }}
@@ -58,3 +67,63 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+  # ---------------- API (Restful Booker, public shared server) ----------------
+  # Credentials: GitHub Secrets RB_ADMIN_USERNAME / RB_ADMIN_PASSWORD, base URL: repository variable RB_BASE_URL.
+  # An unset secret / variable expands to an EMPTY string; tests/data/users.ts and tests/data/restful-booker.ts read
+  # them with `||`, so empty falls back to the public defaults of the API documentation (same for PRs from forks).
+  # No browser is installed: the api project uses APIRequestContext only. retries 0 + 1 worker come from the project.
+  api-full:
+    # Full API suite (incl. @full and the @bad-login group ONCE): weekly schedule + manual run only
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    env:
+      RB_ADMIN_USERNAME: ${{ secrets.RB_ADMIN_USERNAME }}
+      RB_ADMIN_PASSWORD: ${{ secrets.RB_ADMIN_PASSWORD }}
+      RB_BASE_URL: ${{ vars.RB_BASE_URL }}
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v7
+      with:
+        node-version: lts/*
+        cache: npm
+    - name: Install dependencies
+      run: npm ci
+    - name: Type check
+      run: npm run typecheck
+    - name: Run API tests (project api, once)
+      run: npx playwright test --project=api
+    - uses: actions/upload-artifact@v7
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report-api
+        path: playwright-report/
+        retention-days: 30
+
+  api-smoke:
+    # PRs: API @smoke only, NON-blocking (public server may be down / reset): a red result is a warning to read
+    if: github.event_name == 'pull_request'
+    continue-on-error: true
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    env:
+      RB_ADMIN_USERNAME: ${{ secrets.RB_ADMIN_USERNAME }}
+      RB_ADMIN_PASSWORD: ${{ secrets.RB_ADMIN_PASSWORD }}
+      RB_BASE_URL: ${{ vars.RB_BASE_URL }}
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v7
+      with:
+        node-version: lts/*
+        cache: npm
+    - name: Install dependencies
+      run: npm ci
+    - name: Run API smoke tests
+      run: npx playwright test --project=api --grep @smoke
+    - uses: actions/upload-artifact@v7
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report-api-smoke
+        path: playwright-report/
+        retention-days: 14
