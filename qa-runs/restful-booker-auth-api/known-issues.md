@@ -87,7 +87,7 @@ Người duyệt chọn **theo đề xuất của qa-reviewer** cho cả 11 đi�
 | 1 | Bộ test case | ✅ Duyệt: RB-101 30 TC, RB-102 69 TC, tất cả `automatable`, trạng thái `approved`. TC bug theo mẫu 5 bước (L18) |
 | 2 | Tên / mật khẩu rỗng | **400** (rỗng = thiếu), không phải 401 |
 | 3 | Dọn dẹp, phân chia | RB-102 TC-070 → teardown có sổ id + tên của lần chạy; RB-102 TC-068 bỏ biến thể token thường, trỏ RB-101 TC-019 → 021 |
-| 4 | Biến môi trường | `RB_ADMIN_USERNAME`, `RB_ADMIN_PASSWORD`, `RB_BASE_URL` (dùng chung 2 feature; `.env.example` không có giá trị mật khẩu; CI: GitHub Secrets) |
+| 4 | Biến môi trường | `RB_ADMIN_USERNAME`, `RB_ADMIN_PASSWORD`, `RB_BASE_URL` (dùng chung 2 feature; CI: GitHub Secrets). **Bổ sung 2026-11-27**: người dùng chọn ghi 3 biến vào bảng biến môi trường của `README.md` thay vì `.env.example` (máy này chặn sửa file `.env*`) |
 | 5 | RB-101 TC-016 (mật khẩu trên URL) | Gửi bằng `fetch` ngoài `APIRequestContext`, không ghi URL vào annotation / báo cáo, quét mật khẩu trong `run-results/`, `evidence/` trước mỗi commit |
 | 6 | RB-101 TC-030 (HTTP) | Đạt khi GET 301/308, POST 307/308 với `Location` = https cùng host + đường dẫn, hoặc bị từ chối (lỗi kết nối, 426, 4xx không đến từ khâu kiểm tài khoản) |
 | 7 | Mã lỗi mới (400/404/406/413/415) | Kiểm mã + không 5xx + không lộ lỗi nội bộ; không kiểm câu chữ (RB-101 IMP-10, RB-102 IMP-01). Riêng `/auth` (RB-101) kiểm thêm body là JSON. Lỗi đang có và đúng vẫn so nguyên văn |

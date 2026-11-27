@@ -35,7 +35,7 @@
 | TD-24 | HTTP thường (chỉ tài khoản sai) | `GET http://restful-booker.herokuapp.com/ping`; `POST http://restful-booker.herokuapp.com/auth`, `Content-Type: application/json`, body `{"username":"qa-rb101-no-such-user","password":"qa-rb101-wrong-pass"}` (TD-03 (2) + TD-02: **không** gửi tên hay mật khẩu thật dạng rõ). Không theo chuyển hướng (`maxRedirects: 0`) | TC-030 |
 | TD-25 | Mã từ chối khi token sai | `403` (HITL #1, RB-102 Q4: hợp đồng chung RB-101 / RB-102; `401` là cải tiến). Đọc từ dữ liệu dùng chung với RB-102, không viết số cứng trong test | TC-022 |
 | TD-26 | Chiến lược reset và dọn dẹp (chung RB-101 / RB-102, HITL #1 Q6) | Mục "TD-26" bên dưới | TC-015, TC-019 → TC-024, TC-029 |
-| TD-27 | Ngân sách đăng nhập thất bại (HITL #1 Q12) | Mục "TD-27" bên dưới: **30 / 30** lần mỗi lần chạy, nhóm `@bad-login` chạy **một lần mỗi buổi** | TC-004 → TC-014, TC-016, TC-030 |
+| TD-27 | Ngân sách đăng nhập thất bại (HITL #1 Q12) | Mục "TD-27" bên dưới: **≤ 30** lần mỗi lần chạy và **≤ 30 lần mỗi ngày UTC** (bộ đếm theo ngày), nhóm `@bad-login` chạy **một lần mỗi buổi** | TC-004 → TC-014, TC-016, TC-030 |
 | TD-28 | Thứ tự kiểm cho TC có bug đã biết (review-test-impl D1) | Mục "Ghi chú cho script-gen" bên dưới: soft (a)–(d) mọi biến thể → chặn cứng `test.info().errors` → `test.fail()` → soft phần dự kiến FAIL | TC-004 → TC-014, TC-016, TC-030 |
 
 ## TD-26: chiến lược reset và dọn dẹp
@@ -49,10 +49,10 @@ API tự reset dữ liệu và xóa mọi token khoảng 10 phút một lần, �
 4. **Dọn dẹp** (`finally` / `afterEach`, chạy cả khi test fail): `GET /booking/<id>`; **chỉ** `DELETE` (Cookie token mới) khi `firstname` = `QA-RB101-<run>` **và** `lastname` = mã TC, **so khớp chính xác, không so tiền tố** (sau reset, id cũ có thể thuộc người khác: bài học L17; RB-102 dùng `QA-RB102-<RUN>` cũng so khớp chính xác, nên bước dọn của 2 feature không xóa booking của nhau). Bước dọn chấp nhận `403` / `404` (ghi annotation), không làm test fail vì bước dọn.
 5. Heroku `503` / ứng dụng đang ngủ (lần gọi đầu ~1 giây, lỗi `H1x`) là **lỗi môi trường**, không phải bug; thời gian chờ request đủ cho lần gọi đầu.
 
-## TD-27: ngân sách đăng nhập thất bại (≤ 30 lần `POST /auth` không cấp token mỗi lần chạy)
+## TD-27: ngân sách đăng nhập thất bại (≤ 30 lần `POST /auth` không cấp token mỗi lần chạy, tối đa 30 lần mỗi ngày UTC)
 Gọi **tuần tự**, không retry. Đăng nhập **đúng** (đối chứng, cấp token, dấu hiệu (b) của TD-26) không tính.
 
-**Một lần mỗi buổi** (review-test-impl B2, orchestrator chốt): một vòng pipeline có nhiều lần chạy (`test:run`, `test:evidence`, `test:stability`, `repro`, reviewer chạy lại), nên nhóm `@bad-login` chỉ chạy **một lần mỗi buổi**, bằng `test:run`. `test:evidence`, `test:stability` và mọi lần chạy lại **loại** nhóm này bằng `--grep-invert @bad-login`, trừ khi người dùng yêu cầu; evidence của nhóm này lấy từ lần `test:run` đó. Cần chạy lại thì chỉ `-g` đúng TC nghi ngờ (tính vào ngân sách của buổi). `repro` của BUG-37 chỉ gửi 1 request sai.
+**Một lần mỗi buổi** (review-test-impl B2, orchestrator chốt): một vòng pipeline có nhiều lần chạy (`test:run`, `test:evidence`, `test:stability`, `repro`, reviewer chạy lại), nên nhóm `@bad-login` chỉ chạy **một lần mỗi buổi**, bằng `test:run`. `test:evidence`, `test:stability` và mọi lần chạy lại **loại** nhóm này bằng `--grep-invert @bad-login`, trừ khi người dùng yêu cầu; `test:run` của feature `-api` tự ghi evidence API và dựng lại mục lục, nên lần chạy đó vừa cho kết quả vừa làm mới evidence của nhóm này (BUG-37 → BUG-40). **Bộ đếm theo ngày UTC** nằm ngoài `test-results/` (file tạm hệ điều hành `rb-bad-login-<yyyymmdd>.json`): quá 30 lần/ngày thì client từ chối gửi; chỉ khi người dùng đồng ý mở lại thì đặt `RB_BAD_LOGIN_RESET=1`. Cần chạy lại thì chỉ `-g` đúng TC nghi ngờ (tính vào ngân sách của buổi). `repro` của BUG-37 chỉ gửi 1 request sai.
 
 | TC | Viewpoint | Số lần thất bại | Lớp chặn |
 |---|---|---|---|
