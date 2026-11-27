@@ -1,0 +1,139 @@
+# Bug phát hiện sớm và lưu ý khi test: RB-102 Quản lý đặt phòng (restful-booker-booking-api)
+
+> Các bug và vấn đề **đã thấy trong lúc phân tích, trước khi chạy test** (khám phá API ngày 2026-11-26, xem `spec-review.md`). Mỗi bug phải được test tương ứng bắt được (fail đúng chỗ). Bug nào không bắt được tức là test sai.
+> Bug chỉ chính thức thành **defect** sau khi chạy test và duyệt ở HITL #3 (`defects.md`).
+> **Số chính thức BUG-41 → BUG-59** (orchestrator cấp ở HITL #1, 2026-11-26; RB-101 dùng BUG-37 → BUG-40, số trống tiếp theo **BUG-60**). Lúc phân tích dùng số tạm `BUG-B1` → `BUG-B19`: bảng "Số tạm → số chính thức (HITL #1)" ở cuối file. BUG-58, BUG-59 (số tạm `BUG-B18`, `BUG-B19`) thêm sau `reviews/review-test-design.md`.
+> **Quy tắc biến thể hay số mới** (`CLAUDE.md` điểm 4; dùng **cùng lập luận với RB-101**, quyết định của orchestrator 2026-11-26): **cùng chỗ sửa → biến thể** (giữ số); **khác chỗ sửa / khác điểm kiểm → số mới**, ghi "cùng kiểu với BUG-xx". Áp dụng ở đây:
+> - **Tách theo lớp**: lỗi ở **lớp đọc body / `Content-Type`** (chạy trước khi xử lý booking: thiếu / sai `Content-Type`, body không phải JSON) là **BUG-58**; lỗi ở **lớp kiểm trường** (thiếu trường bắt buộc, `null`, `{}`, `[]`, sai cấu trúc) là **BUG-41**. Hai lớp sửa ở hai chỗ khác nhau nên hai số (giống RB-101 tách lỗi lớp đọc body khỏi lỗi lớp kiểm trường).
+> - Biến thể trong cùng bug: BUG-42 gộp JSON `"false"`, urlencoded `depositpaid=false` và XML `<depositpaid>false</depositpaid>` (O-44, test-impl thêm 2026-11-26) (cùng chỗ ép kiểu `depositpaid`); BUG-48 gộp tham số lọc sai ngày, lặp tham số (500) và dạng object / toán tử (bị bỏ âm thầm) vì cùng chỗ kiểm tham số lọc; BUG-54 gộp 4 method vì cùng chỗ đọc id trên đường dẫn; BUG-52 gộp 3 method; BUG-49 gộp `text/plain` (418) và urlencoded (lỗi nội bộ) vì cùng bước định dạng phản hồi chạy **sau** khi đã lưu.
+> - Số mới: BUG-48 (tham số lọc, khác chỗ sửa với thân request: cùng kiểu với BUG-41); BUG-42, BUG-43, BUG-44 (3 trường khác nhau, 3 cách ép kiểu khác nhau); BUG-45 (lỗi **gộp dữ liệu** của `PATCH` với object con, không phải lỗi đọc ngày của BUG-44 dù cùng triệu chứng `0NaN-aN-aN`); BUG-46 và BUG-47 (cùng hàm lọc nhưng 2 điều kiện so sánh khác nhau, expected khác nhau, mức khác nhau; orchestrator có thể gộp nếu muốn); BUG-55 (nhận giá trị rỗng / sai kiểu: điểm kiểm khác với "trả 5xx" của BUG-41); BUG-59 (server sửa giá trị khi lưu: điểm kiểm khác BUG-55).
+> - Không có bug nào là biến thể của BUG-01 → BUG-36 (các feature trước là giao diện SauceDemo, khác hệ thống).
+> - `DELETE` trả 201 **không phải bug** (quy tắc chung RB-101 / RB-102: 201 là hợp đồng tài liệu; tiêu đề "Success 200" là lỗi tài liệu, IMP-10).
+>
+> **HITL #1 (2026-11-26) đã trả lời**: người duyệt chấp nhận **mọi đề xuất** ("theo đề xuất hết"), nên cả 19 bug đều **Đã xác nhận (HITL #1)**; cột "Trạng thái" ghi expected đã chốt (mã trả về / hành vi đúng) và câu hỏi nguồn. Chi tiết: mục "Quyết định HITL #1" bên dưới. Cột "Viewpoint / TC phải bắt": TC do test-impl điền (2026-11-26, đã đối chiếu từng biến thể với bước của TC).
+
+## Bug đã biết (chia theo endpoint)
+
+### Chung: dữ liệu booking (`POST /booking` + `PUT /booking/:id` + `PATCH /booking/:id`)
+| ID | Endpoint | Mô tả | Bằng chứng | Mức | Viewpoint / TC phải bắt | Trạng thái |
+|---|---|---|---|---|---|---|
+| BUG-41 | `POST /booking` | **Lớp kiểm trường: thiếu trường / `null` / sai cấu trúc bị trả 500 `Internal Server Error`** thay vì 4xx: (1) thiếu bất kỳ trường bắt buộc nào (7 trường); (2) body `{}`, `[]`; (3) `totalprice: null`, `depositpaid: null`, `firstname` là số, `bookingdates` là chuỗi. Không tạo booking. Cùng lỗi thiếu trường mà `PUT` trả 400 (đúng) | O-07, O-08, O-09 (2/2 thiếu `firstname`) | Medium | TVP-006, TVP-008, TVP-009; TC: TC-004, TC-005, TC-007 | Đã xác nhận (HITL #1, Q1 a, b): expected **400**, không tạo booking |
+| BUG-58 | `POST /booking` | **Lớp đọc body / `Content-Type`: body không đọc được bị trả 500** thay vì 4xx (400 / 415): không có `Content-Type`, `Content-Type: text/plain`, `application/xml`; body không phải JSON (chuỗi rỗng `""`) với `application/json`. Không tạo booking. Cùng kiểu với BUG-41 nhưng khác chỗ sửa (chạy trước khi kiểm trường). JSON hỏng / `null` thì trả 400 (đúng) | O-08, O-17 (2/2 không có `Content-Type`) | Medium | TVP-008, TVP-048; TC: TC-023 | Đã xác nhận (HITL #1, Q9 b): expected **415** khi thiếu / sai `Content-Type`, **400** khi body không đọc được; không 5xx, không tạo booking |
+| BUG-42 | `POST /booking` + `PUT /booking/:id` + `PATCH /booking/:id` | **Không lưu được `depositpaid = false` ("chưa cọc" thành "đã cọc")**: (1) body **urlencoded** (định dạng tài liệu công bố, "URLencoded example usage") `depositpaid=false` **luôn** lưu `true` ở cả 3 method: client dùng định dạng này không thể tạo booking chưa cọc; (2) JSON chuỗi `"false"` → `true`; `"abc"` → `true`; `0` → `false`, `1` → `true` (`PUT` `0` → 200 lưu `false`: test-impl kiểm lại 2026-11-26); (3) body **XML** `<depositpaid>false</depositpaid>` → `true` (`POST` 2/2, `PUT` 2/2, `PATCH` 1/1, test-impl kiểm lại 2026-11-26, O-44). Trả 200 | O-37 (urlencoded: `POST` 2/2, `PUT` 2/2, `PATCH` 2/2; reviewer `POST` 2/2), O-11 (JSON: `POST` 2/2, `PUT` 2/2 reviewer, `PATCH` 2/2), O-44 (XML) | High | TVP-013, TVP-059, TVP-047 (dương tính `false` boolean: TVP-058); TC: TC-012, TC-045, TC-051, TC-058 | Đã xác nhận (HITL #1, Q2 b, d): JSON chỉ nhận `true` / `false` boolean, khác → **400**; urlencoded và XML `false` / `true` phải lưu đúng nghĩa |
+| BUG-43 | `POST /booking` + `PUT /booking/:id` + `PATCH /booking/:id` | **`totalprice` bị ép kiểu sai**: số lẻ bị **cắt** (`99.99` → `99`, `10.75` → `10`, `0.005` → `0`); giá trị không phải số (`"abc"`, `true`) lưu **`null`** ở `POST` và `PUT` (`PUT` `"150"` → `150`, `true` → `null`: test-impl kiểm lại 2026-11-26); `PATCH` `totalprice: null` → lưu `null` (reviewer 2/2; `PUT` `null` → 400 là đúng); vẫn trả 200 | O-10 (2/2 `99.99`), O-39 | High (mất dữ liệu tiền) | TVP-010, TVP-011; TC: TC-008, TC-009, TC-044, TC-050 | Đã xác nhận (HITL #1, Q2 a, b): số lẻ lưu **đúng giá trị gửi** (tối đa 2 chữ số lẻ); không phải số / `null` / boolean → **400** |
+| BUG-44 | `POST /booking` + `PATCH /booking/:id` | **Ngày không hợp lệ vẫn 200 và lưu sai**: sai định dạng / không tồn tại / rỗng → lưu `"0NaN-aN-aN"`; `2031-02-30` **cuộn** thành `2031-03-02`, `2046-04-31` → `2046-05-01`; năm `10000-01-01` → `0000-01-01`; `10/01/2031` hiểu là 1/10; `…T01:00:00+07:00` lưu **lùi 1 ngày** | O-12, O-24, O-39 (2/2 `0NaN-aN-aN`, 2/2 cuộn ngày; reviewer 2/2) | High (dữ liệu hỏng, không đọc được) | TVP-014, TVP-015 (dương tính: TVP-058); TC: TC-013, TC-014, TC-052 | Đã xác nhận (HITL #1, Q3 a, d): chỉ nhận `CCYY-MM-DD` là ngày có thật, năm 0001 → 9999; khác → **400**, không lưu giá trị khác ngày đã gửi |
+| BUG-55 | `POST /booking` + `PATCH /booking/:id` | **Trường chuỗi nhận giá trị rỗng / `null` / sai kiểu**: `lastname: ""` và `"   "` → lưu `""`; `PATCH firstname: null` → lưu `null`; `PATCH lastname: ""` → `""`; `additionalneeds` số / object / mảng / boolean → lưu nguyên kiểu | O-09, O-14, O-24, O-40 | Low | TVP-018, TVP-064; TC: TC-003, TC-017, TC-053 | Đã xác nhận (HITL #1, Q1 c, d, f; knowledge-base SD-103 Q4): tên rỗng / chỉ khoảng trắng, `PATCH` trường bắt buộc thành `null` / rỗng, `additionalneeds` khác chuỗi → **400**; `additionalneeds: null` = không có |
+| BUG-59 | `POST /booking` | **Server sửa giá trị khi lưu: cắt khoảng trắng đầu cuối** (`"  Pad  "` → `"Pad"` ở body trả về và `GET`), trái AC-1 "giống từng trường đã gửi" | O-14 (2/2) | Low | TVP-019; TC: TC-019 | Đã xác nhận (HITL #1, Q1 e): server **lưu nguyên văn** (cắt khoảng trắng chỉ để kiểm rỗng) |
+| BUG-56 | `POST /booking` + `PUT /booking/:id` | **`checkout` trước `checkin` được nhận** (200) | O-13 (`POST` 3/3, `PUT` 2/2) | Medium | TVP-017; TC: TC-016, TC-046 | Đã xác nhận (HITL #1, Q3 b): `checkout` trước hoặc bằng `checkin` → **400** |
+| BUG-57 | `POST /booking` | **Giá âm được nhận** (`-100` → 200, lưu `-100`) | O-10 | Low | TVP-012; TC: TC-011 | Đã xác nhận (HITL #1, Q2 c): giá âm → **400** (0 hợp lệ) |
+
+### Chung: đường dẫn, quyền, định dạng (nhiều endpoint)
+| ID | Endpoint | Mô tả | Bằng chứng | Mức | Viewpoint / TC phải bắt | Trạng thái |
+|---|---|---|---|---|---|---|
+| BUG-51 | `PUT /booking/:id` + `PATCH /booking/:id` | **`bookingid` trong body chuyển booking sang id khác**: `PUT` / `PATCH` booking X với body có `"bookingid": Y` trả **405** nhưng X **mất** (404), dữ liệu mới nằm ở id **Y**; mỗi lần chuyển thêm 1 bản ghi trùng id Y (2 bản ghi sau 1 lần chuyển, phải `DELETE` Y 2 lần), tìm theo tên cũ và tên mới đều ra id Y. `GET` Y trả **một trong** các bản ghi trùng (bản mới 6/6 khi Y là booking của mình, nhưng bản gốc khi Y = 1), **không xác định**. Người có quyền có thể **chiếm / che id của booking người khác** (lần thử đầu với `bookingid: 1` làm dữ liệu của mình mang id 1, trùng booking của người khác, tới khi dữ liệu bị đặt lại); client nhận 405 nên tưởng không có gì thay đổi | O-16 (khám phá: 2/2 `PUT`, 2/2 `PATCH`; reviewer: 2/2 `PUT`, 2/2 `PATCH`; đối chứng không có `bookingid` → bình thường) | High (toàn vẹn dữ liệu, ảnh hưởng booking của người khác) | TVP-027; TC: TC-064 | Đã xác nhận (HITL #1; AC-4, AC-5): expected **200, bỏ qua `bookingid`** như `POST` (O-15), X giữ id và nhận dữ liệu mới, Y không đổi. Test **không** khẳng định `GET` Y trả bản nào; kiểm chủ sở hữu X, Y ngay trước request (Q12) |
+| BUG-54 | `GET /booking/:id` + `PUT /booking/:id` + `PATCH /booking/:id` + `DELETE /booking/:id` | **Id sai định dạng vẫn được hiểu theo phần số đứng đầu**: `GET /booking/1.5` trả booking 1; `<id>abc`, `00<id>`, `<id>.9` trả booking `<id>`; `PATCH /<id>abc`, `PUT /00<id>` **sửa được**, `DELETE /<id>.9` **xóa được** booking `<id>` | O-06 (`GET` 2/2; `PUT`, `PATCH`, `DELETE` 3/3 trên booking của mình) | Low (`PUT` / `PATCH` / `DELETE` vẫn cần quyền) | TVP-005; TC: TC-063 | Đã xác nhận (HITL #1; knowledge-base SD-102): id sai định dạng → **404** ở cả 4 method, không thao tác |
+| BUG-52 | `PUT /booking/:id` + `PATCH /booking/:id` + `DELETE /booking/:id` | **Id không tồn tại / đã xóa trả 405 `Method Not Allowed`** thay vì 404 (có quyền hợp lệ); `GET` cùng id trả 404 | O-25, O-26 (2/2 xóa lần 2) | Low | TVP-032, TVP-033; TC: TC-055, TC-065 | Đã xác nhận (HITL #1, Q5): expected **404** cho cả 3 method |
+| BUG-49 | `POST /booking` + `GET /booking/:id` | **`Accept` không hỗ trợ: trả lỗi nhưng vẫn tạo booking**: `POST` với `Accept: text/plain` → **418** `I'm a Teapot`; `Accept: application/x-www-form-urlencoded` → **200** `text/html` body `formurlencoded is not a function` (lỗi nội bộ lộ ra). Cả hai **đã tạo booking** (tìm theo tên thấy) mà client không nhận được id → thử lại sẽ tạo trùng. `GET /booking/:id` cùng 2 header: 418 / 200 kèm lỗi nội bộ | O-19 (2/2 `text/plain`, 3/3 urlencoded) | Medium | TVP-049; TC: TC-062 | Đã xác nhận (HITL #1, Q9 a): `Accept` không hỗ trợ → **406**, **không** tạo / sửa gì |
+| BUG-50 | `GET /booking/:id` + `POST /booking` + `PUT /booking/:id` | **Phản hồi XML có `Content-Type: text/html; charset=utf-8`** thay vì `application/xml` / `text/xml`; client đọc theo header sẽ hiểu sai định dạng (nội dung XML và escape vẫn đúng, O-41) | O-18 (2/2) | Low | TVP-046; TC: TC-061 | Đã xác nhận (HITL #1; AC-8): `Content-Type` là XML (`application/xml` hoặc `text/xml`) |
+
+### `GET /booking` (bộ lọc)
+| ID | Endpoint | Mô tả | Bằng chứng | Mức | Viewpoint / TC phải bắt | Trạng thái |
+|---|---|---|---|---|---|---|
+| BUG-46 | `GET /booking` | **Lọc `checkout` bị đảo chiều**: trả booking có `checkout` **≤** ngày lọc thay vì **≥** (AC-3, tài liệu). Booking `checkout` 2041-06-20: lọc `2041-06-19` **không** có, lọc `…-20`, `…-21` **có**. `checkout=2040-03-19` trả 2.269 / 2.283 booking | O-32 (2/2, 2 bộ dữ liệu; reviewer 2/2) | High (kết quả tìm kiếm sai gần hết) | TVP-043; TC: TC-035 | Đã xác nhận (HITL #1; AC-3): `checkout ≥` ngày lọc |
+| BUG-47 | `GET /booking` | **Lọc `checkin` loại booking có `checkin` bằng đúng ngày lọc** (so sánh **>** thay vì **≥**) | O-31 (2/2, 2 bộ dữ liệu; reviewer 2/2) | Medium | TVP-042; TC: TC-033 | Đã xác nhận (HITL #1; AC-3): `checkin ≥` ngày lọc |
+| BUG-48 | `GET /booking` | **Tham số lọc không hợp lệ không bị từ chối**: (1) trả **500**: `checkin=abc`, `checkin=2040-13-45`, `checkout=abc`, lặp `firstname=a&firstname=b`; (2) **bỏ âm thầm bộ lọc, trả toàn bộ danh sách**: dạng object / toán tử `firstname[$ne]=…`, `firstname[$eq]=<tên không tồn tại>`, `lastname[$gt]=…`, `checkin[$gt]=…` (toán tử không được thực thi, không phải NoSQL injection khai thác được, nhưng client tưởng đã lọc); (3) `checkin=08/03/2040` → 200, hiểu là 2040-08-03. Cùng kiểu với BUG-41 nhưng khác chỗ sửa (tham số lọc, không phải thân request) | O-30, O-34, O-38 (object: 4 tham số × 1 lần; reviewer 4 truy vấn khác, cùng kết quả) | Medium | TVP-045, TVP-060; TC: TC-037, TC-038 | Đã xác nhận (HITL #1, Q7 f): tham số lọc sai / lặp / dạng object / toán tử → **400**, không trả toàn bộ, không 5xx |
+
+### `PUT /booking/:id`
+| ID | Endpoint | Mô tả | Bằng chứng | Mức | Viewpoint / TC phải bắt | Trạng thái |
+|---|---|---|---|---|---|---|
+| BUG-53 | `PUT /booking/:id` | **`PUT` không thay toàn bộ**: bỏ trường tùy chọn `additionalneeds` thì giá trị cũ vẫn giữ (body trả về và `GET`) | O-21 (2/2) | Low | TVP-026; TC: TC-042 | Đã xác nhận (HITL #1, Q8): `PUT` không gửi `additionalneeds` thì **xóa** giá trị cũ |
+
+### `PATCH /booking/:id`
+| ID | Endpoint | Mô tả | Bằng chứng | Mức | Viewpoint / TC phải bắt | Trạng thái |
+|---|---|---|---|---|---|---|
+| BUG-45 | `PATCH /booking/:id` | **`PATCH` một trường con của `bookingdates` làm hỏng trường con còn lại**: gửi `{"bookingdates":{"checkin":"2033-01-01"}}` → `checkout` thành `"0NaN-aN-aN"`; gửi chỉ `checkout` → `checkin` thành `0NaN-aN-aN`. Trả 200 | O-23 (2/2; reviewer 2/2 mỗi chiều) | High (vi phạm AC-5, hỏng dữ liệu) | TVP-029; TC: TC-048 | Đã xác nhận (HITL #1; AC-5): trường con không gửi giữ nguyên |
+
+## Điều đã kiểm và **không** phải bug (đã chốt ở HITL #1)
+- Không có quyền / token sai / Basic sai / token ví dụ `abc123` / token thừa 1 ký tự: bị từ chối, booking giữ nguyên từng trường, không bị xóa, đủ 18 kiểu × 3 method (O-27, O-43). **403 là đúng** (Q4, quyết định chung RB-101 / RB-102); 401 chỉ là cải tiến IMP-02.
+- `DELETE` trả 201 (O-26): hợp đồng tài liệu theo quy tắc chung RB-101 / RB-102 (tiêu đề "Success 200" là lỗi tài liệu, IMP-10).
+- `PATCH` một trường cấp 1 chỉ đổi trường đó (O-22); `PATCH {}` không đổi gì; trường thừa ở `POST` / `PATCH` bị bỏ qua (O-15).
+- Chuỗi tiếng Việt, emoji, HTML, 5000 ký tự lưu nguyên văn (O-14); XML escape đúng ký tự đặc biệt (O-41).
+- Phương thức không hỗ trợ (`DELETE /booking`, `POST /booking/<id>`…) trả 404, không đổi dữ liệu (O-42); mã nên là 405 (IMP-13).
+- `POST` 2 lần tạo 2 booking (O-28): **đúng** (Q10); chống trùng là cải tiến IMP-07.
+- `GET /booking` bỏ qua `Accept: application/xml` (O-18): **đúng**, danh sách chỉ JSON (Q9 c); XML là cải tiến IMP-12.
+- Lọc tên khớp chính xác, phân biệt hoa thường, không cắt khoảng trắng, `firstname=` rỗng → `[]`, nhiều tham số là "và" (O-30, O-33): **đúng** (Q7 a → e); tìm không phân biệt hoa thường / một phần là cải tiến IMP-05.
+- Giá `0`, ngày quá khứ, năm `0001` / `9999` được nhận (O-10, O-13, O-39): **đúng** (Q2 c, Q3 c, d).
+
+## Quyết định HITL #1 (người duyệt, 2026-11-26)
+Người duyệt trả lời "theo đề xuất hết": **mọi đề xuất** trong `q-and-a.md` (bản sau review) được chấp nhận, kể cả từng ý nhỏ.
+| Câu | Quyết định | Bug / viewpoint bị ảnh hưởng |
+|---|---|---|
+| Q1 (a) → (f) | Bắt buộc 6 giá trị (`firstname`, `lastname`, `totalprice`, `depositpaid`, `checkin`, `checkout`), `additionalneeds` tùy chọn là chuỗi. Thiếu / `null` / sai cấu trúc → **400**, không tạo / sửa. Tên rỗng / chỉ khoảng trắng → 400. `PATCH` không được đặt trường bắt buộc thành `null` / rỗng → 400. Server **lưu nguyên văn**, không cắt khoảng trắng. `additionalneeds` khác chuỗi → 400, `null` = không có | BUG-41, BUG-55, BUG-59; TVP-006 → TVP-009, TVP-018, TVP-019, TVP-025, TVP-064 |
+| Q2 (a) → (e) | Giá có số lẻ, lưu đúng giá trị gửi (tối đa 2 chữ số lẻ); chỉ nhận số / boolean của JSON, chuỗi / `null` / boolean cho giá → 400; urlencoded `false` / `true` hiểu đúng nghĩa; giá `0` hợp lệ, **âm → 400**; `depositpaid` JSON chỉ `true` / `false`; giới hạn trên của giá do PO đặt sau, hiện chỉ ghi nhận (2^53 + 1) | BUG-42, BUG-43, BUG-57; TVP-010 → TVP-013, TVP-058, TVP-059 |
+| Q3 (a) → (d) | Chỉ `CCYY-MM-DD` là ngày có thật → khác là 400; `checkout` **sau** `checkin` (ít nhất 1 đêm), trước hoặc bằng → 400; ngày quá khứ **được**; năm 0001 → 9999 | BUG-44, BUG-56; TVP-014 → TVP-017 |
+| Q4 | Không có / sai thông tin xác thực → **403** là đúng (quyết định chung, RB-101 theo); 401 + `WWW-Authenticate` chỉ là cải tiến IMP-02 | TVP-034, TVP-035 |
+| Q5 | `PUT` / `PATCH` / `DELETE` id không tồn tại / đã xóa → **404** | BUG-52; TVP-032, TVP-033 |
+| Q6 (tham chiếu) | `DELETE` → **201** là hợp đồng tài liệu (quy tắc chung RB-101 / RB-102) | TVP-031 |
+| Q7 (a) → (f) | Lọc tên khớp chính xác, phân biệt hoa thường, không khớp một phần, không cắt khoảng trắng, `firstname=` → `[]`, nhiều tham số là "và"; tham số dạng object / mảng / toán tử → **400**, không trả toàn bộ, không 5xx | BUG-48; TVP-039, TVP-040, TVP-044, TVP-045, TVP-060 |
+| Q8 | `PUT` không gửi `additionalneeds` thì **xóa** giá trị cũ | BUG-53; TVP-026 |
+| Q9 (a) → (d) | `Accept` không hỗ trợ → **406**, không tạo / sửa; thiếu / sai `Content-Type` → **415** (body không đọc được → 400), không 5xx; `GET /booking` chỉ JSON là đúng; `application/xml` cho body là cải tiến | BUG-49, BUG-58; TVP-048 → TVP-050; IMP-11, IMP-12 |
+| Q10 | `POST` 2 lần tạo 2 booking là **đúng** | TVP-051; IMP-07 |
+| Q11 (tham chiếu) | Theo RB-101 Q6 (token cũ, hạn token) | TVP-037 `out` |
+| Q12 | Chiến lược dữ liệu chung RB-101 / RB-102 (lưu ý 1 bên dưới); Heroku **503** là lỗi môi trường; **kiểm chủ sở hữu cả 2 id ngay trước** mọi request có `bookingid` trong body | TVP-057, TVP-027; mọi TC |
+
+## Lưu ý cho bước sau (test-impl, script-gen)
+1. **Máy chủ dùng chung, dữ liệu bị đặt lại** (O-04). Chiến lược **chung RB-101 / RB-102** (orchestrator chốt 2026-11-26):
+   - **Không** dùng `retries` của Playwright cho các spec này.
+   - Chỉ coi là "bị đặt lại" khi **đủ cả 3 dấu hiệu**: (a) booking do chính test tạo trả 404; (b) token **mới** gọi `PATCH /booking/999999999` **không bị 403** (token còn hợp lệ, không phải lỗi quyền) (không dựa vào mã `405` hiện tại: đó là BUG-52, sửa thành `404` thì dấu hiệu vẫn đúng; review RB-102 lượt 2 R1); (c) thời điểm nằm trong cửa sổ **x0:50 → x1:30** quanh lần đặt lại ở **phút x1** (giờ UTC).
+   - Đủ 3 dấu hiệu: làm lại bước chuẩn bị **một lần** ngay trong test và thêm annotation `env-reset`. Bị đặt lại **lần 2** trong cùng test thì test **fail**.
+   - **Không** lấy token trong `beforeAll`: mỗi test lấy token ngay trước khi dùng. Dọn dẹp chấp nhận **403 / 404** (token / booking mất do đặt lại).
+   - Heroku trả **503** / máy chủ đang ngủ là **lỗi môi trường**, không phải bug; đặt thời gian chờ đủ cho lần gọi đầu.
+   - `firstname` **cố định theo lần chạy** (`QA-RB102-<mã lần chạy>`) + `lastname` = mã TC (review E2): một truy vấn `GET /booking?firstname=…` tìm được **mọi** booking sót (kể cả booking "ẩn" của BUG-49 và bản trùng của BUG-51). Không dùng id cứng; lọc chỉ khẳng định "có / không có booking của mình", không đếm tổng. Dọn dẹp: `GET` id, **chỉ xóa khi `firstname` là của lần chạy** (id cũ có thể đã thuộc người khác sau khi đặt lại).
+2. **BUG-51 nguy hiểm cho dữ liệu người khác**: chỉ tái hiện bằng **2 booking của mình** (X, Y). **Ngay trước** request có `bookingid` trong body, `GET` X và `GET` Y; chỉ gửi khi **cả hai** có `firstname` / `lastname` của lần chạy; nếu không thì **không gửi**, dừng test và đánh dấu "dữ liệu bị đặt lại" (review E1: đặt lại giữa lúc tạo Y và lúc gửi làm id Y thành booking của người khác). Tuyệt đối không gửi `bookingid` của booking không phải của mình. Dọn dẹp: `DELETE` Y **lặp lại tới khi `GET` Y trả 404** (id Y có nhiều bản ghi), kiểm `firstname` trước mỗi lần xóa. Không khẳng định `GET` Y trả bản ghi nào.
+3. **BUG-49 tạo booking "ẩn"**: sau `POST` với `Accept` không hỗ trợ, tìm theo `firstname` + `lastname` để lấy id và xóa, kể cả khi test fail.
+4. **Mật khẩu quản trị** (token, `Basic`): lấy từ biến môi trường (mặc định: giá trị công khai trong tài liệu), không ghi cứng trong test hay tài liệu.
+5. **So từng trường** (qa-reviewer L12): mọi test tạo / sửa so đủ **7 giá trị** với dữ liệu đã gửi (không chỉ `firstname`), so cả body trả về và `GET` đọc lại. Test `PATCH` một trường kiểm **6 giá trị còn lại** không đổi. Test bị từ chối (AC-7) so **cả body trước / sau**.
+6. Tách test **mã trả về** khỏi test **dữ liệu không đổi**: vd TVP-006 kiểm 4xx (fail do BUG-41) và "không tạo booking" (pass) ở 2 bước có thông báo riêng, để biết chính xác phần nào hỏng. **Phân vùng hợp lệ là TC dương tính riêng** (TVP-058: `depositpaid` `true` / `false` boolean, giá nguyên, ngày hợp lệ qua `POST`, `PUT`, `PATCH`), không gộp chung `test.fail()` với phân vùng lỗi (review D1).
+   - **Thứ tự kiểm khi có `test.fail()`** (review-test-impl D1, bài học L18): tách thông báo chưa đủ, vì lỗi `expect.soft` ghi trước `test.fail()` vẫn bị tính là "fail như mong đợi". Mọi TC bug theo **TD-29** của `test-data.md` (cùng mẫu RB-101 TD-28): gửi mọi biến thể → `expect.soft` phần **đang đúng** (vd "không tạo booking" khi server trả 500, trường không gửi giữ nguyên) → chặn cứng `expect(test.info().errors).toHaveLength(0)` → `test.fail()` → `expect.soft` phần dự kiến FAIL. Không gọi `test.fail()` trong vòng lặp biến thể.
+7. **Không tải**: chạy tuần tự (`workers: 1` cho project API hoặc `test.describe.configure({ mode: 'serial' })` nếu cần), mỗi test vài request; cả bộ nên dưới ~300 request. Không chạy lặp `test:stability` nhiều lần trên máy chủ công khai.
+8. **Trường định danh trên hệ thống dùng chung** (review E3): `id`, `bookingid` trong body hay URL **chỉ** thử với đối tượng của mình, kiểm chủ sở hữu ngay trước request.
+
+## Số tạm → số chính thức (HITL #1)
+Orchestrator cấp ngày 2026-11-26, theo đúng thứ tự số tạm. Mọi file của feature đã đổi sang số chính thức; số tạm chỉ còn trong bảng này và trong lịch sử review (`reviews/review-test-design.md`).
+| Số tạm | Số chính thức | Mức | Tóm tắt |
+|---|---|---|---|
+| BUG-B1 | BUG-41 | Medium | Lớp kiểm trường: thiếu trường / `null` / sai cấu trúc → 500 |
+| BUG-B2 | BUG-42 | High | Không lưu được `depositpaid = false` (urlencoded, chuỗi `"false"`) |
+| BUG-B3 | BUG-43 | High | `totalprice` bị cắt số lẻ / lưu `null` |
+| BUG-B4 | BUG-44 | High | Ngày không hợp lệ lưu `0NaN-aN-aN` / cuộn / lệch ngày |
+| BUG-B5 | BUG-45 | High | `PATCH` một trường con `bookingdates` làm hỏng trường kia |
+| BUG-B6 | BUG-46 | High | Lọc `checkout` đảo chiều (≤) |
+| BUG-B7 | BUG-47 | Medium | Lọc `checkin` loại ngày bằng (>) |
+| BUG-B8 | BUG-48 | Medium | Tham số lọc không hợp lệ: 500 hoặc bỏ bộ lọc, trả toàn bộ |
+| BUG-B9 | BUG-49 | Medium | `Accept` không hỗ trợ: trả lỗi nhưng vẫn tạo booking |
+| BUG-B10 | BUG-50 | Low | Phản hồi XML có `Content-Type: text/html` |
+| BUG-B11 | BUG-51 | High | `bookingid` trong body `PUT` / `PATCH` chuyển booking sang id khác |
+| BUG-B12 | BUG-52 | Low | Id không tồn tại / đã xóa ở `PUT` / `PATCH` / `DELETE` → 405 |
+| BUG-B13 | BUG-53 | Low | `PUT` không xóa `additionalneeds` bị bỏ |
+| BUG-B14 | BUG-54 | Low | Id sai định dạng hiểu theo phần số đầu |
+| BUG-B15 | BUG-55 | Low | Trường chuỗi nhận rỗng / `null` / sai kiểu |
+| BUG-B16 | BUG-56 | Medium | `checkout` trước `checkin` được nhận |
+| BUG-B17 | BUG-57 | Low | Giá âm được nhận |
+| BUG-B18 | BUG-58 | Medium | Lớp đọc body / `Content-Type`: thiếu / sai `Content-Type`, body không phải JSON → 500 |
+| BUG-B19 | BUG-59 | Low | Server cắt khoảng trắng khi lưu |
+
+## Quyết định HITL #2 (người duyệt, 2026-11-27)
+Người duyệt chọn **theo đề xuất của qa-reviewer** cho cả 11 điểm (phiếu đã qua qa-reviewer soát trước khi gửi).
+| # | Quyết định | Kết luận |
+|---|---|---|
+| 1 | Bộ test case | ✅ Duyệt: RB-101 30 TC, RB-102 69 TC, tất cả `automatable`, trạng thái `approved`. TC bug theo mẫu 5 bước (L18) |
+| 2 | Tên / mật khẩu rỗng | **400** (rỗng = thiếu), không phải 401 |
+| 3 | Dọn dẹp, phân chia | RB-102 TC-070 → teardown có sổ id + tên của lần chạy; RB-102 TC-068 bỏ biến thể token thường, trỏ RB-101 TC-019 → 021 |
+| 4 | Biến môi trường | `RB_ADMIN_USERNAME`, `RB_ADMIN_PASSWORD`, `RB_BASE_URL` (dùng chung 2 feature; `.env.example` không có giá trị mật khẩu; CI: GitHub Secrets) |
+| 5 | RB-101 TC-016 (mật khẩu trên URL) | Gửi bằng `fetch` ngoài `APIRequestContext`, không ghi URL vào annotation / báo cáo, quét mật khẩu trong `run-results/`, `evidence/` trước mỗi commit |
+| 6 | RB-101 TC-030 (HTTP) | Đạt khi GET 301/308, POST 307/308 với `Location` = https cùng host + đường dẫn, hoặc bị từ chối (lỗi kết nối, 426, 4xx không đến từ khâu kiểm tài khoản) |
+| 7 | Mã lỗi mới (400/404/406/413/415) | Kiểm mã + không 5xx + không lộ lỗi nội bộ; không kiểm câu chữ (RB-101 IMP-10, RB-102 IMP-01). Riêng `/auth` (RB-101) kiểm thêm body là JSON. Lỗi đang có và đúng vẫn so nguyên văn |
+| 8 | RB-102 TC-069 (phương thức không hỗ trợ) | Gửi **không** token; 404 / 405 là đạt, 403 là cảnh báo cần xem tay |
+| 9 | `retries` | `0` riêng cho project API; web giữ nguyên (CI 2) |
+| 10 | Giá `2^53 + 1` | Chỉ annotation, không kiểm |
+| 11 | Chạy ở đâu | Không chạy đủ bộ API theo mỗi push / PR. Job CI web chỉ chạy project web. Job CI riêng cho API: chạy tay + theo lịch hằng tuần (đủ bộ, kèm `@full`, nhóm `@bad-login` 1 lần), giờ cron tránh cửa sổ x0:50 → x1:30 UTC. PR: chỉ API `@smoke` ở chế độ không chặn (continue-on-error). Bài 11: xem chạy Restful Booker cục bộ trong CI qua `RB_BASE_URL`. Ước lượng: RB-101 ~140 request / lần (≤ 30 đăng nhập sai, `@bad-login` 1 lần / buổi); RB-102 ~778 mặc định (~679 khi đã sửa bug), `@full` thêm ~86 |
