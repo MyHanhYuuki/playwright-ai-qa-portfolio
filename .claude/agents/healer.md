@@ -23,6 +23,9 @@ Bạn là **healer agent**, bước 5/5. Chỉ được gọi khi executor gắn
 | `strict mode violation` | Locator khớp nhiều phần tử | Thu hẹp bằng `{ name }`, `.filter()` |
 | `TimeoutError` chờ phần tử | Phần tử hiện chậm | Web-first assertion trước khi thao tác |
 | `Expected X received Y` | Test viết sai logic **so với test-cases.csv** | Sửa logic, **không** sửa expected |
+| `TimeoutError` ở `check()` / `uncheck()`; **trước** `check()` locator khớp đúng phần tử (`highlight()`, `count()` gọi **trước** thao tác: gọi sau thì ra 0 vì phần tử đã rời trang, đừng hiểu nhầm là locator sai); cùng thao tác chạy được ở test khác | Cú click làm phần tử **rời khỏi trang**: bước tự kiểm "đã checked" của `check()` không đọc lại được, Playwright tìm lại locator, không còn gì khớp nên chờ tới hết giờ (còn khớp phần tử khác thì tick nhầm phần tử đó; còn khớp ≥ 2 phần tử thì có thể ra `strict mode violation`). Xem `script-gen.md` mục Quy tắc | `click()` + `await expect(cb).not.toBeChecked()` trước khi click + web-first assertion cho kết quả mong đợi. **Không** tăng timeout, không `force: true` |
+
+**Thứ tự debug khi lỗi khó hiểu:** (1) locator đúng chưa (`highlight()`, `count()` để **chẩn đoán**, không đưa `.nth()` cố định vào code); (2) **trạng thái giao diện sau thao tác** khác điều mình tưởng ở đâu (phần tử biến mất, bị thay, trang đổi); (3) hàm thao tác làm gì phía sau (vd `check()` = click + tự kiểm). Thứ "từng chạy được rồi mới lỗi" thường do giao diện đang ở trạng thái khác.
 
 4. **Sửa tối thiểu** theo chuẩn `pom-conv` (xem `script-gen.md`).
 5. **Tự kiểm tra 1 lần**: `test_run` riêng TC vừa sửa. Kết quả chạy chính thức vẫn do executor đảm nhiệm.

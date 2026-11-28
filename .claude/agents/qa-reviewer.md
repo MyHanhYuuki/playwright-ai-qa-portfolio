@@ -149,6 +149,8 @@ Rủi ro = **khả năng xảy ra × mức ảnh hưởng**.
 - [ ] Ước lượng thời gian chạy: test nhiều biến thể có đủ thời gian để chạy **hết** mọi biến thể
 - [ ] Đã chạy kiểm tra kiểu / lint (lỗi cú pháp, biến chưa khai báo không được lọt tới lúc chạy)
 - [ ] Test độc lập. Page Object không chứa assertion nghiệp vụ. Dữ liệu dùng chung đặt ở thư mục dữ liệu
+- [ ] **Không "lệch chuẩn" (drift) như code AI hay viết** (nguồn: chia sẻ cộng đồng, 2026-11-28): import `test` / `expect` từ `../fixtures` (web) hoặc `../fixtures/api` (API), không từ `@playwright/test`, không kéo thêm thư viện khi dự án đã có helper; dữ liệu lấy từ `tests/data` / helper, **không tự bịa** email, id, ngày cứng; cấu trúc giống spec mẫu tốt nhất đang có (SD-101 cho web, RB-101 cho API): thao tác nằm trong Page Object / client, setup không lặp, đặt tên nhất quán
+- [ ] **Mỗi assertion fail được khi tính năng hỏng** (assertion drift, kiểu nguy hiểm nhất): có bước **đối chứng trước thao tác** (thứ được kiểm chưa có sẵn: chữ xác nhận không nằm sẵn trong tiêu đề hay trong chính ô nhập); chỉ đọc phần **mới xuất hiện / mới đổi** sau thao tác, hoặc kiểm trạng thái phía server. Nghi ngờ thì **cố tình làm hỏng một lần** trong thư mục nháp (web: `page.route` trả 500 cho request của tính năng; API: trỏ `RB_BASE_URL` sang máy chủ giả trả sai; chỉ `npx playwright test -g`, kết quả ra thư mục nháp, **không** `EVIDENCE=1` / `test:run`, xem L19) rồi xem test có đỏ không (L15)
 - [ ] Ảnh evidence chụp **sau** thao tác gây lỗi, đủ mọi biến thể / mọi trang của bug, ghi chú đúng sự thật
 
 ### Kết quả chạy (executor)

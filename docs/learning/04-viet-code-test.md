@@ -84,6 +84,8 @@ Chạy test và phân loại kết quả là việc của **Bài 5 (executor)**.
 | Assertion theo hành vi web đang làm | Assertion theo **expected trong test case** |
 | Test phụ thuộc nhau (test B dùng kết quả test A) | Mỗi test tự chuẩn bị bằng fixture |
 | Viết mật khẩu thẳng vào test | Lấy từ `tests/data` |
+| `check()` hết giờ dù locator đúng: tick xong thì ô biến mất (vd danh sách chỉ hiện việc chưa xong) | `check()` = click **rồi tự kiểm lại** ô đã tick. Ô biến mất thì Playwright tìm lại locator: không còn gì khớp thì chờ tới hết giờ, **còn khớp ô khác thì tick nhầm ô đó** mà không báo lỗi. Dùng `click()`: trước đó khẳng định `await expect(o).not.toBeChecked()`, sau đó kiểm kết quả mong đợi (ô biến mất, bộ đếm giảm). Debug theo thứ tự: locator → giao diện sau thao tác → hàm thao tác làm gì phía sau |
+| Test AI viết **pass nhưng kiểm sai** (assertion drift), vd kiểm chữ "thành công" vốn nằm sẵn ở tiêu đề hoặc trong ô nhập | Đối chứng **trước** thao tác (chữ đó chưa có), chỉ đọc phần **mới xuất hiện**; nghi ngờ thì cố tình làm hỏng tính năng một lần (`page.route` trả 500) xem test có đỏ không. Soát thêm 4 kiểu lệch chuẩn khác của code AI: locator, dữ liệu bịa, import, cấu trúc (checklist trong `qa-reviewer.md`) |
 
 ## ✅ Checklist
 - [ ] Giải thích được Page Object Model và lợi ích

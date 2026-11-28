@@ -70,6 +70,7 @@ Với **mỗi test FAILED**, gán 1 trong 3 nhãn:
 ### `real-bug`: web hoạt động sai so với AC
 - Tìm được phần tử nhưng hành vi, dữ liệu hay trạng thái sai so với `expected_result` / AC
 - **Kiểm chứng**: đối chiếu thông báo lỗi với `expected_result` và mở trace hoặc screenshot trong `test-results/`.
+- **Ghi tách triệu chứng và nguyên nhân gốc** khi có bằng chứng: thấy gì sai (triệu chứng) và hỏng ở tầng nào (response API sai = backend; response đúng mà hiển thị sai = frontend; lỗi `pageerror` / console). Chưa rõ tầng thì ghi "chưa rõ", không đoán.
 
 **Khi không chắc thì chọn `real-bug`.** Để lọt bug nguy hiểm hơn là báo nhầm, và người duyệt sẽ lọc lại ở HITL #3.
 

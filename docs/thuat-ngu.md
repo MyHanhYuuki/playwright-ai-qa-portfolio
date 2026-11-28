@@ -42,6 +42,8 @@
 | Thuật ngữ | Nghĩa | Ví dụ |
 |---|---|---|
 | **Bug / Defect** | Hệ thống hoạt động khác với yêu cầu | Ô Username bị tô đỏ khi chỉ thiếu Password |
+| **Failure / Symptom** (triệu chứng) | Điều **nhìn thấy** sai khi chạy (ISTQB: failure). Thường chưa chỉ ra chỗ hỏng thật | `error_user` mất mô tả sản phẩm, console báo `This component failed to render!` (SD-102 BUG-21) |
+| **Root cause** (nguyên nhân gốc) | Lý do **sâu nhất** khiến lỗi được tạo ra (thiếu yêu cầu, hiểu sai, thiếu bước kiểm…). ISTQB: sai sót của người (error) → chỗ sai trong sản phẩm (defect) → biểu hiện khi chạy (failure); root cause là lý do dẫn tới error đó. Test tốt fail **càng gần chỗ sai càng tốt** để lần ra nguyên nhân nhanh | TC-028: triệu chứng "fail đúng dự kiến"; defect: assertion kiểm class luôn có sẵn; root cause: không đối chứng trước / sau khi bấm → thêm bài học L15 |
 | **Severity** | Mức nghiêm trọng (QC đánh giá) | Critical / High / Medium / Low |
 | **Priority** | Độ ưu tiên sửa (PO/PM quyết định) | P1 / P2 / P3 |
 | **Defect triage** | Họp hoặc duyệt để phân loại bug, chốt severity và priority | HITL #3 |

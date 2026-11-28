@@ -85,6 +85,7 @@ evidence/
 | Báo "100% pass" mà không nói tới expected fail | Báo cáo tách riêng: pass / bug đã biết / flaky |
 | Thấy fail là báo bug ngay | Đọc lỗi: locator không tìm thấy thì thường là script-issue |
 | Test chập chờn thì tăng `retries` | Tìm nguyên nhân gốc, chỉ tăng timeout đúng chỗ cần |
+| Báo bug theo **triệu chứng** ("giao diện thiếu tên") mà không biết hỏng ở đâu | Tìm **nguyên nhân gốc**: response API đúng không (backend), đúng mà hiện sai (frontend), có lỗi JavaScript không. Test quan trọng nên kiểm response trang nhận được (`page.waitForResponse`, **đăng ký chờ trước** thao tác gây ra request) **trước** khi kiểm giao diện, và so dữ liệu với **expected độc lập** (test case / `tests/data`), không chỉ so giao diện với response |
 | Chỉ chạy 1 lần rồi kết luận | Chạy lặp (`--repeat-each`) trước khi kết luận ổn định |
 | Không để ý **số test đã chạy** (vd: lọc `-g "A\|B"` bị shell cắt, 0 test chạy) | Luôn đối chiếu dòng "N passed" với số TC mình chọn. Script gọi Playwright không qua shell (ai-log #7) |
 
