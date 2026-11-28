@@ -85,20 +85,27 @@ if (fs.existsSync(evDir)) {
   const caseRow = (tc) => `| ${firstLine(caseReadme(tc))} |${hasScreens ? ` ${screenOf[tc] ?? ''} |` : ''} ${resultLine(caseReadme(tc))} | [all-cases/${tc}](all-cases/${tc}/README.md) |`;
   const screenLabel = isApi ? 'Endpoint của TC' : 'Màn hình của TC';
   const caseHead = hasScreens ? [`| Test case | ${screenLabel} | Kết quả | Thư mục |`, '|---|---|---|---|'] : ['| Test case | Kết quả | Thư mục |', '|---|---|---|'];
+  // Command that made the evidence: test:run passes EVIDENCE_INDEX_CMD (it only calls us with --index-only)
+  const madeBy = process.env.EVIDENCE_INDEX_CMD || (indexOnly ? `npm run test:evidence -- ${feature} --index-only` : 'npm run test:evidence');
+  const hasBadLogin = fs.readFileSync(spec, 'utf8').includes('@bad-login');
+  const hasManual = list('bugs').some((b) => list(path.join('bugs', b)).includes('manual'));
   const lines = [
     `# Evidence: ${feature}`,
     '',
-    `> Tạo tự động bởi \`npm run test:evidence\` lúc ${new Date().toISOString()}.`,
+    // --index-only run by hand: the time is the index rebuild, NOT a test run (review-executor lượt 2 N1)
+    indexOnly && !process.env.EVIDENCE_INDEX_CMD
+      ? `> Mục lục dựng lại bằng \`${madeBy}\` lúc ${new Date().toISOString()} từ evidence có sẵn (không chạy test). Thời điểm chạy của từng test case ghi trong README của nó.`
+      : `> Tạo tự động bởi \`${madeBy}\` lúc ${new Date().toISOString()}.`,
     ...(isApi
       ? [
           '> Feature API: mỗi test case có README liệt kê từng bước, request / response (method, đường dẫn, mã, header chính, trích body) và dòng **"Cần xem"**. Không có ảnh / video.',
-          '> Token, cookie, Authorization, mật khẩu đã được che (`***`). Nhóm `@bad-login` lấy evidence từ lần chạy có nhóm này (mặc định không chạy lại ở đây, TD-27).',
+          '> Token, cookie, Authorization, mật khẩu đã được che (`***`).' + (hasBadLogin ? ' Nhóm `@bad-login` lấy evidence từ lần chạy có nhóm này (mặc định không chạy lại ở đây, TD-27).' : ''),
         ]
       : [
           '> Mỗi ảnh có **khung đỏ** khoanh vùng cần xem và dòng **"Cần xem"** nói rõ phải kiểm tra gì. Test case có bug (hoặc kết quả bất thường) có thêm video.',
           '> Thư mục `manual/` trong từng bug: ảnh **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi ảnh của test tự động.',
         ]),
-    ...(isApi ? ['> Thư mục `manual/` trong từng bug: **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi evidence của test tự động.'] : []),
+    ...(isApi && hasManual ? ['> Thư mục `manual/` trong từng bug: **tái hiện độc lập** (script riêng `npm run repro`, không dùng code test), tách khỏi evidence của test tự động.'] : []),
     '',
     '## Bug (theo ticket)',
     hasScreens ? `| Ticket_BUG | ${screenLabel} | Nội dung | Thư mục |` : '| Ticket_BUG | Nội dung | Thư mục |',

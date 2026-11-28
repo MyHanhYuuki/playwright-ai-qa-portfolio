@@ -136,7 +136,7 @@ for (const t of teardown) console.log(`api-teardown (${t.status}): ${t.annotatio
 console.log(`\nKết quả: ${out.replace(/\\/g, '/')} · ${s.total} test · Passed theo TC ${s.passed - s.expected_fail} · Failed theo TC ${s.failed + s.expected_fail} (bug đã biết ${s.expected_fail}) · flaky ${s.flaky} · skipped ${s.skipped}`);
 // API: rebuild the evidence index (README) from the evidence just written (review C1)
 if (isApi) {
-  const ev = spawnSync(process.execPath, ['scripts/run-evidence.mjs', feature, '--index-only'], { stdio: 'inherit' });
+  const ev = spawnSync(process.execPath, ['scripts/run-evidence.mjs', feature, '--index-only'], { stdio: 'inherit', env: { ...process.env, EVIDENCE_INDEX_CMD: 'npm run test:run' } });
   if (ev.status) console.warn(`⚠️  Dựng lại mục lục evidence lỗi, chạy tay: npm run test:evidence -- ${feature} --index-only`);
 }
 process.exit(run.status ?? 1);
