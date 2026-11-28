@@ -4,6 +4,8 @@
 // API features (*-api): `api` project, README per TC with request / response summaries (masked), no screenshot.
 //   The @bad-login group is EXCLUDED by default (--grep-invert @bad-login, RB-101 TD-27: it runs once per session
 //   with test:run); add --include-bad-login to run it here anyway (counts in the session budget).
+//   The @full group (e.g. RB-102 TC-013, TC-067: ~95 requests) is EXCLUDED by default (HITL #2 item 11) unless
+//   --include-full is given or -g picks TCs explicitly. Both exclusions go into ONE --grep-invert (Playwright takes only one).
 // Works on Windows, macOS, Linux.
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -22,11 +24,16 @@ let status = 0;
 const isApi = feature.endsWith('-api');
 const indexOnly = args.includes('--index-only');
 const includeBadLogin = args.includes('--include-bad-login');
-for (const flag of ['--index-only', '--include-bad-login']) if (args.includes(flag)) args.splice(args.indexOf(flag), 1);
+const includeFull = args.includes('--include-full');
+const explicitGrep = args.some((a) => a === '-g' || a === '--grep');
+for (const flag of ['--index-only', '--include-bad-login', '--include-full']) if (args.includes(flag)) args.splice(args.indexOf(flag), 1);
 if (!args.some((a) => a === '--project' || a.startsWith('--project='))) args.unshift(`--project=${isApi ? 'api' : 'chromium'}`);
-if (isApi && !includeBadLogin && !indexOnly) {
-  args.push('--grep-invert', '@bad-login');
-  console.log('ℹ️  API: bỏ nhóm @bad-login (TD-27, chạy 1 lần mỗi buổi bằng test:run). Thêm --include-bad-login nếu cần.');
+if (isApi && !indexOnly) {
+  const skip = [!includeBadLogin && '@bad-login', !includeFull && !explicitGrep && '@full'].filter(Boolean);
+  if (skip.length) {
+    args.push('--grep-invert', skip.join('|'));
+    console.log(`ℹ️  API: bỏ nhóm ${skip.join(' và ')} (@bad-login: TD-27, chạy 1 lần mỗi buổi bằng test:run; @full: HITL #2 mục 11). Thêm --include-bad-login / --include-full nếu cần.`);
+  }
 }
 if (!indexOnly) {
   // Run the Playwright CLI with Node directly, WITHOUT a shell.

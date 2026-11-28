@@ -98,3 +98,28 @@ export const MSG_RB_AUTH = {
   /** MSG-04: body of 404 on GET /booking/:id after delete, text/plain */
   notFound: 'Not Found',
 } as const;
+
+/**
+ * RB-102 Restful Booker booking (qa-runs/restful-booker-booking-api/test-data.md, "Thông báo và header nguyên văn"), VERBATIM.
+ * MSG-02 (403 Forbidden) is shared with RB-101: use RB_REJECT in tests/data/restful-booker.ts.
+ * New error codes of HITL #1 (400 / 404 / 406 / 415) check the CODE only, not the body (IMP-01); existing correct
+ * errors (Not Found, Forbidden, Bad Request) are compared verbatim.
+ */
+export const MSG_RB_BOOKING = {
+  /** MSG-01: body of 404, text/plain */
+  notFound: 'Not Found',
+  /** MSG-03: body of DELETE 201 */
+  created: 'Created',
+  /** MSG-04: body of the existing correct 400 (PUT missing field, broken JSON, Content-Type / body mismatch) */
+  badRequest: 'Bad Request',
+  /** MSG-08: internal error leaked by Accept: application/x-www-form-urlencoded (BUG-49); must NOT appear */
+  formurlencodedLeak: 'formurlencoded is not a function',
+  /** MSG-09: broken date (BUG-44, BUG-45); must NOT appear */
+  nanDate: '0NaN-aN-aN',
+  /** MSG-10: Content-Type of a JSON response */
+  jsonType: 'application/json; charset=utf-8',
+  /** MSG-11: Content-Type of an error / Created response */
+  textType: 'text/plain; charset=utf-8',
+  /** MSG-12: Content-Type of the XML responses today (BUG-50); must NOT be this value */
+  htmlType: 'text/html; charset=utf-8',
+} as const;

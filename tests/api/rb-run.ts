@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import type { TestInfo } from '@playwright/test';
-import { RB_BAD_LOGIN_BUDGET, RB_RESET_PROBE, RB_REJECT, type Booking } from '../data/restful-booker';
+import { RB_BAD_LOGIN_BUDGET, RB_RESET_PROBE, RB_REJECT } from '../data/restful-booker';
 import type { RbApi } from './rb-client';
 
 /** Heroku 503, sleeping dyno, network error: an ENVIRONMENT error, not a bug (TD-26 point 5). */
@@ -182,9 +182,12 @@ export async function withResetGuard(api: RbApi, info: TestInfo, body: (attempt:
  */
 export async function cleanupTracked(api: RbApi, maxDeletes = 1): Promise<string[]> {
   const notes: string[] = [];
+  // One token for the whole pass (review D1); refreshed only when a DELETE answers 403 (token expired / reset)
+  let token: string | undefined;
   for (const t of api.tracked) {
     try {
       let done = false;
+      let retried = false;
       for (let i = 0; i < maxDeletes && !done; i++) {
         const g = await api.getBooking(t.id);
         if (g.status === 404) {
@@ -193,12 +196,21 @@ export async function cleanupTracked(api: RbApi, maxDeletes = 1): Promise<string
         } else if (g.status !== 200) {
           notes.push(`#${t.id}: GET ${g.status}, không xóa`);
           done = true;
-        } else if (!t.isOwner(g.json as Booking)) {
+        } else if (typeof g.json !== 'object' || g.json === null || Array.isArray(g.json) || !t.isOwner(g.json as Record<string, unknown>)) {
           notes.push(`#${t.id}: không phải booking của test (${t.label}), không xóa`);
           done = true;
         } else {
-          const token = await api.freshToken();
+          const reused = token !== undefined;
+          token ??= await api.freshToken();
           const d = await api.send('DELETE', `/booking/${t.id}`, { headers: { Cookie: `token=${token}` } });
+          if (d.status === 403 && reused && !retried) {
+            // the pass token may be stale (expired / reset): new token, and GET + owner check AGAIN before deleting (L17, review N3)
+            token = undefined;
+            retried = true;
+            i--;
+            notes.push(`#${t.id}: DELETE 403 với token dùng chung của lượt dọn, lấy token mới và kiểm lại chủ sở hữu`);
+            continue;
+          }
           notes.push(`#${t.id}: DELETE ${d.status}${[201, 403, 404].includes(d.status) ? '' : ' (bất thường)'}`);
           if (d.status !== 201) done = true;
         }

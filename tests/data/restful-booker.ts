@@ -75,3 +75,32 @@ export const RB101_PATCH = { totalprice: 303, additionalneeds: 'Dinner' } as con
 
 /** Booking after TD-20 applied to TD-18. */
 export const rb101Patched = (tc: string): Booking => ({ ...rb101Booking(tc), ...RB101_PATCH });
+
+// ---------------- RB-102 (restful-booker-booking-api) ----------------
+
+/**
+ * RB-102 TD-02: run-scoped firstname `QA-RB102-<RUN>`. Owner checks compare it EXACTLY (L17), never as a prefix.
+ * Every name a test sends that carries it (variants `-moi`, `-patch`, `-khac`, lastname / additionalneeds of variants
+ * that lose the firstname) is written to the run ledger before the request (TD-26 point 1).
+ */
+export const RB102_FIRSTNAME = `QA-RB102-${RB_RUN.rb102}`;
+
+/** RB-102 TD-03: standard POST booking. depositpaid false so a coercion to true shows up. */
+export const rb102Booking = (lastname: string): Booking => ({
+  firstname: RB102_FIRSTNAME,
+  lastname,
+  totalprice: 150,
+  depositpaid: false,
+  bookingdates: { checkin: '2031-01-10', checkout: '2031-01-12' },
+  additionalneeds: 'Breakfast',
+});
+
+/** RB-102 TD-04: PUT body, differs from TD-03 in ALL 7 values (lastname usually `<TC>-moi`). */
+export const rb102Put = (lastname: string): Booking => ({
+  firstname: `${RB102_FIRSTNAME}-moi`,
+  lastname,
+  totalprice: 275,
+  depositpaid: true,
+  bookingdates: { checkin: '2032-02-01', checkout: '2032-02-05' },
+  additionalneeds: 'Ăn sáng chay',
+});

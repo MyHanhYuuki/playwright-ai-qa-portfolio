@@ -4,6 +4,7 @@
 // Output: qa-runs/<feature>/run-results/stability-YYYYMMDD-HHMM.json (only counts per TC: no machine paths).
 // API features (*-api): `api` project; the @bad-login group is EXCLUDED (--grep-invert @bad-login, RB-101 TD-27 /
 //   HITL #1 Q12: never repeated) unless --include-bad-login is given. --cpu does not apply (no browser).
+//   The @full group is also EXCLUDED unless --include-full is given or -g picks TCs; both go into ONE --grep-invert.
 // It proves the tests are STABLE (same outcome every time). It does not store error text: the bug evidence is the official run (test:run).
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -21,8 +22,14 @@ const n = /^\d+$/.test(rest[0] ?? '') ? Number(rest.shift()) : 2;
 const isApi = feature.endsWith('-api');
 const includeBadLogin = rest.includes('--include-bad-login');
 if (includeBadLogin) rest.splice(rest.indexOf('--include-bad-login'), 1);
+const includeFull = rest.includes('--include-full');
+if (includeFull) rest.splice(rest.indexOf('--include-full'), 1);
+const explicitGrep = rest.some((a) => a === '-g' || a === '--grep');
 if (!rest.some((a) => a === '--project' || a.startsWith('--project='))) rest.unshift(`--project=${isApi ? 'api' : 'chromium'}`);
-if (isApi && !includeBadLogin) rest.push('--grep-invert', '@bad-login');
+if (isApi) {
+  const skip = [!includeBadLogin && '@bad-login', !includeFull && !explicitGrep && '@full'].filter(Boolean);
+  if (skip.length) rest.push('--grep-invert', skip.join('|'));
+}
 const cpuAt = rest.indexOf('--cpu');
 const cpu = cpuAt >= 0 ? Number(rest.splice(cpuAt, 2)[1]) : 0;
 if (cpuAt >= 0 && isApi) {

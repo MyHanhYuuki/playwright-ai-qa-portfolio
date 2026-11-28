@@ -83,6 +83,12 @@ export const hasTokenField = (r: ApiResult) => isObj(r.json) && 'token' in r.jso
 export const mentionsToken = (r: ApiResult) => hasTokenField(r) || /token/i.test(r.text);
 /** Body parses to a JSON object (not array, not null) */
 export const isJsonObject = (r: ApiResult) => isObj(r.json);
+/** `bookingid` of a create response: JSON `{"bookingid": n}` or XML `<bookingid>n</bookingid>` (Accept: application/xml). */
+export const bookingIdOf = (r: ApiResult): number | undefined => {
+  if (isObj(r.json) && typeof r.json.bookingid === 'number') return r.json.bookingid;
+  const m = /<bookingid>\s*(\d+)\s*<\/bookingid>/.exec(r.text);
+  return m ? Number(m[1]) : undefined;
+};
 
 /**
  * Signs of an internal error leaking in an error body (RB-101 TD-28 note, IMP-10; RB-102 MSG-14).
@@ -117,7 +123,7 @@ export class RbApi {
   failedLogins = 0;
   private secrets = new Set<string>();
   /** bookings this test created: cleaned in the fixture teardown (TD-26 point 4) */
-  readonly tracked: { id: number; isOwner: (b: Booking) => boolean; label: string }[] = [];
+  readonly tracked: { id: number; isOwner: (b: Record<string, unknown>) => boolean; label: string }[] = [];
 
   constructor(
     readonly ctx: APIRequestContext,
@@ -222,8 +228,10 @@ export class RbApi {
       data = JSON.stringify(opts.json);
       if (!Object.keys(headers).some((h) => h.toLowerCase() === 'content-type')) headers['Content-Type'] = 'application/json';
     }
+    // Playwright turns `data: ''` into the 2-byte JSON string `""` (Content-Length 2); a real empty body must be a 0-byte Buffer (review A1)
+    if (data === '') data = Buffer.alloc(0);
     const reqBody =
-      data !== undefined ? (Buffer.isBuffer(data) ? (data.length ? data.toString('utf8') : '(0 byte)') : data || '(chuỗi rỗng)')
+      data !== undefined ? (Buffer.isBuffer(data) ? (data.length ? data.toString('utf8') : '(0 byte)') : data)
       : opts.form ? `form: ${new URLSearchParams(opts.form).toString()}`
       : opts.multipart ? `multipart: ${Object.entries(opts.multipart).map(([k, v]) => `${k}=${v}`).join(', ')}`
       : '';
@@ -334,18 +342,40 @@ export class RbApi {
    * after the server stored it must still be found by the teardown sweep); the id is added after the response.
    */
   async createBooking(body: Booking, opts: { names?: string[]; headers?: Record<string, string> } = {}) {
-    const entry = this.run.ledgerIntent({ tc: this.tc, firstname: body.firstname, lastname: body.lastname, names: opts.names ?? [body.firstname] });
-    const res = await this.send('POST', '/booking', { json: body, headers: { Accept: 'application/json', ...(opts.headers ?? {}) } });
-    const id = isObj(res.json) && typeof res.json.bookingid === 'number' ? res.json.bookingid : undefined;
+    return this.createBookingVia(
+      {
+        firstname: body.firstname,
+        lastname: body.lastname,
+        names: opts.names ?? [body.firstname],
+        isOwner: (b) => b.firstname === body.firstname && b.lastname === body.lastname,
+        label: `${body.firstname} / ${body.lastname}`,
+      },
+      () => this.send('POST', '/booking', { json: body, headers: { Accept: 'application/json', ...(opts.headers ?? {}) } }),
+    );
+  }
+
+  /**
+   * Any create request of RB-102 (raw / invalid JSON, XML, urlencoded, no Content-Type, unsupported Accept...): same
+   * path as `createBooking`, the owner goes to the run ledger BEFORE `send()` runs, then a `bookingid` found in the
+   * response (JSON or XML) is added to the ledger and tracked for the cleanup. `names` = run-unique names the server
+   * may store (teardown sweep); `isOwner` must be an EXACT match (L17).
+   */
+  async createBookingVia(
+    owner: { firstname: string; lastname: string; names: string[]; isOwner: (b: Record<string, unknown>) => boolean; label: string },
+    send: () => Promise<ApiResult>,
+  ) {
+    const entry = this.run.ledgerIntent({ tc: this.tc, firstname: owner.firstname, lastname: owner.lastname, names: owner.names });
+    const res = await send();
+    const id = bookingIdOf(res);
     if (id !== undefined) {
       this.run.ledgerId(entry, id);
-      this.track(id, (b) => b.firstname === body.firstname && b.lastname === body.lastname, `${body.firstname} / ${body.lastname}`);
+      this.track(id, owner.isOwner, owner.label);
     }
     return { res, id };
   }
 
   /** Register a booking for the cleanup of this test. `isOwner` must be an EXACT match (L17), never a prefix. */
-  track(id: number, isOwner: (b: Booking) => boolean, label: string) {
+  track(id: number, isOwner: (b: Record<string, unknown>) => boolean, label: string) {
     if (!this.tracked.some((t) => t.id === id)) this.tracked.push({ id, isOwner, label });
   }
 

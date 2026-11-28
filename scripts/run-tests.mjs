@@ -2,6 +2,7 @@
 // Usage: npm run test:run -- <feature> [-g "TC-001|TC-004"] [--triggered-by healer-round-1] [other playwright args]
 // Project: a feature named *-api runs in the `api` project (no browser, + api-teardown sweep), others in `chromium`.
 // API features: test:run is THE run that includes the @bad-login group (once per session, RB-101 TD-27).
+//   The @full group (e.g. RB-102 TC-013, TC-067) is excluded unless --include-full is given or -g picks TCs (HITL #2 item 11).
 // Output: qa-runs/<feature>/run-results/run-YYYYMMDD-HHMMSS.json (schema: .claude/agents/executor.md)
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -26,8 +27,14 @@ for (let i = rest.length - 1; i >= 0; i--) {
 const isApi = feature.endsWith('-api');
 const project = isApi ? 'api' : 'chromium';
 if (!rest.some((a) => a === '--project' || a.startsWith('--project='))) rest.unshift(`--project=${project}`);
+const fullAt = rest.indexOf('--include-full');
+const includeFull = fullAt >= 0;
+if (includeFull) rest.splice(fullAt, 1);
+const explicitGrep = rest.some((a) => a === '-g' || a === '--grep');
+if (isApi && !includeFull && !explicitGrep) rest.push('--grep-invert', '@full');
 const gIndex = rest.findIndex((a) => a === '-g' || a === '--grep');
-const scope = gIndex >= 0 ? `subset:${rest[gIndex + 1]}` : 'full';
+// 'full' only when nothing is filtered out; the default API run drops @full (RTM then warns: those TCs show "Not run", review N1)
+const scope = gIndex >= 0 ? `subset:${rest[gIndex + 1]}` : isApi && !includeFull ? 'default:không @full' : 'full';
 
 const now = new Date();
 const p2 = (n) => String(n).padStart(2, '0');

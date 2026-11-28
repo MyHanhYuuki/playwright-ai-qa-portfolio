@@ -47,6 +47,7 @@ npm test                     # run all tests
 npm run test:smoke           # smoke check only (site is up)
 npm run test:ui              # interactive UI mode
 npm run test:run -- saucedemo-login-screen       # run one feature, save results to qa-runs/<feature>/run-results/
+                                                 # (API features also skip the costly @full group; add --include-full to run it)
 npm run test:evidence -- saucedemo-login-screen  # screenshots (red boxes + notes) + video per test case
 npm run rtm -- saucedemo-login-screen            # build the traceability matrix (rtm.md + rtm-report.html)
 npm run test:stability -- saucedemo-products-cart-screen  # run a feature N times (default 2), save a stability summary

@@ -13,7 +13,7 @@ Dự án portfolio học test automation bằng **Playwright + TypeScript** vớ
 ```bash
 npm test               # chạy toàn bộ test WEB (project chromium; không chạy API)
 npm run test:smoke     # chỉ test @smoke của web
-npm run test:api       # chạy toàn bộ test API (project api, máy chủ công khai: chỉ chạy khi cần, kèm nhóm @bad-login)
+npm run test:api       # chạy test API (project api, máy chủ công khai: chỉ chạy khi cần, kèm nhóm @bad-login, BỎ nhóm @full)
 npm run test:api:smoke # chỉ test @smoke của API
 npm run test:ui        # UI mode, chỉ project chromium (web). Lệnh trần `npx playwright test` chạy CẢ 2 project (chromium + api), tức gửi cả nhóm @bad-login lên máy chủ công khai: luôn thêm `--project=`
 npm run test:run -- <feature>       # chạy test 1 feature, lưu kết quả vào qa-runs/<feature>/run-results/ (tên file theo giờ UTC, cùng đồng hồ với tên lần chạy QA-RBxxx-… trong dữ liệu).
@@ -28,7 +28,7 @@ npm run typecheck      # kiểm tra kiểu TypeScript (Playwright không tự ki
 npm run repro          # tái hiện độc lập các bug (tests/repro/*.repro.ts) → evidence/bugs/*/manual/
 ```
 Thêm `-g "TC-001|TC-004"` để chạy một nhóm test. Mọi lệnh có `<feature>` chỉ đụng tới feature đó.
-**Web và API tách theo tên file**: `*-api.spec.ts` chạy ở project `api` (không mở trình duyệt, `retries: 0`, 1 worker, sau đó project `api-teardown` quét sổ lần chạy), mọi spec khác ở project `chromium`. Các lệnh `<feature>` tự chọn project theo tên feature. Feature API: `test:evidence` / `test:stability` mặc định **bỏ** nhóm `@bad-login` (TD-27, chỉ chạy 1 lần mỗi buổi bằng `test:run`: lần đó cũng làm mới evidence BUG-37 → BUG-40); thêm `--include-bad-login` nếu thật sự cần. Ngân sách 30 lần đăng nhập sai được đếm theo **ngày UTC** trong file tạm của hệ điều hành (`rb-bad-login-<yyyymmdd>.json`, ngoài `test-results/`): quá 30 thì test từ chối gửi; chỉ khi người dùng đồng ý mở lại thì đặt `RB_BAD_LOGIN_RESET=1`. Biến môi trường API: `RB_BASE_URL`, `RB_ADMIN_USERNAME`, `RB_ADMIN_PASSWORD` (để trống = giá trị công khai của tài liệu). CI: job web chỉ chạy `chromium`; job `api-full` chạy tay + hằng tuần; PR chỉ chạy API `@smoke`, không chặn.
+**Web và API tách theo tên file**: `*-api.spec.ts` chạy ở project `api` (không mở trình duyệt, `retries: 0`, 1 worker, sau đó project `api-teardown` quét sổ lần chạy), mọi spec khác ở project `chromium`. Các lệnh `<feature>` tự chọn project theo tên feature. Feature API: `test:evidence` / `test:stability` mặc định **bỏ** nhóm `@bad-login` (TD-27, chỉ chạy 1 lần mỗi buổi bằng `test:run`: lần đó cũng làm mới evidence BUG-37 → BUG-40); thêm `--include-bad-login` nếu thật sự cần. **Mọi lệnh mặc định cũng bỏ nhóm `@full`** (TC tốn nhiều request, vd RB-102 TC-013 và TC-067, HITL #2 mục 11): `test:evidence` / `test:stability` gộp thành **một** `--grep-invert "@bad-login|@full"` (Playwright chỉ nhận một biểu thức), `test:run` giữ `@bad-login` (đó là lần chạy của nhóm này) nhưng bỏ `@full`; thêm `--include-full` để chạy cả `@full`. Khi chỉ định TC bằng `-g` thì không tự bỏ `@full`. `test:api` bỏ `@full`; job CI `api-full` vẫn chạy đủ (`npx playwright test --project=api`). Ngân sách 30 lần đăng nhập sai được đếm theo **ngày UTC** trong file tạm của hệ điều hành (`rb-bad-login-<yyyymmdd>.json`, ngoài `test-results/`): quá 30 thì test từ chối gửi; chỉ khi người dùng đồng ý mở lại thì đặt `RB_BAD_LOGIN_RESET=1`. Biến môi trường API: `RB_BASE_URL`, `RB_ADMIN_USERNAME`, `RB_ADMIN_PASSWORD` (để trống = giá trị công khai của tài liệu). CI: job web chỉ chạy `chromium`; job `api-full` chạy tay + hằng tuần; PR chỉ chạy API `@smoke`, không chặn.
 
 ## Bắt đầu chức năng mới (màn hình mới)
 Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `reviews/review-final.md`).
@@ -37,7 +37,7 @@ Làm mẫu theo `qa-runs/saucedemo-login-screen/` (đã qua review cuối: `revi
 3. Chạy `/qa-orchestrator <feature>`, đi qua từng bước và 3 điểm HITL.
 4. Đánh số:
    - `TC-xxx`, `TVP-xxx`, `Qn`, `O-xx`, `IMP-xx`: **riêng từng feature**, bắt đầu từ 001 / 1.
-   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, sản phẩm + giỏ BUG-05 → BUG-21, thanh toán BUG-22 → BUG-36, Restful Booker auth BUG-37 → BUG-40, booking BUG-41 → BUG-59, feature sau bắt đầu từ **BUG-60**).
+   - `BUG-xx`: **chung cả repo**, nối tiếp số lớn nhất đã có trong mọi `known-issues.md` (Login đã dùng BUG-01 → BUG-04, sản phẩm + giỏ BUG-05 → BUG-21, thanh toán BUG-22 → BUG-36, Restful Booker auth BUG-37 → BUG-40, booking BUG-41 → BUG-60, feature sau bắt đầu từ **BUG-61**).
    - Bug mới hay **biến thể** của bug cũ: cùng thành phần / cùng chỗ sửa → ghi là biến thể của bug cũ (giữ số cũ); khác form / khác điểm kiểm → cấp số mới. Ghi rõ lý do trong `known-issues.md`.
 5. Bug đã biết: ghi `BUG-xx` vào **câu đầu** cột `notes` của TC, vd `Bug đã biết BUG-08 (O-18): dự kiến FAIL. …` (RTM chỉ đọc câu đầu; nhắc BUG id ở câu sau chỉ là tham khảo), thêm vào `tests/data/bugs.ts`, test dùng `test.fail()` + tag `@BUG-xx`.
 6. Dữ liệu dùng chung: thêm vào `tests/data/users.ts`, `messages.ts` (nhóm mới cho feature), không tạo file trùng.

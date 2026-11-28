@@ -7,7 +7,7 @@
   "scripts": {
     "test": "playwright test --project=chromium",
     "test:smoke": "playwright test --project=chromium --grep @smoke",
-    "test:api": "playwright test --project=api",
+    "test:api": "playwright test --project=api --grep-invert @full",
     "test:api:smoke": "playwright test --project=api --grep @smoke",
     "test:ui": "playwright test --ui --project=chromium",
     "test:headed": "playwright test --project=chromium --headed",
