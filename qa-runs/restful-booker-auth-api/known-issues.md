@@ -2,7 +2,7 @@
 
 > Các bug và vấn đề **đã thấy trong lúc phân tích (khám phá API ngày 2026-11-26), trước khi chạy test**. Mỗi bug phải được test tương ứng bắt được (fail đúng chỗ). Bug nào không bắt được tức là test sai.
 > Bug chỉ chính thức thành **defect** sau khi chạy test và duyệt ở HITL #3 (`defects.md`).
-> **Số chính thức BUG-37 → BUG-40** (chung cả repo, sau BUG-36 của SD-103) do orchestrator cấp ở HITL #1; RB-102 dùng tiếp BUG-41 → BUG-59. Số tạm dùng lúc phân tích và cách quy đổi: bảng "Số tạm → số chính thức (HITL #1)" bên dưới.
+> **Số chính thức BUG-37 → BUG-40** (chung cả repo, sau BUG-36 của SD-103) do orchestrator cấp ở HITL #1; RB-102 dùng tiếp BUG-41 → BUG-60 (BUG-60 phát hiện ở script-gen RB-102). Số tạm dùng lúc phân tích và cách quy đổi: bảng "Số tạm → số chính thức (HITL #1)" bên dưới.
 > **HITL #1 (2026-11-26) đã trả lời cả 11 câu** ("theo đề xuất hết", Q1 là dòng tham chiếu): 4 bug dưới đây **đã xác nhận**; giới hạn thử sai **không phải bug** (IMP-05, đính chính của qa-reviewer); `/ping` trả `201` là hợp đồng tài liệu (IMP-06). Quyết định chi tiết: mục "Quyết định HITL #1".
 > **Quy tắc biến thể hay số mới** (`CLAUDE.md` điểm 4): cùng thành phần / cùng chỗ sửa → biến thể (giữ số); khác điểm kiểm → số mới.
 > - **Đối chiếu bug cũ của repo**: BUG-01 → BUG-36 đều thuộc web SauceDemo (hệ thống khác, chỗ sửa khác), nên **không** có bug nào của RB-101 là biến thể của bug cũ. Riêng **BUG-02** (SD-101: tự tạo cookie phiên là vào được) đã được kiểm **dạng tương tự** trên API này: token tự tạo (`abc123` của tài liệu), token bị sửa 1 ký tự, viết hoa, rỗng đều bị từ chối và booking không đổi (O-19). **Không** có lỗi kiểu BUG-02 ở Restful Booker.
