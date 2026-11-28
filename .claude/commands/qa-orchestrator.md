@@ -68,6 +68,7 @@ Sau **mỗi** bước test-design, test-impl, script-gen, executor: gọi agent 
 - **Vòng bắt buộc trước khi push** (người dùng chốt 2026-11-25): qa-reviewer soát → sửa theo review, điền bảng "Xử lý sau review" → qa-reviewer **kiểm lại lượt 2** (thêm mục `## Kiểm lại lượt 2`) tới khi ✅ → trình người dùng danh sách commit → người dùng duyệt mới push. Áp dụng cho mọi thay đổi, kể cả việc nhỏ ngoài bước (script, tài liệu agent).
 - **Mặc định chạy tuần tự từng feature** để đỡ tốn hạn mức (người dùng chốt 2026-11-27, sau khi Bài 10 chạm hạn mức chi tiêu giữa chừng). Chỉ chạy song song khi người dùng yêu cầu.
 - **Agent chạy song song** (vd 2 feature cùng lúc): mỗi agent dùng **thư mục nháp riêng** (`<scratchpad>/<feature>-<bước>/`), số bug tạm riêng (`BUG-A*`, `BUG-B*`), chỉ sửa file của feature mình; orchestrator chốt các quyết định chung cho cả hai (Bài 10: agent RB-102 ghi đè script nháp của RB-101).
+- **Chạy thử không được ghi vào `qa-runs/`** (người dùng chốt 2026-11-27, sau khi lần chạy thử với server giả của reviewer đè evidence thật của RB-101 TC-004). Chỉ **executor** (lần chạy chính thức) được dùng `npm run test:run`, `npm run test:evidence` hoặc `EVIDENCE=1`, vì các lệnh này ghi vào `qa-runs/<feature>/run-results/` và `evidence/`. Chạy thử, chạy bằng server giả (stub), chạy của reviewer: dùng `npx playwright test <spec> -g "<TC>" --reporter=json`, ghi kết quả ra thư mục nháp. Trước mỗi lần chạy có ghi vào `qa-runs/`: nếu `git status` thấy evidence / run-results **chưa commit**, sao lưu ra thư mục nháp trước.
 - **Phiếu HITL do orchestrator tóm tắt** (gộp câu hỏi, rút gọn, thêm đề xuất) **cũng phải qua qa-reviewer** đối chiếu với `q-and-a.md` trước khi đưa người dùng: không sót câu / ý con, đề xuất khớp bản gốc, chỗ orchestrator tự thêm ý phải được nêu rõ (người dùng chốt 2026-11-26).
 - **Soát đủ mà không tốn thừa** (người dùng chốt 2026-11-26):
   - Đưa sẵn cho qa-reviewer **kết quả chạy** (`run-results/*.json`, số liệu, lỗi đã đọc): reviewer chỉ chạy lại test nào nghi ngờ (`-g`), không chạy lại cả spec.
@@ -120,7 +121,7 @@ Gọi `qa-reviewer` (script-gen).
 **Đổi quy ước giữa chừng** (vd thêm cột `screen`): liệt kê các file đã tạo bị ảnh hưởng, cập nhật chúng trước HITL tiếp theo.
 
 ## Bước 4: executor
-Gọi agent `executor` (phạm vi: cả feature, `npm run test:run -- <feature>`). Đọc `triage.md` (mục mới nhất), lưu `last_run_id`.
+Gọi agent `executor` (phạm vi: cả feature, `npm run test:run -- <feature>`; feature `-api` thêm `--include-full` để gồm cả tag `@full`, review N1 RB-102). Đọc `triage.md` (mục mới nhất), lưu `last_run_id`.
 Không còn script-issue thì executor chụp evidence: `npm run test:evidence -- <feature>`.
 Gọi `qa-reviewer` (executor) để soát phân loại, nhất là đối chiếu với `known-issues.md`.
 - Có `script-issue` → **Vòng lặp healer**

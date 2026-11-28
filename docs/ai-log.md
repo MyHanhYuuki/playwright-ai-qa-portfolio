@@ -22,6 +22,8 @@
 | 12 | 2026-11-25 | Kiểm lại phát hiện của reviewer | Thử tái hiện lỗi console của `error_user` | AI kết luận vội "không tái hiện được" vì chỉ nghe sự kiện `console`, trong khi lỗi là `pageerror` | Người dùng yêu cầu trao đổi lại với reviewer; reviewer kiểm 3 lần, AI kiểm lại: đúng là `pageerror` |
 | 13 | 2026-11-25 | Bug report SD-102 (BUG-21) | Báo lỗi console của `error_user` ở trang chi tiết | AI ghi "giao diện vẫn đúng", chấm Low; thực tế **mất mô tả sản phẩm**. Cũng gọi ảnh do script chụp là "tái hiện bằng tay" | Review cuối so với `standard_user` phát hiện; người dùng nâng Medium; TC-046 kiểm thêm mô tả; đổi tên "tái hiện độc lập", lưu script trong repo |
 | 14 | 2026-11-25 | Test BUG-01 (SD-101 TC-028) | Viết assertion kiểm ô bị đánh dấu lỗi | Kiểm class `input_error`, class này **luôn có sẵn** trên ô nhập: bước kiểm ô lỗi luôn đúng, bước kiểm ô không lỗi luôn sai, test fail "đúng như dự kiến" vì lý do sai suốt từ Bài 4 | qa-reviewer phát hiện khi review test case SD-103; người dùng cho sửa; đổi sang class `error` + đếm icon, thêm bước đối chứng, bài học L15 |
+| 15 | 2026-11-25 | Điền bảng "Xử lý sau review" bằng script | Viết script Node sửa file review | Regex sai làm chữ chèn vào dòng tiêu đề, bảng vẫn trống, script vẫn in "ok"; AI **đổ lỗi nhầm cho reviewer** | AI đọc lại file sau khi chạy script; đính chính nguyên nhân trong 2 file review |
+| 16 | 2026-11-27 | Review code test API RB-101 | Cho reviewer chạy thử với server giả (stub) | Lần chạy thử **đè evidence thật chưa commit** của TC-004; thêm bộ đếm đăng nhập sai theo ngày nhưng **không ghi bù** lần chạy trước đó, luật bị hở trong ngày | qa-reviewer phát hiện chỗ hở bộ đếm; không commit evidence hỏng, chạy lại toàn bộ RB-101 ở ngày UTC mới; ghi bù bộ đếm; luật mới: chạy thử không ghi vào `qa-runs/` |
 
 ---
 
@@ -109,3 +111,9 @@
 - **Phát hiện**: lần thứ 3 điền bảng, AI đọc lại file ngay sau khi chạy script và thấy bảng vẫn trống, dòng tiêu đề dài bất thường.
 - **Xử lý**: sửa dòng tiêu đề của 2 file review, điền lại bảng bằng script mới (điền theo từng ô trong đúng mục, dừng nếu không thấy dòng hoặc ô đã có chữ), đính chính nguyên nhân trong 2 file review.
 - **Bài học**: script "in ok" chưa chắc đã làm đúng: **đọc lại kết quả** sau mỗi lần sửa file bằng script. Trước khi đổ lỗi cho bên khác, kiểm lại phần việc của mình trước.
+
+### #16: Lần chạy thử đè evidence thật, bộ đếm mới bỏ sót lần chạy cũ
+- **Chuyện xảy ra**: khi review code test RB-101, reviewer chạy thử với server giả (stub) với `EVIDENCE=1` bật, nên ghi thẳng vào `qa-runs/restful-booker-auth-api/evidence/`, đè evidence thật của TC-004 lúc 14h35. Thư mục chưa commit, không có bản sao, nên mất. Cùng đợt, AI thêm bộ đếm "≤ 30 lần đăng nhập sai mỗi ngày UTC" nhưng không ghi bù khoảng 30 lần của lần chạy 14h35: code vẫn cho gửi thêm 30 lần nữa trong ngày, trái tinh thần TD-27 (server dùng chung).
+- **Phát hiện**: AI thấy evidence TC-004 chứa dữ liệu giả trước khi commit; qa-reviewer phát hiện file đếm của ngày chưa tồn tại khi được hỏi nên chạy lại lúc nào.
+- **Xử lý**: không commit `evidence/` và `run-results/` của RB-101; executor chạy lại toàn bộ ở ngày UTC mới; ghi bù bộ đếm của ngày bằng 30; thêm luật vào `qa-orchestrator.md` và `qa-reviewer.md` (nguyên tắc 12, bài học L19): chỉ executor được ghi vào `qa-runs/`, chạy thử ghi ra thư mục nháp, sao lưu evidence chưa commit trước khi chạy.
+- **Bài học**: trước khi chạy một lệnh, biết rõ nó **ghi vào đâu**. Thêm một cơ chế kiểm soát mới thì phải tính cả những gì đã xảy ra trước khi có nó.

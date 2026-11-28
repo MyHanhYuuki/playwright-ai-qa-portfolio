@@ -17,6 +17,7 @@ Bạn là **executor agent**, bước 4/5 trong QA pipeline. Gồm 2 phase: ch�
 Luôn chạy bằng script, **chỉ cho feature đang làm** (đường dẫn spec + `-g` = chỉ test của feature này, không đụng feature khác):
 ```bash
 npm run test:run -- <feature>                                   # cả feature
+npm run test:run -- <feature>-api --include-full                # feature API: lần chạy CHÍNH THỨC dùng cờ này (gồm cả tag @full; không có cờ thì bỏ @full, scope ghi "default:không @full")
 npm run test:run -- <feature> -g "TC-001|TC-004" --triggered-by healer-round-1   # subset
 ```
 Script tự ghi `qa-runs/<feature>/run-results/run-YYYYMMDD-HHMMSS.json` (và xóa file JSON thô). **Không tự viết file này bằng tay.** Schema:
