@@ -155,18 +155,24 @@ Kiểm lại trên API thật 2026-11-26. MSG ghi "(hiện trạng)" chỉ để
 | MSG-14 | Dấu hiệu lỗi nội bộ, **không được xuất hiện** trong body phản hồi lỗi: chuỗi `is not a function`, `Error:`, dòng bắt đầu bằng `at ` (stack trace), đường dẫn mã nguồn (`/app/…`, `node_modules`, `.js:<số>`) |
 
 ## Ước lượng số request mỗi lần chạy
-Ước lượng (±15 %), tính cả token, `GET` kiểm chủ sở hữu và dọn dẹp, chưa tính làm lại do `env-reset`. **Mặc định** = mọi TC trừ tag `@full`; **`@full`** = thêm TC-013, TC-067 (HITL #2: chạy theo lịch / trước release). "Hiện tại": các bug đang tạo booking ngoài ý muốn nên phải dọn thêm; "Khi đã sửa": các biến thể lỗi trả 4xx, không phải dọn.
+**Số đo thật** (cập nhật 2026-11-28, review script-gen D1, executor): lần chạy chính thức `run-20261128-052139` (`npm run test:run -- restful-booker-booking-api --include-full`, 69 TC, 0 `env-reset`, 0 đăng nhập sai, dọn sót 0). Mỗi test ghi annotation `requests` (gồm token, `GET` kiểm chủ sở hữu và dọn dẹp `afterEach`); cộng theo `test.describe` trong spec. Tổng 69 test = **962** request, khớp số của teardown ("cả lần chạy (chưa tính teardown): 962 request"); teardown **15** request.
+- **Cả `@full`: hiện tại** = số đo trực tiếp.
+- **Mặc định: hiện tại** = số đo trừ request của 2 TC `@full`: TC-013 **34** (nhóm `POST /booking`) và TC-067 **54** (nhóm Chung), tổng 88. Teardown giữ 15 (giả định: teardown chỉ truy vấn theo firstname của lần chạy và lastname mang `QA-RB102-<RUN>`, số tên này gần như không đổi khi bỏ 2 TC). Chưa đo bằng một lần chạy mặc định riêng.
+- **"Khi đã sửa"** vẫn là **ước lượng** (chưa đo được khi bug còn): số đo hiện tại trừ phần dọn dẹp do bug mà bảng cũ đã tính (chênh lệch "hiện tại − khi đã sửa" của bảng ước lượng cũ: `POST` 66 / 89 với `@full`, `PUT` 6, `PATCH` 11, Chung 16).
+- Số TC theo describe đúng như spec: TC-026 nằm trong describe **Chung** (bảng cũ xếp vào `GET /booking/:id`).
 
-| Nhóm describe | Số TC (trong đó `@full`) | Mặc định: hiện tại | Mặc định: khi đã sửa | Cả `@full`: hiện tại | Cả `@full`: khi đã sửa |
-|---|---|---|---|---|---|
-| `POST /booking` | 25 (1) | ~245 | ~179 | ~278 | ~189 |
-| `GET /booking/:id` | 3 (0) | ~15 | ~15 | ~15 | ~15 |
-| `GET /booking` | 11 (0) | ~83 | ~83 | ~83 | ~83 |
-| `PUT /booking/:id` | 7 (0) | ~79 | ~73 | ~79 | ~73 |
-| `PATCH /booking/:id` | 7 (0) | ~91 | ~80 | ~91 | ~80 |
-| `DELETE /booking/:id` | 2 (0) | ~24 | ~24 | ~24 | ~24 |
-| Chung | 14 (1) | ~226 | ~210 | ~279 | ~263 |
-| Teardown (quét sổ lần chạy, TD-26) | – | ~15 | ~15 | ~15 | ~15 |
-| **Tổng** | **69 (2)** | **~778** | **~679** | **~864** | **~742** |
+| Nhóm describe | Số TC (trong đó `@full`) | Mặc định: hiện tại (đo) | Mặc định: khi đã sửa (ước lượng) | Cả `@full`: hiện tại (đo) | Cả `@full`: khi đã sửa (ước lượng) | Ước lượng cũ (mặc định / `@full`, hiện tại) |
+|---|---|---|---|---|---|---|
+| `POST /booking` | 25 (1: TC-013) | 265 | ~199 | 299 | ~210 | ~245 / ~278 |
+| `GET /booking/:id` | 2 (0) | 10 | ~10 | 10 | ~10 | ~15 / ~15 |
+| `GET /booking` | 11 (0) | 82 | ~82 | 82 | ~82 | ~83 / ~83 |
+| `PUT /booking/:id` | 7 (0) | 93 | ~87 | 93 | ~87 | ~79 / ~79 |
+| `PATCH /booking/:id` | 7 (0) | 123 | ~112 | 123 | ~112 | ~91 / ~91 |
+| `DELETE /booking/:id` | 2 (0) | 33 | ~33 | 33 | ~33 | ~24 / ~24 |
+| Chung | 15 (1: TC-067) | 268 | ~252 | 322 | ~306 | ~226 / ~279 |
+| Teardown (quét sổ lần chạy, TD-26) | – | ~15 | ~15 | 15 | ~15 | ~15 / ~15 |
+| **Tổng** | **69 (2)** | **~889** (874 + teardown) | **~790** | **977** (962 + 15) | **~855** | ~778 / ~864 |
 
-Sau HITL #2 (tag `@full` cho TC-013, TC-067; biến thể bị từ chối đúng chỉ 1 `GET` so mốc; bỏ v04 trùng RB-101 ở TC-068) lần chạy mặc định giảm khoảng 11 % so với ~875 ban đầu (~778), vẫn cao hơn mức "dưới ~300" của lưu ý 7: phần lớn là dọn dẹp (2 request mỗi booking, nhiều booking do bug đang tạo ngoài ý muốn) và các TC nhiều biến thể dữ liệu. Chạy trên bản Restful Booker cục bộ qua `RB_BASE_URL` (reviewer gợi ý, chưa thử) sẽ bỏ được giới hạn này.
+So với ước lượng cũ: mặc định ~889 / ~778 (+14 %), `@full` 977 / ~864 (+13 %), vẫn trong biên ±15 % nhưng sát mép; lần chạy thử script-gen trước khi `cleanupTracked` dùng chung token là 1015. Nhóm vượt nhiều nhất: `PATCH` (+35 %), `DELETE` (+38 %), `PUT` (+18 %), Chung (+19 %, +14 % nếu không tính TC-026 vừa chuyển nhóm từ `GET /booking/:id`: 258 / 226). Dòng `GET /booking/:id` không so được với bảng cũ (khác số TC: TC-026 đã chuyển sang Chung). Sổ lần chạy có 159 booking (dọn 2 request mỗi booking: `GET` + `DELETE`).
+
+Sau HITL #2 (tag `@full` cho TC-013, TC-067; biến thể bị từ chối đúng chỉ 1 `GET` so mốc; bỏ v04 trùng RB-101 ở TC-068) lần chạy mặc định giảm khoảng 11 % so với ~875 ban đầu (~778; ước lượng lúc HITL #2, số suy từ lần chạy đo được là ~889, xem bảng), vẫn cao hơn mức "dưới ~300" của lưu ý 7: phần lớn là dọn dẹp (2 request mỗi booking, nhiều booking do bug đang tạo ngoài ý muốn) và các TC nhiều biến thể dữ liệu. Chạy trên bản Restful Booker cục bộ qua `RB_BASE_URL` (reviewer gợi ý, chưa thử) sẽ bỏ được giới hạn này.

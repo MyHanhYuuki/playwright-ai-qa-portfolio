@@ -1,0 +1,939 @@
+{
+  "run_id": "run-20261127-143546",
+  "triggered_by": "script-gen-check",
+  "scope": "full",
+  "browser": "none (api)",
+  "project": "api",
+  "summary": {
+    "total": 30,
+    "passed": 30,
+    "failed": 0,
+    "flaky": 0,
+    "skipped": 0,
+    "expected_fail": 13
+  },
+  "total_duration_ms": 69599,
+  "api_teardown": [
+    {
+      "status": "passed",
+      "annotations": [
+        {
+          "type": "teardown",
+          "description": "rb101 20261127-073546: 8 booking trong sổ, dọn sót 0 · cả lần chạy (chưa tính teardown): 141 request, đăng nhập thất bại 30 · teardown 1 request"
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "tc_id": "TC-001",
+      "title": "TC-001 Happy path: tài khoản quản trị đúng (JSON) được cấp token",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1120,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "Cache-Control",
+          "description": "(không có), cải tiến IMP-02"
+        },
+        {
+          "type": "token",
+          "description": "15 ký tự, hex; các trường: token"
+        },
+        {
+          "type": "requests",
+          "description": "1 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-002",
+      "title": "TC-002 Mỗi lần gọi cấp một token mới (5 lần liên tiếp)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2134,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "requests",
+          "description": "5 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-003",
+      "title": "TC-003 Biến thể hợp lệ của body / header JSON vẫn cấp token",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2145,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "requests",
+          "description": "5 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-004",
+      "title": "TC-004 Sai mật khẩu: 401, không cấp token, thông báo Bad credentials",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 1536,
+      "retry_count": 0,
+      "error": "Error: 1. Sai mật khẩu (TD-02): (e) HTTP 401",
+      "errors": [
+        "Error: 1. Sai mật khẩu (TD-02): (e) HTTP 401"
+      ],
+      "error_details": [
+        "Error: 1. Sai mật khẩu (TD-02): (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  177 |     hardGate();\n  178 |     test.fail(true, 'BUG-37: đăng nhập thất bại trả 200 thay vì 401');\n> 179 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 401`).toBe(401);\n      |                                                                                    ^\n  180 |   });\n  181 |\n  182 |   test('TC-005 Sai tên / tài khoản không tồn tại: giống hệt sai mật khẩu (không lộ tài khoản)', { tag: ['@AC-2', '@security', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:179:84"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. Sai mật khẩu (TD-02): 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-37: đăng nhập thất bại trả 200 thay vì 401"
+        },
+        {
+          "type": "requests",
+          "description": "2 request, đăng nhập thất bại 1"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-005",
+      "title": "TC-005 Sai tên / tài khoản không tồn tại: giống hệt sai mật khẩu (không lộ tài khoản)",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 1533,
+      "retry_count": 0,
+      "error": "Error: 1. Tên đúng thêm x + mật khẩu đúng: (e) HTTP 401",
+      "errors": [
+        "Error: 1. Tên đúng thêm x + mật khẩu đúng: (e) HTTP 401",
+        "Error: 2. Tài khoản không tồn tại: (e) HTTP 401"
+      ],
+      "error_details": [
+        "Error: 1. Tên đúng thêm x + mật khẩu đúng: (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  193 |     hardGate();\n  194 |     test.fail(true, 'BUG-37: đăng nhập thất bại trả 200 thay vì 401');\n> 195 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 401`).toBe(401);\n      |                                                                                    ^\n  196 |   });\n  197 |\n  198 |   test('TC-006 Phân biệt hoa thường ở tên đăng nhập và mật khẩu', { tag: ['@AC-2', '@security', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:195:84",
+        "Error: 2. Tài khoản không tồn tại: (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  193 |     hardGate();\n  194 |     test.fail(true, 'BUG-37: đăng nhập thất bại trả 200 thay vì 401');\n> 195 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 401`).toBe(401);\n      |                                                                                    ^\n  196 |   });\n  197 |\n  198 |   test('TC-006 Phân biệt hoa thường ở tên đăng nhập và mật khẩu', { tag: ['@AC-2', '@security', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:195:84"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. Tên đúng thêm x + mật khẩu đúng: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "2. Tài khoản không tồn tại: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-37: đăng nhập thất bại trả 200 thay vì 401"
+        },
+        {
+          "type": "requests",
+          "description": "3 request, đăng nhập thất bại 2"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-006",
+      "title": "TC-006 Phân biệt hoa thường ở tên đăng nhập và mật khẩu",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 1823,
+      "retry_count": 0,
+      "error": "Error: 1. Tên viết hoa chữ đầu + mật khẩu đúng: (e) HTTP 401",
+      "errors": [
+        "Error: 1. Tên viết hoa chữ đầu + mật khẩu đúng: (e) HTTP 401",
+        "Error: 2. Tên đúng + mật khẩu viết hoa toàn bộ: (e) HTTP 401"
+      ],
+      "error_details": [
+        "Error: 1. Tên viết hoa chữ đầu + mật khẩu đúng: (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  209 |     hardGate();\n  210 |     test.fail(true, 'BUG-37: đăng nhập thất bại trả 200 thay vì 401');\n> 211 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 401`).toBe(401);\n      |                                                                                    ^\n  212 |   });\n  213 |\n  214 |   test('TC-007 Khoảng trắng ở 4 vị trí (đầu / cuối tên, đầu / cuối mật khẩu) không được cắt', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:211:84",
+        "Error: 2. Tên đúng + mật khẩu viết hoa toàn bộ: (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  209 |     hardGate();\n  210 |     test.fail(true, 'BUG-37: đăng nhập thất bại trả 200 thay vì 401');\n> 211 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 401`).toBe(401);\n      |                                                                                    ^\n  212 |   });\n  213 |\n  214 |   test('TC-007 Khoảng trắng ở 4 vị trí (đầu / cuối tên, đầu / cuối mật khẩu) không được cắt', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:211:84"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. Tên viết hoa chữ đầu + mật khẩu đúng: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "2. Tên đúng + mật khẩu viết hoa toàn bộ: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-37: đăng nhập thất bại trả 200 thay vì 401"
+        },
+        {
+          "type": "requests",
+          "description": "3 request, đăng nhập thất bại 2"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-007",
+      "title": "TC-007 Khoảng trắng ở 4 vị trí (đầu / cuối tên, đầu / cuối mật khẩu) không được cắt",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 2367,
+      "retry_count": 0,
+      "error": "Error: 1. \" \" + tên: (e) HTTP 401",
+      "errors": [
+        "Error: 1. \" \" + tên: (e) HTTP 401",
+        "Error: 2. tên + \" \": (e) HTTP 401",
+        "Error: 3. \" \" + mật khẩu: (e) HTTP 401",
+        "Error: 4. mật khẩu + \" \": (e) HTTP 401"
+      ],
+      "error_details": [
+        "Error: 1. \" \" + tên: (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  223 |     hardGate();\n  224 |     test.fail(true, 'BUG-37: đăng nhập thất bại trả 200 thay vì 401');\n> 225 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 401`).toBe(401);\n      |                                                                                    ^\n  226 |   });\n  227 |\n  228 |   test('TC-008 Thiếu trường bắt buộc: 400, không cấp token', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:225:84",
+        "Error: 2. tên + \" \": (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  223 |     hardGate();\n  224 |     test.fail(true, 'BUG-37: đăng nhập thất bại trả 200 thay vì 401');\n> 225 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 401`).toBe(401);\n      |                                                                                    ^\n  226 |   });\n  227 |\n  228 |   test('TC-008 Thiếu trường bắt buộc: 400, không cấp token', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:225:84",
+        "Error: 3. \" \" + mật khẩu: (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  223 |     hardGate();\n  224 |     test.fail(true, 'BUG-37: đăng nhập thất bại trả 200 thay vì 401');\n> 225 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 401`).toBe(401);\n      |                                                                                    ^\n  226 |   });\n  227 |\n  228 |   test('TC-008 Thiếu trường bắt buộc: 400, không cấp token', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:225:84",
+        "Error: 4. mật khẩu + \" \": (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  223 |     hardGate();\n  224 |     test.fail(true, 'BUG-37: đăng nhập thất bại trả 200 thay vì 401');\n> 225 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 401`).toBe(401);\n      |                                                                                    ^\n  226 |   });\n  227 |\n  228 |   test('TC-008 Thiếu trường bắt buộc: 400, không cấp token', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:225:84"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. \" \" + tên: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "2. tên + \" \": 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "3. \" \" + mật khẩu: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "4. mật khẩu + \" \": 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-37: đăng nhập thất bại trả 200 thay vì 401"
+        },
+        {
+          "type": "requests",
+          "description": "5 request, đăng nhập thất bại 4"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-008",
+      "title": "TC-008 Thiếu trường bắt buộc: 400, không cấp token",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 2679,
+      "retry_count": 0,
+      "error": "Error: 1. Thiếu password: (e) HTTP 400",
+      "errors": [
+        "Error: 1. Thiếu password: (e) HTTP 400",
+        "Error: 2. Thiếu username: (e) HTTP 400",
+        "Error: 3. Body {}: (e) HTTP 400",
+        "Error: 4. Body rỗng 0 byte: (e) HTTP 400"
+      ],
+      "error_details": [
+        "Error: 1. Thiếu password: (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  241 |     hardGate();\n  242 |     test.fail(true, 'BUG-37: thiếu trường trả 200 thay vì 400');\n> 243 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 400`).toBe(400);\n      |                                                                                    ^\n  244 |   });\n  245 |\n  246 |   test('TC-009 Giá trị rỗng và null coi như thiếu trường: 400, không cấp token', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:243:84",
+        "Error: 2. Thiếu username: (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  241 |     hardGate();\n  242 |     test.fail(true, 'BUG-37: thiếu trường trả 200 thay vì 400');\n> 243 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 400`).toBe(400);\n      |                                                                                    ^\n  244 |   });\n  245 |\n  246 |   test('TC-009 Giá trị rỗng và null coi như thiếu trường: 400, không cấp token', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:243:84",
+        "Error: 3. Body {}: (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  241 |     hardGate();\n  242 |     test.fail(true, 'BUG-37: thiếu trường trả 200 thay vì 400');\n> 243 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 400`).toBe(400);\n      |                                                                                    ^\n  244 |   });\n  245 |\n  246 |   test('TC-009 Giá trị rỗng và null coi như thiếu trường: 400, không cấp token', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:243:84",
+        "Error: 4. Body rỗng 0 byte: (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  241 |     hardGate();\n  242 |     test.fail(true, 'BUG-37: thiếu trường trả 200 thay vì 400');\n> 243 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 400`).toBe(400);\n      |                                                                                    ^\n  244 |   });\n  245 |\n  246 |   test('TC-009 Giá trị rỗng và null coi như thiếu trường: 400, không cấp token', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:243:84"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. Thiếu password: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "2. Thiếu username: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "3. Body {}: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "4. Body rỗng 0 byte: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-37: thiếu trường trả 200 thay vì 400"
+        },
+        {
+          "type": "requests",
+          "description": "5 request, đăng nhập thất bại 4"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-009",
+      "title": "TC-009 Giá trị rỗng và null coi như thiếu trường: 400, không cấp token",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 1864,
+      "retry_count": 0,
+      "error": "Error: 1. username \"\": (e) HTTP 400",
+      "errors": [
+        "Error: 1. username \"\": (e) HTTP 400",
+        "Error: 2. password \"\": (e) HTTP 400",
+        "Error: 3. password null: (e) HTTP 400"
+      ],
+      "error_details": [
+        "Error: 1. username \"\": (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  254 |     hardGate();\n  255 |     test.fail(true, 'BUG-37: rỗng / null trả 200 thay vì 400');\n> 256 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 400`).toBe(400);\n      |                                                                                    ^\n  257 |   });\n  258 |\n  259 |   test('TC-010 Sai kiểu dữ liệu và thử vượt xác thực không cấp token, không 5xx', { tag: ['@AC-2', '@security', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:256:84",
+        "Error: 2. password \"\": (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  254 |     hardGate();\n  255 |     test.fail(true, 'BUG-37: rỗng / null trả 200 thay vì 400');\n> 256 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 400`).toBe(400);\n      |                                                                                    ^\n  257 |   });\n  258 |\n  259 |   test('TC-010 Sai kiểu dữ liệu và thử vượt xác thực không cấp token, không 5xx', { tag: ['@AC-2', '@security', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:256:84",
+        "Error: 3. password null: (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  254 |     hardGate();\n  255 |     test.fail(true, 'BUG-37: rỗng / null trả 200 thay vì 400');\n> 256 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 400`).toBe(400);\n      |                                                                                    ^\n  257 |   });\n  258 |\n  259 |   test('TC-010 Sai kiểu dữ liệu và thử vượt xác thực không cấp token, không 5xx', { tag: ['@AC-2', '@security', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:256:84"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. username \"\": 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "2. password \"\": 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "3. password null: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-37: rỗng / null trả 200 thay vì 400"
+        },
+        {
+          "type": "requests",
+          "description": "4 request, đăng nhập thất bại 3"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-010",
+      "title": "TC-010 Sai kiểu dữ liệu và thử vượt xác thực không cấp token, không 5xx",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 2660,
+      "retry_count": 0,
+      "error": "Error: 1. username là mảng: (e) HTTP 400",
+      "errors": [
+        "Error: 1. username là mảng: (e) HTTP 400",
+        "Error: 2. password là mảng: (e) HTTP 400",
+        "Error: 3. password là object {\"$ne\":\"\"}: (e) HTTP 400",
+        "Error: 4. body là mảng JSON: (e) HTTP 400",
+        "Error: 5. Chuỗi kiểu SQL ' OR '1'='1: (e) HTTP 401"
+      ],
+      "error_details": [
+        "Error: 1. username là mảng: (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  269 |     hardGate();\n  270 |     test.fail(true, 'BUG-37: sai kiểu / chuỗi sai trả 200 thay vì 400 / 401');\n> 271 |     results.forEach((v, i) => expect.soft(v.res.status, `${v.label}: (e) HTTP ${i < 4 ? 400 : 401}`).toBe(i < 4 ? 400 : 401));\n      |                                                                                                      ^\n  272 |   });\n  273 |\n  274 |   test('TC-011 Tên đăng nhập 10 000 ký tự: 401, không 5xx', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at forEach (<repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:271:102)\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:271:13",
+        "Error: 2. password là mảng: (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  269 |     hardGate();\n  270 |     test.fail(true, 'BUG-37: sai kiểu / chuỗi sai trả 200 thay vì 400 / 401');\n> 271 |     results.forEach((v, i) => expect.soft(v.res.status, `${v.label}: (e) HTTP ${i < 4 ? 400 : 401}`).toBe(i < 4 ? 400 : 401));\n      |                                                                                                      ^\n  272 |   });\n  273 |\n  274 |   test('TC-011 Tên đăng nhập 10 000 ký tự: 401, không 5xx', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at forEach (<repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:271:102)\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:271:13",
+        "Error: 3. password là object {\"$ne\":\"\"}: (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  269 |     hardGate();\n  270 |     test.fail(true, 'BUG-37: sai kiểu / chuỗi sai trả 200 thay vì 400 / 401');\n> 271 |     results.forEach((v, i) => expect.soft(v.res.status, `${v.label}: (e) HTTP ${i < 4 ? 400 : 401}`).toBe(i < 4 ? 400 : 401));\n      |                                                                                                      ^\n  272 |   });\n  273 |\n  274 |   test('TC-011 Tên đăng nhập 10 000 ký tự: 401, không 5xx', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at forEach (<repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:271:102)\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:271:13",
+        "Error: 4. body là mảng JSON: (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  269 |     hardGate();\n  270 |     test.fail(true, 'BUG-37: sai kiểu / chuỗi sai trả 200 thay vì 400 / 401');\n> 271 |     results.forEach((v, i) => expect.soft(v.res.status, `${v.label}: (e) HTTP ${i < 4 ? 400 : 401}`).toBe(i < 4 ? 400 : 401));\n      |                                                                                                      ^\n  272 |   });\n  273 |\n  274 |   test('TC-011 Tên đăng nhập 10 000 ký tự: 401, không 5xx', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at forEach (<repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:271:102)\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:271:13",
+        "Error: 5. Chuỗi kiểu SQL ' OR '1'='1: (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  269 |     hardGate();\n  270 |     test.fail(true, 'BUG-37: sai kiểu / chuỗi sai trả 200 thay vì 400 / 401');\n> 271 |     results.forEach((v, i) => expect.soft(v.res.status, `${v.label}: (e) HTTP ${i < 4 ? 400 : 401}`).toBe(i < 4 ? 400 : 401));\n      |                                                                                                      ^\n  272 |   });\n  273 |\n  274 |   test('TC-011 Tên đăng nhập 10 000 ký tự: 401, không 5xx', { tag: ['@AC-2', '@auth', '@bad-login', '@BUG-37'] }, async ({ api }) => {\n    at forEach (<repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:271:102)\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:271:13"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. username là mảng: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "2. password là mảng: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "3. password là object {\"$ne\":\"\"}: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "4. body là mảng JSON: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "5. Chuỗi kiểu SQL ' OR '1'='1: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-37: sai kiểu / chuỗi sai trả 200 thay vì 400 / 401"
+        },
+        {
+          "type": "requests",
+          "description": "6 request, đăng nhập thất bại 5"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-011",
+      "title": "TC-011 Tên đăng nhập 10 000 ký tự: 401, không 5xx",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 1212,
+      "retry_count": 0,
+      "error": "Error: 1. username 10 000 ký tự (TD-09): (e) HTTP 401",
+      "errors": [
+        "Error: 1. username 10 000 ký tự (TD-09): (e) HTTP 401"
+      ],
+      "error_details": [
+        "Error: 1. username 10 000 ký tự (TD-09): (e) HTTP 401\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 401\nReceived: 200\n\n  278 |     hardGate();\n  279 |     test.fail(true, 'BUG-37: đăng nhập thất bại trả 200 thay vì 401');\n> 280 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 401`).toBe(401);\n      |                                                                                    ^\n  281 |   });\n  282 |\n  283 |   test('TC-012 Body quá lớn (~200 KB): 413, phản hồi lỗi là JSON', { tag: ['@AC-5', '@auth', '@bad-login', '@BUG-38'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:280:84"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. username 10 000 ký tự (TD-09): 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-37: đăng nhập thất bại trả 200 thay vì 401"
+        },
+        {
+          "type": "requests",
+          "description": "2 request, đăng nhập thất bại 1"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-012",
+      "title": "TC-012 Body quá lớn (~200 KB): 413, phản hồi lỗi là JSON",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 2451,
+      "retry_count": 0,
+      "error": "Error: (d) Content-Type application/json",
+      "errors": [
+        "Error: (d) Content-Type application/json",
+        "Error: (d) body đọc được thành object JSON"
+      ],
+      "error_details": [
+        "Error: (d) Content-Type application/json\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"application/json\"\nReceived: \"text/plain\"\n\n  292 |     hardGate('(a)–(c) phải đạt trước test.fail');\n  293 |     test.fail(true, 'BUG-38: phản hồi 413 là text/plain, không phải JSON');\n> 294 |     expect.soft(r.mediaType, '(d) Content-Type application/json').toBe('application/json');\n      |                                                                   ^\n  295 |     expect.soft(isJsonObject(r), '(d) body đọc được thành object JSON').toBe(true);\n  296 |   });\n  297 |\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:294:67",
+        "Error: (d) body đọc được thành object JSON\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\n  293 |     test.fail(true, 'BUG-38: phản hồi 413 là text/plain, không phải JSON');\n  294 |     expect.soft(r.mediaType, '(d) Content-Type application/json').toBe('application/json');\n> 295 |     expect.soft(isJsonObject(r), '(d) body đọc được thành object JSON').toBe(true);\n      |                                                                         ^\n  296 |   });\n  297 |\n  298 |   test('TC-013 Body không phân tích được: 400, phản hồi lỗi là JSON', { tag: ['@AC-5', '@auth', '@bad-login', '@BUG-38'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:295:73"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. Body ~200 KB: 413 text/plain; charset=utf-8 \"Payload Too Large\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-38: phản hồi 413 là text/plain, không phải JSON"
+        },
+        {
+          "type": "requests",
+          "description": "2 request, đăng nhập thất bại 1"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-013",
+      "title": "TC-013 Body không phân tích được: 400, phản hồi lỗi là JSON",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 1526,
+      "retry_count": 0,
+      "error": "Error: 1. JSON hỏng (cắt cụt): (d) Content-Type application/json",
+      "errors": [
+        "Error: 1. JSON hỏng (cắt cụt): (d) Content-Type application/json",
+        "Error: 1. JSON hỏng (cắt cụt): (d) body đọc được thành object JSON",
+        "Error: 2. Body XML với Content-Type JSON: (d) Content-Type application/json",
+        "Error: 2. Body XML với Content-Type JSON: (d) body đọc được thành object JSON"
+      ],
+      "error_details": [
+        "Error: 1. JSON hỏng (cắt cụt): (d) Content-Type application/json\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"application/json\"\nReceived: \"text/plain\"\n\n  318 |     test.fail(true, 'BUG-38: phản hồi 400 là text/plain, không phải JSON');\n  319 |     for (const { label, res } of results) {\n> 320 |       expect.soft(res.mediaType, `${label}: (d) Content-Type application/json`).toBe('application/json');\n      |                                                                                 ^\n  321 |       expect.soft(isJsonObject(res), `${label}: (d) body đọc được thành object JSON`).toBe(true);\n  322 |     }\n  323 |   });\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:320:81",
+        "Error: 1. JSON hỏng (cắt cụt): (d) body đọc được thành object JSON\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\n  319 |     for (const { label, res } of results) {\n  320 |       expect.soft(res.mediaType, `${label}: (d) Content-Type application/json`).toBe('application/json');\n> 321 |       expect.soft(isJsonObject(res), `${label}: (d) body đọc được thành object JSON`).toBe(true);\n      |                                                                                       ^\n  322 |     }\n  323 |   });\n  324 |\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:321:87",
+        "Error: 2. Body XML với Content-Type JSON: (d) Content-Type application/json\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: \"application/json\"\nReceived: \"text/plain\"\n\n  318 |     test.fail(true, 'BUG-38: phản hồi 400 là text/plain, không phải JSON');\n  319 |     for (const { label, res } of results) {\n> 320 |       expect.soft(res.mediaType, `${label}: (d) Content-Type application/json`).toBe('application/json');\n      |                                                                                 ^\n  321 |       expect.soft(isJsonObject(res), `${label}: (d) body đọc được thành object JSON`).toBe(true);\n  322 |     }\n  323 |   });\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:320:81",
+        "Error: 2. Body XML với Content-Type JSON: (d) body đọc được thành object JSON\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\n  319 |     for (const { label, res } of results) {\n  320 |       expect.soft(res.mediaType, `${label}: (d) Content-Type application/json`).toBe('application/json');\n> 321 |       expect.soft(isJsonObject(res), `${label}: (d) body đọc được thành object JSON`).toBe(true);\n      |                                                                                       ^\n  322 |     }\n  323 |   });\n  324 |\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:321:87"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. JSON hỏng (cắt cụt): 400 text/plain; charset=utf-8 \"Bad Request\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "2. Body XML với Content-Type JSON: 400 text/plain; charset=utf-8 \"Bad Request\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-38: phản hồi 400 là text/plain, không phải JSON"
+        },
+        {
+          "type": "requests",
+          "description": "3 request, đăng nhập thất bại 2"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-014",
+      "title": "TC-014 Định dạng body không hỗ trợ (tài khoản đúng): 415 JSON, không báo Bad credentials",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 2556,
+      "retry_count": 0,
+      "error": "Error: 1. text/xml: (c) HTTP 415",
+      "errors": [
+        "Error: 1. text/xml: (c) HTTP 415",
+        "Error: 1. text/xml: (e) body không chứa \"Bad credentials\"",
+        "Error: 2. multipart/form-data: (c) HTTP 415",
+        "Error: 2. multipart/form-data: (e) body không chứa \"Bad credentials\"",
+        "Error: 3. không Content-Type: (c) HTTP 415",
+        "Error: 3. không Content-Type: (e) body không chứa \"Bad credentials\""
+      ],
+      "error_details": [
+        "Error: 1. text/xml: (c) HTTP 415\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 415\nReceived: 200\n\n  346 |     test.fail(true, 'BUG-39: định dạng không hỗ trợ bị báo 200 Bad credentials thay vì 415');\n  347 |     for (const { label, res } of results) {\n> 348 |       expect.soft(res.status, `${label}: (c) HTTP 415`).toBe(415);\n      |                                                         ^\n  349 |       expect.soft(res.mediaType, `${label}: (d) Content-Type application/json`).toBe('application/json');\n  350 |       expect.soft(isJsonObject(res), `${label}: (d) body đọc được thành object JSON`).toBe(true);\n  351 |       expect.soft(res.text.includes('Bad credentials'), `${label}: (e) body không chứa \"Bad credentials\"`).toBe(false);\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:348:57",
+        "Error: 1. text/xml: (e) body không chứa \"Bad credentials\"\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  349 |       expect.soft(res.mediaType, `${label}: (d) Content-Type application/json`).toBe('application/json');\n  350 |       expect.soft(isJsonObject(res), `${label}: (d) body đọc được thành object JSON`).toBe(true);\n> 351 |       expect.soft(res.text.includes('Bad credentials'), `${label}: (e) body không chứa \"Bad credentials\"`).toBe(false);\n      |                                                                                                            ^\n  352 |     }\n  353 |   });\n  354 |\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:351:108",
+        "Error: 2. multipart/form-data: (c) HTTP 415\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 415\nReceived: 200\n\n  346 |     test.fail(true, 'BUG-39: định dạng không hỗ trợ bị báo 200 Bad credentials thay vì 415');\n  347 |     for (const { label, res } of results) {\n> 348 |       expect.soft(res.status, `${label}: (c) HTTP 415`).toBe(415);\n      |                                                         ^\n  349 |       expect.soft(res.mediaType, `${label}: (d) Content-Type application/json`).toBe('application/json');\n  350 |       expect.soft(isJsonObject(res), `${label}: (d) body đọc được thành object JSON`).toBe(true);\n  351 |       expect.soft(res.text.includes('Bad credentials'), `${label}: (e) body không chứa \"Bad credentials\"`).toBe(false);\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:348:57",
+        "Error: 2. multipart/form-data: (e) body không chứa \"Bad credentials\"\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  349 |       expect.soft(res.mediaType, `${label}: (d) Content-Type application/json`).toBe('application/json');\n  350 |       expect.soft(isJsonObject(res), `${label}: (d) body đọc được thành object JSON`).toBe(true);\n> 351 |       expect.soft(res.text.includes('Bad credentials'), `${label}: (e) body không chứa \"Bad credentials\"`).toBe(false);\n      |                                                                                                            ^\n  352 |     }\n  353 |   });\n  354 |\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:351:108",
+        "Error: 3. không Content-Type: (c) HTTP 415\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 415\nReceived: 200\n\n  346 |     test.fail(true, 'BUG-39: định dạng không hỗ trợ bị báo 200 Bad credentials thay vì 415');\n  347 |     for (const { label, res } of results) {\n> 348 |       expect.soft(res.status, `${label}: (c) HTTP 415`).toBe(415);\n      |                                                         ^\n  349 |       expect.soft(res.mediaType, `${label}: (d) Content-Type application/json`).toBe('application/json');\n  350 |       expect.soft(isJsonObject(res), `${label}: (d) body đọc được thành object JSON`).toBe(true);\n  351 |       expect.soft(res.text.includes('Bad credentials'), `${label}: (e) body không chứa \"Bad credentials\"`).toBe(false);\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:348:57",
+        "Error: 3. không Content-Type: (e) body không chứa \"Bad credentials\"\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: false\nReceived: true\n\n  349 |       expect.soft(res.mediaType, `${label}: (d) Content-Type application/json`).toBe('application/json');\n  350 |       expect.soft(isJsonObject(res), `${label}: (d) body đọc được thành object JSON`).toBe(true);\n> 351 |       expect.soft(res.text.includes('Bad credentials'), `${label}: (e) body không chứa \"Bad credentials\"`).toBe(false);\n      |                                                                                                            ^\n  352 |     }\n  353 |   });\n  354 |\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:351:108"
+      ],
+      "annotations": [
+        {
+          "type": "TD-12 biến thể 3",
+          "description": "header đã gửi: content-length, host (+ host)"
+        },
+        {
+          "type": "phản hồi",
+          "description": "1. text/xml: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "2. multipart/form-data: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "3. không Content-Type: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-39: định dạng không hỗ trợ bị báo 200 Bad credentials thay vì 415"
+        },
+        {
+          "type": "requests",
+          "description": "4 request, đăng nhập thất bại 3"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-015",
+      "title": "TC-015 Body URL-encoded được cấp token và token đó dùng được",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2846,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "cleanup",
+          "description": "#2754: DELETE 201"
+        },
+        {
+          "type": "requests",
+          "description": "7 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-016",
+      "title": "TC-016 Tài khoản trên query string bị từ chối (400), không cấp token",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 1943,
+      "retry_count": 0,
+      "error": "Error: 1. Tài khoản trên query string: (e) HTTP 400",
+      "errors": [
+        "Error: 1. Tài khoản trên query string: (e) HTTP 400"
+      ],
+      "error_details": [
+        "Error: 1. Tài khoản trên query string: (e) HTTP 400\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 400\nReceived: 200\n\n  381 |     hardGate();\n  382 |     test.fail(true, 'BUG-37: tài khoản trên query string trả 200 thay vì 400');\n> 383 |     for (const v of results) expect.soft(v.res.status, `${v.label}: (e) HTTP 400`).toBe(400);\n      |                                                                                    ^\n  384 |   });\n  385 |\n  386 |   test('TC-017 Header Accept: application/xml không đổi định dạng phản hồi của /auth', { tag: ['@AC-5', '@auth'] }, async ({ api }) => {\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:383:84"
+      ],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. Tài khoản trên query string: 200 application/json; charset=utf-8 \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "fail",
+          "description": "BUG-37: tài khoản trên query string trả 200 thay vì 400"
+        },
+        {
+          "type": "requests",
+          "description": "2 request, đăng nhập thất bại 1"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-017",
+      "title": "TC-017 Header Accept: application/xml không đổi định dạng phản hồi của /auth",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 898,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "requests",
+          "description": "1 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-018",
+      "title": "TC-018 Sai phương thức trên /auth: 4xx, không token, không 5xx",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2451,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "1. GET /auth: 404 text/plain; charset=utf-8 \"Not Found\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "2. PUT /auth (body TD-01): 404 text/plain; charset=utf-8 \"Not Found\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "3. PATCH /auth (body TD-01): 404 text/plain; charset=utf-8 \"Not Found\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "4. DELETE /auth: 404 text/plain; charset=utf-8 \"Not Found\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "5. HEAD /auth: 404 text/plain; charset=utf-8 (body rỗng)"
+        },
+        {
+          "type": "phản hồi",
+          "description": "6. GET /auth/: 404 text/plain; charset=utf-8 \"Not Found\""
+        },
+        {
+          "type": "requests",
+          "description": "6 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-019",
+      "title": "TC-019 AC-3: token vừa cấp dùng được cho PUT booking tự tạo",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2775,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "cleanup",
+          "description": "#2828: DELETE 201"
+        },
+        {
+          "type": "requests",
+          "description": "7 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-020",
+      "title": "TC-020 AC-3: token vừa cấp dùng được cho PATCH booking tự tạo",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 3047,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "cleanup",
+          "description": "#2856: DELETE 201"
+        },
+        {
+          "type": "requests",
+          "description": "7 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-021",
+      "title": "TC-021 AC-3: token vừa cấp dùng được cho DELETE booking tự tạo",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2344,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "cleanup",
+          "description": "#2886: không còn (GET 404)"
+        },
+        {
+          "type": "requests",
+          "description": "5 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-022",
+      "title": "TC-022 Đối chứng âm AC-3: token abc123 và token bị sửa bị từ chối 403, booking không đổi",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 6450,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "cleanup",
+          "description": "#2903: DELETE 201"
+        },
+        {
+          "type": "requests",
+          "description": "19 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-023",
+      "title": "TC-023 Token cũ vẫn dùng được sau khi đã cấp token mới (cùng chu kỳ reset)",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 3163,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "cleanup",
+          "description": "#2965: DELETE 201"
+        },
+        {
+          "type": "requests",
+          "description": "8 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-024",
+      "title": "TC-024 Cookie có nhiều giá trị: token vẫn được nhận",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 2859,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "cleanup",
+          "description": "#2988: DELETE 201"
+        },
+        {
+          "type": "requests",
+          "description": "7 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-025",
+      "title": "TC-025 GET /ping trả 201 Created",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 917,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "requests",
+          "description": "1 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-026",
+      "title": "TC-026 HEAD /ping cùng mã với GET, body rỗng",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1224,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "HEAD body",
+          "description": "0 byte (không assert, L15)"
+        },
+        {
+          "type": "requests",
+          "description": "2 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-027",
+      "title": "TC-027 Biến thể URL / header của /ping cho cùng kết quả",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1835,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "requests",
+          "description": "4 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-028",
+      "title": "TC-028 Sai phương thức trên /ping: 4xx, không trả Created",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 1837,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "phản hồi",
+          "description": "POST /ping: 404 text/plain; charset=utf-8 \"Not Found\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "PUT /ping: 404 text/plain; charset=utf-8 \"Not Found\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "PATCH /ping: 404 text/plain; charset=utf-8 \"Not Found\""
+        },
+        {
+          "type": "phản hồi",
+          "description": "DELETE /ping: 404 text/plain; charset=utf-8 \"Not Found\""
+        },
+        {
+          "type": "requests",
+          "description": "4 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-029",
+      "title": "TC-029 Luồng smoke: ping → tạo booking → auth → PATCH bằng token → xóa",
+      "status": "passed",
+      "expected_status": "passed",
+      "outcome": "expected",
+      "duration_ms": 3166,
+      "retry_count": 0,
+      "error": null,
+      "errors": [],
+      "error_details": [],
+      "annotations": [
+        {
+          "type": "cleanup",
+          "description": "#3065: không còn (GET 404)"
+        },
+        {
+          "type": "requests",
+          "description": "8 request, đăng nhập thất bại 0"
+        }
+      ]
+    },
+    {
+      "tc_id": "TC-030",
+      "title": "TC-030 HTTP thường bị chuyển hướng sang HTTPS hoặc bị từ chối; HTTPS có HSTS",
+      "status": "failed",
+      "expected_status": "failed",
+      "outcome": "expected",
+      "duration_ms": 1874,
+      "retry_count": 0,
+      "error": "Error: Bước 1: http://…/ping phải chuyển hướng 301 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối; thực tế 201",
+      "errors": [
+        "Error: Bước 1: http://…/ping phải chuyển hướng 301 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối; thực tế 201",
+        "Error: Bước 2: http://…/auth phải chuyển hướng 307 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối (không qua kiểm tài khoản); thực tế 200",
+        "Error: Bước 3: HTTPS có Strict-Transport-Security max-age > 0; thực tế (không có)"
+      ],
+      "error_details": [
+        "Error: Bước 1: http://…/ping phải chuyển hướng 301 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối; thực tế 201\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\n  650 |       r2.status === 426 ||\n  651 |       (is4xx(r2.status) && !(isJsonObject(r2) && ('reason' in (r2.json as object) || 'token' in (r2.json as object))));\n> 652 |     expect.soft(step1Ok, `Bước 1: http://…/ping phải chuyển hướng 301 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối; thực tế ${r1.error ?? r1.status}`).toBe(true);\n      |                                                                                                                                                                       ^\n  653 |     expect.soft(step2Ok, `Bước 2: http://…/auth phải chuyển hướng 307 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối (không qua kiểm tài khoản); thực tế ${r2.error ?? r2.status}`).toBe(true);\n  654 |     expect.soft(maxAge, `Bước 3: HTTPS có Strict-Transport-Security max-age > 0; thực tế ${hsts ?? '(không có)'}`).toBeGreaterThan(0);\n  655 |   });\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:652:167",
+        "Error: Bước 2: http://…/auth phải chuyển hướng 307 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối (không qua kiểm tài khoản); thực tế 200\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\n  651 |       (is4xx(r2.status) && !(isJsonObject(r2) && ('reason' in (r2.json as object) || 'token' in (r2.json as object))));\n  652 |     expect.soft(step1Ok, `Bước 1: http://…/ping phải chuyển hướng 301 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối; thực tế ${r1.error ?? r1.status}`).toBe(true);\n> 653 |     expect.soft(step2Ok, `Bước 2: http://…/auth phải chuyển hướng 307 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối (không qua kiểm tài khoản); thực tế ${r2.error ?? r2.status}`).toBe(true);\n      |                                                                                                                                                                                                  ^\n  654 |     expect.soft(maxAge, `Bước 3: HTTPS có Strict-Transport-Security max-age > 0; thực tế ${hsts ?? '(không có)'}`).toBeGreaterThan(0);\n  655 |   });\n  656 | });\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:653:194",
+        "Error: Bước 3: HTTPS có Strict-Transport-Security max-age > 0; thực tế (không có)\n\nexpect(received).toBeGreaterThan(expected)\n\nExpected: > 0\nReceived:   0\n\n  652 |     expect.soft(step1Ok, `Bước 1: http://…/ping phải chuyển hướng 301 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối; thực tế ${r1.error ?? r1.status}`).toBe(true);\n  653 |     expect.soft(step2Ok, `Bước 2: http://…/auth phải chuyển hướng 307 / 308 sang https cùng host, cùng đường dẫn, hoặc bị từ chối (không qua kiểm tài khoản); thực tế ${r2.error ?? r2.status}`).toBe(true);\n> 654 |     expect.soft(maxAge, `Bước 3: HTTPS có Strict-Transport-Security max-age > 0; thực tế ${hsts ?? '(không có)'}`).toBeGreaterThan(0);\n      |                                                                                                                    ^\n  655 |   });\n  656 | });\n  657 |\n    at <repo>\\tests\\specs\\restful-booker-auth-api.spec.ts:654:116"
+      ],
+      "annotations": [
+        {
+          "type": "Bước 1 HTTP GET /ping",
+          "description": "201, Location (không có), body \"Created\""
+        },
+        {
+          "type": "Bước 2 HTTP POST /auth",
+          "description": "200, Location (không có), body \"{\"reason\":\"Bad credentials\"}\""
+        },
+        {
+          "type": "Bước 3 HSTS",
+          "description": "(không có)"
+        },
+        {
+          "type": "fail",
+          "description": "BUG-40: API phục vụ trên HTTP thường, HTTPS không có HSTS"
+        },
+        {
+          "type": "requests",
+          "description": "3 request, đăng nhập thất bại 1"
+        }
+      ]
+    }
+  ]
+}
